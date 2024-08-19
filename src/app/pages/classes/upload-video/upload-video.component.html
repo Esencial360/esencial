@@ -1,0 +1,103 @@
+<app-header></app-header>
+@if(firstStep) {
+  <div class="relative">
+    <form
+      [formGroup]="newVideoForm"
+      class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="title">
+          Title
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="title"
+          type="text"
+          placeholder="Enter blog title"
+          formControlName="title"
+        />
+        <div
+          *ngIf="
+            newVideoForm.get('title')?.invalid &&
+            (newVideoForm.get('title')?.dirty || newVideoForm.get('title')?.touched)
+          "
+        >
+          <div *ngIf="newVideoForm.get('title')?.errors" class="text-red-500">
+            Title is required.
+          </div>
+        </div>
+      </div>
+      <select
+        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+        id="collectionId"
+        formControlName="collectionId"
+        >
+        <option value="" disabled selected>Select a Category</option>
+        @for(collection of collectionList; track collection) {
+        <option [value]="collection.guid">
+          {{ collection.name }}
+        </option>
+        }
+      </select>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="title">
+          Thumbnail Time (MS)
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="thumbnailTime"
+          type="number"
+          placeholder="Enter blog title"
+          formControlName="thumbnailTime"
+        />
+        <div
+          *ngIf="
+            newVideoForm.get('thumbnailTime')?.invalid &&
+            (newVideoForm.get('thumbnailTime')?.dirty || newVideoForm.get('thumbnailTime')?.touched)
+          "
+        >
+        </div>
+      </div>
+      <select
+      class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+      id="instructor"
+      formControlName="instructor"
+      >
+      <option value="" selected>No Instructor</option>
+      @for(singleInstructor of instructors; track singleInstructor) {
+      <option [value]="singleInstructor._id">
+        {{ singleInstructor.firstname }} {{singleInstructor.lastname}}
+      </option>
+      }
+    </select>
+      <div
+        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+      >
+        <svg
+          class="fill-current h-4 w-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7z" />
+        </svg>
+      </div>
+      <div class="flex items-center justify-between">
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+        >
+          CREAR VIDEO
+        </button>
+      </div>
+    </form>
+  </div>
+}
+@if (secondStep) {
+  <input type="file" #videoInput (change)="onFileSelected($event)" />
+  <button (click)="onUploadVideo()">Upload Video</button>
+}
+@if(thirdStep) {
+
+}
+<app-footer></app-footer>

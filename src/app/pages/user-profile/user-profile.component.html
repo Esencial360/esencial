@@ -1,0 +1,234 @@
+<app-header></app-header>
+@if(isLoading) {
+<app-loading></app-loading>
+} @else {
+<app-page-title
+  [pageTitle]="activeFilter"
+  [pageDescription]="
+    activeFilter === 'MIS CLASES'
+      ? 'Haz click para ver la tu respectiva clase y las estadisticas del mismo.'
+      : ''
+  "
+></app-page-title>
+<div class="flex justify-between">
+  <div class="filter-container relative z-20 w-full" (click)="toggleDropdown()">
+    <div
+      class="filter-selected text-sm font-medium flex items-center justify-center uppercase"
+    >
+      {{ activeFilter }}
+      <span class="material-symbols-outlined">
+        {{ dropdownClosed ? "keyboard_arrow_up" : "keyboard_arrow_down" }}
+      </span>
+      @if(!dropdownClosed) {
+      <div class="absolute bg-white rounded shadow-md mt-[140px] w-[160px]">
+        @for(filter of filters; track $index) {
+        <div class="pl-2 py-2 border-b uppercase" (click)="applyFilter(filter)">
+          {{ filter }}
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>
+@if(activeFilter === 'EDITA TU PERFIL') {
+<div>
+  @if(authService.user$ | async; as user) {
+  <div>
+    <div>
+      <img [src]="user.picture" alt="user profile picture" />
+      <h2>{{ user.name }}</h2>
+    </div>
+  </div>
+  }
+</div>
+} @if(activeFilter === 'CAMBIA TU CONTRASEÑA') {
+<div>
+  <h2>Change Password</h2>
+  <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="currentPassword">Current Password:</label>
+      <input
+        type="password"
+        id="currentPassword"
+        formControlName="currentPassword"
+        required
+      />
+      <div
+        *ngIf="
+          passwordForm.controls['currentPassword'].invalid &&
+          passwordForm.controls['currentPassword'].touched
+        "
+      >
+        <p>Current password is required.</p>
+      </div>
+    </div>
+    <div>
+      <label for="newPassword">New Password:</label>
+      <input
+        type="password"
+        id="newPassword"
+        formControlName="newPassword"
+        required
+      />
+      <div
+        *ngIf="
+          passwordForm.controls['newPassword'].invalid &&
+          passwordForm.controls['newPassword'].touched
+        "
+      >
+        <p>New password is required.</p>
+      </div>
+    </div>
+    <div>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        required
+      />
+      <div
+        *ngIf="
+          passwordForm.controls['confirmPassword'].invalid &&
+          passwordForm.controls['confirmPassword'].touched
+        "
+      >
+        <p>Confirm password is required.</p>
+      </div>
+      <div *ngIf="passwordForm.hasError('mismatch')">
+        <p>New password and confirm password do not match.</p>
+      </div>
+    </div>
+    <button type="submit" [disabled]="passwordForm.invalid">
+      Change Password
+    </button>
+  </form>
+  <p *ngIf="message">{{ message }}</p>
+</div>
+} @if(activeFilter === 'MANEJA TU SUBSCRIPCION') {
+<div class="flex flex-col justify-center items-center mt-10">
+  <p>No cuentas con ninguna membresia activa</p>
+  <button
+    class="bg-blue text-white px-6 py-2 mt-4 rounded-full flex items-center relative"
+  >
+    Activa tu membresia
+  </button>
+  <img
+    src="../../../assets/images/yoga1.jpg"
+    alt="Person doing yoga"
+    class="rounded-xl object-cover w-10/12 lg:w-1/4 h-64 my-20"
+  />
+</div>
+} @if(activeFilter === 'MIS CLASES') {
+<app-page-title
+  [pageDescription]="'Haz click para subir un nuevo video.'"
+></app-page-title>
+<div class="w-full flex justify-center">
+  <button
+    (click)="onUploadVideo()"
+    class="group flex items-center mb-4 justify-center rounded-full w-10/12 lg:w-1/4 bg-lightBrown px-4 py-4 hover:bg-strongBrown transition-colors duration-200"
+  >
+    <span class="text-white text-sm font-medium uppercase">SUBE UNA CLASE</span>
+  </button>
+</div>
+<section class="container mx-auto px-4 py-8 montserrat-normal">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    @for(video of videos; track videos) {
+
+    <div
+      class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+      (click)="onWatchSingleClass(video.video)"
+    >
+      <img
+        [src]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
+        [alt]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <div class="flex items-center text-sm text-blue mb-2">
+          <span>Esencial360</span>
+          <span class="mx-2">•</span>
+        </div>
+        <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
+          {{ video.video.title }}
+        </h3>
+        <p class="text-strongBrown mb-4">
+          Breathing plays an essential role in our well-being. Follow the advice
+          of Dr. Marie
+        </p>
+        <div class="flex items-center justify-between">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-gray-400"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+} @if (activeFilter === 'INSTRUCTORES') {
+<section class="container mx-auto px-4 py-8 montserrat-normal">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    @for(instructor of instructors; track instructor) {
+
+    <div
+      class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+      (click)="onInstructor(instructor._id)"
+    >
+      <img
+        [src]="'../../../../assets/images/yoga1.jpg'"
+        [alt]="instructor.title"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <div class="flex items-center text-sm text-blue mb-2 relative">
+          <span>Esencial360</span>
+          <span class="mx-2">•</span>
+          <span class="">Instructor</span>
+          <!-- <img
+            [src]="'../../../../assets/images/examplePerson.jpg'"
+            [alt]="instructor.name"
+            class="rounded-full w-16 h-16 mb-2 absolute border-2 border-white top-[37%] object-cover"
+          /> -->
+        </div>
+        <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
+          {{ instructor.firstname + " " + instructor.lastname }}
+        </h3>
+        <p class="text-strongBrown mb-4">
+          Numero de clases: {{ instructor.videos.length }}
+        </p>
+        <div class="flex items-center justify-between">
+          <span
+            class="bg-blue uppercase text-green-800 px-2 py-1 rounded-full text-sm"
+            >{{ instructor.title }}</span
+          >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-gray-400"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+} }
+<app-footer [ngClass]="isLoading ? 'fixed bottom-0 w-full' : ''"></app-footer>

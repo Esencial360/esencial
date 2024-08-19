@@ -1,0 +1,219 @@
+<app-header></app-header>
+
+@if (isLoading) {
+<app-loading></app-loading>
+} @else { @if(authService.isAuthenticated$ | async) {
+<app-user-dashboard
+  [blogs]="blogs"
+  [instructors]="instructors"
+  class="w-full montserrat-normal"
+></app-user-dashboard>
+} @else {
+<section
+  class="bg-white montserrat-normal container mx-auto h-auto px-4 p-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div
+    [@fadeIn]="elementState"
+    appInView
+    (inView)="onInView()"
+    class="bg-white lg:p-8 relative overflow-hidden flex flex-col h-5/6"
+  >
+    <div
+      [@fadeIn]="elementState"
+      appInView
+      (inView)="onInView()"
+      class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
+    >
+      <div
+        [@fadeIn]="elementState"
+        appInView
+        (inView)="onInView()"
+        class="md:w-1/2 mb-8 md:mb-0 lg:mr-[180px]"
+      >
+        <div class="flex items-center mb-4">
+          <div class="flex -space-x-2 mr-4">
+            <img
+              src="../../../assets/images/examplePerson.jpg"
+              class="w-8 h-8 rounded-full border-2 border-white"
+              alt="User avatar"
+            />
+            <img
+              src="../../../assets/images/examplePerson.jpg"
+              class="w-8 h-8 rounded-full border-2 border-white"
+              alt="User avatar"
+            />
+            <img
+              src="../../../assets/images/examplePerson.jpg"
+              class="w-8 h-8 rounded-full border-2 border-white"
+              alt="User avatar"
+            />
+            <img
+              src="../../../assets/images/examplePerson.jpg"
+              class="w-8 h-8 rounded-full border-2 border-white"
+              alt="User avatar"
+            />
+            <img
+              src="../../../assets/images/examplePerson.jpg"
+              class="w-8 h-8 rounded-full border-2 border-white"
+              alt="User avatar"
+            />
+          </div>
+          <div class="flex items-center">
+            <span class="text-lightBrown text-2xl">★★★★★</span>
+            <span class="ml-2 text-2xl font-bold">5.0</span>
+          </div>
+        </div>
+        <p class="text-sm mb-6 text-blue">from 200+ reviews</p>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-strongBrown">
+          Explore the Path<br />of Balance
+        </h1>
+        <p class="text-lg mb-6 text-strongBrown">
+          Let yourself be enveloped in a gentle harmony where yoga, well-being
+          and a caring diet come together.
+        </p>
+        <button
+          class="bg-green-900 text-white px-6 py-3 rounded-full flex items-center"
+        >
+          Start your journey
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 ml-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-5 md:mt-0 md:w-1/2">
+        <img
+          src="../../../assets/images/yoga.jpg"
+          alt="Yoga pose"
+          class="rounded-xl object-cover w-full h-64"
+        />
+      </div>
+    </div>
+    <app-scrolling-banner class="flex justify-center"></app-scrolling-banner>
+  </div>
+  <div
+    class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
+  ></div>
+</section>
+<section
+  class="container mx-auto px-4 py-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div
+    [@fadeIn]="elementState"
+    appInView
+    (inView)="onInView()"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    <div>
+      <h2
+        [@fadeIn]="elementState"
+        appInView
+        (inView)="onInView()"
+        class="text-green-600 font-semibold mb-2 text-blue"
+      >
+        OUR SERVICES
+      </h2>
+      <h1 class="text-2xl font-bold mb-4 text-strongBrown">
+        Our services for a healthy body
+      </h1>
+      <p class="text-gray-600 text-sm text-strongBrown">
+        Explore the ancient heritage of yoga through our classes, which are
+        accessible to all levels and accompanied by a balanced diet.
+      </p>
+    </div>
+    @for (service of services; track $index) {
+    <div
+      [ngClass]="{
+        'bg-gray-100': !service.special,
+        'bg-purple-100': service.special
+      }"
+      class="rounded-lg overflow-hidden relative group"
+    >
+      <img
+        [src]="service.image"
+        [alt]="service.title"
+        class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+      />
+      <div class="">
+        <h3
+          class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          {{ service.title }}
+        </h3>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+<section
+  class="container mx-auto px-4 py-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div>
+      <h2 class="text-green-600 font-semibold mb-2 text-blue">OUR BLOG</h2>
+      <h1
+        [@fadeIn]="elementState"
+        appInView
+        (inView)="onInView()"
+        class="text-2xl font-bold mb-4 text-strongBrown"
+      >
+        CHECK OUT OUR BLOG
+      </h1>
+      <p class="text-gray-600 text-sm text-strongBrown">
+        Weekly inspiration for mindful living. Discover yoga sequences, short
+        workouts, recipes, and mindfulness tips from the experts.
+      </p>
+    </div>
+    @for (blog of blogs | slice:0:5; track blog) {
+    <div class="rounded-lg overflow-hidden relative">
+      <img
+        [src]="'../../../assets/images/yoga.jpg'"
+        [alt]=""
+        class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+      />
+      <div class="">
+        <h3
+          class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          {{ blog.title }}
+        </h3>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+<app-news-and-blogs></app-news-and-blogs>
+<app-pricing-plan></app-pricing-plan>
+<app-banner
+  [title]="'A better path to a healthy life'"
+  [description]="
+    'Discover the transformative power of yoga: Strengthen your body & calm your mind.'
+  "
+  [addMargin]="true"
+></app-banner>
+<app-banner
+  [title]="'Quieres formar parte del equipo de intructores?'"
+  [description]="
+    'Sube tus propias clases y crea una comunidad.'
+  "
+  [addMargin]="true"
+  [contact]="true"
+  (onActionButton)="onInstructorContact()"
+></app-banner>
+} }
+
+<app-footer [ngClass]="isLoading ? 'fixed bottom-0 w-full' : ''"></app-footer>

@@ -1,0 +1,19 @@
+<div class="container mx-auto px-4 py-12 text-center">
+    <div class="flex flex-col justify-center mb-12 items-center" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="font-semibold mb-2 text-blue text-sm">EVENTS & RETREATS</h2>
+    <h1 class="text-4xl font-bold text-strongBrown mb-4">Find out more about our<br>events and retreats</h1>
+    <p class="text-strongBrown max-w-2xl mx-auto">
+      Explore the ancient heritage of yoga through our classes, which are accessible to all levels and accompanied by a balanced diet.
+    </p>
+</div>
+    <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
+      <img src="../../../assets/images/yoga.jpg" alt="Yoga at sunset" class="w-full h-96 object-cover rounded-lg shadow-lg">
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up" data-aos-duration="1000">
+      <div *ngFor="let feature of retreatFeatures">
+        <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ feature.title }}</h3>
+        <p class="text-gray-600">{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>

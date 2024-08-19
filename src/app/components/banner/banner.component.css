@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+    .transform.-skew-x-6 {
+      transform: skewX(-6deg);
+    }
+  }

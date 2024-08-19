@@ -1,0 +1,32 @@
+  <div class="overlay-container">
+    <div class="overlay-background"></div>
+    <div class="overlay-content">
+      <div class="bg-white rounded-lg p-6 shadow-md">
+        <div class="bg-white rounded-lg p-6">
+          <h2 class="text-lg font-semibold mb-4">{{ data.title }}</h2>
+          <p class="mb-6">{{ data.message }}</p>
+      
+          <div class="flex justify-end">
+            <button 
+              *ngIf="data.cancelText"
+              mat-button 
+              (click)="cancel()" 
+              class="mr-4 text-blue hover:text-strongBrown"
+            >
+              {{ data.cancelText }}
+            </button>
+      
+            <button 
+              mat-raised-button 
+              color="primary" 
+              (click)="confirm()"
+              class="bg-blue-500 text-blue hover:text-strongBrown"
+            >
+              {{ data.confirmText || 'Confirm' }}
+            </button>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>

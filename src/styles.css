@@ -1,1 +1,94 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body.menu-opened {
+  overflow: hidden; 
+}
+
+body {
+  background-color: #F1EEE6;
+  scroll-behavior: smooth;
+}
+
+
+.raleway-regular {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .raleway-bold {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .montserrat-bold {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .montserrat-normal {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .montserrat-light {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  .no-scrollbar {
+    transform: translateY(0);
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+  }
+
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+  }
+  
+  .fade-in.show {
+    opacity: 1;
+  }
+
+  .cdk-global-scrollblock {
+    position: static !important;
+    width: 100% !important;
+    overflow-y: hidden !important;
+  }
+  
+  .custom-dialog-container .mat-dialog-container {
+    overflow: auto;
+    max-height: 90vh;
+  }
+  
+  .mat-dialog-container {
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  
+/* html, body { height: 100%; } */
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

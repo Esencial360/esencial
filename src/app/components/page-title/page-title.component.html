@@ -1,0 +1,20 @@
+<div class="container mx-auto px-4 py-12 relative montserrat-normal text-strongBrown flex items-center">
+  @if (arrowBack) {
+    <span
+    (click)="goBack()"
+    class="top-[5%] md:top-auto material-symbols-outlined text-2xl text-black absolute text-[25px] md:text-[40px] cursor-pointer"
+  >
+    arrow_back
+  </span>
+  }
+    <div class="max-w-2xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 uppercase">
+        {{pageTitle}}
+      </h1>
+      <p class=" text-lg">
+       {{pageDescription}}
+      </p>
+    </div>
+    <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full"></div>
+  </div>
+

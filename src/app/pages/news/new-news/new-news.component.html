@@ -1,0 +1,85 @@
+<app-header></app-header>
+<div class="container mx-auto my-8">
+  <h1 class="text-2xl font-bold mb-4">Crea una nueva noticia</h1>
+  <form
+    [formGroup]="newsForm"
+    (ngSubmit)="onSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2" for="title">
+        Title
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        type="text"
+        placeholder="Enter blog title"
+        formControlName="title"
+      />
+      <div
+        *ngIf="
+          newsForm.get('title')?.invalid &&
+          (newsForm.get('title')?.dirty || newsForm.get('title')?.touched)
+        "
+      >
+        <div *ngIf="newsForm.get('title')?.errors" class="text-red-500">
+          Title is required.
+        </div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2" for="description">
+        Description
+      </label>
+      <textarea
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="description"
+        rows="3"
+        placeholder="Enter blog description"
+        formControlName="description"
+      ></textarea>
+      <div
+        *ngIf="
+          newsForm.get('description')?.invalid &&
+          (newsForm.get('description')?.dirty ||
+          newsForm.get('description')?.touched)
+        "
+      >
+        <div *ngIf="newsForm.get('description')?.errors" class="text-red-500">
+          Description is required.
+        </div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2" for="imageUrl">
+        Image
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="image"
+        type="file"
+        formControlName="image"
+      />
+      <div
+        *ngIf="
+          newsForm.get('image')?.invalid &&
+          (newsForm.get('image')?.dirty || newsForm.get('image')?.touched)
+        "
+      >
+        <div *ngIf="newsForm.get('image')?.errors" class="text-red-500">
+          Image is required.
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-between">
+      <button
+        type="submit"
+        class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+      >
+        CREAR BLOG
+      </button>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,31 @@
+
+  /* logo-scroll.component.css */
+.logo-container {
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.logo-scroll {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
+
+.logo-group {
+  display: flex;
+  min-width: 100%;
+  justify-content: space-around;
+}
+
+.logo {
+  height: 2rem;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+  

@@ -1,0 +1,6 @@
+{
+    "domain": "dev-syvyfpm6kjwu0kzp.us.auth0.com",
+    "clientId": "atpOOLQH8aatanwIQmv8ZkyD03NqsraF",
+    "audience": "https://test-assign-roles.com",
+    "serverUrl": "http://localhost:3000"
+}

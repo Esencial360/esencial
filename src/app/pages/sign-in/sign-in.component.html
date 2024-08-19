@@ -1,0 +1,72 @@
+<app-header></app-header>
+<app-page-title [pageTitle]="'INICIA SESION'"></app-page-title>
+<!-- <div class="flex flex-col items-center justify-start min-h-screen bg-gray-100">
+  <div class="w-11/12 max-w-md p-8 bg-white rounded-lg shadow-md">
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="showAlert" class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <p>Invalid username or password. Please try again.</p>
+      </div>
+      <div class="mb-4">
+        <input
+          type="email"
+          placeholder="Email Address"
+          formControlName="email"
+          class="w-full px-3 py-2 pl-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        @if (signInForm.get('email')?.invalid && (signInForm.get('email')?.dirty
+        || signInForm.get('email')?.touched)) {
+        <div class="text-red-500 text-xs mt-1">
+          @if(signInForm.get('email')?.errors?.['required']) {
+          <div>Email is required.</div>
+          } @if(signInForm.get('email')?.errors?.['email']) {
+          <div>Invalid email address.</div>
+          }
+        </div>
+        }
+      </div>
+      <div class="mb-4 relative">
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          class="w-full px-3 py-2 pl-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+        />
+        @if (signInForm.get('password')?.invalid &&
+        (signInForm.get('password')?.dirty ||
+        signInForm.get('password')?.touched)) {
+        <div class="text-red-500 text-xs mt-1">
+          @if (signInForm.get('password')?.errors?.['required']) {
+          <div>Password is required.</div>
+          }
+        </div>
+        }
+      </div>
+      <div class="flex flex-col justify-center items-center mb-4">
+        <a
+          (click)="navigateToForgot()"
+          class="text-sm text-gray-600 hover:text-gray-800 cursor-pointer underline"
+          >Forgot Password?</a
+        >
+        <p class="text-sm text-gray-600 hover:text-gray-800"
+          >New to Alo Moves?
+          <span class="cursor-pointer underline" (click)="navigateToSignup()">Sign Up</span></p
+        >
+      </div>
+      <button
+        type="submit"
+        class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+      >
+        SIGN IN
+      </button>
+    </form>
+    <div class="mt-6 text-center text-gray-600 mt-10">
+      <p class="mb-2">ONE-CLICK SIGN-IN</p>
+      <button
+        class="w-full py-2 px-4 bg-white border border-gray-300 rounded-md mb-2 flex items-center justify-center"
+      >
+        SIGN IN WITH GOOGLE
+      </button>
+    </div>
+  </div>
+</div> -->
+<app-footer></app-footer>
