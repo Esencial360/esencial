@@ -142,7 +142,7 @@ const routes: Routes = [
   {
     path: 'nuevo-video',
     component: UploadVideoComponent,
-    data: { animation: 'openClosePage' },
+    data: { animation: 'openClosePage', },
   },
   {
     path: 'collection/:id',

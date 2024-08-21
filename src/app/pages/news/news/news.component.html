@@ -23,7 +23,7 @@
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        @for(singleNews of news; track news) {  
+        @for(singleNews of news; track $index;) {  
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" (click)="onNavigateToNews(singleNews._id)">
           <img

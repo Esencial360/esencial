@@ -94,7 +94,7 @@
           formControlName="categoryId"
         >
           <option value="">Select a category</option>
-          @for (category of categories; track category) {
+          @for (category of categories; track $index;) {
           <option [value]="category._id" class="uppercase">
             {{ category.name }}
           </option>

@@ -25,13 +25,7 @@ interface PreviewInstructor {
 })
 export class UserProfileComponent implements OnInit {
   profileJson!: string;
-  filters: string[] = [
-    'EDITA TU PERFIL',
-    'CAMBIA TU CONTRASEÑA',
-    'MANEJA TU SUBSCRIPCION',
-    'MIS CLASES',
-    'INSTRUCTORES'
-  ];
+  filters: string[] = ['EDITA TU PERFIL'];
   activeFilter: string = this.filters[0];
   dropdownClosed: boolean = true;
   passwordForm!: FormGroup;
@@ -42,6 +36,7 @@ export class UserProfileComponent implements OnInit {
   instructor!: Instructor;
   videos!: any[];
   isLoading!: boolean;
+  roles!: string;
   filteredInstructors: PreviewInstructor[] | undefined;
   private ngUnsubscribe = new Subject<void>();
   constructor(
@@ -71,7 +66,34 @@ export class UserProfileComponent implements OnInit {
       this.authService.user$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
-        this.user = user;
+        if (user) {
+          this.isLoading = false;
+        }
+        this.authService.user$.subscribe((user) => {
+          if (user) {
+            const namespace = 'https://test-assign-roles.com';
+            this.roles = user[`${namespace}roles`][0] || [];
+            if (this.roles === 'Admin') {
+              this.filters = [
+                'EDITA TU PERFIL',
+                'CAMBIA TU CONTRASEÑA',
+                'INSTRUCTORES'
+              ];
+            } else if (this.roles === 'Instructor') {
+              this.filters = [
+                'EDITA TU PERFIL',
+                'CAMBIA TU CONTRASEÑA',
+                'MIS CLASES'
+              ];
+            } else {
+              this.filters = [
+                'EDITA TU PERFIL',
+                'CAMBIA TU CONTRASEÑA',
+                'MANEJA TU SUBSCRIPCION'
+              ];
+            }
+          }
+        });
         this.getAllInstructors();
       });
     }

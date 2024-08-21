@@ -23,20 +23,6 @@
       </div>
     </div>
     } 
-  <button
-      type="submit"
-      (click)="sendTestEmail()"
-      class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
-    >
-      MANDA UN CORREO
-    </button>
-    <button
-      type="submit"
-      (click)="onUploadVideo()"
-      class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
-    >
-      SUBE UNA CLASE
-    </button>
     <app-classes-catalogue
       [collectionList]="collectionList"
     ></app-classes-catalogue>
@@ -54,12 +40,9 @@
           </p>
           <button class="bg-blue text-white px-6 py-2  mt-4 rounded-full flex items-center relative" (click)="navigateToBlog()">
             TODOS LOS BLOGS
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 bg-lightBrown rounded-full absolute left-[111px] border-4 border-blue" viewBox="0 0 20 20" fill="white">
-              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg> -->
           </button>
         </div>
-        @for (blog of blogs | slice:0:5; track blog) {
+        @for (blog of blogs | slice:0:5; track $index;) {
         <div data-aos="fade-up" data-aos-duration="1000" class="rounded-lg overflow-hidden relative" (click)="onNavigateToSingleBlog(blog._id)">
           <img
             [src]="'../../../assets/images/yoga.jpg'"

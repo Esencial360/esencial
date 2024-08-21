@@ -33,7 +33,7 @@
         formControlName="collectionId"
         >
         <option value="" disabled selected>Select a Category</option>
-        @for(collection of collectionList; track collection) {
+        @for(collection of collectionList; track $index;) {
         <option [value]="collection.guid">
           {{ collection.name }}
         </option>
@@ -64,7 +64,7 @@
       formControlName="instructor"
       >
       <option value="" selected>No Instructor</option>
-      @for(singleInstructor of instructors; track singleInstructor) {
+      @for(singleInstructor of instructors; track $index;) {
       <option [value]="singleInstructor._id">
         {{ singleInstructor.firstname }} {{singleInstructor.lastname}}
       </option>

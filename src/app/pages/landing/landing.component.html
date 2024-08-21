@@ -178,7 +178,7 @@
         workouts, recipes, and mindfulness tips from the experts.
       </p>
     </div>
-    @for (blog of blogs | slice:0:5; track blog) {
+    @for (blog of blogs | slice:0:5; track $index;) {
     <div class="rounded-lg overflow-hidden relative">
       <img
         [src]="'../../../assets/images/yoga.jpg'"

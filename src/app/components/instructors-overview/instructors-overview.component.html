@@ -4,7 +4,7 @@
       <a class="text-gray-600 hover:underline" (click)="onSeeAll()">See All &gt;</a>
     </div>
     <div class="flex space-x-4 overflow-x-auto no-scrollbar">
-        @for (instructor of instructors; track $index) {
+        @for (instructor of instructors; track $index;) {
             <div class="flex-none" data-aos="fade-up" data-aos-duration="1000">
                 <div class="w-48 h-48 rounded-full overflow-hidden mb-2">
                   <img [src]="instructor.imageUrl" [alt]="instructor.name" class="w-full h-full object-cover">
