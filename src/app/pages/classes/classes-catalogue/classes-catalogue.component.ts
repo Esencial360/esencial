@@ -45,6 +45,6 @@ export class ClassesCatalogueComponent implements OnInit {
   }
 
   goBack() {
-    // this.location.back();
+    this.location.back();
   }
 }

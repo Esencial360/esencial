@@ -24,7 +24,7 @@ export class SingleNewsComponent implements OnInit {
   }
 
   goBack() {
-    // this.location.back()
+    this.location.back()
   }
 
   getBlogById() {

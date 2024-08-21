@@ -23,7 +23,7 @@ export class SingleBlogComponent implements OnInit {
   }
 
   goBack() {
-    // this.location.back()
+    this.location.back()
   }
 
   getBlogById() {

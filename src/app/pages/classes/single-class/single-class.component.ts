@@ -8,6 +8,8 @@ import {
   DialogData,
 } from '../../../shared/dialog/dialog.component';
 import AOS from 'aos';
+import { AuthService } from '@auth0/auth0-angular';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-single-class',
@@ -21,13 +23,16 @@ export class SingleClassComponent implements OnInit {
   videos!: any;
   link!: SafeResourceUrl;
   isLoading!: boolean;
+  roles!: string;
+  private ngUnsubscribe = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private bunnystreamService: BunnystreamService,
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -38,6 +43,21 @@ export class SingleClassComponent implements OnInit {
       this.videoId = params.get('id');
     });
     this.getVideo();
+
+    this.authService.user$
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((user) => {
+          if (user) {
+            console.log('User:', user);
+            this.isLoading = false;
+          }
+          this.authService.user$.subscribe((user) => {
+            if (user) {
+              const namespace = 'https://test-assign-roles.com';
+              this.roles = user[`${namespace}roles`][0] || [];
+            }
+          });
+        });
   }
 
   getVideo() {

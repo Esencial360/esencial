@@ -1,13 +1,11 @@
 <app-header></app-header>
 @if (isLoading) {
-  <app-loading></app-loading>
+<app-loading></app-loading>
 } @else {
-  <app-page-title
-[pageTitle]="videos.title"
-[pageDescription]="
-  'Disfruta de tu clase con Jane Doe.'
-"
-[arrowBack]="true"
+<app-page-title
+  [pageTitle]="videos.title"
+  [pageDescription]="'Disfruta de tu clase con Jane Doe.'"
+  [arrowBack]="true"
 ></app-page-title>
 <!-- <button
   class="py-2 px-4 w-full mb-8 border border-black text-black rounded-md hover:bg-black hover:text-white"
@@ -15,34 +13,55 @@
 >
   Delete Video
 </button> -->
-<app-button (click)="deleteVideo()" [text]="'BORRAR EL VIDEO'" class="flex justify-center py-2 px-4 w-full mb-8 text-black rounded-md"></app-button>
-<div #dialogAnchor class="cdk-visually-hidden" cdkTrapFocus class="flex flex-col md:flex-row bg-white p-6 mx-10 rounded-lg montserrat-normal">
+@if (roles === 'Admin') {
+<app-button
+  (click)="deleteVideo()"
+  [text]="'BORRAR EL VIDEO'"
+  class="flex justify-center py-2 px-4 w-full mb-8 text-black rounded-md"
+></app-button>
+}
+<div
+  #dialogAnchor
+  class="cdk-visually-hidden"
+  cdkTrapFocus
+  class="flex flex-col md:flex-row bg-white p-6 mx-10 rounded-lg montserrat-normal"
+>
   <div class="md:w-1/2 pr-6" data-aos="fade-up" data-aos-duration="1000">
     <h2 class="text-2xl font-bold mb-4">DESCRIPTION</h2>
     <p class="mb-4">
-      Awakening the Heart is a 14-day meditation journey that will support a deeper
-      connection to yourself, others, and the world around you. These heart-centered
-      meditations are designed for those interested in exploring the beauty that meditation
-      can bring into daily life, as well as those seeking balance, warmth, and perspective in
-      their practice.
+      Awakening the Heart is a 14-day meditation journey that will support a
+      deeper connection to yourself, others, and the world around you. These
+      heart-centered meditations are designed for those interested in exploring
+      the beauty that meditation can bring into daily life, as well as those
+      seeking balance, warmth, and perspective in their practice.
     </p>
     <p class="mb-4">
       These meditations cover topics such as self-acceptance, inspiration, and
-      kindness — qualities we already have that require gentle guidance to uncover more
-      deeply. Follow along for the full 14-day journey, or take whatever class resonates with
-      you for the day. As you reconnect with your heart, you'll walk away with a renewed
-      sense of appreciation for yourself that expands outward to everyone and everything
-      around you.
+      kindness — qualities we already have that require gentle guidance to
+      uncover more deeply. Follow along for the full 14-day journey, or take
+      whatever class resonates with you for the day. As you reconnect with your
+      heart, you'll walk away with a renewed sense of appreciation for yourself
+      that expands outward to everyone and everything around you.
     </p>
     <p class="font-bold mb-2">In this meditation series, you will:</p>
     <ul class="list-disc list-inside mb-4">
-      <li>Access 14 heart-centered meditations that inspire kindness, love, and acceptance</li>
+      <li>
+        Access 14 heart-centered meditations that inspire kindness, love, and
+        acceptance
+      </li>
       <li>Reconnect to the beauty of your personal meditation practice</li>
-      <li>Open your mind beyond your personal experience and discover a more thoughtful</li>
+      <li>
+        Open your mind beyond your personal experience and discover a more
+        thoughtful
+      </li>
     </ul>
     <button class="bg-blue-500 text-white px-4 py-2 rounded">READ MORE</button>
   </div>
-  <div class="md:w-1/2 mt-6 md:mt-0" data-aos="fade-up" data-aos-duration="1000">
+  <div
+    class="md:w-1/2 mt-6 md:mt-0"
+    data-aos="fade-up"
+    data-aos-duration="1000"
+  >
     <div style="position: relative; padding-top: 56.25%">
       <iframe
         [src]="link"
@@ -54,16 +73,15 @@
     </div>
   </div>
 </div>
+<app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
+@if (roles === 'Admin' || roles === 'Instructor') {
+<app-class-statistics
+  [videoGuid]="videoId"
+  class="flex justify-center"
+></app-class-statistics>
+}
 <app-page-title
-[pageDescription]="
-  'Estadisticas del video'
-"
-></app-page-title>
-<app-class-statistics [videoGuid]="videoId" class="flex justify-center"></app-class-statistics>
-<app-page-title
-[pageDescription]="
-  'Descubre nuestra gran variedad de clases'
-"
+  [pageDescription]="'Descubre nuestra gran variedad de clases'"
 ></app-page-title>
 }
 <app-footer></app-footer>

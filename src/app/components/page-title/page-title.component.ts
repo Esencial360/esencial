@@ -21,6 +21,6 @@ export class PageTitleComponent implements OnInit {
   ngOnInit(): void {}
 
   goBack() {
-    // this.location.back();
+    this.location.back();
   }
 }

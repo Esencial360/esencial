@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID, } from '@angular/core';
+import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 // import { AuthService } from '../../shared/services/auth.service';
 import { takeUntil } from 'rxjs/operators';
@@ -9,9 +9,8 @@ import { Router } from '@angular/router';
 import { EmailService } from '../../shared/services/email.service';
 import { Blog } from '../../shared/Models/Blog';
 import { Instructor } from '../../shared/Models/Instructor';
-import AOS from "aos";
+import AOS from 'aos';
 import { isPlatformBrowser } from '@angular/common';
-
 
 @Component({
   selector: 'app-user-dashboard',
@@ -19,19 +18,19 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './user-dashboard.component.css',
 })
 export class UserDashboardComponent implements OnInit {
+  @Input()
+  blogs!: Blog[];
 
   @Input()
-  blogs!: Blog[]
-
-  @Input()
-  instructors!: any[]
+  instructors!: any[];
 
   private ngUnsubscribe = new Subject<void>();
   videos!: any[];
   links: SafeResourceUrl[] = [];
-  collectionList: any[] = []
+  collectionList: any[] = [];
   isLoading!: boolean;
   userRoles: string[] = [];
+  roles: string[] = [];
 
   constructor(
     public authService: AuthService,
@@ -43,24 +42,25 @@ export class UserDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    AOS.init({once: true})
+    AOS.init({ once: true });
     this.isLoading = true;
     if (isPlatformBrowser(this.platformId)) {
-      this.authService.user$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((user) => {
-        if (user) {
-          console.log('User:', user);
-          // Access the user's role(s) from the user object
-          this.isLoading = false;
-        }
-        this.authService.user$.subscribe(
-          (profile) => {
-            const namespace = 'https://test-assign-roles.com';
-            this.userRoles = profile?.[`${namespace}roles`] || [];
-            console.log(this.userRoles);
-            
+      this.authService.user$
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((user) => {
+          if (user) {
+            console.log('User:', user);
+            this.isLoading = false;
           }
-        );
-      });
+          this.authService.user$.subscribe((user) => {
+            if (user) {
+              const namespace = 'https://test-assign-roles.com';
+              this.roles = user[`${namespace}roles`][0] || [];
+              console.log(this.roles);
+              
+            }
+          });
+        });
     }
     this.getVideos();
     this.getCollectionList();
@@ -72,18 +72,15 @@ export class UserDashboardComponent implements OnInit {
   }
 
   onUploadVideo() {
-    this.router.navigateByUrl(
-      '/nuevo-video'
-    )
+    this.router.navigateByUrl('/nuevo-video');
   }
-
 
   sendTestEmail() {
     const emailData = {
       to: 'pablosalcido1@gmail.com',
       subject: 'Test Email',
       text: 'This is a test email.',
-      html: '<p>This is a <strong>test</strong> email.</p>'
+      html: '<p>This is a <strong>test</strong> email.</p>',
     };
     this.emailService.sendEmail(emailData).subscribe({
       next: (response) => {
@@ -93,11 +90,10 @@ export class UserDashboardComponent implements OnInit {
       error: (error) => {
         console.error('Error sending email:', error);
         // Handle error (e.g., show an error message)
-      }
+      },
     });
   }
 
-  
   navigateToBlog() {
     this.router
       .navigateByUrl('/blog')
@@ -151,8 +147,8 @@ export class UserDashboardComponent implements OnInit {
   getCollectionList() {
     this.bunnystreamService.getCollectionList().subscribe(
       (response: any) => {
-       this.collectionList = response.items;
-       console.log(this.collectionList)
+        this.collectionList = response.items;
+        console.log(this.collectionList);
       },
       (error) => {
         console.error('Error retrieving collection:', error);

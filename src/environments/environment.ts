@@ -1,14 +1,13 @@
 export const environment = {
-    production: false,
+    production: true,
     auth0: {
       domain: 'dev-syvyfpm6kjwu0kzp.us.auth0.com',
       clientId: 'atpOOLQH8aatanwIQmv8ZkyD03NqsraF',
-      redirectUri: 'http://localhost:4200',
+      redirectUri: 'https://esencial360.com/',
       audience: 'https://test-assign-roles.com'
     },
     dev: {
       serverUrl: 'http://localhost:3000'
     }
   };
-
 
