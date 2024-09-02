@@ -68,6 +68,7 @@ export class UserProfileComponent implements OnInit {
       .subscribe((user) => {
         if (user) {
           this.isLoading = false;
+          this.user = user
         }
         this.authService.user$.subscribe((user) => {
           if (user) {
@@ -109,6 +110,8 @@ export class UserProfileComponent implements OnInit {
       (instructors) => {
         this.instructors = instructors;
         this.filteredInstructors = this.instructors;
+        console.log(this.filteredInstructors);
+        
         const matchingObject = this.filteredInstructors?.find(
           (obj) => obj.email === this.user.email
         );

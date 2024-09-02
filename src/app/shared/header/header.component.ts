@@ -62,6 +62,10 @@ export class HeaderComponent {
     this.route.navigate(['/contacto']);
   }
 
+  onAbout() {
+    this.route.navigate(['/nosotros']);
+  }
+
   onUserSettings () {
     this.route.navigate(['/ajustes'])
   }

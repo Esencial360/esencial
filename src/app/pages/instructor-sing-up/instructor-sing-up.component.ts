@@ -17,11 +17,13 @@ export class InstructorSingUpComponent implements OnInit {
   instructorForm: FormGroup;
   resumeFile: File | null = null;
   resumeError: string = '';
+  videoError: string = '';
   formSubmitted!: boolean;
   submitted = false;
   success = false;
   error = '';
   formView = false;
+  videoFile: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -57,6 +59,34 @@ export class InstructorSingUpComponent implements OnInit {
     }
   }
 
+  onVideoSelected(event: any) {
+    const file: File = event.target.files[0];
+    console.log(file);
+    
+    if (file) {
+      if (this.isVideoFile(file)) {
+        this.videoFile = file;
+        this.videoError = '';
+      } else {
+        this.videoFile = null;
+        this.videoError = 'Invalid file type. Please upload a PDF file.';
+      }
+    }
+  }
+
+  isVideoFile(file: File): boolean {
+    console.log(file);
+    
+    const videoTypes = [
+      'video/mp4',
+      'video/mpeg',
+      'video/ogg',
+      'video/webm',
+      'video/quicktime'
+    ];
+    return videoTypes.includes(file.type);
+  }
+
   onSubmit() {
     if (this.instructorForm.valid && this.resumeFile) {
       const formData = new FormData();
@@ -69,6 +99,8 @@ export class InstructorSingUpComponent implements OnInit {
 
       // Append the resume file
       formData.append('resume', this.resumeFile, this.resumeFile.name);
+
+      formData.append('video', this.videoFile, this.videoFile.name);
 
       // Send the new instructor data
       this.emailService.sendNewInstructor(formData).subscribe({
@@ -117,7 +149,6 @@ export class InstructorSingUpComponent implements OnInit {
         error: (error) => {
           console.error('Error sending form', error);
           this.error = error.message;
-          this.showErrorMessage()
         },
       });
     } else {
@@ -135,6 +166,7 @@ export class InstructorSingUpComponent implements OnInit {
         onConfirm: () => {
           dialogRef.afterClosed().subscribe((result) => {
             this.router.navigateByUrl('/');
+            document.body.style.position = 'relative';
           });
         },
       } as DialogData,

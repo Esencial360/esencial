@@ -123,6 +123,11 @@ const routes: Routes = [
     data: { animation: 'openClosePage' },
   },
   {
+    path: 'nosotros',
+    component: AboutComponent,
+    data: { animation: 'openClosePage' },
+  },
+  {
     path: 'nueva-noticia',
     component: NewNewsComponent,
     canActivate: [AuthGuard],
@@ -164,7 +169,8 @@ const routes: Routes = [
     component: InstructorAdminViewComponent,
     data: { animation: 'openClosePage' },
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }, // Catch-all for invalid routes (404)
+  { path: '**', redirectTo: '', pathMatch: 'full' }, 
+  // Catch-all for invalid routes (404)
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

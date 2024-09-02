@@ -26,6 +26,9 @@
       <li class="mr-10">
         <a (click)="onMenu()" class="hover:text-gray-400">Clases</a>
       </li>
+      <li class="mr-10">
+        <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
+      </li>
       @if(authService.isAuthenticated$ | async) {
       <li class="mr-10" (click)="signOut()">LOGOUT</li>
       } @else {
