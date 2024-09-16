@@ -35,6 +35,7 @@ export class UserProfileComponent implements OnInit {
   userId: any;
   instructor!: Instructor;
   videos!: any[];
+  pendingVideos: string[] = [];
   isLoading!: boolean;
   roles!: string;
   filteredInstructors: PreviewInstructor[] | undefined;
@@ -78,7 +79,8 @@ export class UserProfileComponent implements OnInit {
               this.filters = [
                 'EDITA TU PERFIL',
                 'CAMBIA TU CONTRASEÑA',
-                'INSTRUCTORES'
+                'INSTRUCTORES',
+                'VIDEOS PENDIENTES'
               ];
             } else if (this.roles === 'Instructor') {
               this.filters = [
@@ -111,25 +113,38 @@ export class UserProfileComponent implements OnInit {
         this.instructors = instructors;
         this.filteredInstructors = this.instructors;
         console.log(this.filteredInstructors);
+        // this.pendingVideos = this.filteredInstructors?.filter((video) => video.)
+        if (this.roles === 'Admin') {
+          instructors.forEach(instructor => {
+            (instructor.videos ?? []).filter(video => video.status === 'Pending').forEach(video => {
+              console.log(video.videoId);
+              this.pendingVideos.push(video.videoId)
+            });
+          });
+          this.getVideo(this.pendingVideos) 
+        }
         
-        const matchingObject = this.filteredInstructors?.find(
-          (obj) => obj.email === this.user.email
-        );
-        if (matchingObject) {
-          this.userId = matchingObject?._id.toString();
-          this.instructorService.getInstructor(this.userId).subscribe(
-            (response) => {
-              console.log('Instructor get successfully', response);
-              this.instructor = response;
-              console.log(this.instructor.videos);
-              this.getVideo(this.instructor.videos);
-            },
-            (error) => {
-              console.error('Instructor get error', error);
-            }
+        // this.getVideo(this.pendingVideos)
+        if (this.roles === 'Instructor') {
+          const matchingObject = this.filteredInstructors?.find(
+            (obj) => obj.email === this.user.email
           );
-        } else {
-          this.isLoading = false;
+          if (matchingObject) {
+            this.userId = matchingObject?._id.toString();
+            this.instructorService.getInstructor(this.userId).subscribe(
+              (response) => {
+                console.log('Instructor get successfully', response);
+                this.instructor = response;
+                console.log(this.instructor.videos);
+                this.getVideo(this.instructor.videos);
+              },
+              (error) => {
+                console.error('Instructor get error', error);
+              }
+            );
+          } else {
+            this.isLoading = false;
+          }
         }
       },
       (error) => {

@@ -110,10 +110,16 @@ export class UploadVideoComponent implements OnInit {
     const selectedInstructor = this.instructors.find(instructor => instructor._id === this.newVideoForm.value.instructor);
     if (selectedInstructor) {
       const instructorVideos = selectedInstructor.videos ? selectedInstructor.videos : [];
+
+      const newVideo = {
+        videoId: this.videoId,
+        status: 'Pending' // Mark as pending initially
+      };
       const updatedInstructor: Instructor = {
         ...selectedInstructor,
-        videos: [...instructorVideos, this.videoId] 
-      };
+        videos: [...instructorVideos, newVideo] 
+      }; 
+      
       const videos = this.videoId ? [this.videoId] : [];
       const instructorData: Instructor = { ...updatedInstructor };
   

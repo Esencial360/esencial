@@ -4,5 +4,8 @@ export interface Instructor {
     lastname: string,
     title: string, 
     description: string,
-    videos?: string[]
+    videos?: {
+        videoId: string;
+        status: string;
+      }[];  
 }
