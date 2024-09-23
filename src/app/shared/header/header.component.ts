@@ -19,6 +19,9 @@ export class HeaderComponent {
   @Input()
   userConnected!: boolean;
 
+  @Input()
+  newLanding!: boolean 
+
   isOpen: boolean = false;
 
   constructor(

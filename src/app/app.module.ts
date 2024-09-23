@@ -69,6 +69,7 @@ import { CheckMarkComponent } from './shared/check-mark/check-mark.component';
 import { InstructorAdminViewComponent } from './pages/instructors/instructor-admin-view/instructor-admin-view.component';
 import { isPlatformBrowser } from '@angular/common';
 import { auth0ConfigFactory } from './shared/services/auth-config-factory.service';
+import { ParallaxComponent } from './shared/parallax/parallax.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { auth0ConfigFactory } from './shared/services/auth-config-factory.servic
     InstructorsOverviewComponent,
     ScrollingBannerComponent,
     InstructorAdminViewComponent,
+    ParallaxComponent,
   ],
   imports: [
     BrowserModule,

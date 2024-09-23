@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [newLanding]="true"></app-header>
 
 @if (isLoading) {
 <app-loading></app-loading>
@@ -9,6 +9,17 @@
   class="w-full montserrat-normal"
 ></app-user-dashboard>
 } @else {
+  <section class="h-full relative">
+    <!-- <img src="assets/images/yogaBg.jpg" class="object-cover h-screen w-full" alt=""> -->
+     <app-parallax [imagePath]="'assets/images/yogaBg.jpg'"></app-parallax>
+    <div class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center">
+      <h1 class="font-bold text-8xl">Inspire Your Life</h1>
+      <p class="text-2xl">Yoga. Healing. Transformation.</p>
+    </div>
+    <span class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4" >
+      keyboard_arrow_down
+      </span>
+  </section>
 <section
   class="bg-white montserrat-normal container mx-auto h-auto px-4 p-8"
   data-aos="fade-up"
@@ -97,13 +108,18 @@
   data-aos="fade-up"
   data-aos-duration="1000"
 >
+  <div class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8">
+    <h4 class="text-blue">NOSOTROS</h4>
+    <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">Descubre nuestros servicios</h3>
+    <p class="text-strongBrown">Discover the unique benefits of Esencial360 designed to support your yoga journey.</p>
+  </div>
   <div
     [@fadeIn]="elementState"
     appInView
     (inView)="onInView()"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
   >
-    <div>
+    <!-- <div>
       <h2
         [@fadeIn]="elementState"
         appInView
@@ -119,7 +135,7 @@
         Explore the ancient heritage of yoga through our classes, which are
         accessible to all levels and accompanied by a balanced diet.
       </p>
-    </div>
+    </div> -->
     @for (service of services; track $index) {
     <div
       [ngClass]="{
@@ -149,8 +165,14 @@
   data-aos="fade-up"
   data-aos-duration="1000"
 >
+<div class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8">
+  <h4 class="text-blue">OUR BLOG</h4>
+  <h3 class="text-4xl font-bold my-2 text-strongBrown">CHECK OUT OUR BLOG</h3>
+  <p class="text-strongBrown">Weekly inspiration for mindful living. Discover yoga sequences, short
+    workouts, recipes, and mindfulness tips from the experts.</p>
+</div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div>
+    <!-- <div>
       <h2 class="text-green-600 font-semibold mb-2 text-blue">OUR BLOG</h2>
       <h1
         [@fadeIn]="elementState"
@@ -164,7 +186,7 @@
         Weekly inspiration for mindful living. Discover yoga sequences, short
         workouts, recipes, and mindfulness tips from the experts.
       </p>
-    </div>
+    </div> -->
     @for (blog of blogs | slice:0:5; track $index;) {
     <div class="rounded-lg overflow-hidden relative">
       <img

@@ -1,4 +1,5 @@
-<header
+@if (!newLanding) {
+  <header
   class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[9999]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
@@ -202,3 +203,98 @@
     }
   </div>
 </section>
+} @else {
+  <header
+  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full  top-0 z-[9999]"
+>
+  <div class="flex justify-center items-center">
+    <img
+      src="../../../assets/images/logo.png"
+      alt="Logo"
+      class="max-h-20 cursor-pointer rounded-lg"
+      (click)="onHome()"
+    />
+    <h3 class="text-white text-2xl">esencial<span class="text-blue">360</span></h3>
+  </div>
+  <nav>
+    <ul
+      class="flex anton items-center uppercase pointer text-lg cursor-pointer"
+    >
+      <li class="mr-10">
+        <a (click)="onInstructors()" class="hover:text-gray-400"
+          >INSTRUCTORES</a
+        >
+      </li>
+      <li class="mr-10">
+        <a (click)="onMenu()" class="hover:text-gray-400">Clases</a>
+      </li>
+      <li class="mr-10">
+        <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
+      </li>
+      @if(authService.isAuthenticated$ | async) {
+      <li class="mr-10" (click)="signOut()">LOGOUT</li>
+      } @else {
+      <li class="mr-10" (click)="authService.loginWithRedirect()">
+        Inicia Sesion
+      </li>
+      } @if(authService.isAuthenticated$ | async) {
+      <button
+        (click)="onUserSettings()"
+        class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
+      >
+        <span class="text-white text-sm font-medium uppercase">Mi perfil</span>
+        <div
+          class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
+        >
+          <svg
+            class="w-3 h-3 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            ></path>
+          </svg>
+        </div>
+      </button>
+      } @else {
+      <button
+        (click)="authService.loginWithRedirect({ 
+            authorizationParams: {
+                screen_hint: 'signup',
+              }, appState: { target: '/subscribirse' }})"
+        class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
+      >
+        <span class="text-white text-sm font-medium uppercase"
+          >subscribirse</span
+        >
+        <div
+          class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
+        >
+          <svg
+            class="w-3 h-3 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            ></path>
+          </svg>
+        </div>
+      </button>
+      }
+    </ul>
+  </nav>
+</header>
+}
+
