@@ -1,9 +1,11 @@
 @if (isOpen) {
 <div
-  class="z-50 fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
+  class="z-50 fixed inset-0 bg-gray-600 bg-opacity-50 montserrat-normal overflow-y-auto h-full w-full flex items-center justify-center"
 >
   <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-  <div class="relative bg-white rounded-lg shadow-xl md:h-[620px] w-11/12 md:w-6/12 m-4">
+  <div
+    class="relative bg-white rounded-lg shadow-xl md:h-[620px] w-11/12 md:w-6/12 m-4"
+  >
     <div class="absolute top-0 right-0 pt-4 pr-4">
       <button
         (click)="closeDialog()"
@@ -24,7 +26,7 @@
         </svg>
       </button>
     </div>
-    @if (!onSubmittingForm) {
+    @if (!onSubmittingForm && !formSuccess) {
     <div class="p-6">
       <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
         Dejanos saber de ti
@@ -36,8 +38,8 @@
         class="rounded px-8 pt-6 pb-8 mb-4 z-20"
       >
         <div class="flex justify-between">
-          <div class="mb-4">
-            <label for="name" class="block mb-2 font-bold text-gray-700"
+          <div class="mb-4 mr-2">
+            <label for="name" class="block w-full mb-2 font-bold text-gray-700"
               >Nombre Completo</label
             >
             <input
@@ -57,7 +59,7 @@
             </div>
             }
           </div>
-          <div class="mb-4">
+          <div class="mb-4 ml-2">
             <label for="experience" class="block mb-2 font-bold text-gray-700"
               >Years of Experience</label
             >
@@ -77,7 +79,7 @@
               class="text-red-500 mt-1"
             >
               <div *ngIf="instructorForm.get('years')?.errors?.['required']">
-                Experience is required.
+                Experience es requerido.
               </div>
               <div *ngIf="instructorForm.get('years')?.errors?.['min']">
                 Experience must be at least 0 years.
@@ -136,14 +138,14 @@
         <div class="flex justify-between">
           <div class="mb- mr-2">
             <label for="resume" class="block mb-2 font-bold text-gray-700"
-              >Resume (PDF)</label
+              >CV (PDF)</label
             >
             <input
               type="file"
               id="resume"
               (change)="onFileSelected($event)"
               accept=".pdf"
-              class=" w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+              class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
             />
             @if (resumeError) {
             <div class="text-red-500 mt-1">
@@ -153,14 +155,14 @@
           </div>
           <div class="mb-4 ml-2">
             <label for="resume" class="block mb-2 font-bold text-gray-700"
-              >Video</label
+              >Video (CV)</label
             >
             <input
               type="file"
               id="video"
               accept="video/*"
               (change)="onVideoSelected($event)"
-              class=" w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+              class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
             />
             @if (videoError) {
             <div class="text-red-500 mt-1">
@@ -180,14 +182,30 @@
         </button>
       </form>
     </div>
-    } @else if (onSubmittingForm && !error) {
+    } @else if (onSubmittingForm && !error && !formSuccess) {
+    <div class="flex flex-col justify-center items-center h-full">
       <app-loading></app-loading>
+    </div>
     } @else if (error) {
-      <div  class="flex justify-center items-center">
-        <p>
-          Ha ocucrrido un error. Intentalo una vez mas
-        </p>
-      </div>
+    <div class="flex justify-center items-center">
+      <p>Ha ocucrrido un error. Intentalo una vez mas</p>
+    </div>
+    } @else if (formSuccess) {
+    <div class="flex flex-col justify-center items-center h-full">
+    <app-check-mark></app-check-mark>
+    <div class="md:mx-10 mx-2">
+      <h4>
+        Muchas gracias por tu aplicacion! El formulario se ha mandado exitosamente
+      </h4>
+      <p>
+        Evaluaremos tus credenciales cuidadosamente y tendremos una respuesta lo
+        mas pronto posible.
+      </p>
+    </div>
+    <div (click)="onProcessDone()">
+      <app-button [text]="'HOME'"></app-button>
+    </div>
+  </div>
     }
   </div>
 </div>

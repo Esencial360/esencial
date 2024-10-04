@@ -20,7 +20,7 @@ export class CheckMarkComponent {
 
   private animationItem: AnimationItem | undefined;
   options: AnimationOptions = {
-    path: '/assets/lottie/loading.json',
+    path: '/assets/lottie/check.json',
     loop: true,
     autoplay: true
   };

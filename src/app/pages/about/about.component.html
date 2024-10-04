@@ -1,31 +1,59 @@
-<app-header></app-header>
-<app-page-title [pageTitle]="'SOBRE NOSOTROS'" [arrowBack]="true"></app-page-title>
-<div class="bg-gray-100 py-16">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div>
-        <img src="about-us.jpg" alt="About Us" class="rounded-lg shadow-md" />
-      </div>
-      <div>
-        <h1 class="text-4xl font-bold mb-4">Misión</h1>
-        <p class="text-lg mb-8">
-          Nuestra misión es acompañarte en tu camino hacia un estilo de vida consciente y equilibrado. A través de prácticas de yoga, meditaciones y herramientas de desarrollo personal, buscamos inspirar y motivar a nuestra comunidad para que vivan plenamente.
-        </p>
-        <h2 class="text-2xl font-bold mb-2">Visión </h2>
-        <p class="text-gray-600 mb-8">
-          Aspiramos a ser la plataforma líder de prácticas de yoga y bienestar integral en habla hispana, reconocida en México y, a largo plazo, en toda Latinoamérica. Queremos estar en la mente de quienes buscan una metodología integral que les permita conectar con su bienestar diariament
-        </p>
-        <h2 class="text-2xl font-bold mb-2">Valores</h2>
-        <p class="text-gray-600 mb-8">
-          En Esencial360 creemos en la transparencia, la honestidad, el crecimiento integral, la comunidad, la inclusión, la integridad, y la calidad profesional en cada acción.
-        </p>
-        <a
-          href="#"
-          class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >Contact Us</a
-        >
-      </div>
+<app-header [newLanding]="true"></app-header>
+
+<section class="h-full relative">
+  <app-parallax [imagePath]="'assets/images/yoga1.jpg'"></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
+    <h1 class="font-bold text-5xl">Sobre Esencial360</h1>
+    <p class="text-xl">Mision, vision, valores, etc.</p>
+  </div>
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
+<app-news-and-blogs [aboutView]="true"></app-news-and-blogs>
+<section
+class="container mx-auto px-4 py-8"
+data-aos="fade-up"
+data-aos-duration="1000"
+>
+<div
+  class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
+>
+  <h4 class="text-blue">NOSOTROS</h4>
+  <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+    Que es importante para nosotros
+  </h3>
+  <p class="text-strongBrown">
+    Descrubre como buscamos implementer nuestar mision y vision siguiendo nuestros valores
+  </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  @for (service of services; track $index) {
+  <div
+    [ngClass]="{
+      'bg-gray-100': !service.special,
+      'bg-purple-100': service.special
+    }"
+    class="rounded-lg overflow-hidden relative group"
+  >
+    <img
+      [src]="service.image"
+      [alt]="service.title"
+      class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+    />
+    <div class="">
+      <h3
+        class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+      >
+        {{ service.title }}
+      </h3>
     </div>
   </div>
+  }
 </div>
+</section>
 <app-footer></app-footer>

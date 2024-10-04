@@ -21,11 +21,26 @@ export class DialogFormComponent implements OnInit {
   formView = false;
   videoFile: any;
   onSubmittingForm!: boolean;
+  formSuccess!: boolean;
   @Input()
   isOpen!: boolean;
 
+  @Input()
+  newVideo!: boolean;
+
+  @Input()
+  newBlog!: boolean;
+
+  @Input()
+  contactForm!: boolean;
+  
+
   @Output()
   onCloseDialog = new EventEmitter<boolean>();
+
+  @Output()
+  onSubmitForm = new EventEmitter<boolean>();
+
 
   constructor(
     private fb: FormBuilder,
@@ -141,12 +156,12 @@ export class DialogFormComponent implements OnInit {
             },
           });
 
-          // Reset the form and file input after successful submission
           this.instructorForm.reset();
           this.resumeFile = null;
           this.submitted = false;
           this.formView = false;
           this.onSubmittingForm = false;
+          this.formSuccess = true;
         },
         error: (error) => {
           console.error('Error sending form', error);
@@ -154,14 +169,20 @@ export class DialogFormComponent implements OnInit {
         },
       });
     } else {
-      // Form is invalid or no resume file selected
       this.error = 'Please fill all required fields and select a resume file.';
     }
+  }
+
+  onProcessDone() {
+    this.formSuccess = false;
+    this.closeDialog()
+    this.router.navigate(['/'])
   }
 
   closeDialog() {
     document.body.classList.remove('overflow-hidden');
     this.isOpen = false;
     this.onCloseDialog.emit(true);
+
   }
 }

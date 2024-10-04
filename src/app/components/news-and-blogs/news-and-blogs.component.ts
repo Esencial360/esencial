@@ -14,7 +14,12 @@ export class NewsAndBlogsComponent implements OnInit {
 
   @Input()
   instructorView!: boolean;
+
+  @Input()
+  aboutView!: boolean;
+
   retreatFeatures: RetreatFeature[] = []
+
 
   ngOnInit() {
     if (this.instructorView) {
@@ -29,6 +34,21 @@ export class NewsAndBlogsComponent implements OnInit {
         },
         {
           title: 'Si todo ok, te contactaremos',
+          description: 'Connect with the calming power of nature. Our retreats are set in beautiful, peaceful locations that offer a perfect backdrop for mindfulness and growth.'
+        }
+      ];
+    } else if (this.aboutView) {
+      this.retreatFeatures = [
+        {
+          title: 'Nuestra Mision',
+          description: 'Our retreats are designed to fit your needs, whether you\'re a yoga novice or expert. Find the perfect balance of activity and relaxation, and connect with like-minded individuals.'
+        },
+        {
+          title: 'Nuestra Vision',
+          description: 'Experience a variety of yoga styles to enrich your practice. Our expert instructors guide you in finding the style that speaks to you, from calming Yin to dynamic Ashtanga.'
+        },
+        {
+          title: 'Valores',
           description: 'Connect with the calming power of nature. Our retreats are set in beautiful, peaceful locations that offer a perfect backdrop for mindfulness and growth.'
         }
       ];

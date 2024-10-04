@@ -1,4 +1,4 @@
-<app-header [newLanding]="true"></app-header>
+<app-header [newLanding]="authService.isAuthenticated$ ? false : true"></app-header>
 
 @if (isLoading) {
 <app-loading></app-loading>
