@@ -1,118 +1,74 @@
 <app-header [newLanding]="true"></app-header>
 
 <section class="h-full relative">
-   <app-parallax [imagePath]="'assets/images/yogaBg.jpg'"></app-parallax>
-  <div class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center">
+  <app-parallax [imagePath]="'assets/images/yoga1.jpg'"></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
     <h1 class="font-bold text-5xl">Forma parte de Esencial360</h1>
     <p class="text-xl">Se parte de nuestra gran comunidad de instructores.</p>
   </div>
-  <span class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4" >
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+  >
     keyboard_arrow_down
-    </span>
+  </span>
 </section>
 <div class="flex flex-col bg-white p-6 mx-10 rounded-lg montserrat-normal">
   <section
-  class="container mx-auto px-4 py-8"
-  data-aos="fade-up"
-  data-aos-duration="1000"
->
-  <div class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8">
-    <h4 class="text-blue">NOSOTROS</h4>
-    <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">Descubre nuestros servicios</h3>
-    <p class="text-strongBrown">Discover the unique benefits of Esencial360 designed to support your yoga journey.</p>
-  </div>
-  <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    class="container mx-auto px-4 py-8"
+    data-aos="fade-up"
+    data-aos-duration="1000"
   >
-    <!-- <div>
-      <h2
-        [@fadeIn]="elementState"
-        appInView
-        (inView)="onInView()"
-        class="text-green-600 font-semibold mb-2 text-blue"
-      >
-        OUR SERVICES
-      </h2>
-      <h1 class="text-2xl font-bold mb-4 text-strongBrown">
-        Our services for a healthy body
-      </h1>
-      <p class="text-gray-600 text-sm text-strongBrown">
-        Explore the ancient heritage of yoga through our classes, which are
-        accessible to all levels and accompanied by a balanced diet.
-      </p>
-    </div> -->
-    @for (service of services; track $index) {
     <div
-      [ngClass]="{
-        'bg-gray-100': !service.special,
-        'bg-purple-100': service.special
-      }"
-      class="rounded-lg overflow-hidden relative group"
+      class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
     >
-      <img
-        [src]="service.image"
-        [alt]="service.title"
-        class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-      />
-      <div class="">
-        <h3
-          class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
-        >
-          {{ service.title }}
-        </h3>
+      <h4 class="text-blue">NOSOTROS</h4>
+      <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+        Descubre nuestros servicios
+      </h3>
+      <p class="text-strongBrown">
+        Discover the unique benefits of Esencial360 designed to support your
+        yoga journey.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (service of services; track $index) {
+      <div
+        [ngClass]="{
+          'bg-gray-100': !service.special,
+          'bg-purple-100': service.special
+        }"
+        class="rounded-lg overflow-hidden relative group"
+      >
+        <img
+          [src]="service.image"
+          [alt]="service.title"
+          class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div class="">
+          <h3
+            class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+          >
+            {{ service.title }}
+          </h3>
+        </div>
       </div>
+      }
     </div>
-    }
-  </div>
-</section>
-<app-news-and-blogs></app-news-and-blogs>
-  <!-- <div class="md:w-1/2 pr-6">
-    <h2 class="text-2xl font-bold mb-4">DESCRIPTION</h2>
-    <p class="mb-4">
-      Awakening the Heart is a 14-day meditation journey that will support a deeper
-      connection to yourself, others, and the world around you. These heart-centered
-      meditations are designed for those interested in exploring the beauty that meditation
-      can bring into daily life, as well as those seeking balance, warmth, and perspective in
-      their practice.
-    </p>
-    <p class="mb-4">
-      These meditations cover topics such as self-acceptance, inspiration, and
-      kindness — qualities we already have that require gentle guidance to uncover more
-      deeply. Follow along for the full 14-day journey, or take whatever class resonates with
-      you for the day. As you reconnect with your heart, you'll walk away with a renewed
-      sense of appreciation for yourself that expands outward to everyone and everything
-      around you.
-    </p>
-    <p class="font-bold mb-2">In this meditation series, you will:</p>
-    <ul class="list-disc list-inside mb-4">
-      <li>Access 14 heart-centered meditations that inspire kindness, love, and acceptance</li>
-      <li>Reconnect to the beauty of your personal meditation practice</li>
-      <li>Open your mind beyond your personal experience and discover a more thoughtful</li>
-    </ul>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded">READ MORE</button>
-  </div> -->
-  <!-- <div class="md:w-1/2 mt-6 md:mt-0">
-
-    <div class="relative" (click)="onContinueToForm()">
-      <img [src]="'../../../../assets/images/yoga1.jpg'" [alt]="" class="cursor-pointer rounded-lg object-cover transition duration-300 ease-in-out transform hover:scale-105"/>
-      <h3
-      class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 cursor-pointer"
-    >
-      Haz click para empezar el proceso
-    </h3>
-    </div>
-  </div> -->
-
+  </section>
+  <app-news-and-blogs [instructorView]="true"></app-news-and-blogs>
   <app-banner
-  [title]="'Empieza el proceso ahora!'"
-  [description]="
-    'Da click en continuar para iniciar tu viaje'
-  "
-  [addMargin]="true"
-  [contact]="true"
-  (onActionButton)="onContinueToForm()"
-></app-banner>
+    [title]="'Empieza el proceso ahora!'"
+    [description]="'Da click en continuar para iniciar tu viaje'"
+    [addMargin]="true"
+    [contact]="true"
+    (onActionButton)="onContinueToForm()"
+  ></app-banner>
 </div>
 
-  <app-dialog-form [isOpen]="formView ? true : false" (onCloseDialog)="onDialogClosed()"></app-dialog-form>
+<app-dialog-form
+  [isOpen]="formView ? true : false"
+  (onCloseDialog)="onDialogClosed()"
+></app-dialog-form>
 <app-footer></app-footer>
