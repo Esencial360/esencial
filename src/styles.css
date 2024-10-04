@@ -89,6 +89,10 @@ body {
     max-height: 90vh !important;
     overflow-y: auto !important;
   }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
   
 /* html, body { height: 100%; } */
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

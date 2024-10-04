@@ -1,27 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailService } from '../services/email.service';
 import { Router } from '@angular/router';
-import { EmailService } from '../../shared/services/email.service';
-import { MatDialog } from '@angular/material/dialog';
-import {
-  DialogComponent,
-  DialogData,
-} from '../../shared/dialog/dialog.component';
-
-interface Service {
-  title: string;
-  image: string;
-  description?: string;
-  special?: boolean;
-}
 
 @Component({
-  selector: 'app-instructor-sing-up',
-  templateUrl: './instructor-sing-up.component.html',
-  styleUrl: './instructor-sing-up.component.css',
+  selector: 'app-dialog-form',
+  templateUrl: './dialog-form.component.html',
+  styleUrl: './dialog-form.component.css',
 })
-export class InstructorSingUpComponent implements OnInit {
-  instructorForm: FormGroup;
+export class DialogFormComponent implements OnInit {
+  consultationForm!: FormGroup;
+  instructorForm!: FormGroup;
   resumeFile: File | null = null;
   resumeError: string = '';
   videoError: string = '';
@@ -31,14 +20,20 @@ export class InstructorSingUpComponent implements OnInit {
   error = '';
   formView = false;
   videoFile: any;
-  services: Service[] = [];
+  onSubmittingForm!: boolean;
+  @Input()
+  isOpen!: boolean;
+
+  @Output()
+  onCloseDialog = new EventEmitter<boolean>();
+
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
-    private emailService: EmailService,
-    private dialog: MatDialog
+    private emailService: EmailService
   ) {
-    this.instructorForm = this.formBuilder.group({
+    window.scroll(0, 0)
+    this.instructorForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       years: [0, [Validators.required, Validators.min(0)]],
@@ -46,24 +41,12 @@ export class InstructorSingUpComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.formSubmitted = false;
-    this.services = [
-      { title: 'YOGA', image: '../../../assets/images/yoga.jpg '},
-      { title: 'FITNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'MINDFULNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'ROUTINES', image: '../../../assets/images/yoga.jpg' },
-      { 
-        title: 'Ready to start your journey?', 
-        image: '../../../assets/images/yoga.jpg',
-        special: true
-      }
-    ];
+  ngOnInit() {
   }
 
-  onHome() {
-    this.router.navigate(['/']);
-  }
+  // ngOnChanges(simpleChanges: SimpleChanges) {
+  //   this.isOpen[]
+  // }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -81,7 +64,7 @@ export class InstructorSingUpComponent implements OnInit {
   onVideoSelected(event: any) {
     const file: File = event.target.files[0];
     console.log(file);
-    
+
     if (file) {
       if (this.isVideoFile(file)) {
         this.videoFile = file;
@@ -95,13 +78,13 @@ export class InstructorSingUpComponent implements OnInit {
 
   isVideoFile(file: File): boolean {
     console.log(file);
-    
+
     const videoTypes = [
       'video/mp4',
       'video/mpeg',
       'video/ogg',
       'video/webm',
-      'video/quicktime'
+      'video/quicktime',
     ];
     return videoTypes.includes(file.type);
   }
@@ -110,7 +93,7 @@ export class InstructorSingUpComponent implements OnInit {
     if (this.instructorForm.valid && this.resumeFile) {
       const formData = new FormData();
       this.formSubmitted = true;
-
+      this.onSubmittingForm = true;
       // Append form fields
       Object.keys(this.instructorForm.value).forEach((key) => {
         formData.append(key, this.instructorForm.value[key]);
@@ -126,7 +109,6 @@ export class InstructorSingUpComponent implements OnInit {
         next: (response) => {
           console.log('Form sent successfully', response);
           this.success = true;
-          this.showSuccessMessage()
           // Store the current scroll position
           const scrollPosition = window.pageYOffset;
 
@@ -164,6 +146,7 @@ export class InstructorSingUpComponent implements OnInit {
           this.resumeFile = null;
           this.submitted = false;
           this.formView = false;
+          this.onSubmittingForm = false;
         },
         error: (error) => {
           console.error('Error sending form', error);
@@ -176,54 +159,9 @@ export class InstructorSingUpComponent implements OnInit {
     }
   }
 
-  showSuccessMessage() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Tu solicitud ha sido mandada exitosamente',
-        message: 'Da click para regresar a la pagina principal',
-        confirmText: 'Aceptar',
-        onConfirm: () => {
-          dialogRef.afterClosed().subscribe((result) => {
-            this.router.navigateByUrl('/');
-            document.body.style.position = 'relative';
-          });
-        },
-      } as DialogData,
-    });
-  }
-
-  showErrorMessage() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Intenta de nuevo',
-        message: 'Video no ha podido ser eliminado',
-        confirmText: 'Nuevo intento',
-        onConfirm: () => {
-          this.router
-            .navigateByUrl('/carrera-instructor')
-            .then((navigationSuccess) => {
-              if (navigationSuccess) {
-                console.log('Navigation to instructores page successful');
-              } else {
-                console.error('Navigation to instructores page failed');
-              }
-            })
-            .catch((error) => {
-              console.error(
-                `An error occurred during navigation: ${error.message}`
-              );
-            });
-        },
-      } as DialogData,
-    });
-  }
-
-  onContinueToForm() {
-    this.formView = true;
-  }
-
-  onDialogClosed() {
-    this.formView = false;
-    
+  closeDialog() {
+    document.body.classList.remove('overflow-hidden');
+    this.isOpen = false;
+    this.onCloseDialog.emit(true);
   }
 }

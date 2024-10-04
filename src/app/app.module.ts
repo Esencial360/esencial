@@ -70,6 +70,7 @@ import { InstructorAdminViewComponent } from './pages/instructors/instructor-adm
 import { isPlatformBrowser } from '@angular/common';
 import { auth0ConfigFactory } from './shared/services/auth-config-factory.service';
 import { ParallaxComponent } from './shared/parallax/parallax.component';
+import { DialogFormComponent } from './shared/dialog-form/dialog-form.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { ParallaxComponent } from './shared/parallax/parallax.component';
     ScrollingBannerComponent,
     InstructorAdminViewComponent,
     ParallaxComponent,
+    DialogFormComponent,
   ],
   imports: [
     BrowserModule,
