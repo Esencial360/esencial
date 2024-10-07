@@ -8,12 +8,12 @@ import { Component } from '@angular/core';
 export class ScrollingBannerComponent {
 
   logos = [
-    { src: '../../../assets/images/Adidas_Logo.png', alt: 'Framer' },
-    { src: '../../../assets/images/Adidas_Logo.png', alt: 'Flow the Sun' },
-    { src: '../../../assets/images/Adidas_Logo.png', alt: 'Framer' },
-    { src: '../../../assets/images/Adidas_Logo.png', alt: 'Flow the Sun' },
-    { src: '../../../assets/images/Adidas_Logo.png', alt: 'Framer' },
-    { src: '../../../assets/images/Adidas_Logo.png', alt: 'Flow the Sun' }
+    { src: '../../../assets/images/logo.png', alt: 'Framer' },
+    { src: '../../../assets/images/logo.png', alt: 'Flow the Sun' },
+    { src: '../../../assets/images/logo.png', alt: 'Framer' },
+    { src: '../../../assets/images/logo.png', alt: 'Flow the Sun' },
+    { src: '../../../assets/images/logo.png', alt: 'Framer' },
+    { src: '../../../assets/images/logo.png', alt: 'Flow the Sun' }
   ];
 
 }
