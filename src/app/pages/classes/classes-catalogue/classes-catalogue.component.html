@@ -1,34 +1,42 @@
 <!-- start-moving.component.html -->
 <div class="">
   <div class="" data-aos="fade-up" data-aos-duration="1000">
-    @for(category of collectionList; track $index) {
-    <div
-      class="p-4 md:p-8 relative h-[50rem] rounded-3xl flex flex-col justify-center overflow-hidden"
-      [ngClass]="$index % 2 !== 0 ? 'bg-white' : 'bg-white'"
+    <section
+      class="container mx-auto w-10/12 px-4 py-8"
+      data-aos="fade-up"
+      data-aos-duration="1000"
     >
-      <img
-        class="absolute h-[110%]"
-        [ngClass]="$index % 2 !== 0 ? 'hidden' : 'right-[10%]'"
-        [src]="'../../../../assets/svg/llline (1).svg'"
-        alt=""
-      />
-      <div class="container mx-auto z-50">
-        <p class="text-blue font-bold uppercase text-sm mb-2">
-          {{ category.name }}
-        </p>
-        <h1 class="text-4xl font-bold text-lime-900 mb-2">Poses</h1>
-        <p class="text-lime-700 mb-8 max-w-md">
-          There are many yoga poses, each with its own physical, mental and
-          emotional benefits.
-        </p>
+      <div
+        class="flex flex-col text-col w-full items-center justify-center text-center montserrat-normal my-8"
+      >
+        <h4 class="text-blue">{{collectionName}}</h4>
+        <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+          {{collectionSubtitle}}
+        </h3>
       </div>
-      <app-banner
-        [title]="category.name"
-        [category]="category"
-        (onSingleCollection)="onSingleCollection($event)"
-        [index]="$index"
-      ></app-banner>
-    </div>
-    }
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          @for(category of collectionList; track $index) {
+          <div class="rounded-lg overflow-hidden relative group">
+            <img
+              (click)="onSingleCollection(category.name)"
+              [src]="'assets/images/yoga1.jpg'"
+              [alt]="category.name"
+              class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+            />
+            <div class="">
+              <h3
+                class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+              >
+                {{ category.name }}
+              </h3>
+            </div>
+          </div>
+          }
+        </div>
+    </section>
   </div>
 </div>

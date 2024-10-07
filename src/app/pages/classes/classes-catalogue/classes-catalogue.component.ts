@@ -18,6 +18,12 @@ export class ClassesCatalogueComponent implements OnInit {
   @Input()
   collectionList: any[] = [];
 
+  @Input()
+  collectionName!: string
+
+  @Input()
+  collectionSubtitle!: string
+
   dotLottie?: any;
 
   constructor(private router: Router, private location: Location) {}

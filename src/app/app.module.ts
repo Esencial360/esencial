@@ -71,6 +71,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { auth0ConfigFactory } from './shared/services/auth-config-factory.service';
 import { ParallaxComponent } from './shared/parallax/parallax.component';
 import { DialogFormComponent } from './shared/dialog-form/dialog-form.component';
+import { CatalogueViewComponent } from './shared/catalogue-view/catalogue-view.component';
+import { FaqComponent } from './shared/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +115,8 @@ import { DialogFormComponent } from './shared/dialog-form/dialog-form.component'
     InstructorAdminViewComponent,
     ParallaxComponent,
     DialogFormComponent,
+    CatalogueViewComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,

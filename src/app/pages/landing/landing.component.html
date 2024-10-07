@@ -1,25 +1,31 @@
-<app-header [newLanding]="authService.isAuthenticated$ ? false : true"></app-header>
-
 @if (isLoading) {
 <app-loading></app-loading>
 } @else { @if(authService.isAuthenticated$ | async) {
+<app-header></app-header>
 <app-user-dashboard
   [blogs]="blogs"
   [instructors]="instructors"
   class="w-full montserrat-normal"
 ></app-user-dashboard>
 } @else {
-  <section class="h-full relative">
-    <!-- <img src="assets/images/yogaBg.jpg" class="object-cover h-screen w-full" alt=""> -->
-     <app-parallax [imagePath]="'assets/images/yogaBg.jpg'"></app-parallax>
-    <div class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center">
-      <h1 class="font-bold text-8xl">Inspire Your Life</h1>
-      <p class="text-2xl">Yoga. Healing. Transformation.</p>
-    </div>
-    <span class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4" >
-      keyboard_arrow_down
-      </span>
-  </section>
+<app-header [newLanding]="true"></app-header>
+<section class="h-full relative">
+  <app-parallax
+    [parallaxSpeed]="0.5"
+    [imagePath]="'assets/images/yoga1.jpg'"
+  ></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
+    <h1 class="font-bold text-8xl">Inspire Your Life</h1>
+    <p class="text-2xl">Yoga. Healing. Transformation.</p>
+  </div>
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
 <section
   class="bg-white montserrat-normal container mx-auto h-auto px-4 p-8"
   data-aos="fade-up"
@@ -81,7 +87,10 @@
           Explore the Path<br />of Balance
         </h1>
         <p class="text-lg mb-6 text-strongBrown">
-          Bienvenido a Esencial360, Tu plataforma integral para el bienestar, diseñada pensando en nuestra comunidad latina. Explora una amplia variedad de prácticas de yoga, meditaciones, y talleres, disponibles en cualquier momento y lugar.
+          Bienvenido a Esencial360, Tu plataforma integral para el bienestar,
+          diseñada pensando en nuestra comunidad latina. Explora una amplia
+          variedad de prácticas de yoga, meditaciones, y talleres, disponibles
+          en cualquier momento y lugar.
         </p>
         <button
           class="bg-lightBrown text-white px-6 py-3 rounded-full flex items-center"
@@ -108,10 +117,17 @@
   data-aos="fade-up"
   data-aos-duration="1000"
 >
-  <div class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8">
+  <div
+    class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
+  >
     <h4 class="text-blue">NOSOTROS</h4>
-    <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">Descubre nuestros servicios</h3>
-    <p class="text-strongBrown">Discover the unique benefits of Esencial360 designed to support your yoga journey.</p>
+    <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+      Descubre nuestros servicios
+    </h3>
+    <p class="text-strongBrown">
+      Discover the unique benefits of Esencial360 designed to support your yoga
+      journey.
+    </p>
   </div>
   <div
     [@fadeIn]="elementState"
@@ -160,51 +176,14 @@
     }
   </div>
 </section>
-<section
-  class="container mx-auto px-4 py-8"
-  data-aos="fade-up"
-  data-aos-duration="1000"
->
-<div class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8">
-  <h4 class="text-blue">OUR BLOG</h4>
-  <h3 class="text-4xl font-bold my-2 text-strongBrown">CHECK OUT OUR BLOG</h3>
-  <p class="text-strongBrown">Weekly inspiration for mindful living. Discover yoga sequences, short
-    workouts, recipes, and mindfulness tips from the experts.</p>
-</div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- <div>
-      <h2 class="text-green-600 font-semibold mb-2 text-blue">OUR BLOG</h2>
-      <h1
-        [@fadeIn]="elementState"
-        appInView
-        (inView)="onInView()"
-        class="text-2xl font-bold mb-4 text-strongBrown"
-      >
-        CHECK OUT OUR BLOG
-      </h1>
-      <p class="text-gray-600 text-sm text-strongBrown">
-        Weekly inspiration for mindful living. Discover yoga sequences, short
-        workouts, recipes, and mindfulness tips from the experts.
-      </p>
-    </div> -->
-    @for (blog of blogs | slice:0:5; track $index;) {
-    <div class="rounded-lg overflow-hidden relative">
-      <img
-        [src]="'../../../assets/images/yoga.jpg'"
-        [alt]=""
-        class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-      />
-      <div class="">
-        <h3
-          class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
-        >
-          {{ blog.title }}
-        </h3>
-      </div>
-    </div>
-    }
-  </div>
-</section>
+<app-catalogue-view
+  [title]="'OUR BLOG'"
+  [subtitle]="'CHECK OUT OUR BLOG'"
+  [description]="
+    'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
+  "
+  [catalogue]="blogs"
+></app-catalogue-view>
 <app-news-and-blogs></app-news-and-blogs>
 <app-pricing-plan></app-pricing-plan>
 <app-banner
@@ -216,9 +195,7 @@
 ></app-banner>
 <app-banner
   [title]="'Quieres formar parte del equipo de intructores?'"
-  [description]="
-    'Sube tus propias clases y crea una comunidad.'
-  "
+  [description]="'Sube tus propias clases y crea una comunidad.'"
   [addMargin]="true"
   [contact]="true"
   (onActionButton)="onInstructorContact()"

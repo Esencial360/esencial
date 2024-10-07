@@ -24,41 +24,26 @@
     </div>
     } 
     <app-classes-catalogue
+      [collectionName]="'CATEGORIAS'"
+      [collectionSubtitle]="'Empieza el bienestar de tu dia con alguna de nuestras categorias'"
       [collectionList]="collectionList"
     ></app-classes-catalogue>
     <app-instructors-overview></app-instructors-overview>
-    <section class="container mx-auto px-4 py-8 mt-10">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-down" data-aos-duration="1000">
-        <div>
-          <h2 class="text-green-600 font-semibold mb-2 text-blue">OUR BLOG</h2>
-          <h1 class="text-2xl font-bold mb-4 text-strongBrown">
-            CHECK OUT OUR BLOG
-          </h1>
-          <p class="text-gray-600 text-sm text-strongBrown">
-            Weekly inspiration for mindful living. Discover yoga sequences, short
-            workouts, recipes, and mindfulness tips from the experts.
-          </p>
-          <button class="bg-blue text-white px-6 py-2  mt-4 rounded-full flex items-center relative" (click)="navigateToBlog()">
-            TODOS LOS BLOGS
-          </button>
-        </div>
-        @for (blog of blogs | slice:0:5; track $index;) {
-        <div data-aos="fade-up" data-aos-duration="1000" class="rounded-lg overflow-hidden relative" (click)="onNavigateToSingleBlog(blog._id)">
-          <img
-            [src]="'../../../assets/images/yoga.jpg'"
-            [alt]=""
-            class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-          />
-          <div class="">
-            <h3
-              class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
-            >
-              {{ blog.title }}
-            </h3>
-          </div>
-        </div>
-        }
-      </div>
-    </section>
+    <app-catalogue-view
+    [title]="'EVENTOS Y NOTICIAS'"
+    [subtitle]="'Descrube lo que esta pasando en la comunidad de Esencial360'"
+    [description]="
+      'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
+    "
+    [catalogue]="blogs"
+  ></app-catalogue-view>
+    <app-catalogue-view
+    [title]="'OUR BLOG'"
+    [subtitle]="'CHECK OUT OUR BLOG'"
+    [description]="
+      'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
+    "
+    [catalogue]="blogs"
+  ></app-catalogue-view>
 }
 
