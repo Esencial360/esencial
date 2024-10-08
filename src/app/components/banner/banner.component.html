@@ -1,38 +1,32 @@
 <div
   [style]="addMargin ? 'margin-top: 50px; margin-bottom: 50px;' : ''"
-  class="text-strongBrown container mx-auto rounded-xl overflow-hidden mb-5 relative"
-  [ngClass]="index % 2 !== 0 ? 'bg-bone' : 'bg-lightBrown'"
+  class="text-strongBrown container mx-auto bg-cover rounded-xl overflow-hidden mb-5 relative"
 >
   <div
-    class="flex flex-col md:flex-row"
+    class="flex flex-col items-center justify-center md:flex-row !bg-cover  !bg-no-repeat !bg-center"
     data-aos="fade-up"
     data-aos-duration="1000"
+    style="background: url(/assets/images/yogaBgBlue.jpg);"
   >
     <!-- <img src="../../../assets/svg/bannerLine.svg" alt=""> -->
-    <div class="p-8 md:w-8/12 flex flex-col justify-center">
-      <h1 class="text-4xl font-bold mb-4">{{ title }}</h1>
+    <div class="p-8 flex  text-white flex-col h-[320px] justify-center items-center">
+      <h1 class="text-4xl font-bold mb-4 uppercase">{{ title }}</h1>
       <p class="mb-6">
         Improves posture, strengthens ankles, knees and thighs, calms the mind.
       </p>
       @if (!contact) {
       <div class="flex space-x-4" (click)="onHandleCollection(category.name)">
-        <app-button [text]="'Accede'"></app-button>
+        <button class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full">
+          Subscribe
+        </button>
       </div>
       } @else {
       <div class="flex space-x-4" (click)="onAction()">
-        <app-button [text]="'CONTACTANOS'"></app-button>
+        <button class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full">
+          Subscribe
+        </button>
       </div>
       }
-    </div>
-    <div class="md:w-4/12 relative">
-      <div
-        class="absolute inset-0 bg-green-800 transform -skew-x-6 -ml-10"
-      ></div>
-      <img
-        src="../../../assets/images/yoga2.jpg"
-        alt="Woman doing yoga"
-        class="rounded-[2.5rem] md:rounded-none md:rounded-s-xl p-4 md:p-0 z-10 w-full h-full object-cover"
-      />
     </div>
   </div>
 </div>

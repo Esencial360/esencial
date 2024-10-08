@@ -1,18 +1,18 @@
-<div class="container mx-auto px-4 py-8 montserrat-normal text-center">
+<div class="container mx-auto px-4 py-8 montserrat-normal text-center flex flex-col items-center">
   <h1 class="text-blue">Frequently Asked Questions</h1>
-  <p class="text-4xl font-bold my-2 text-strongBrown mb-6">
-    Find answers to common questions about Esencia360.
+  <p class="text-4xl font-bold my-2 text-strongBrown mb-6 uppercase">
+    Encuentra respuesta a las preguntas tipicas de  Esencial360.
   </p>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-start">
+<!-- TODO arreglar faq -->
+  <div class="grid grid-cols-1 md:grid-cols-1 w-7/12  gap-4 text-start mt-4">
     @for (item of faqItems; track $index) {
-    <div class="border rounded-lg">
+    <div class="border border-lightBrown rounded-lg">
       <button
         (click)="toggleItem($index)"
         class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-50 focus:outline-none"
       >
-        <span class="font-medium">{{ item.question }}</span>
-        <span class="text-2xl">{{ item.isOpen ? "−" : "+" }}</span>
+        <span class="font-medium text-strongBrown">{{ item.question }}</span>
+        <span class="text-2xl text-lightBrown">{{ item.isOpen ? "−" : "+" }}</span>
       </button>
       @if (item.isOpen) {
       <div class="p-4 bg-gray-50">
@@ -25,7 +25,7 @@
 
   <div class="flex flex-col justify-center py-10 items-center">
     <h1 class="text-blue">Todavia tienes una pregunta?</h1>
-    <p class="text-4xl font-bold my-2 text-strongBrown mb-6">
+    <p class="text-4xl font-bold my-2 text-strongBrown mb-6 uppercase">
       Contactanos para mas informacion
     </p>
     <app-button (click)="onContact()" [text]="'CONTACTO'"></app-button>
