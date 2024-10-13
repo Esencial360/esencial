@@ -1,14 +1,14 @@
-<div class="w-64 bg-white h-full overflow-y-auto montserrat-normal drop-shadow-xl">
+<div class="w-64 bg-white h-full overflow-y-auto montserrat-normal">
   <div class="p-4">
     <!-- Difficulty Dropdown -->
     <div class="mb-4">
       <button
         (click)="toggleDropdown('difficulty')"
-        class="w-full text-left font-bold py-2 flex justify-between items-center"
+        class="w-full text-left py-2 flex justify-between items-center"
       >
-        DIFFICULTY
+        DIFICULTAD
         <svg
-          [ngClass]="{ 'rotate-180': dropdowns.difficulty }"
+          [ngClass]="{ 'rotate-180': openDropdown === 'difficulty' }"
           class="w-4 h-4 transition-transform"
           fill="none"
           stroke="currentColor"
@@ -23,32 +23,35 @@
           ></path>
         </svg>
       </button>
-      @if (dropdowns.difficulty) {
-      <div class="mt-2">
-        @for (level of difficultyLevels; track $index) {
-        <div class="flex items-center mb-1">
-          <input
-            type="checkbox"
-            [id]="level"
-            [(ngModel)]="selectedDifficulties[level]"
-            class="mr-2"
-          />
-          <label [for]="level">{{ level }}</label>
-        </div>
-        }
+      <div [@dropdownAnimation]="openDropdown === 'difficulty' ? 'open' : 'closed'" class="overflow-hidden">
+        @if (openDropdown === 'difficulty') {
+            <div class="mt-2">
+              @for (level of difficultyLevels; track $index) {
+              <div class="flex items-center mb-1">
+                <input
+                  type="checkbox"
+                  [id]="level"
+                  [(ngModel)]="selectedDifficulties[level]"
+                  class="mr-2"
+                />
+                <label [for]="level">{{ level }}</label>
+              </div>
+              }
+            </div>
+            }
       </div>
-      }
+  
     </div>
 
     <!-- Length Dropdown -->
     <div class="mb-4">
       <button
         (click)="toggleDropdown('length')"
-        class="w-full text-left font-bold py-2 flex justify-between items-center"
+        class="w-full text-left py-2 flex justify-between items-center"
       >
-        LENGTH
+        DURACION
         <svg
-          [ngClass]="{ 'rotate-180': dropdowns.length }"
+          [ngClass]="{ 'rotate-180':  openDropdown === 'length' }"
           class="w-4 h-4 transition-transform"
           fill="none"
           stroke="currentColor"
@@ -63,32 +66,34 @@
           ></path>
         </svg>
       </button>
-      @if (dropdowns.length) {
-      <div class="mt-2">
-        @for (duration of lengthOptions; track $index) {
-        <div class="flex items-center mb-1">
-          <input
-            type="checkbox"
-            [id]="duration"
-            [(ngModel)]="selectedLengths[duration]"
-            class="mr-2"
-          />
-          <label [for]="duration">{{ duration }}</label>
-        </div>
-        }
+      <div [@dropdownAnimation]="openDropdown === 'length' ? 'open' : 'closed'" class="overflow-hidden"> 
+        @if (openDropdown === 'length') {
+            <div class="mt-2">
+              @for (duration of lengthOptions; track $index) {
+              <div class="flex items-center mb-1">
+                <input
+                  type="checkbox"
+                  [id]="duration"
+                  [(ngModel)]="selectedLengths[duration]"
+                  class="mr-2"
+                />
+                <label [for]="duration">{{ duration }}</label>
+              </div>
+              }
+            </div>
+            }
       </div>
-      }
     </div>
 
     <!-- Instructors Dropdown -->
     <div>
       <button
         (click)="toggleDropdown('instructors')"
-        class="w-full text-left font-bold py-2 flex justify-between items-center"
+        class="w-full text-left py-2 flex justify-between items-center"
       >
-        INSTRUCTORS
+        INSTRUCTORES
         <svg
-          [ngClass]="{ 'rotate-180': dropdowns.instructors }"
+          [ngClass]="{ 'rotate-180': openDropdown === 'instructors'}"
           class="w-4 h-4 transition-transform"
           fill="none"
           stroke="currentColor"
@@ -103,32 +108,34 @@
           ></path>
         </svg>
       </button>
-      @if (dropdowns.instructors) {
-      <div class="mt-2">
-        <div class="flex items-center mb-2">
-          <input
-            type="checkbox"
-            id="allInstructors"
-            [(ngModel)]="allInstructorsSelected"
-            (change)="toggleAllInstructors()"
-            class="mr-2"
-          />
-          <label for="allInstructors">All Instructors</label>
-        </div>
-        @for (instructor of instructors; track $index) {
-        <div class="flex items-center mb-1">
-          <input
-            type="checkbox"
-            [id]="instructor"
-            [(ngModel)]="selectedInstructors[instructor]"
-            (change)="updateInstructorSelection()"
-            class="mr-2"
-          />
-          <label [for]="instructor">{{ instructor }}</label>
-        </div>
-        }
+      <div [@dropdownAnimation]="openDropdown === 'instructors' ? 'open' : 'closed'" class="overflow-hidden">
+        @if (openDropdown === 'instructors') {
+            <div class="mt-2 overflow-y-hidden max-h-52 overflow-y-scroll">
+              <div class="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  id="allInstructors"
+                  [(ngModel)]="allInstructorsSelected"
+                  (change)="toggleAllInstructors()"
+                  class="mr-2"
+                />
+                <label for="allInstructors">All Instructors</label>
+              </div>
+              @for (instructor of instructors; track $index) {
+              <div class="flex items-center mb-1">
+                <input
+                  type="checkbox"
+                  [id]="instructor"
+                  [(ngModel)]="selectedInstructors[instructor]"
+                  (change)="updateInstructorSelection()"
+                  class="mr-2"
+                />
+                <label [for]="instructor">{{ instructor }}</label>
+              </div>
+              }
+            </div>
+            }
       </div>
-      }
     </div>
   </div>
 </div>

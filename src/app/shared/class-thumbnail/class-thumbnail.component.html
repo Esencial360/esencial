@@ -5,6 +5,7 @@
 >
   @for (class of classes; track $index) {
   <div
+    (click)="onClassSelected(class.video.guid)"
     class="relative overflow-hidden rounded shadow-xl max-w-md montserrat-normal cursor-pointer"
   >
     <img

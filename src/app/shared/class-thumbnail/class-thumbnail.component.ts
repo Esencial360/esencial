@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 interface Class {
   name: string,
@@ -20,8 +20,15 @@ export class ClassThumbnailComponent implements OnInit {
   @Input()
   classes!: any[] 
 
+  @Output()
+  actionClassSelected = new EventEmitter<string>()
+
   ngOnInit() {
     
+  }
+
+  onClassSelected($event: string) {
+    this.actionClassSelected.emit($event)
   }
 
 }

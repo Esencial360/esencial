@@ -12,13 +12,13 @@
       {{ description }}
     </p>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    @for (individualCatalogue of catalogue | slice:0:5; track $index;) {
-    <div class="rounded-lg overflow-hidden relative">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+    @for (individualCatalogue of catalogue | slice:0:6; track $index;) {
+    <div class="overflow-hidden relative">
       <img
         [src]="'../../../assets/images/yoga.jpg'"
         [alt]=""
-        class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
       />
       <div class="">
         <h3

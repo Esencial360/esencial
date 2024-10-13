@@ -1,16 +1,29 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-class-filter',
   templateUrl: './class-filter.component.html',
-  styleUrl: './class-filter.component.css'
+  styleUrl: './class-filter.component.css',
+  animations: [
+    trigger('dropdownAnimation', [
+      state('closed', style({
+        height: '0',
+        opacity: '0',
+        overflow: 'hidden'
+      })),
+      state('open', style({
+        height: '*',
+        opacity: '1'
+      })),
+      transition('closed <=> open', [
+        animate('300ms ease-in-out')
+      ])
+    ])
+  ]
 })
 export class ClassFilterComponent {
-  dropdowns = {
-    difficulty: false,
-    length: false,
-    instructors: false
-  };
+  openDropdown: 'difficulty' | 'length' | 'instructors' | null = null;
 
   difficultyLevels = ['Beginner', 'Intermediate', 'Advanced'];
   lengthOptions = ['0-15 min', '15-30 min', '30-45 min', '45+ min'];
@@ -32,7 +45,7 @@ export class ClassFilterComponent {
   }
 
   toggleDropdown(dropdown: 'difficulty' | 'length' | 'instructors') {
-    this.dropdowns[dropdown] = !this.dropdowns[dropdown];
+    this.openDropdown = this.openDropdown === dropdown ? null : dropdown;
   }
 
   toggleAllInstructors() {

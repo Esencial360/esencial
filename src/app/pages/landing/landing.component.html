@@ -131,7 +131,7 @@
     [@fadeIn]="elementState"
     appInView
     (inView)="onInView()"
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
   >
     <!-- <div>
       <h2
@@ -156,12 +156,12 @@
         'bg-gray-100': !service.special,
         'bg-purple-100': service.special
       }"
-      class="rounded-lg overflow-hidden relative group"
+      class="overflow-hidden relative group"
     >
       <img
         [src]="service.image"
         [alt]="service.title"
-        class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
       />
       <div class="">
         <h3
