@@ -1,0 +1,134 @@
+<div class="w-64 bg-white h-full overflow-y-auto montserrat-normal drop-shadow-xl">
+  <div class="p-4">
+    <!-- Difficulty Dropdown -->
+    <div class="mb-4">
+      <button
+        (click)="toggleDropdown('difficulty')"
+        class="w-full text-left font-bold py-2 flex justify-between items-center"
+      >
+        DIFFICULTY
+        <svg
+          [ngClass]="{ 'rotate-180': dropdowns.difficulty }"
+          class="w-4 h-4 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
+      </button>
+      @if (dropdowns.difficulty) {
+      <div class="mt-2">
+        @for (level of difficultyLevels; track $index) {
+        <div class="flex items-center mb-1">
+          <input
+            type="checkbox"
+            [id]="level"
+            [(ngModel)]="selectedDifficulties[level]"
+            class="mr-2"
+          />
+          <label [for]="level">{{ level }}</label>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Length Dropdown -->
+    <div class="mb-4">
+      <button
+        (click)="toggleDropdown('length')"
+        class="w-full text-left font-bold py-2 flex justify-between items-center"
+      >
+        LENGTH
+        <svg
+          [ngClass]="{ 'rotate-180': dropdowns.length }"
+          class="w-4 h-4 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
+      </button>
+      @if (dropdowns.length) {
+      <div class="mt-2">
+        @for (duration of lengthOptions; track $index) {
+        <div class="flex items-center mb-1">
+          <input
+            type="checkbox"
+            [id]="duration"
+            [(ngModel)]="selectedLengths[duration]"
+            class="mr-2"
+          />
+          <label [for]="duration">{{ duration }}</label>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Instructors Dropdown -->
+    <div>
+      <button
+        (click)="toggleDropdown('instructors')"
+        class="w-full text-left font-bold py-2 flex justify-between items-center"
+      >
+        INSTRUCTORS
+        <svg
+          [ngClass]="{ 'rotate-180': dropdowns.instructors }"
+          class="w-4 h-4 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
+      </button>
+      @if (dropdowns.instructors) {
+      <div class="mt-2">
+        <div class="flex items-center mb-2">
+          <input
+            type="checkbox"
+            id="allInstructors"
+            [(ngModel)]="allInstructorsSelected"
+            (change)="toggleAllInstructors()"
+            class="mr-2"
+          />
+          <label for="allInstructors">All Instructors</label>
+        </div>
+        @for (instructor of instructors; track $index) {
+        <div class="flex items-center mb-1">
+          <input
+            type="checkbox"
+            [id]="instructor"
+            [(ngModel)]="selectedInstructors[instructor]"
+            (change)="updateInstructorSelection()"
+            class="mr-2"
+          />
+          <label [for]="instructor">{{ instructor }}</label>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>

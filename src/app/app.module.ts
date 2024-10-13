@@ -75,6 +75,7 @@ import { CatalogueViewComponent } from './shared/catalogue-view/catalogue-view.c
 import { FaqComponent } from './shared/faq/faq.component';
 import { PopularClassesAndInstructorsComponent } from './shared/popular-classes-and-instructors/popular-classes-and-instructors.component';
 import { ClassThumbnailComponent } from './shared/class-thumbnail/class-thumbnail.component';
+import { ClassFilterComponent } from './shared/class-filter/class-filter.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { ClassThumbnailComponent } from './shared/class-thumbnail/class-thumbnai
     FaqComponent,
     PopularClassesAndInstructorsComponent,
     ClassThumbnailComponent,
+    ClassFilterComponent,
   ],
   imports: [
     BrowserModule,
