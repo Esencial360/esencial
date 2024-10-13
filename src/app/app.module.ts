@@ -73,6 +73,8 @@ import { ParallaxComponent } from './shared/parallax/parallax.component';
 import { DialogFormComponent } from './shared/dialog-form/dialog-form.component';
 import { CatalogueViewComponent } from './shared/catalogue-view/catalogue-view.component';
 import { FaqComponent } from './shared/faq/faq.component';
+import { PopularClassesAndInstructorsComponent } from './shared/popular-classes-and-instructors/popular-classes-and-instructors.component';
+import { ClassThumbnailComponent } from './shared/class-thumbnail/class-thumbnail.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +119,8 @@ import { FaqComponent } from './shared/faq/faq.component';
     DialogFormComponent,
     CatalogueViewComponent,
     FaqComponent,
+    PopularClassesAndInstructorsComponent,
+    ClassThumbnailComponent,
   ],
   imports: [
     BrowserModule,

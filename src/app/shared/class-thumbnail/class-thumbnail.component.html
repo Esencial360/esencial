@@ -1,0 +1,41 @@
+<div
+  class="grid grid-cols-1 md:grid-cols-3 gap-6"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  @for (class of classes; track $index) {
+  <div
+    class="relative overflow-hidden rounded shadow-xl max-w-md montserrat-normal cursor-pointer"
+  >
+    <img
+      [src]="class.safeThumbnail.changingThisBreaksApplicationSecurity"
+      alt="Woman doing Pilates"
+      class="w-full h-56 object-cover relative"
+    />
+
+    <div
+      class="absolute top-2 left-2 bg-white text-strongBrown px-2 py-1 rounded text-sm font-semibold"
+    >
+      10:17
+    </div>
+    <span
+      class="material-symbols-outlined text-white absolute -translate-x-2/4 top-[20%] left-2/4 text-8xl"
+    >
+      play_circle
+    </span>
+    <div class="p-4 bg-white">
+      <h2 class="text-lg font-bold mb-1 uppercase text-strongBrown">
+        {{ class.video.title }}
+      </h2>
+      <p class="text-sm text-strongBrown">{{ class.instructor }}</p>
+      <p class="text-strongBrown mb-2">
+        Breathing plays an essential role in our well-being. Follow the advice
+        of Dr. Marie
+      </p>
+      <p class="text-xs text-strongBrown">
+        Fitness / Yoga • <span class="text-blue">Principiante</span>
+      </p>
+    </div>
+  </div>
+  }
+</div>
