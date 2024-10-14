@@ -1,6 +1,6 @@
 import { Component, Renderer2, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { burgerMenuAnimation } from '../animations/burger-menu.animations';
+import { burgerMenuAnimation } from '../../animations/burger-menu.animations';
 // import { AuthService } from '../services/auth.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';

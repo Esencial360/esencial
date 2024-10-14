@@ -9,9 +9,9 @@ import {
 } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { ButtonComponent } from './shared/button/button.component';
+import { HeaderComponent } from './shared/ui/header/header.component';
+import { FooterComponent } from './shared/ui/footer/footer.component';
+import { ButtonComponent } from './shared/ui/button/button.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { VideosCatalogueComponent } from './pages/videos/videos-catalogue/videos-catalogue.component';
 import { InstructorsCatalogueComponent } from './pages/instructors/instructors-catalogue/instructors-catalogue.component';
@@ -22,7 +22,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { SingleBlogComponent } from './pages/blogs/single-blog/single-blog.component';
 import { SectionSneakPeakComponent } from './components/section-sneak-peak/section-sneak-peak.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
-import { InstructorFilterComponent } from './shared/instructor-filter/instructor-filter.component';
+import { InstructorFilterComponent } from './shared/ui/instructor-filter/instructor-filter.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -50,7 +50,7 @@ import { ClassesCatalogueComponent } from './pages/classes/classes-catalogue/cla
 import { SingleCollectionClassesComponent } from './pages/classes/single-collection-classes/single-collection-classes.component';
 import { UploadVideoComponent } from './pages/classes/upload-video/upload-video.component';
 import { SingleClassComponent } from './pages/classes/single-class/single-class.component';
-import { DialogComponent } from './shared/dialog/dialog.component';
+import { DialogComponent } from './shared/ui/dialog/dialog.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ClassStatisticsComponent } from './pages/classes/class-statistics/class-statistics.component';
 import { environment } from '../environments/environment.development';
@@ -64,18 +64,22 @@ import {
   provideLottieOptions,
 } from 'ngx-lottie';
 import player from 'lottie-web';
-import { LoadingComponent } from './shared/loading/loading.component';
-import { CheckMarkComponent } from './shared/check-mark/check-mark.component';
+import { LoadingComponent } from './shared/ui/loading/loading.component';
+import { CheckMarkComponent } from './shared/ui/check-mark/check-mark.component';
 import { InstructorAdminViewComponent } from './pages/instructors/instructor-admin-view/instructor-admin-view.component';
 import { isPlatformBrowser } from '@angular/common';
 import { auth0ConfigFactory } from './shared/services/auth-config-factory.service';
-import { ParallaxComponent } from './shared/parallax/parallax.component';
-import { DialogFormComponent } from './shared/dialog-form/dialog-form.component';
-import { CatalogueViewComponent } from './shared/catalogue-view/catalogue-view.component';
-import { FaqComponent } from './shared/faq/faq.component';
-import { PopularClassesAndInstructorsComponent } from './shared/popular-classes-and-instructors/popular-classes-and-instructors.component';
-import { ClassThumbnailComponent } from './shared/class-thumbnail/class-thumbnail.component';
-import { ClassFilterComponent } from './shared/class-filter/class-filter.component';
+import { ParallaxComponent } from './shared/ui/parallax/parallax.component';
+import { DialogFormComponent } from './shared/ui/dialog-form/dialog-form.component';
+import { CatalogueViewComponent } from './shared/ui/catalogue-view/catalogue-view.component';
+import { FaqComponent } from './shared/ui/faq/faq.component';
+import { PopularClassesAndInstructorsComponent } from './shared/ui/popular-classes-and-instructors/popular-classes-and-instructors.component';
+import { ClassThumbnailComponent } from './shared/ui/class-thumbnail/class-thumbnail.component';
+import { ClassFilterComponent } from './shared/ui/class-filter/class-filter.component';
+import { FavoriteClassesComponent } from './pages/classes/favorite-classes/favorite-classes.component';
+import { PreviousClassesComponent } from './pages/classes/previous-classes/previous-classes.component';
+import { BadgesComponent } from './pages/user-profile/badges/badges.component';
+import { PaymentsComponent } from './pages/user-profile/payments/payments.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +127,10 @@ import { ClassFilterComponent } from './shared/class-filter/class-filter.compone
     PopularClassesAndInstructorsComponent,
     ClassThumbnailComponent,
     ClassFilterComponent,
+    FavoriteClassesComponent,
+    PreviousClassesComponent,
+    BadgesComponent,
+    PaymentsComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { InstructorService } from '../../shared/services/instructor.service';
 import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
 import { Instructor } from '../../shared/Models/Instructor';
 import { isPlatformBrowser } from '@angular/common';
+import { m } from '@lottiefiles/dotlottie-web/dist/index-Dba5bXrL';
 
 interface PreviewInstructor {
   _id: number;
@@ -38,6 +39,108 @@ export class UserProfileComponent implements OnInit {
   pendingVideos: string[] = [];
   isLoading!: boolean;
   roles!: string;
+  favoriteClasses = [
+    {
+      name: 'Clase 1',
+      description: 'Lorem impsum',
+      instructor: 'John Smith',
+      duration: 500,
+      difficulty: 'Beginner'
+    },
+    {
+      name: 'Clase 2',
+      description: 'Lorem impsum',
+      instructor: 'John Smith',
+      duration: 500,
+      difficulty: 'Beginner'
+    },
+    {
+      name: 'Clase 3',
+      description: 'Lorem impsum',
+      instructor: 'John Smith',
+      duration: 500,
+      difficulty: 'Beginner'
+    },
+  ]
+
+  previousClasses = [
+    {
+      name: 'Clase 1',
+      description: 'Lorem impsum',
+      instructor: 'John Smith',
+      duration: 500,
+      difficulty: 'Beginner'
+    },
+    {
+      name: 'Clase 2',
+      description: 'Lorem impsum',
+      instructor: 'John Smith',
+      duration: 500,
+      difficulty: 'Beginner'
+    },
+    {
+      name: 'Clase 3',
+      description: 'Lorem impsum',
+      instructor: 'John Smith',
+      duration: 500,
+      difficulty: 'Beginner'
+    },
+  ]
+
+  badges = [
+    {
+      name: 'Badge 1',
+    },
+    {
+      name: 'Badge 2',
+    },
+    {
+      name: 'Badge 3',
+    },
+    {
+      name: 'Badge 4',
+    },
+    {
+      name: 'Badge 5',
+    },
+    {
+      name: 'Badge 6',
+    },
+  ]
+  futureBadges = [
+    {
+      name: 'Badge 1',
+    },
+    {
+      name: 'Badge 2',
+    },
+    {
+      name: 'Badge 3',
+    },
+    {
+      name: 'Badge 4',
+    },
+    {
+      name: 'Badge 5',
+    },
+    {
+      name: 'Badge 6',
+    },
+  ]
+  payments = [
+    {
+      month: 'MAYO',
+      amount: 459.32
+    },
+    {
+      month: 'JUNIO',
+      amount: 459.32
+    },
+    {
+      month: 'JULIO',
+      amount: 459.32
+    }
+  ]
   filteredInstructors: PreviewInstructor[] | undefined;
   private ngUnsubscribe = new Subject<void>();
   constructor(
@@ -86,13 +189,17 @@ export class UserProfileComponent implements OnInit {
               this.filters = [
                 'EDITA TU PERFIL',
                 'CAMBIA TU CONTRASEÑA',
-                'MIS CLASES'
+                'MIS CLASES',
+                'PAGOS',
+                'CODIGO'
               ];
             } else {
               this.filters = [
                 'EDITA TU PERFIL',
                 'CAMBIA TU CONTRASEÑA',
-                'MANEJA TU SUBSCRIPCION'
+                'MANEJA TU SUBSCRIPCION',
+                'FAVORITOS',
+                'BADGES'
               ];
             }
           }

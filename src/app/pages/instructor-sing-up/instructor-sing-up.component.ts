@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   DialogComponent,
   DialogData,
-} from '../../shared/dialog/dialog.component';
+} from '../../shared/ui/dialog/dialog.component';
 
 interface Service {
   title: string;

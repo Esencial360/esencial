@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EmailService } from '../services/email.service';
+import { EmailService } from '../../services/email.service';
 import { Router } from '@angular/router';
 
 @Component({

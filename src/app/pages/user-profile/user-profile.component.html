@@ -230,50 +230,58 @@
     }
   </div>
 </section>
-} @if (activeFilter === 'VIDEOS PENDIENTES') { 
-  <section class="container mx-auto px-4 py-8 montserrat-normal">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      @for(video of videos; track $index;) {
-  
-        <div
-        class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
-        (click)="onWatchSingleClass(video.video)"
-      >
-        <img
-          [src]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
-          [alt]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4">
-          <div class="flex items-center text-sm text-blue mb-2">
-            <span>Esencial360</span>
-            <span class="mx-2">•</span>
-          </div>
-          <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
-            {{ video.video.title }}
-          </h3>
-          <p class="text-strongBrown mb-4">
-            Breathing plays an essential role in our well-being. Follow the advice
-            of Dr. Marie
-          </p>
-          <div class="flex items-center justify-between">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
+} @if (activeFilter === 'VIDEOS PENDIENTES') {
+<section class="container mx-auto px-4 py-8 montserrat-normal">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    @for(video of videos; track $index;) {
+
+    <div
+      class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+      (click)="onWatchSingleClass(video.video)"
+    >
+      <img
+        [src]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
+        [alt]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <div class="flex items-center text-sm text-blue mb-2">
+          <span>Esencial360</span>
+          <span class="mx-2">•</span>
+        </div>
+        <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
+          {{ video.video.title }}
+        </h3>
+        <p class="text-strongBrown mb-4">
+          Breathing plays an essential role in our well-being. Follow the advice
+          of Dr. Marie
+        </p>
+        <div class="flex items-center justify-between">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-gray-400"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
         </div>
       </div>
-      }
     </div>
-  </section>
-} }
+    }
+  </div>
+</section>
+} @if (activeFilter === 'FAVORITOS') { 
+  <app-favorite-classes [favoriteClasses]="favoriteClasses"></app-favorite-classes>
+  <app-previous-classes [previousClasses]="previousClasses"></app-previous-classes>
+} @if (activeFilter === 'BADGES') {
+  <app-badges [badges]="badges" [futureBadges]="futureBadges"></app-badges>
+} @if (activeFilter === 'PAGOS') {
+  <app-payments [payments]="payments"></app-payments>
+}
+ }
 <app-footer [ngClass]="isLoading ? 'fixed bottom-0 w-full' : ''"></app-footer>

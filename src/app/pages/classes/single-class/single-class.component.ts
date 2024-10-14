@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   DialogComponent,
   DialogData,
-} from '../../../shared/dialog/dialog.component';
+} from '../../../shared/ui/dialog/dialog.component';
 import AOS from 'aos';
 import { AuthService } from '@auth0/auth0-angular';
 import { Subject, takeUntil } from 'rxjs';

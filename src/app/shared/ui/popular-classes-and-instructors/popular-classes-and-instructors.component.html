@@ -1,0 +1,139 @@
+<section
+  class="container mx-auto w-10/12 px-4 py-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div
+    class="flex flex-col text-col w-full items-start justify-center text-start montserrat-normal my-8"
+  >
+    <h4 class="text-strongBrown uppercase text-4xl font-bold">
+      Clases Populares
+    </h4>
+    <!-- <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+    {{collectionSubtitle}}
+  </h3> -->
+  </div>
+  <div
+    data-aos="fade-up"
+    data-aos-duration="1000"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    @for(class of classes; track $index) {
+    <!-- <div
+      class="relative overflow-hidden rounded shadow-xl max-w-md montserrat-normal cursor-pointer"
+    >
+      <img
+        src="assets/images/yoga1.jpg"
+        alt="Woman doing Pilates"
+        class="w-full h-56 object-cover"
+      />
+
+      <div
+        class="absolute top-2 left-2 bg-white text-strongBrown px-2 py-1 rounded text-sm font-semibold"
+      >
+        10:17
+      </div>
+
+      <div class="p-4 bg-white">
+        <h2 class="text-lg font-bold mb-1 uppercase text-strongBrown">
+          {{ class.name }}
+        </h2>
+        <p class="text-sm text-strongBrown">{{ class.instructor }}</p>
+        <p class="text-xs text-strongBrown">
+          Fitness / Yoga • <span class="text-blue">{{ class.difficulty }}</span>
+        </p>
+      </div>
+    </div> -->
+    <div
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+    >
+      <div class="relative">
+        <img
+          [src]="'assets/images/yoga1.jpg'"
+          [alt]="'Woman doing Pilates'"
+          class="w-full h-56 object-cover"
+        />
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"
+        ></div>
+        <div class="absolute bottom-4 left-4 right-4 text-white">
+          <h3 class="text-2xl font-bold mb-1 uppercase">
+            {{ class.name }}
+          </h3>
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-white">{{ class.instructor }}</p>
+            <span class="mx-2">•</span>
+            Fitness / Yoga •
+            <span class="text-blue mx-2">{{ class.difficulty }} •</span>
+            <span> 10:17</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<section
+  class="container mx-auto w-10/12 px-4 py-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div
+    class="flex flex-col text-col w-full items-start justify-center text-start montserrat-normal my-8"
+  >
+    <h4 class="text-strongBrown uppercase text-4xl font-bold">
+      Instructores Populares
+    </h4>
+    <!-- <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+    {{collectionSubtitle}}
+  </h3> -->
+  </div>
+  <div
+    data-aos="fade-up"
+    data-aos-duration="1000"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    @for(instructor of instructors; track $index) {
+    <!-- <div class="relative overflow-hidden rounded shadow-xl max-w-md montserrat-normal cursor-pointer">
+        <img src="assets/images/yoga1.jpg" alt="Woman doing Pilates" class="w-full h-56 object-cover">
+        <div class="p-4 bg-white">
+          <h2 class="text-lg font-bold mb-1 uppercase text-strongBrown">{{instructor.name}}</h2>
+          <p class="text-sm text-strongBrown">{{instructor.title}}</p>
+        </div>
+      </div> -->
+    <div
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+    >
+      <div class="relative">
+        <img
+          [src]="'/assets/images/examplePerson.jpg'"
+          [alt]="instructor.title"
+          class="w-full h-56 object-cover"
+        />
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"
+        ></div>
+        <div class="absolute bottom-4 left-4 right-4 text-white">
+          <h3 class="text-2xl font-bold mb-1 capitalize">
+            {{ instructor.name }}
+          </h3>
+          <div class="flex items-center text-sm">
+            <span
+              class="text-white py-1 rounded-full text-xs uppercase tracking-wide"
+            >
+              {{ instructor.title }}
+            </span>
+            <span class="mx-2">•</span>
+            <span>Esencial<span class="text-blue">360</span> Instructor</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
