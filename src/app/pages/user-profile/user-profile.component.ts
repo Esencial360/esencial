@@ -178,30 +178,31 @@ export class UserProfileComponent implements OnInit {
           if (user) {
             const namespace = 'https://test-assign-roles.com';
             this.roles = user[`${namespace}roles`][0] || [];
-            if (this.roles === 'Admin') {
-              this.filters = [
-                'EDITA TU PERFIL',
-                'CAMBIA TU CONTRASEÑA',
-                'INSTRUCTORES',
-                'VIDEOS PENDIENTES'
-              ];
-            } else if (this.roles === 'Instructor') {
-              this.filters = [
-                'EDITA TU PERFIL',
-                'CAMBIA TU CONTRASEÑA',
-                'MIS CLASES',
-                'PAGOS',
-                'CODIGO'
-              ];
-            } else {
-              this.filters = [
-                'EDITA TU PERFIL',
-                'CAMBIA TU CONTRASEÑA',
-                'MANEJA TU SUBSCRIPCION',
-                'FAVORITOS',
-                'BADGES'
-              ];
-            }
+            this.setFilters();
+            // if (this.roles === 'Admin') {
+            //   this.filters = [
+            //     'EDITA TU PERFIL',
+            //     'CAMBIA TU CONTRASEÑA',
+            //     'INSTRUCTORES',
+            //     'VIDEOS PENDIENTES'
+            //   ];
+            // } else if (this.roles === 'Instructor') {
+            //   this.filters = [
+            //     'EDITA TU PERFIL',
+            //     'CAMBIA TU CONTRASEÑA',
+            //     'MIS CLASES',
+            //     'PAGOS',
+            //     'CODIGO'
+            //   ];
+            // } else {
+            //   this.filters = [
+            //     'EDITA TU PERFIL',
+            //     'CAMBIA TU CONTRASEÑA',
+            //     'MANEJA TU SUBSCRIPCION',
+            //     'FAVORITOS',
+            //     'BADGES'
+            //   ];
+            // }
           }
         });
         this.getAllInstructors();
@@ -394,5 +395,36 @@ export class UserProfileComponent implements OnInit {
       .catch((error) => {
         console.error(`An error occurred during navigation: ${error.message}`);
       });
+  }
+
+  setFilters() {
+    if (this.roles === 'Admin') {
+      this.filters = [
+        'EDITA TU PERFIL',
+        'CAMBIA TU CONTRASEÑA',
+        'INSTRUCTORES',
+        'VIDEOS PENDIENTES'
+      ];
+    } else if (this.roles === 'Instructor') {
+      this.filters = [
+        'EDITA TU PERFIL',
+        'CAMBIA TU CONTRASEÑA',
+        'MIS CLASES',
+        'PAGOS',
+        'CODIGO'
+      ];
+    } else {
+      this.filters = [
+        'EDITA TU PERFIL',
+        'CAMBIA TU CONTRASEÑA',
+        'MANEJA TU SUBSCRIPCION',
+        'FAVORITOS',
+        'BADGES'
+      ];
+    }
+  }
+
+  showTab(tabName: string): boolean {
+    return this.filters.includes(tabName);
   }
 }

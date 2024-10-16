@@ -22,4 +22,17 @@ export class BadgesComponent {
   @Input()
   futureBadges!: any[]
 
+  selectedBadge!: any
+  openDialog!: boolean;
+
+  onBadgeClick(badge: any) {
+    this.openDialog = true
+    this.selectedBadge = badge
+    document.body.classList.add('overflow-hidden');
+  }
+
+  onDialogClose() {
+    this.openDialog = false
+  }
+
 }

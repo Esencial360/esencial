@@ -28,6 +28,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { PlatformService } from './shared/services/platform.service';
 import { firstValueFrom } from 'rxjs';
+import { PartnersComponent } from './pages/partners/partners.component';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -168,6 +169,10 @@ const routes: Routes = [
     path: 'instructor-previa/:id',
     component: InstructorAdminViewComponent,
     data: { animation: 'openClosePage' },
+  },
+  {
+    path: 'socios',
+    component: PartnersComponent
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
   // Catch-all for invalid routes (404)

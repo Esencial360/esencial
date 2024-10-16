@@ -1,5 +1,5 @@
 <section
-  class="container mx-auto px-4 py-8"
+  class="container mx-auto px-4 py-8  min-h-[60vh]"
   data-aos="fade-up"
   data-aos-duration="1000"
 >
@@ -14,7 +14,7 @@
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
     @for (badge of badges; track $index;) {
-    <div class="overflow-hidden relative">
+    <div class="overflow-hidden relative" (click)="onBadgeClick(badge)">
       <img
         [src]="'../../../assets/images/yoga.jpg'"
         [alt]=""
@@ -29,6 +29,7 @@
       </div>
     </div>
     }
+    <app-dialog-popup [isOpen]="openDialog" (onCloseDialog)="onDialogClose()" [badge]="selectedBadge"></app-dialog-popup>
   </div>
   <div
   class="flex flex-col text-col w-full items-center justify-center montserrat-normal mt-16 mb-8"
@@ -41,7 +42,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
   @for (badge of futureBadges; track $index;) {
-  <div class="overflow-hidden relative">
+  <div class="overflow-hidden relative" (click)="onBadgeClick(badge)">
     <img
       [src]="'../../../assets/images/yoga.jpg'"
       [alt]=""
@@ -56,5 +57,6 @@
     </div>
   </div>
   }
+  <app-dialog-popup [isOpen]="openDialog" (onCloseDialog)="onDialogClose()" [badge]="selectedBadge"></app-dialog-popup>
 </div>
 </section>

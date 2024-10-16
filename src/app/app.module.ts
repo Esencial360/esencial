@@ -80,6 +80,10 @@ import { FavoriteClassesComponent } from './pages/classes/favorite-classes/favor
 import { PreviousClassesComponent } from './pages/classes/previous-classes/previous-classes.component';
 import { BadgesComponent } from './pages/user-profile/badges/badges.component';
 import { PaymentsComponent } from './pages/user-profile/payments/payments.component';
+import { QrComponent } from './pages/user-profile/qr/qr.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { DialogPopupComponent } from './shared/ui/dialog-popup/dialog-popup.component';
+import { PartnersComponent } from './pages/partners/partners.component';
 
 @NgModule({
   declarations: [
@@ -131,6 +135,9 @@ import { PaymentsComponent } from './pages/user-profile/payments/payments.compon
     PreviousClassesComponent,
     BadgesComponent,
     PaymentsComponent,
+    QrComponent,
+    DialogPopupComponent,
+    PartnersComponent,
   ],
   imports: [
     BrowserModule,
@@ -141,6 +148,7 @@ import { PaymentsComponent } from './pages/user-profile/payments/payments.compon
     HttpClientModule,
     LoadingComponent,
     CheckMarkComponent,
+    MatTabsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     // AuthModule.forRoot({
     //   ... environment.auth0,

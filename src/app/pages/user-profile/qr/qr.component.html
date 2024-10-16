@@ -2,38 +2,29 @@
   class="container mx-auto px-4 py-8  min-h-[60vh]"
   data-aos="fade-up"
   data-aos-duration="1000"
-
 >
   <div
     class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
   >
-    <h4 class="text-4xl font-bold my-2 text-strongBrown uppercase">Tu historia de pagos</h4>
+    <h4 class="text-4xl font-bold my-2 text-strongBrown uppercase">
+      Comparte este codgio para nuevos usuarios
+    </h4>
     <!-- <h3 class="text-4xl font-bold my-2 text-strongBrown">{{ subtitle }}</h3>
     <p class="text-strongBrown">
       {{ description }}
     </p> -->
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-    @for (payment of payments; track $index;) {
-    <div class="overflow-hidden relative">
+  <div class="flex flex-col w-full items-center justify-center">
+    <div class="overflow-hidden relative mb-5">
       <img
         [src]="'../../../assets/images/yoga.jpg'"
         [alt]=""
         class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
       />
-      <div class="absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-        <h3
-          class="text-xl text-white z-20 font-semibold"
-        >
-          {{ payment.month }}
-        </h3>
-        <h6
-        class="text-xl text-white z-20 font-semibold mt-4"
-      >
-        {{ payment.amount }}
-      </h6>
-      </div>
+      <div
+        class="absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+      ></div>
     </div>
-    }
+    <app-button [text]="'DESCARGAR'"></app-button>
   </div>
 </section>

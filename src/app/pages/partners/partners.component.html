@@ -1,0 +1,55 @@
+<app-header [newLanding]="true"></app-header>
+<section class="h-full relative">
+  <app-parallax [imagePath]="'assets/images/yoga1.jpg'"></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
+    <h1 class="font-bold text-5xl">NUESTROS SOCIOS</h1>
+    <p class="text-xl">Nos hacemos socios de organizacion que comparten nuestar passion y mision.</p>
+  </div>
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
+<div class="bg-white">
+  <section class="container mx-auto px-4 py-8 montserrat-normal">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      @for(partner of partners; track $index;) {
+
+      <div
+        data-aos="fade-up"
+        data-aos-duration="1000"
+        class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+      >
+        <div class="relative">
+          <img
+            [src]="'/assets/images/examplePerson.jpg'"
+            [alt]="partner.name"
+            class="w-full h-56 object-cover"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"
+          ></div>
+          <div class="absolute bottom-4 left-4 right-4 text-white">
+            <h3 class="text-2xl font-bold mb-1 capitalize">
+              {{ partner.name }}
+            </h3>
+            <div class="flex items-center text-sm">
+              <span
+                class="text-white py-1 rounded-full text-xs uppercase tracking-wide"
+              >
+                INFORMATION
+              </span>
+              <span class="mx-2">•</span>
+              <span>Esencial<span class="text-blue">360</span> PARTNER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>
