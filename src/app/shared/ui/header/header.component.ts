@@ -76,6 +76,10 @@ export class HeaderComponent {
   onInstructors() {
     this.route.navigate(['/instructores'])
   }
+
+  onCommunity() {
+    this.route.navigate(['/comunidad'])
+  }
   
 
   toggle() {

@@ -30,6 +30,9 @@
       <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
       </li>
+      <li class="mr-10">
+        <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
+      </li>
       @if(authService.isAuthenticated$ | async) {
       <li class="mr-10" (click)="signOut()">LOGOUT</li>
       } @else {
@@ -230,6 +233,9 @@
       </li>
       <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
+      </li>
+      <li class="mr-10">
+        <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
       </li>
       @if(authService.isAuthenticated$ | async) {
       <li class="mr-10" (click)="signOut()">LOGOUT</li>

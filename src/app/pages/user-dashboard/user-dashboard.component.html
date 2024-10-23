@@ -2,7 +2,8 @@
   <app-loading></app-loading>
 } @else {
   @if (authService.user$ | async; as user) {
-    <div
+    <app-recommendation-classes></app-recommendation-classes>
+    <!-- <div
       class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
     >
       <div class="flex-1 pr-8">
@@ -21,7 +22,7 @@
           class="rounded-xl object-cover w-full h-64"
         />
       </div>
-    </div>
+    </div> -->
     } 
     <app-popular-classes-and-instructors></app-popular-classes-and-instructors>
     <app-classes-catalogue
@@ -47,4 +48,5 @@
     [catalogue]="blogs"
   ></app-catalogue-view>
 }
+<!-- } -->
 

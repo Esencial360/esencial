@@ -84,6 +84,8 @@ import { QrComponent } from './pages/user-profile/qr/qr.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { DialogPopupComponent } from './shared/ui/dialog-popup/dialog-popup.component';
 import { PartnersComponent } from './pages/partners/partners.component';
+import { CommunityComponent } from './pages/community/community.component';
+import { RecommendationClassesComponent } from './shared/ui/recommendation-classes/recommendation-classes.component';
 
 @NgModule({
   declarations: [
@@ -138,6 +140,8 @@ import { PartnersComponent } from './pages/partners/partners.component';
     QrComponent,
     DialogPopupComponent,
     PartnersComponent,
+    CommunityComponent,
+    RecommendationClassesComponent,
   ],
   imports: [
     BrowserModule,

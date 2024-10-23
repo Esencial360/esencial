@@ -7,7 +7,7 @@ import { User } from '../Models/User';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://your-api-url/users'; // Replace with your API URL
+  private apiUrl = 'http://localhost:3000/users'; // Replace with your API URL
 
   constructor(private http: HttpClient) { }
 
@@ -15,8 +15,8 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl);
   }
 
-  getUser(id: string): Observable<User> {
-    const url = `${this.apiUrl}/${id}`;
+  getUser(email: any): Observable<User> {
+    const url = `${this.apiUrl}/${email}`;
     return this.http.get<User>(url);
   }
 

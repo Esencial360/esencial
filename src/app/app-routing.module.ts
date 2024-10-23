@@ -29,6 +29,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { PlatformService } from './shared/services/platform.service';
 import { firstValueFrom } from 'rxjs';
 import { PartnersComponent } from './pages/partners/partners.component';
+import { CommunityComponent } from './pages/community/community.component';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -173,6 +174,10 @@ const routes: Routes = [
   {
     path: 'socios',
     component: PartnersComponent
+  },
+  {
+    path: 'comunidad',
+    component: CommunityComponent
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
   // Catch-all for invalid routes (404)
