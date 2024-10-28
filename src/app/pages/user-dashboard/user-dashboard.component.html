@@ -1,9 +1,12 @@
 @if (isLoading) {
-  <app-loading></app-loading>
-} @else {
-  @if (authService.user$ | async; as user) {
-    <app-recommendation-classes></app-recommendation-classes>
-    <!-- <div
+<app-loading></app-loading>
+} @else { @if (authService.user$ | async; as user) { @if (showRecommendation) {
+<app-recommendation-classes
+  (recommendationProcess)="onRemoveRecommendation()"
+  (isRecommendationDone)="onRecommendationDone()"
+></app-recommendation-classes>
+}
+<div
       class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
     >
       <div class="flex-1 pr-8">
@@ -22,31 +25,32 @@
           class="rounded-xl object-cover w-full h-64"
         />
       </div>
-    </div> -->
-    } 
-    <app-popular-classes-and-instructors></app-popular-classes-and-instructors>
-    <app-classes-catalogue
-      [collectionName]="'CATEGORIAS'"
-      [collectionSubtitle]="'Empieza el bienestar de tu dia con alguna de nuestras categorias'"
-      [collectionList]="collectionList"
-    ></app-classes-catalogue>
-    <app-instructors-overview></app-instructors-overview>
-    <app-catalogue-view
-    [title]="'EVENTOS Y NOTICIAS'"
-    [subtitle]="'Descrube lo que esta pasando en la comunidad de Esencial360'"
-    [description]="
-      'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
-    "
-    [catalogue]="blogs"
-  ></app-catalogue-view>
-    <app-catalogue-view
-    [title]="'OUR BLOG'"
-    [subtitle]="'CHECK OUT OUR BLOG'"
-    [description]="
-      'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
-    "
-    [catalogue]="blogs"
-  ></app-catalogue-view>
+    </div>
+}
+<app-popular-classes-and-instructors></app-popular-classes-and-instructors>
+<app-classes-catalogue
+  [collectionName]="'CATEGORIAS'"
+  [collectionSubtitle]="
+    'Empieza el bienestar de tu dia con alguna de nuestras categorias'
+  "
+  [collectionList]="collectionList"
+></app-classes-catalogue>
+<app-instructors-overview></app-instructors-overview>
+<app-catalogue-view
+  [title]="'EVENTOS Y NOTICIAS'"
+  [subtitle]="'Descrube lo que esta pasando en la comunidad de Esencial360'"
+  [description]="
+    'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
+  "
+  [catalogue]="blogs"
+></app-catalogue-view>
+<app-catalogue-view
+  [title]="'OUR BLOG'"
+  [subtitle]="'CHECK OUT OUR BLOG'"
+  [description]="
+    'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
+  "
+  [catalogue]="blogs"
+></app-catalogue-view>
 }
 <!-- } -->
-

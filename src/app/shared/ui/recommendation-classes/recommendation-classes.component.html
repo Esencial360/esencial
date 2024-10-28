@@ -1,65 +1,69 @@
-<div class="min-h-screen bg-gray-50 p-4">
-    <div class="max-w-lg mx-auto">
-      <!-- Progress bar -->
-      <div class="mb-8">
-        <div class="h-2 bg-gray-200 rounded-full">
-          <div 
-            class="h-2 bg-blue-500 rounded-full transition-all duration-300"
-            [style.width]="(currentStep / 3 * 100) + '%'"
-          ></div>
-        </div>
-        <div class="mt-2 text-sm text-gray-500 text-center">
-          Step {{currentStep}} of 3
-        </div>
+<div class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto w-full">
+  <div class="max-w-lg mx-auto w-full">
+    @if (startQuestionnaire) {
+    <!-- Progress bar -->
+    <div class="mb-8">
+      <div class="h-2 bg-gray-200 rounded-full">
+        <div
+          class="h-2 bg-blue-500 rounded-full transition-all duration-300"
+          [style.width]="(currentStep / 3) * 100 + '%'"
+        ></div>
+      </div>
+      <div class="mt-2 text-sm text-gray-500 text-center">
+        Step {{ currentStep }} of 3
+      </div>
+    </div>
+
+    <!-- Question Card -->
+    @if (!isComplete) {
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-6">{{ currentQuestion.question }}</h2>
+
+      <div class="space-y-3">
+        @for (option of currentQuestion.options; track $index) {
+        <button
+          (click)="selectAnswer(option.value)"
+          class="w-full p-4 text-left rounded-lg border hover:bg-blue-50 hover:border-blue-500 transition-colors duration-200"
+          [class.border-blue-500]="answers[getAnswerKey()] === option.value"
+          [class.bg-blue-50]="answers[getAnswerKey()] === option.value"
+        >
+          {{ option.label }}
+        </button>
+        }
       </div>
 
-      <!-- Question Card -->
-      <div class="bg-white rounded-lg shadow-lg p-6" *ngIf="!isComplete">
-        <h2 class="text-2xl font-bold mb-6">{{currentQuestion.question}}</h2>
-        
-        <div class="space-y-3">
-          <button
-            *ngFor="let option of currentQuestion.options"
-            (click)="selectAnswer(option.value)"
-            class="w-full p-4 text-left rounded-lg border hover:bg-blue-50 hover:border-blue-500 transition-colors duration-200"
-            [class.border-blue-500]="answers[getAnswerKey()] === option.value"
-            [class.bg-blue-50]="answers[getAnswerKey()] === option.value"
-          >
-            {{option.label}}
-          </button>
-        </div>
-
-        <!-- Navigation -->
-        <div class="mt-6 flex justify-between">
-          <button
-            *ngIf="currentStep > 1"
-            (click)="previousStep()"
-            class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-          >
-            Back
-          </button>
-        </div>
+      <!-- Navigation -->
+      <div class="mt-6 flex justify-between">
+        <button
+          *ngIf="currentStep > 1"
+          (click)="previousStep()"
+          class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+        >
+          Back
+        </button>
       </div>
+    </div>
+    }
 
-      <!-- Recommendation Card -->
-      <div class="bg-white rounded-lg shadow-lg p-6" *ngIf="isComplete">
+    <!-- Recommendation Card -->
+    @if (isComplete) {
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <div>
         <h2 class="text-2xl font-bold mb-6">Your Recommended Practice</h2>
         <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-blue-600">
-            {{recommendation.title}}
-          </h3>
+          <h3 class="text-xl font-semibold text-blue-600"></h3>
           <div class="grid grid-cols-2 gap-4">
             <div>
               <p class="text-sm text-gray-500">Duration</p>
-              <p class="font-medium">{{recommendation.duration}}</p>
+              <p class="font-medium"></p>
             </div>
             <div>
               <p class="text-sm text-gray-500">Level</p>
-              <p class="font-medium">{{recommendation.level}}</p>
+              <p class="font-medium"></p>
             </div>
             <div>
               <p class="text-sm text-gray-500">Instructor</p>
-              <p class="font-medium">{{recommendation.instructor}}</p>
+              <p class="font-medium"></p>
             </div>
           </div>
           <button
@@ -70,5 +74,32 @@
           </button>
         </div>
       </div>
+      <app-button [text]="'IR A DASHBOARD'" (click)="onDashboardGo()"></app-button>
     </div>
+    } } @else {
+    <div
+      class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
+    >
+      <div class="flex-1 pr-8">
+        <h2 class="!text-4xl font-bold text-strongBrown mb-4">
+          Bienvenido {{ user ? user.username : "" }}
+        </h2>
+        <p class="text-olive-600 text-lg">
+          Da click para empezar con la recomendacion de clases.
+        </p>
+      </div>
+      <div class="mt-5 md:mt-0 md:w-1/2">
+        <img
+          src="../../../assets/images/yoga1.jpg"
+          alt="Person doing yoga"
+          class="rounded-xl object-cover w-full h-64"
+        />
+      </div>
+    </div>
+    <app-button
+      [text]="'CONTINUAR'"
+      (click)="onQuestionnaireStart()"
+    ></app-button>
+    }
   </div>
+</div>

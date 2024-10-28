@@ -31,6 +31,7 @@ export class UserDashboardComponent implements OnInit {
   isLoading!: boolean;
   userRoles: string[] = [];
   roles: string[] = [];
+  showRecommendation!: boolean
 
   constructor(
     public authService: AuthService,
@@ -154,5 +155,17 @@ export class UserDashboardComponent implements OnInit {
         console.error('Error retrieving collection:', error);
       }
     );
+  }
+
+  onRemoveRecommendation() {
+    this.showRecommendation = false
+  }
+
+  onAddRecommendation() {
+    this.showRecommendation = true
+  }
+
+  onRecommendationDone() {
+    this.showRecommendation = false
   }
 }
