@@ -1,0 +1,148 @@
+<!-- appointment-scheduler.component.html -->
+<app-header [newLanding]="true"></app-header>
+<section class="h-full relative">
+  <app-parallax [imagePath]="'assets/images/yoga1.jpg'"></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
+    <h1 class="font-bold text-5xl">INSTRUCTORES</h1>
+    <p class="text-xl">Conoce al equipo de Instructores de Esencial360</p>
+  </div>
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
+<div class="max-w-2xl mx-auto my-8 p-8 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+    Haz un cita con nuestros asesores
+  </h2>
+
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" class="space-y-6">
+    <!-- Name Field -->
+    <div class="space-y-2">
+      <label for="name" class="block text-sm font-medium text-gray-700"
+        >Full Name</label
+      >
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        [ngClass]="{
+          'border-red-500 focus:ring-red-500': submitted && f['name'].errors
+        }"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+        placeholder="Enter your full name"
+      />
+      @if (submitted && f['name'].errors) {
+      <div class="text-sm text-red-600 mt-1">
+        @if (f['name'].errors['required']) {
+        <div>Name is required</div>
+        } @if (f['name'].errors['minlength']) {
+        <div>Name must be at least 2 characters</div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Email Field -->
+    <div class="space-y-2">
+      <label for="email" class="block text-sm font-medium text-gray-700"
+        >Email</label
+      >
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        [ngClass]="{
+          'border-red-500 focus:ring-red-500': submitted && f['email'].errors
+        }"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+        placeholder="Enter your email"
+      />
+      @if (submitted && f['email'].errors) {
+      <div class="text-sm text-red-600 mt-1">
+        @if (f['email'].errors['required']) {
+        <div>Email is required</div>
+        } @if (f['email'].errors['email']) {
+        <div>Please enter a valid email</div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Date and Time Fields -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Date Field -->
+      <div class="space-y-2">
+        <label for="date" class="block text-sm font-medium text-gray-700"
+          >Date</label
+        >
+        <input
+          id="date"
+          type="date"
+          formControlName="date"
+          [min]="minDate"
+          [ngClass]="{
+            'border-red-500 focus:ring-red-500': submitted && f['date'].errors
+          }"
+          class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+        />
+        @if (submitted && f['date'].errors) {
+        <div class="text-sm text-red-600 mt-1">
+          @if (f['date'].errors['required']) {
+          <div>Date is required</div>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Time Field -->
+      <div class="space-y-2">
+        <label for="time" class="block text-sm font-medium text-gray-700"
+          >Time</label
+        >
+        <input
+          id="time"
+          type="time"
+          formControlName="time"
+          [ngClass]="{
+            'border-red-500 focus:ring-red-500': submitted && f['time'].errors
+          }"
+          class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+        />
+        @if (submitted && f['time'].errors) {
+        <div class="text-sm text-red-600 mt-1">
+          @if (f['time'].errors['required']) {
+          <div>Time is required</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Notes Field -->
+    <div class="space-y-2">
+      <label for="notes" class="block text-sm font-medium text-gray-700"
+        >Notes (Optional)</label
+      >
+      <textarea
+        id="notes"
+        formControlName="notes"
+        rows="3"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 resize-y"
+        placeholder="Any special requests or notes?"
+      ></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 active:bg-blue-700 transition duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    >
+      Schedule Appointment
+    </button>
+  </form>
+</div>
+<app-footer></app-footer>

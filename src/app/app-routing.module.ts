@@ -30,6 +30,7 @@ import { PlatformService } from './shared/services/platform.service';
 import { firstValueFrom } from 'rxjs';
 import { PartnersComponent } from './pages/partners/partners.component';
 import { CommunityComponent } from './pages/community/community.component';
+import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -179,8 +180,12 @@ const routes: Routes = [
     path: 'comunidad',
     component: CommunityComponent
   },
+  {
+    path: 'asesorias',
+    component: AppointmentSchedulerComponent
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
-  // Catch-all for invalid routes (404)
+  // Catch-all for invalid routes (404)`
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

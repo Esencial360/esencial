@@ -86,6 +86,7 @@ import { DialogPopupComponent } from './shared/ui/dialog-popup/dialog-popup.comp
 import { PartnersComponent } from './pages/partners/partners.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { RecommendationClassesComponent } from './shared/ui/recommendation-classes/recommendation-classes.component';
+import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { RecommendationClassesComponent } from './shared/ui/recommendation-class
     PartnersComponent,
     CommunityComponent,
     RecommendationClassesComponent,
+    AppointmentSchedulerComponent,
   ],
   imports: [
     BrowserModule,
