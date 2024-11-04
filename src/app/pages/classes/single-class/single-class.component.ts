@@ -10,6 +10,8 @@ import {
 import AOS from 'aos';
 import { AuthService } from '@auth0/auth0-angular';
 import { Subject, takeUntil } from 'rxjs';
+import { LikedClassesService } from '../../../shared/services/liked-classes.service';
+import { UserService } from '../../../shared/services/users.service';
 
 @Component({
   selector: 'app-single-class',
@@ -24,6 +26,8 @@ export class SingleClassComponent implements OnInit {
   link!: SafeResourceUrl;
   isLoading!: boolean;
   roles!: string;
+  isLiked = false;
+  userId!: string
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
@@ -32,7 +36,9 @@ export class SingleClassComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private likedClassesService: LikedClassesService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -43,18 +49,28 @@ export class SingleClassComponent implements OnInit {
       this.videoId = params.get('id');
     });
     this.getVideo();
-
+    
     this.authService.user$
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((user) => {
-          if (user) {
-            console.log('User:', user);
-            this.isLoading = false;
-          }
           this.authService.user$.subscribe((user) => {
             if (user) {
               const namespace = 'https://test-assign-roles.com';
+              console.log('User', user.email);
+              
               this.roles = user[`${namespace}roles`][0] || [];
+              this.userService.getUser(user.email).subscribe({
+                next: (response) => {
+                  this.userId = response._id
+                  console.log('User successful received', response);
+                },
+                error: (error) => {
+                  console.error('Error user retreival:', error);
+                  // Handle error (e.g., show an error message)
+                },
+              })
+              console.log('User:', user);
+              this.isLoading = false;
             }
           });
         });
@@ -66,6 +82,11 @@ export class SingleClassComponent implements OnInit {
         this.videos = response;
         const link = `https://iframe.mediadelivery.net/embed/263508/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
         this.link = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+        this.likedClassesService.getLikedVideos(this.userId).subscribe(
+          likedVideos => {
+            this.isLiked = likedVideos.includes(this.videoId);
+          }
+        );
         this.isLoading = false;
       },
       (error) => {
@@ -142,5 +163,19 @@ export class SingleClassComponent implements OnInit {
         },
       } as DialogData,
     });
+  }
+
+  toggleLike() {
+    this.likedClassesService.toggleVideoLike(this.videoId, this.userId).subscribe(
+      response => {
+        console.log(response);
+        this.isLiked = true
+        
+      },
+      error => {
+        console.error('Error toggling like:', error);
+        this.isLiked = true
+      }
+    );
   }
 }

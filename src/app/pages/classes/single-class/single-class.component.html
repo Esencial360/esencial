@@ -71,15 +71,20 @@
         allowfullscreen="true"
       ></iframe>
     </div>
+    <div class="video-container">
+      <button (click)="toggleLike()">
+        {{ isLiked ? "❤️" : "🤍" }}
+      </button>
+    </div>
   </div>
 </div>
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
-@if (roles === 'Admin' || roles === 'Instructor') {
+<!-- @if (roles === 'Admin' || roles === 'Instructor') {
 <app-class-statistics
   [videoGuid]="videoId"
   class="flex justify-center"
 ></app-class-statistics>
-}
+} -->
 <app-page-title
   [pageDescription]="'Descubre nuestra gran variedad de clases'"
 ></app-page-title>
