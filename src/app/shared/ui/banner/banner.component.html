@@ -1,0 +1,11 @@
+<<div *ngIf="banner" class="fixed bottom-0 w-full bg-red-100 border-t-4 border-red-500 p-4 text-center">
+    <div class="flex flex-col items-center md:flex-row md:justify-center">
+      <img *ngIf="banner.imageUrl" [src]="banner.imageUrl" alt="Banner Image" class="max-w-xs mb-2 md:mb-0 md:mr-4" />
+      <div>
+        <h2 class="text-lg font-semibold text-red-800">{{ banner.title }}</h2>
+        <p class="text-sm text-red-700">{{ banner.message }}</p>
+        <a *ngIf="banner.linkUrl" [href]="banner.linkUrl" class="text-blue-500 underline mt-2 block">Learn More</a>
+      </div>
+    </div>
+  </div>
+  

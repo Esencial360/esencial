@@ -1,0 +1,294 @@
+<app-header></app-header>
+<mat-tab-group>
+  <mat-tab label="Create Banner">
+    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold mb-6 text-center">Create New Banner</h2>
+      <form (ngSubmit)="onSubmit()" [formGroup]="bannerForm">
+        <div
+          class="mb-4"
+        >
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+            >Title</label
+          >
+          @if (bannerForm.get('title')?.errors) {
+            <input
+            type="text"
+            id="title"
+            type="text"
+            placeholder="Enter blog title"
+            formControlName="title"
+          />
+          }
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="content"
+            >Content</label
+          >
+          <textarea
+            id="content"
+            formControlName="content"
+            name="content"
+            placeholder="placeholder text"
+            class="w-full px-3 py-2 border rounded"
+          ></textarea>
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="imageUrl"
+            >Image URL</label
+          >
+          <input
+            type="url"
+            id="imageUrl"
+            formControlName="imageUrl"
+            name="imageUrl"
+            class="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="linkUrl"
+            >Link URL</label
+          >
+          <input
+            type="url"
+            id="linkUrl"
+           formControlName="linkUrl"
+            name="linkUrl"
+            class="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="startDate"
+            >Start Date</label
+          >
+          <input
+            type="date"
+            id="startDate"
+            formControlName="startDate"
+            name="startDate"
+            class="w-full px-3 py-2 border rounded"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="endDate"
+            >End Date</label
+          >
+          <input
+            type="date"
+            id="endDate"
+            formControlName="endDate"
+            name="endDate"
+            class="w-full px-3 py-2 border rounded"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="isActive"
+            >Active</label
+          >
+          <input
+            type="checkbox"
+            id="isActive"
+            formControlName="isActive"
+            name="isActive"
+            class="mr-2"
+          />
+          <span class="text-gray-700 text-sm">Display banner</span>
+        </div>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Create Banner
+        </button>
+      </form>
+    </div>
+  </mat-tab>
+
+  <!-- Edit Banner Tab -->
+  <mat-tab label="Edit Banner">
+    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold mb-6 text-center">Edit Banner</h2>
+      <form (ngSubmit)="onUpdate()">
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="bannerId"
+            >Select Banner</label
+          >
+          <select
+            [(ngModel)]="selectedBannerId"
+            name="bannerId"
+            (change)="loadBannerData()"
+            class="w-full px-3 py-2 border rounded"
+            required
+          >
+            <option *ngFor="let banner of banners" [value]="banner._id">
+              {{ banner.title }}
+            </option>
+          </select>
+        </div>
+        <form (ngSubmit)="onSubmit()" [formGroup]="bannerForm">
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="title"
+              >Title</label
+            >
+            <input
+              type="text"
+              id="title"
+              formControlName="title"
+              name="title"
+              class="w-full px-3 py-2 border rounded"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="content"
+              >Content</label
+            >
+            <textarea
+              id="content"
+              formControlName="content"
+              name="content"
+              class="w-full px-3 py-2 border rounded"
+              required
+            ></textarea>
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="imageUrl"
+              >Image URL</label
+            >
+            <input
+              type="url"
+              id="imageUrl"
+              formControlName="imageUrl"
+              name="imageUrl"
+              class="w-full px-3 py-2 border rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="linkUrl"
+              >Link URL</label
+            >
+            <input
+              type="url"
+              id="linkUrl"
+              formControlName="linkUrl"
+              name="linkUrl"
+              class="w-full px-3 py-2 border rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="startDate"
+              >Start Date</label
+            >
+            <input
+              type="date"
+              id="startDate"
+              formControlName="startDate"
+              name="startDate"
+              class="w-full px-3 py-2 border rounded"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="endDate"
+              >End Date</label
+            >
+            <input
+              type="date"
+              id="endDate"
+              formControlName="endDate"
+              name="endDate"
+              class="w-full px-3 py-2 border rounded"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="isActive"
+              >Active</label
+            >
+            <input
+              type="checkbox"
+              id="isActive"
+              formControlName="isActive"
+              name="isActive"
+              class="mr-2"
+            />
+            <span class="text-gray-700 text-sm">Display banner</span>
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded"
+            [disabled]="!bannerForm.valid"
+          >
+            Create Banner
+          </button>
+        </form>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+          [disabled]="!bannerForm.valid"
+        >
+          Update Banner
+        </button>
+      </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Manage Banners">
+    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold mb-6 text-center">Manage Banners</h2>
+      <ul>
+        <li
+          *ngFor="let banner of banners"
+          class="flex items-center justify-between p-2 border-b"
+        >
+          <span>{{ banner.title }}</span>
+          <div>
+            <button
+              (click)="deactivateBanner(banner._id)"
+              class="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+            >
+              {{ banner.isActive ? "Deactivate" : "Activate" }}
+            </button>
+            <button
+              (click)="deleteBanner(banner._id)"
+              class="bg-red-500 text-white px-3 py-1 rounded"
+            >
+              Delete
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<app-footer></app-footer>

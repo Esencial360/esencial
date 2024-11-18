@@ -31,6 +31,7 @@ import { firstValueFrom } from 'rxjs';
 import { PartnersComponent } from './pages/partners/partners.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
+import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -183,6 +184,10 @@ const routes: Routes = [
   {
     path: 'asesorias',
     component: AppointmentSchedulerComponent
+  }, 
+  {
+    path: 'banner',
+    component: CreateBannerComponent
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
   // Catch-all for invalid routes (404)`

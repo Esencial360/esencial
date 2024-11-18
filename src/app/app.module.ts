@@ -87,6 +87,7 @@ import { PartnersComponent } from './pages/partners/partners.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { RecommendationClassesComponent } from './shared/ui/recommendation-classes/recommendation-classes.component';
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
+import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/app
     CommunityComponent,
     RecommendationClassesComponent,
     AppointmentSchedulerComponent,
+    CreateBannerComponent,
   ],
   imports: [
     BrowserModule,
