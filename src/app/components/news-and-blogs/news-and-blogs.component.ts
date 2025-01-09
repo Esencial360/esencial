@@ -25,16 +25,16 @@ export class NewsAndBlogsComponent implements OnInit {
     if (this.instructorView) {
       this.retreatFeatures = [
         {
-          title: 'Primero Manda tu informacion',
-          description: 'Our retreats are designed to fit your needs, whether you\'re a yoga novice or expert. Find the perfect balance of activity and relaxation, and connect with like-minded individuals.'
+          title: 'Comunidad',
+          description: '¡Esta es la comunidad que estabas esperando! Aquí encontrarás tanto a colegas instructores y facilitadores, que como tú, aportan crecimiento y bienestar a través de su experiencia y capacidades. Además, tendrás a tu disposición la plataforma y sus contenidos, para seguirte entrenando de manera continua, aprendiendo de Maestros con sólidas trayectorias, que están listos para asesorarte si así lo deseas.'
         },
         {
-          title: 'Evaluaremos tu solicitud',
-          description: 'Experience a variety of yoga styles to enrich your practice. Our expert instructors guide you in finding the style that speaks to you, from calming Yin to dynamic Ashtanga.'
+          title: 'Beneficios',
+          description: 'Súmate y goza de todos los beneficios que esencial360 ha planeado para hacer que tus clases  y tus conocimientos, cobran otra dimensión, y sumes a tu crecimiento personal y profesional'
         },
         {
-          title: 'Si todo ok, te contactaremos',
-          description: 'Connect with the calming power of nature. Our retreats are set in beautiful, peaceful locations that offer a perfect backdrop for mindfulness and growth.'
+          title: 'Proceso',
+          description: 'Estás a un paso de ser parte de esta maravillosa comunidad de crecimiento y bienestar compartido. Para nosotros, eres ESENCIAL. Estamos seguros de que esta plataforma diseñada para ti, es el lugar perfecto para compartir tu experiencia y unicidad, con cientos de alumnos y usuarios que se suman a diario a ESENCIAL360.'
         }
       ];
     } else if (this.aboutView) {

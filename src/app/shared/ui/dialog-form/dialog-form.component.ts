@@ -2,11 +2,24 @@ import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailService } from '../../services/email.service';
 import { Router } from '@angular/router';
+import { trigger, style, transition, animate } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dialog-form',
   templateUrl: './dialog-form.component.html',
   styleUrl: './dialog-form.component.css',
+  animations: [
+    trigger('dialogAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.9)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' })),
+      ]),
+    ]),
+  ],
 })
 export class DialogFormComponent implements OnInit {
   consultationForm!: FormGroup;
@@ -22,6 +35,7 @@ export class DialogFormComponent implements OnInit {
   videoFile: any;
   onSubmittingForm!: boolean;
   formSuccess!: boolean;
+  introForm!: boolean;
   @Input()
   isOpen!: boolean;
 
@@ -45,7 +59,7 @@ export class DialogFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private emailService: EmailService
+    private emailService: EmailService,
   ) {
     window.scroll(0, 0)
     this.instructorForm = this.fb.group({
@@ -128,20 +142,19 @@ export class DialogFormComponent implements OnInit {
           const scrollPosition = window.pageYOffset;
 
           // Prevent scrolling
-          document.body.style.top = `-${scrollPosition}px`;
-          document.body.style.position = 'fixed';
-          document.body.style.width = '100%';
+          // document.body.style.top = `-${scrollPosition}px`;
+          // document.body.style.position = 'fixed';
+          // document.body.style.width = '100%';
+          document.body.classList.remove('overflow-hidden');
 
           // Send the confirmation email
+
+           const htmlContentPath = '/assets/views/potentialInstructor.html';
           const emailData = {
             to: this.instructorForm.value.email,
             subject: 'Muchas gracias por contactarnos.',
-            text: `Nuevo potencial instructor ${JSON.stringify(
-              this.instructorForm.value
-            )}`,
-            html: `Nuevo potencial instructor ${JSON.stringify(
-              this.instructorForm.value
-            )}`,
+            text: `Gracias por contactarnos. Hemos recibido su mensaje.`,
+            html: `Gracias por contactarnos. Hemos recibido su mensaje.`,
           };
 
           this.emailService.sendEmail(emailData).subscribe({
@@ -177,6 +190,8 @@ export class DialogFormComponent implements OnInit {
     this.formSuccess = false;
     this.closeDialog()
     this.router.navigate(['/'])
+    document.body.classList.remove('overflow-hidden');
+
   }
 
   closeDialog() {

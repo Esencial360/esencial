@@ -3,24 +3,38 @@
   <mat-tab label="Create Banner">
     <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
       <h2 class="text-2xl font-semibold mb-6 text-center">Create New Banner</h2>
-      <form (ngSubmit)="onSubmit()" [formGroup]="bannerForm">
-        <div
-          class="mb-4"
-        >
+      <form [formGroup]="bannerForm">
+        <div class="mb-4">
+          @if (bannerForm.get('title')?.invalid &&
+          (bannerForm.get('title')?.dirty || bannerForm.get('title')?.touched))
+          {
+          <div>
+            @if (bannerForm.get('title')?.errors) {
+            <div class="text-red-500">Title is required.</div>
+            }
+          </div>
+          }
           <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
             >Title</label
           >
-          @if (bannerForm.get('title')?.errors) {
-            <input
+          <input
             type="text"
             id="title"
             type="text"
             placeholder="Enter blog title"
             formControlName="title"
           />
-          }
         </div>
         <div class="mb-4">
+          @if (bannerForm.get('content')?.invalid &&
+          (bannerForm.get('content')?.dirty ||
+          bannerForm.get('content')?.touched)) {
+          <div>
+            @if (bannerForm.get('content')?.errors) {
+            <div class="text-red-500">content is required.</div>
+            }
+          </div>
+          }
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="content"
@@ -35,6 +49,15 @@
           ></textarea>
         </div>
         <div class="mb-4">
+          @if (bannerForm.get('imageUrl')?.invalid &&
+          (bannerForm.get('imageUrl')?.dirty ||
+          bannerForm.get('imageUrl')?.touched)) {
+          <div>
+            @if (bannerForm.get('imageUrl')?.errors) {
+            <div class="text-red-500">imageUrl is required.</div>
+            }
+          </div>
+          }
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="imageUrl"
@@ -49,6 +72,15 @@
           />
         </div>
         <div class="mb-4">
+          @if (bannerForm.get('linkUrl')?.invalid &&
+          (bannerForm.get('linkUrl')?.dirty ||
+          bannerForm.get('linkUrl')?.touched)) {
+          <div>
+            @if (bannerForm.get('linkUrl')?.errors) {
+            <div class="text-red-500">linkUrl is required.</div>
+            }
+          </div>
+          }
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="linkUrl"
@@ -57,12 +89,21 @@
           <input
             type="url"
             id="linkUrl"
-           formControlName="linkUrl"
+            formControlName="linkUrl"
             name="linkUrl"
             class="w-full px-3 py-2 border rounded"
           />
         </div>
         <div class="mb-4">
+          @if (bannerForm.get('startDate')?.invalid &&
+          (bannerForm.get('startDate')?.dirty ||
+          bannerForm.get('startDate')?.touched)) {
+          <div>
+            @if (bannerForm.get('startDate')?.errors) {
+            <div class="text-red-500">startDate is required.</div>
+            }
+          </div>
+          }
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="startDate"
@@ -78,6 +119,15 @@
           />
         </div>
         <div class="mb-4">
+          @if (bannerForm.get('endDate')?.invalid &&
+          (bannerForm.get('endDate')?.dirty ||
+          bannerForm.get('endDate')?.touched)) {
+          <div>
+            @if (bannerForm.get('endDate')?.errors) {
+            <div class="text-red-500">endDate is required.</div>
+            }
+          </div>
+          }
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="endDate"
@@ -93,6 +143,15 @@
           />
         </div>
         <div class="mb-4">
+          @if (bannerForm.get('isActive')?.invalid &&
+          (bannerForm.get('isActive')?.dirty ||
+          bannerForm.get('isActive')?.touched)) {
+          <div>
+            @if (bannerForm.get('isActive')?.errors) {
+            <div class="text-red-500">isActive is required.</div>
+            }
+          </div>
+          }
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="isActive"
@@ -107,18 +166,51 @@
           />
           <span class="text-gray-700 text-sm">Display banner</span>
         </div>
-        <button
-          type="submit"
-          class="bg-blue-500 text-white px-4 py-2 rounded"
+        <app-button [text]="'Crear banner'" (click)="onSubmit()"> </app-button>
+
+        @if (creatingBanner || errorCreatingBanner || successCreatingBanner) {
+        <div
+          class="z-50 fixed inset-0 bg-gray-600 bg-opacity-50 montserrat-normal overflow-y-auto h-full w-full flex items-center justify-center"
         >
-          Create Banner
-        </button>
+          <div
+            class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+          ></div>
+          <div
+            class="relative bg-white rounded-lg shadow-xl md:h-[620px] w-11/12 md:w-6/12 m-4"
+          >
+            @if (creatingBanner) {
+            <div class="flex flex-col justify-center items-center h-full">
+              <app-loading></app-loading>
+            </div>
+            } @if (errorCreatingBanner) {
+            <div class="flex justify-center items-center">
+              <p>Ha ocucrrido un error. Intentalo una vez mas</p>
+            </div>
+            } @if (successCreatingBanner) {
+            <div class="flex flex-col justify-center items-center h-full">
+              <app-check-mark></app-check-mark>
+              <div class="md:mx-10 mx-2">
+                <h4>
+                  Muchas gracias por tu aplicacion! El formulario se ha mandado
+                  exitosamente
+                </h4>
+                <p>
+                  Evaluaremos tus credenciales cuidadosamente y tendremos una
+                  respuesta lo mas pronto posible.
+                </p>
+              </div>
+              <div (click)="onBannerCreationDone()">
+                <app-button [text]="'HOME'"></app-button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        }
       </form>
     </div>
   </mat-tab>
-
-  <!-- Edit Banner Tab -->
-  <mat-tab label="Edit Banner">
+  <!-- <mat-tab label="Edit Banner">
     <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
       <h2 class="text-2xl font-semibold mb-6 text-center">Edit Banner</h2>
       <form (ngSubmit)="onUpdate()">
@@ -251,16 +343,12 @@
             Create Banner
           </button>
         </form>
-        <button
-          type="submit"
-          class="bg-blue-500 text-white px-4 py-2 rounded"
-          [disabled]="!bannerForm.valid"
-        >
+        <app-button [ngClass]="!bannerForm.valid ? 'hidden' : ''">
           Update Banner
-        </button>
+        </app-button>
       </form>
     </div>
-  </mat-tab>
+  </mat-tab> -->
 
   <mat-tab label="Manage Banners">
     <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
@@ -272,23 +360,80 @@
         >
           <span>{{ banner.title }}</span>
           <div>
-            <button
+            <app-button
               (click)="deactivateBanner(banner._id)"
-              class="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+              [text]="banner.isActive ? 'Deactivate' : 'Activate'"
             >
-              {{ banner.isActive ? "Deactivate" : "Activate" }}
-            </button>
-            <button
-              (click)="deleteBanner(banner._id)"
-              class="bg-red-500 text-white px-3 py-1 rounded"
+            </app-button>
+            <app-button
+              (click)="openBanner(banner)"
+              [text]="'Open Details'"
             >
-              Delete
-            </button>
+            </app-button>
           </div>
         </li>
       </ul>
     </div>
   </mat-tab>
 </mat-tab-group>
-
 <app-footer></app-footer>
+
+@if (detailsBanner) {
+    <div
+      class="z-50 fixed inset-0 bg-gray-600 bg-opacity-50 montserrat-normal overflow-y-auto h-full w-full flex items-center justify-center"
+    >
+      <div
+        class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+      ></div>
+      <div
+        class="relative bg-white rounded-lg shadow-xl md:h-[620px] w-11/12 md:w-6/12 m-4"
+      >
+        <!-- @if (creatingBanner) {
+        <div class="flex flex-col justify-center items-center h-full">
+          <app-loading></app-loading>
+        </div>
+        } 
+        @if (errorCreatingBanner) {
+        <div class="flex justify-center items-center">
+          <p>Ha ocucrrido un error. Intentalo una vez mas</p>
+        </div>
+        } @if (successCreatingBanner) {
+        <div class="flex flex-col justify-center items-center h-full">
+          <app-check-mark></app-check-mark>
+          <div class="md:mx-10 mx-2">
+            <h4>
+              Muchas gracias por tu aplicacion! El formulario se ha mandado
+              exitosamente
+            </h4>
+            <p>
+              Evaluaremos tus credenciales cuidadosamente y tendremos una
+              respuesta lo mas pronto posible.
+            </p>
+          </div>
+          <div (click)="onBannerCreationDone()">
+            <app-button [text]="'HOME'"></app-button>
+          </div>
+        </div>
+        } -->
+
+        
+      </div>
+    </div>
+    }
+
+<!-- @if (banners) {
+  @for (banner of banners; track $index) {
+    <div class="absolute top-[20%] w-full text-white flex items-center justify-between p-4 rounded-md"  [ngStyle]="{'background-image': 'url(' + banner.imageUrl + ')'}">
+      <div class="text-center">
+        <h1 class="text-3xl font-bold">Coca-Cola</h1>
+        <p class="italic">share the joy.</p>
+      </div>
+    
+      <div class="text-right">
+        <p class="font-semibold">cheers to the holidays</p>
+        <a href="#" class="text-white underline">›</a>
+      </div>
+    </div>
+    
+  }
+} -->

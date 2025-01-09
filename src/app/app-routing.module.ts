@@ -50,148 +50,157 @@ import { CreateBannerComponent } from './pages/create-banner/create-banner.compo
 //   return true;
 // };
 
+// const routes: Routes = [
+//   {
+//     path: '',
+//     component: LandingComponent,
+//     data: { animation: 'openClosePage' },
+//   }, // Default route (empty path)
+//   // { path: 'dashboard', component: UserDashboardComponent, canActivate: [AuthGuard] },
+//   {
+//     path: 'dashboard',
+//     component: UserDashboardComponent,
+//     // canActivate: [AuthGuard],
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'about',
+//     component: AboutComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'blog',
+//     component: BlogComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'blog/:id',
+//     component: SingleBlogComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'classes',
+//     component: VideosCatalogueComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'instructores',
+//     component: InstructorsCatalogueComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'instructores/:id',
+//     component: SingleInstructorComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'user-settings',
+//     component: UserProfileComponent,
+//     canActivate: [AuthGuard],
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'iniciar-sesion',
+//     component: SignInComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'subscribirse',
+//     component: SignUpComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   { path: 'olvido', component: ForgotComponent },
+//   {
+//     path: 'contacto',
+//     component: ContactComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'nuevo-blog',
+//     component: NewBlogComponent,
+//     canActivate: [AuthGuard],
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'noticias',
+//     component: NewsComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'nosotros',
+//     component: AboutComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'nueva-noticia',
+//     component: NewNewsComponent,
+//     canActivate: [AuthGuard],
+//     data: { animation: 'openClosePage' },
+//   },
+//   { path: 'noticias/:id', component: SingleNewsComponent },
+//   {
+//     path: 'carrera-instructor',
+//     component: InstructorSingUpComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'ajustes',
+//     component: UserProfileComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'nuevo-video',
+//     component: UploadVideoComponent,
+//     data: { animation: 'openClosePage', },
+//   },
+//   {
+//     path: 'collection/:id',
+//     component: SingleCollectionClassesComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'collection/:collectionName/:id',
+//     component: SingleClassComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'estadisticas',
+//     component: ClassStatisticsComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'instructor-previa/:id',
+//     component: InstructorAdminViewComponent,
+//     data: { animation: 'openClosePage' },
+//   },
+//   {
+//     path: 'socios',
+//     component: PartnersComponent
+//   },
+//   {
+//     path: 'comunidad',
+//     component: CommunityComponent
+//   },
+//   {
+//     path: 'asesorias',
+//     component: AppointmentSchedulerComponent
+//   }, 
+//   {
+//     path: 'banner',
+//     component: CreateBannerComponent
+//   },
+//   { path: '**', redirectTo: '', pathMatch: 'full' }, 
+//   // Catch-all for invalid routes (404)`
+// ];
+
 const routes: Routes = [
-  {
-    path: '',
-    component: LandingComponent,
-    data: { animation: 'openClosePage' },
-  }, // Default route (empty path)
-  // { path: 'dashboard', component: UserDashboardComponent, canActivate: [AuthGuard] },
-  {
-    path: 'dashboard',
-    component: UserDashboardComponent,
-    // canActivate: [AuthGuard],
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'about',
-    component: AboutComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'blog',
-    component: BlogComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'blog/:id',
-    component: SingleBlogComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'classes',
-    component: VideosCatalogueComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'instructores',
-    component: InstructorsCatalogueComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'instructores/:id',
-    component: SingleInstructorComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'user-settings',
-    component: UserProfileComponent,
-    canActivate: [AuthGuard],
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'iniciar-sesion',
-    component: SignInComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'subscribirse',
-    component: SignUpComponent,
-    data: { animation: 'openClosePage' },
-  },
-  { path: 'olvido', component: ForgotComponent },
-  {
-    path: 'contacto',
-    component: ContactComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'nuevo-blog',
-    component: NewBlogComponent,
-    canActivate: [AuthGuard],
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'noticias',
-    component: NewsComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'nosotros',
-    component: AboutComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'nueva-noticia',
-    component: NewNewsComponent,
-    canActivate: [AuthGuard],
-    data: { animation: 'openClosePage' },
-  },
-  { path: 'noticias/:id', component: SingleNewsComponent },
-  {
-    path: 'carrera-instructor',
-    component: InstructorSingUpComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'ajustes',
-    component: UserProfileComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'nuevo-video',
-    component: UploadVideoComponent,
-    data: { animation: 'openClosePage', },
-  },
-  {
-    path: 'collection/:id',
-    component: SingleCollectionClassesComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'collection/:collectionName/:id',
-    component: SingleClassComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'estadisticas',
-    component: ClassStatisticsComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'instructor-previa/:id',
-    component: InstructorAdminViewComponent,
-    data: { animation: 'openClosePage' },
-  },
-  {
-    path: 'socios',
-    component: PartnersComponent
-  },
-  {
-    path: 'comunidad',
-    component: CommunityComponent
-  },
-  {
-    path: 'asesorias',
-    component: AppointmentSchedulerComponent
-  }, 
-  {
-    path: 'banner',
-    component: CreateBannerComponent
-  },
-  { path: '**', redirectTo: '', pathMatch: 'full' }, 
-  // Catch-all for invalid routes (404)`
-];
+    {
+        path: '',
+        component: InstructorSingUpComponent,
+        data: { animation: 'openClosePage' },
+      },
+]
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

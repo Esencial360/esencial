@@ -7,14 +7,17 @@ import { Banner } from '../Models/Banner';
   providedIn: 'root',
 })
 export class BannerService {
-  private apiUrl = 'http://localhost:3000/api/banners'; 
+  private apiUrl = 'http://localhost:3000/banner'; 
   constructor(private http: HttpClient) {}
 
   getAllBanners(page: string): Observable<Banner[]> {
-    return this.http.get<Banner[]>(`/api/banners/${page}`);
+    return this.http.get<Banner[]>(`${this.apiUrl}`);
   }
 
   createBanner(banner: any): Observable<any> {
+    console.log('posting banner');
+    console.log(this.apiUrl);
+    
     return this.http.post(`${this.apiUrl}`, banner);
   }
 

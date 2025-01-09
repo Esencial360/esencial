@@ -4,6 +4,7 @@
 >
   <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
   <div
+  [@dialogAnimation]
     class="relative bg-white rounded-lg shadow-xl md:h-[620px] w-11/12 md:w-6/12 m-4"
   >
     <div class="absolute top-0 right-0 pt-4 pr-4">
@@ -29,7 +30,7 @@
     @if (!onSubmittingForm && !formSuccess) {
     <div class="p-6">
       <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
-        Dejanos saber de ti
+        Déjanos saber más de tu trayectoria
       </h2>
 
       <form
@@ -54,14 +55,14 @@
             instructorForm.get('name')?.touched)) {
             <div class="text-red-500 mt-1">
               @if (instructorForm.get('name')?.errors?.['required']) {
-              <div>Name is required.</div>
+              <div>Campo obligatorio.</div>
               }
             </div>
             }
           </div>
           <div class="mb-4 ml-2">
             <label for="experience" class="block mb-2 font-bold text-gray-700"
-              >Years of Experience</label
+              >Años de experiencia</label
             >
             <input
               type="number"
@@ -79,10 +80,10 @@
               class="text-red-500 mt-1"
             >
               <div *ngIf="instructorForm.get('years')?.errors?.['required']">
-                Experience es requerido.
+                Campo Obligatorio.
               </div>
               <div *ngIf="instructorForm.get('years')?.errors?.['min']">
-                Experience must be at least 0 years.
+                Experiencia tiene que ser al menos 0.
               </div>
             </div>
           </div>
@@ -108,10 +109,10 @@
             class="text-red-500 mt-1"
           >
             <div *ngIf="instructorForm.get('email')?.errors?.['required']">
-              Email is required.
+              Campo Obligatorio.
             </div>
             <div *ngIf="instructorForm.get('email')?.errors?.['email']">
-              Invalid email format.
+              Formato de email invalido.
             </div>
           </div>
         </div>
@@ -124,13 +125,14 @@
             formControlName="message"
             required
             class="w-full justify-center px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+            placeholder="Nos encantaría conocer más de ti, en un párrafo"
           ></textarea>
           @if ( instructorForm.get('message')?.invalid &&
           (instructorForm.get('message')?.dirty ||
           instructorForm.get('message')?.touched)) {
           <div class="text-red-500 mt-1">
             @if (instructorForm.get('message')?.errors?.['required']) {
-            <div>Bio is required.</div>
+            <div>Campo obligatorio</div>
             }
           </div>
           }
@@ -138,14 +140,18 @@
         <div class="flex justify-between">
           <div class="mb- mr-2">
             <label for="resume" class="block mb-2 font-bold text-gray-700"
-              >CV (PDF)</label
+              >CV</label
             >
+            <span class="text-xs text-gray-500 block mb-1">
+              Por favor compártenos una sola hoja de CV en PDF
+            </span>
             <input
               type="file"
               id="resume"
               (change)="onFileSelected($event)"
               accept=".pdf"
               class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                      
             />
             @if (resumeError) {
             <div class="text-red-500 mt-1">
@@ -155,8 +161,11 @@
           </div>
           <div class="mb-4 ml-2">
             <label for="resume" class="block mb-2 font-bold text-gray-700"
-              >Video (CV)</label
+              >Video</label
             >
+            <span class="text-xs text-gray-500 block mb-1">
+              Compártenos en máximo 5 minutos,  una práctica, clase, sesión, o charla impartida por ti, para conocer sobre tu área de expertise
+            </span>
             <input
               type="file"
               id="video"
@@ -175,10 +184,10 @@
         <button
           type="submit"
           [disabled]="instructorForm.invalid"
-          [ngClass]="instructorForm.invalid ? 'brightness-80' : ''"
-          class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+          [ngClass]="instructorForm.invalid ? 'brightness-80' : 'cursor-pointer   hover:bg-black hover:text-white'"
+          class="bg-transparent text-black border border-black px-4 py-2 rounded flex items-center justify-center w-full"
         >
-          Submit
+          Subir
         </button>
       </form>
     </div>
@@ -193,16 +202,19 @@
     } @else if (formSuccess) {
     <div class="flex flex-col justify-center items-center h-full">
     <app-check-mark></app-check-mark>
-    <div class="md:mx-10 mx-2">
+    <div class="md:mx-10 mx-2 text-center">
       <h4>
-        Muchas gracias por tu aplicacion! El formulario se ha mandado exitosamente
+        Para nosotros, tu participación es ESENCIAL.
       </h4>
-      <p>
-        Evaluaremos tus credenciales cuidadosamente y tendremos una respuesta lo
-        mas pronto posible.
+      <p class="my-4">
+        ¡Muchas gracias por tu aplicación! El formulario con tu material se ha enviado exitosamente.
+        Pronto te contactaremos.
       </p>
+      <h4>
+        El equipo de ESENCIAL360
+      </h4>
     </div>
-    <div (click)="onProcessDone()">
+    <div class="mt-5" (click)="onProcessDone()">
       <app-button [text]="'HOME'"></app-button>
     </div>
   </div>
