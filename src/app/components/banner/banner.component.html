@@ -3,25 +3,33 @@
   class="text-strongBrown container mx-auto bg-cover rounded overflow-hidden mb-5 relative"
 >
   <div
-    class="flex flex-col items-center justify-center md:flex-row !bg-cover  !bg-no-repeat !bg-center"
+    class="flex flex-col items-center justify-center md:flex-row !bg-cover !bg-no-repeat !bg-center"
     data-aos="fade-up"
     data-aos-duration="1000"
-    style="background: url(/assets/images/yogaBgBlue.jpg);"
+    style="background: url(/assets/images/1.png)"
   >
-    <div class="p-8 flex  text-white flex-col h-[320px] justify-center items-center">
+    <div
+      class="p-8 flex text-white flex-col h-[420px] md:h-[320px] justify-center items-center"
+    >
       <h1 class="text-4xl font-bold mb-4 uppercase">{{ title }}</h1>
       <p class="mb-6">
-        Improves posture, strengthens ankles, knees and thighs, calms the mind.
+        Llegaste al foro que fue planeado para ti. Es el momento de volverte
+        ESENCIAL360. Adelante, estás a unos sencillos pasos de volverte
+        ESENCIAL.
       </p>
       @if (!contact) {
       <div class="flex space-x-4" (click)="onHandleCollection(category.name)">
-        <button class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full">
+        <button
+          class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full"
+        >
           Accede
         </button>
       </div>
       } @else {
       <div class="flex space-x-4" (click)="onAction()">
-        <button class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full">
+        <button
+          class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full"
+        >
           SUBSCRIBE
         </button>
       </div>
@@ -29,4 +37,3 @@
     </div>
   </div>
 </div>
-

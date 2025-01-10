@@ -50,9 +50,9 @@ export class InstructorSingUpComponent implements OnInit {
   ngOnInit(): void {
     this.formSubmitted = false;
     this.services = [
-      { title: 'YOGA', image: '../../../assets/images/yoga.jpg ', description: ''},
-      { title: 'Meditación', image: '../../../assets/images/yoga.jpg' },
-      { title: 'disciplinas varias, relativas al desarrollo personal y evolución del ser', image: '../../../assets/images/yoga.jpg' },
+      { title: 'YOGA', image: '../../../assets/images/8.png ', description: ''},
+      { title: 'Meditación', image: '../../../assets/images/4.png' },
+      { title: 'disciplinas varias, relativas al desarrollo personal y evolución del ser', image: '../../../assets/images/10.png ' },
     ];
   }
 
