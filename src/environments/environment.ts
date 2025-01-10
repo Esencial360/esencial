@@ -7,7 +7,7 @@ export const environment = {
       audience: 'https://test-assign-roles.com'
     },
     dev: {
-      serverUrl: 'http://localhost:3000'
+      serverUrl: 'https://seal-app-jeede.ondigitalocean.app/'
     }
   };
 
