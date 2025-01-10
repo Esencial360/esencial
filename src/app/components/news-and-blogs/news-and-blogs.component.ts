@@ -30,7 +30,7 @@ export class NewsAndBlogsComponent implements OnInit {
         },
         {
           title: 'Beneficios',
-          description: 'Súmate y goza de todos los beneficios que esencial360 ha planeado para hacer que tus clases  y tus conocimientos, cobran otra dimensión, y sumes a tu crecimiento personal y profesional'
+          description: 'Súmate y goza de todos los beneficios que esencial360 ha planeado para hacer que tus clases  y tus conocimientos, cobren otra dimensión, y sumes a tu crecimiento personal y profesional'
         },
         {
           title: 'Proceso',

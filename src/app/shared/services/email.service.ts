@@ -24,6 +24,7 @@ export class EmailService {
   }
 
   sendNewInstructor(formData: any): Observable<any> {
+    console.log(this.apiUrl);
     return this.http.post(`${this.apiUrl}/new-instructor`, formData);
   }
 }
