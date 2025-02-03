@@ -106,21 +106,19 @@ export class DialogFormComponent implements OnInit {
   // }
 
   onVideoSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file.size > 50 * 1024 * 1024) {
-      this.videoError = 'File too large. Max 50MB allowed.';
-      return;
-    }
-  
+    const file: File = event.target.files[0];  
     if (file) {
-      if (this.isVideoFile(file)) {
+      if (this.isVideoFile(file) && file.size < 25 * 1024 * 1024) {
         this.videoFile = file;
         this.videoError = '';
         console.log('Is video File true');
         
+      } else if (file.size > 25 * 1024 * 1024) {
+        this.videoError = 'Video demasiado grande. Máximo 25 MB permitidos';
+        this.videoFile = null;
       } else {
         this.videoFile = null;
-        this.videoError = 'Invalid file type. Please upload a valid video file.';
+        this.videoError = 'Tipo de archivo no válido. Por favor, cargue un archivo de vídeo válido.';
       }
     }
   }
@@ -137,7 +135,7 @@ export class DialogFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.instructorForm.valid && this.resumeFile) {
+    if (this.instructorForm.valid && this.resumeFile && this.videoFile) {
       const formData = new FormData();
       this.formSubmitted = true;
       this.onSubmittingForm = true;
