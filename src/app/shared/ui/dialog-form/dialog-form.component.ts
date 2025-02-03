@@ -90,24 +90,42 @@ export class DialogFormComponent implements OnInit {
     }
   }
 
+  // onVideoSelected(event: any) {
+  //   const file: File = event.target.files[0];
+  //   console.log(file);
+
+  //   if (file) {
+  //     if (this.isVideoFile(file)) {
+  //       this.videoFile = file;
+  //       this.videoError = '';
+  //     } else {
+  //       this.videoFile = null;
+  //       this.videoError = 'Invalid file type. Please upload a PDF file.';
+  //     }
+  //   }
+  // }
+
   onVideoSelected(event: any) {
     const file: File = event.target.files[0];
-    console.log(file);
-
+    if (file.size > 50 * 1024 * 1024) {
+      this.videoError = 'File too large. Max 50MB allowed.';
+      return;
+    }
+  
     if (file) {
       if (this.isVideoFile(file)) {
         this.videoFile = file;
         this.videoError = '';
+        console.log('Is video File true');
+        
       } else {
         this.videoFile = null;
-        this.videoError = 'Invalid file type. Please upload a PDF file.';
+        this.videoError = 'Invalid file type. Please upload a valid video file.';
       }
     }
   }
 
   isVideoFile(file: File): boolean {
-    console.log(file);
-
     const videoTypes = [
       'video/mp4',
       'video/mpeg',
