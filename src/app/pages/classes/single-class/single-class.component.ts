@@ -56,20 +56,21 @@ export class SingleClassComponent implements OnInit {
           this.authService.user$.subscribe((user) => {
             if (user) {
               const namespace = 'https://test-assign-roles.com';
-              console.log('User', user.email);
-              
               this.roles = user[`${namespace}roles`][0] || [];
               this.userService.getUser(user.email).subscribe({
                 next: (response) => {
                   this.userId = response._id
-                  console.log('User successful received', response);
+                  this.likedClassesService.getLikedVideos(this.userId).subscribe(
+                    likedVideos => {
+                      this.isLiked = likedVideos.includes(this.videoId);
+                    }
+                  );
+  
                 },
                 error: (error) => {
                   console.error('Error user retreival:', error);
-                  // Handle error (e.g., show an error message)
                 },
               })
-              console.log('User:', user);
               this.isLoading = false;
             }
           });
@@ -82,11 +83,6 @@ export class SingleClassComponent implements OnInit {
         this.videos = response;
         const link = `https://iframe.mediadelivery.net/embed/263508/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
         this.link = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-        this.likedClassesService.getLikedVideos(this.userId).subscribe(
-          likedVideos => {
-            this.isLiked = likedVideos.includes(this.videoId);
-          }
-        );
         this.isLoading = false;
       },
       (error) => {
@@ -168,7 +164,6 @@ export class SingleClassComponent implements OnInit {
   toggleLike() {
     this.likedClassesService.toggleVideoLike(this.videoId, this.userId).subscribe(
       response => {
-        console.log(response);
         this.isLiked = true
         
       },

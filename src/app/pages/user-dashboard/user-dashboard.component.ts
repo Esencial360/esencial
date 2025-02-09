@@ -11,6 +11,7 @@ import { Blog } from '../../shared/Models/Blog';
 import { Instructor } from '../../shared/Models/Instructor';
 import AOS from 'aos';
 import { isPlatformBrowser } from '@angular/common';
+import { UserService } from '../../shared/services/users.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -31,7 +32,9 @@ export class UserDashboardComponent implements OnInit {
   isLoading!: boolean;
   userRoles: string[] = [];
   roles: string[] = [];
-  showRecommendation!: boolean
+  userId: string = '';
+  streak!: number
+  showRecommendation!: boolean;
 
   constructor(
     public authService: AuthService,
@@ -39,6 +42,7 @@ export class UserDashboardComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private emailService: EmailService,
+    private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -50,15 +54,26 @@ export class UserDashboardComponent implements OnInit {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((user) => {
           if (user) {
-            console.log('User:', user);
             this.isLoading = false;
           }
           this.authService.user$.subscribe((user) => {
             if (user) {
               const namespace = 'https://test-assign-roles.com';
               this.roles = user[`${namespace}roles`][0] || [];
-              console.log(this.roles);
-              
+              this.userService.getUser(user.email).subscribe({
+                next: (response) => {
+                  this.userId = response._id;
+                  this.userService
+                    .updateStreak(this.userId)
+                    .subscribe((response) => {
+                      console.log(response);
+                    });
+                  this.userService.getStreak(this.userId)
+                  .subscribe((res) => {
+                    this.streak = res.streak
+                  })
+                },
+              });
             }
           });
         });
@@ -158,14 +173,14 @@ export class UserDashboardComponent implements OnInit {
   }
 
   onRemoveRecommendation() {
-    this.showRecommendation = false
+    this.showRecommendation = false;
   }
 
   onAddRecommendation() {
-    this.showRecommendation = true
+    this.showRecommendation = true;
   }
 
   onRecommendationDone() {
-    this.showRecommendation = false
+    this.showRecommendation = false;
   }
 }
