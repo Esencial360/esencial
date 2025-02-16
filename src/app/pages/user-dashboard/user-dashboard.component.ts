@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Inject,
+  PLATFORM_ID,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 // import { AuthService } from '../../shared/services/auth.service';
 import { takeUntil } from 'rxjs/operators';
@@ -12,6 +20,10 @@ import { Instructor } from '../../shared/Models/Instructor';
 import AOS from 'aos';
 import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../shared/services/users.service';
+import { User } from '../../shared/Models/User';
+import { Store } from '@ngrx/store';
+import { selectUsers } from '../../state/user.selectors';
+import { UserApiActions } from '../../state/user.actions';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -25,6 +37,10 @@ export class UserDashboardComponent implements OnInit {
   @Input()
   instructors!: any[];
 
+  @Input() users: ReadonlyArray<User> = [];
+
+  @Output() add = new EventEmitter<string>();
+
   private ngUnsubscribe = new Subject<void>();
   videos!: any[];
   links: SafeResourceUrl[] = [];
@@ -33,8 +49,9 @@ export class UserDashboardComponent implements OnInit {
   userRoles: string[] = [];
   roles: string[] = [];
   userId: string = '';
-  streak!: number
+  streak!: number;
   showRecommendation!: boolean;
+
 
   constructor(
     public authService: AuthService,
@@ -43,10 +60,15 @@ export class UserDashboardComponent implements OnInit {
     private router: Router,
     private emailService: EmailService,
     private userService: UserService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private store: Store
   ) {}
 
   async ngOnInit() {
+    this.userService.getAllUsers().subscribe((users) => {
+      this.store.dispatch(UserApiActions.retrievedUserList({ users }));
+    });
+
     AOS.init({ once: true });
     this.isLoading = true;
     if (isPlatformBrowser(this.platformId)) {
@@ -68,10 +90,9 @@ export class UserDashboardComponent implements OnInit {
                     .subscribe((response) => {
                       console.log(response);
                     });
-                  this.userService.getStreak(this.userId)
-                  .subscribe((res) => {
-                    this.streak = res.streak
-                  })
+                  this.userService.getStreak(this.userId).subscribe((res) => {
+                    this.streak = res.streak;
+                  });
                 },
               });
             }

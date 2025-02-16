@@ -60,6 +60,11 @@ export class InstructorSingUpComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  onSubmit() {
+  console.log('onsubmit');
+  
+}
+
 
   onContinueToForm() {
     this.formView = true;

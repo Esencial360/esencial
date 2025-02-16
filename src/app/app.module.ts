@@ -88,6 +88,9 @@ import { CommunityComponent } from './pages/community/community.component';
 import { RecommendationClassesComponent } from './shared/ui/recommendation-classes/recommendation-classes.component';
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './state/user.reducer';
+import { ModalComponent } from './shared/ui/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -146,6 +149,7 @@ import { CreateBannerComponent } from './pages/create-banner/create-banner.compo
     RecommendationClassesComponent,
     AppointmentSchedulerComponent,
     CreateBannerComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -174,6 +178,7 @@ import { CreateBannerComponent } from './pages/create-banner/create-banner.compo
         allowedList: [`${environment.dev.serverUrl}`],
       },
     }),
+    StoreModule.forRoot({users: userReducer}),
   ],
   providers: [
     // {

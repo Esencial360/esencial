@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { take } from 'rxjs';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import { Instructor } from '../../../shared/Models/Instructor';
+import { Router } from '@angular/router';
 
 interface UploadVideo {
   title: string;
@@ -44,7 +45,8 @@ export class UploadVideoComponent implements OnInit {
   constructor(
     private bunnyStreamService: BunnystreamService,
     private fb: FormBuilder,
-    private instructorService: InstructorService
+    private instructorService: InstructorService,
+    private router: Router
   ) {
     this.newVideoForm = this.fb.group({
       title: ['', Validators.required],
@@ -181,5 +183,9 @@ export class UploadVideoComponent implements OnInit {
           console.error('Error uploading video:', error);
         }
       );
+  }
+
+  onProcessDone() {
+    this.router.navigate(['/home'])
   }
 }

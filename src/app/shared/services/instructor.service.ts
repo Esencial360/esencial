@@ -25,7 +25,6 @@ export class InstructorService {
   }
 
   updateInstructor(instructor: Instructor): Observable<Instructor> {
-    console.log(instructor)
     return this.http.put<Instructor>(this.apiUrl, instructor);
   }
 

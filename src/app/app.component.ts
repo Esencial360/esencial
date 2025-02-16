@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       // Code that interacts with the 'document' object goes here
-      AOS.init(); // Or any other AOS-related code
+      // AOS.init(); // Or any other AOS-related code
     }
   }
 }

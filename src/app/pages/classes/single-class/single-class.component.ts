@@ -12,6 +12,8 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Subject, takeUntil } from 'rxjs';
 import { LikedClassesService } from '../../../shared/services/liked-classes.service';
 import { UserService } from '../../../shared/services/users.service';
+import { selectUsers, selectAllUsers } from '../../../state/user.selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-single-class',
@@ -29,6 +31,7 @@ export class SingleClassComponent implements OnInit {
   isLiked = false;
   userId!: string
   private ngUnsubscribe = new Subject<void>();
+  users$!: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,12 +41,17 @@ export class SingleClassComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private likedClassesService: LikedClassesService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private store: Store
+  ) {
+    this.users$ = this.store.select(selectAllUsers).subscribe(users => {
+      console.log('Users from store:', users);
+    });
+  }
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    AOS.init({ once: true });
+    // AOS.init({ once: true });
     this.isLoading = true;
     this.route.paramMap.subscribe((params) => {
       this.videoId = params.get('id');
