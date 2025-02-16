@@ -364,7 +364,7 @@
   (close)="showModalAfterAction = false"
 >
   <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">
-    Video {{resultReviewAction}}
+    Video {{ resultReviewAction }}
   </h2>
 
   @if (resultReviewAction === 'approve') {
@@ -384,13 +384,15 @@
   } @else if (resultReviewAction === 'underObservation') {
   <div class="flex flex-col justify-center items-center h-full">
     <app-check-mark></app-check-mark>
-    <div class="md:mx-10 mx-2 text-center">
-      <h4>Video esta bajo observacion.</h4>
-      <p class="my-4">
-        ¡Muchas gracias por tu review! El video ya se encuentra disponible para
-        la comunidad de esencial.
-      </p>
-    </div>
+    <label for="observationReason" class="block mb-2 font-bold text-gray-700">
+      Provide a reason:
+    </label>
+    <textarea
+      id="observationReason"
+      [(ngModel)]="observationReason"
+      class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+      placeholder="Enter reason..."
+    ></textarea>
     <div class="mt-5" (click)="onProcessDone()">
       <app-button [text]="'OK'"></app-button>
     </div>

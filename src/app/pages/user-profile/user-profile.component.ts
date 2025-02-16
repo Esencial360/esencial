@@ -11,6 +11,7 @@ import { concatMap, from, map, Subject, takeUntil, toArray } from 'rxjs';
 import { Instructor } from '../../shared/Models/Instructor';
 import { isPlatformBrowser } from '@angular/common';
 import { m } from '@lottiefiles/dotlottie-web/dist/index-Dba5bXrL';
+import { EmailService } from '../../shared/services/email.service';
 
 interface PreviewInstructor {
   _id: number;
@@ -44,6 +45,7 @@ export class UserProfileComponent implements OnInit {
   resultReviewAction!: string;
   showModalAfterAction!: boolean;
   activeVideoId!: string;
+  observationReason!: string;
   favoriteClasses = [
     {
       name: 'Clase 1',
@@ -156,6 +158,7 @@ export class UserProfileComponent implements OnInit {
     private bunnystreamService: BunnystreamService,
     private sanitizer: DomSanitizer,
     private router: Router,
+    private emailService: EmailService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.passwordForm = this.formBuilder.group(
@@ -389,12 +392,14 @@ export class UserProfileComponent implements OnInit {
     this.showModal = false;
     this.resultReviewAction = action;
     this.showModalAfterAction = true;
-    if (action === 'approve') {
-      this.updateToActiveVideo();
+    if (action === 'reject') {
+      this.rejectVideo();
+    } else {
+      this.updateVideoStatus(action);
     }
   }
 
-  updateToActiveVideo() {
+  updateVideoStatus(status: string, reason?: string) {
     const selectedInstructor = this.instructors.find(
       (instructor: { videos: { videoId: string }[] }) =>
         instructor.videos?.some(
@@ -409,9 +414,7 @@ export class UserProfileComponent implements OnInit {
 
     const updatedVideos = selectedInstructor.videos.map(
       (video: { videoId: string }) =>
-        video.videoId === this.activeVideoId
-          ? { ...video, status: 'Active' }
-          : video
+        video.videoId === this.activeVideoId ? { ...video, status } : video
     );
 
     const updatedInstructor: Instructor = {
@@ -421,7 +424,25 @@ export class UserProfileComponent implements OnInit {
 
     this.instructorService.updateInstructor(updatedInstructor).subscribe(
       (response: any) => {
-        console.log('Instructor updated successfully', response);
+        console.log(`Instructor video status updated to ${status}`, response);
+        if (status === 'underObservation') {
+          this.sendObservationEmail(
+            selectedInstructor.email,
+            'reason',
+            this.activeVideoId
+          );
+        }
+
+        if (status === 'reject') {
+          this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
+            (response) => {
+              console.log('Success deleting video:', response);
+            },
+            (error) => {
+              console.error('Error retrieving videos:', error);
+            }
+          );
+        }
       },
       (error) => {
         console.error('Error updating instructor:', error);
@@ -429,8 +450,72 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  rejectVideo() {
+    const selectedInstructor = this.instructors.find(
+      (instructor: { videos: { videoId: string }[] }) =>
+        instructor.videos?.some(
+          (video: { videoId: string }) => video.videoId === this.activeVideoId
+        )
+    );
+    if (!selectedInstructor) {
+      console.error('Instructor not found for this video.');
+      return;
+    }
+
+    const updatedVideos = selectedInstructor.videos?.filter(
+      (video: { videoId: string }) => video.videoId !== this.activeVideoId
+    );
+
+    const updatedInstructor: Instructor = {
+      ...selectedInstructor,
+      videos: updatedVideos,
+    };
+
+    this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
+      (response) => {
+        console.log('Success deleting video:', response);
+        this.instructorService.updateInstructor(updatedInstructor).subscribe(
+          (response: any) => {
+            console.log('Instructor updated successfully', response);
+          },
+          (error) => {
+            console.error('Error updating instructor:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error retrieving videos:', error);
+      }
+    );
+  }
+
   onProcessDone() {
     this.showModal = false;
     this.showModalAfterAction = false;
+  }
+
+  sendObservationEmail(toEmail: string, reason: string, videoId: string) {
+    console.log(toEmail);
+
+    const emailData = {
+      to: toEmail,
+      subject: 'Your video is under observation',
+      html: `
+        <p>Dear Instructor,</p>
+        <p>Your video (ID: <strong>${videoId}</strong>) has been marked as <strong>Under Observation</strong>.</p>
+        <p>Reason: <em>${reason}</em></p>
+        <p>Please reach out if you have any questions.</p>
+        <p>Best regards,<br>ESENCIAL360 Team</p>
+      `,
+    };
+
+    this.emailService.sendEmail(emailData).subscribe(
+      () => {
+        console.log('Observation email sent successfully');
+      },
+      (error: any) => {
+        console.error('Error sending observation email:', error);
+      }
+    );
   }
 }

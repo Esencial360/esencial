@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmailService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/email';
+  private apiUrl = 'http://localhost:3000/email';
 
   constructor(private http: HttpClient) {}
 
