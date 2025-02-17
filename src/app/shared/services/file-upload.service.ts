@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FileUploadService {
 
-  private apiUrl = 'http://localhost:3000/upload';
+  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/upload';
 
   constructor(private http: HttpClient) { }
 

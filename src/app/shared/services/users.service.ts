@@ -8,7 +8,7 @@ import { map } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/users';
 
   constructor(private http: HttpClient) {}
 

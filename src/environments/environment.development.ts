@@ -3,11 +3,11 @@ export const environment = {
     auth0: {
       domain: 'dev-syvyfpm6kjwu0kzp.us.auth0.com',
       clientId: 'atpOOLQH8aatanwIQmv8ZkyD03NqsraF',
-      redirectUri: 'http://localhost:4200',
+      redirectUri: 'https://whale-app-gfb2z.ondigitalocean.app/',
       audience: 'https://test-assign-roles.com'
     },
     dev: {
-      serverUrl: 'http://localhost:3000'
+      serverUrl: 'https://seal-app-jeede.ondigitalocean.app/'
     }
   };
 

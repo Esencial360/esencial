@@ -7,7 +7,7 @@ import { Banner } from '../Models/Banner';
   providedIn: 'root',
 })
 export class BannerService {
-  private apiUrl = 'http://localhost:3000/banner'; 
+  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/banner'; 
   constructor(private http: HttpClient) {}
 
   getAllBanners(page: string): Observable<Banner[]> {

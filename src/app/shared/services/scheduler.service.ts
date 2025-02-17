@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SchedulerService {
-  private apiUrl = `http://localhost:3000/scheduler`;
+  private apiUrl = `https://seal-app-jeede.ondigitalocean.app/scheduler`;
 
   constructor(private http: HttpClient) {}
 

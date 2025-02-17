@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LikedClassesService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/users';
   constructor(private http: HttpClient) {}
 
   toggleVideoLike(videoId: string, userId: string): Observable<any> {

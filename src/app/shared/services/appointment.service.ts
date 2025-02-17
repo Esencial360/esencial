@@ -10,7 +10,7 @@ import { Appointment } from '../Models/Appointment';
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = 'http://localhost:3000/appointments';
+  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/appointments';
 
   constructor(private http: HttpClient) {}
 

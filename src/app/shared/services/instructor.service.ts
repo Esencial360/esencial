@@ -7,7 +7,7 @@ import { Instructor } from '../Models/Instructor'; // Import the Instructor mode
   providedIn: 'root'
 })
 export class InstructorService {
-  private apiUrl = 'http://localhost:3000/instructors';
+  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/instructors';
 
   constructor(private http: HttpClient) { }
 

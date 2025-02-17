@@ -8,8 +8,8 @@ import { Category } from '../Models/Category';
   providedIn: 'root'
 })
 export class BlogService {
-  private apiUrlBlogs = 'http://localhost:3000/blog'
-  private apiUrlCategories = 'http://localhost:3000/categories'
+  private apiUrlBlogs = 'https://seal-app-jeede.ondigitalocean.app/blog'
+  private apiUrlCategories = 'https://seal-app-jeede.ondigitalocean.app/categories'
 
   constructor(private http: HttpClient) { }
 
