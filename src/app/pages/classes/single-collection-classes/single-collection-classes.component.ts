@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { concatMap, from, map, toArray } from 'rxjs';
-import AOS from "aos";
+import AOS from 'aos';
 
 @Component({
   selector: 'app-single-collection-classes',
@@ -15,7 +15,7 @@ export class SingleCollectionClassesComponent implements OnInit {
 
   collectionName: any;
 
-  matchingCollection!: any[];
+  matchingCollection!: any;
 
   videos!: any[];
 
@@ -29,14 +29,15 @@ export class SingleCollectionClassesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
     this.route.paramMap.subscribe((params) => {
       this.collectionName = params.get('id');
       console.log(this.collectionName);
+      
     });
     this.getCollectionList();
     AOS.init({
-      once: true
+      once: true,
     });
   }
 
@@ -44,7 +45,8 @@ export class SingleCollectionClassesComponent implements OnInit {
     this.bunnystreamService.getCollectionList().subscribe(
       (response: any) => {
         this.collectionList = response.items;
-        console.log(this.collectionList);
+        console.log(response);
+        
         function findMatchingObject(dataArray: any, name: string) {
           return dataArray.find((item: { name: string }) => item.name === name);
         }
@@ -52,18 +54,28 @@ export class SingleCollectionClassesComponent implements OnInit {
           this.collectionList,
           this.collectionName
         );
-        // this.getVideosOfCollection(this.matchingCollection);
-        this.getVideo(this.matchingCollection);
+        // this.getVideo(this.matchingCollection);
       },
       (error) => {
         console.error('Error retrieving collection:', error);
       }
     );
+    this.bunnystreamService
+      .getCollectionVideosList(this.collectionName)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.getVideo(response.items)
+        },
+        (error) => {
+          console.error('Error retrieving video list collection:', error);
+        }
+      );
   }
 
-  getVideo(videoIds: any) {
-    const videoIdsArray = videoIds.previewVideoIds.split(',');
-    console.log(videoIdsArray)
+  getVideo(videos: any) {
+    const videoIdsArray = videos.map((video: { guid: any; }) => video.guid);
+    console.log(videoIdsArray);
     if (videoIdsArray.length === 0) {
     } else if (videoIdsArray.length === 1) {
       // this.bunnystreamService.getVideo(videoIds.previewVideoIds).subscribe(
@@ -80,26 +92,24 @@ export class SingleCollectionClassesComponent implements OnInit {
       //   }
       // );
       from(videoIdsArray)
-      .pipe(
-        concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
-        map((video) => ({
-          video: video,
-          safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-            `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
-          ),
-        })),
-        toArray()
-
-      )
-      .subscribe({
-        next: (videos) => {
-          this.videos = videos;
-          console.log(this.videos)
-        },
-        error: (error) => {
-          console.error('Error retrieving videos:', error);
-        },
-      });
+        .pipe(
+          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          map((video) => ({
+            video: video,
+            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+              `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
+            ),
+          })),
+          toArray()
+        )
+        .subscribe({
+          next: (videos) => {
+            this.videos = videos;
+          },
+          error: (error) => {
+            console.error('Error retrieving videos:', error);
+          },
+        });
     } else if (videoIdsArray.length > 1) {
       from(videoIdsArray)
         .pipe(
@@ -115,7 +125,6 @@ export class SingleCollectionClassesComponent implements OnInit {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            console.log(this.videos)
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
@@ -125,15 +134,17 @@ export class SingleCollectionClassesComponent implements OnInit {
   }
 
   onWatchSingleClass(id: string) {
-    this.router.navigate([`/collection/${this.collectionName}/${id}`]).then((navigationSuccess) => {
-      if (navigationSuccess) {
-        console.log('Navigation to class successful');
-      } else {
-        console.error('Navigation to class failed');
-      }
-    })
-    .catch((error) => {
-      console.error(`An error occurred during navigation: ${error.message}`);
-    });
+    this.router
+      .navigate([`/collection/${this.collectionName}/${id}`])
+      .then((navigationSuccess) => {
+        if (navigationSuccess) {
+          console.log('Navigation to class successful');
+        } else {
+          console.error('Navigation to class failed');
+        }
+      })
+      .catch((error) => {
+        console.error(`An error occurred during navigation: ${error.message}`);
+      });
   }
 }

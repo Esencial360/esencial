@@ -35,7 +35,6 @@ export class ClassesCatalogueComponent implements OnInit {
   }
 
   onSingleCollection(id: string) {
-    console.log('clicked');
     this.router
       .navigate([`/collection/${id}`])
       .then((navigationSuccess) => {

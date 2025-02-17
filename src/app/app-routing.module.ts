@@ -79,7 +79,7 @@ const routes: Routes = [
     data: { animation: 'openClosePage' },
   },
   {
-    path: 'classes',
+    path: 'clases',
     component: VideosCatalogueComponent,
     data: { animation: 'openClosePage' },
   },
