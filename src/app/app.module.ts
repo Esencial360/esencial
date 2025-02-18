@@ -91,6 +91,7 @@ import { CreateBannerComponent } from './pages/create-banner/create-banner.compo
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './state/user.reducer';
 import { ModalComponent } from './shared/ui/modal/modal.component';
+import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +151,7 @@ import { ModalComponent } from './shared/ui/modal/modal.component';
     AppointmentSchedulerComponent,
     CreateBannerComponent,
     ModalComponent,
+    AllClassesComponent,
   ],
   imports: [
     BrowserModule,

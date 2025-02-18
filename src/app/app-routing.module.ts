@@ -32,6 +32,7 @@ import { PartnersComponent } from './pages/partners/partners.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
+import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -80,7 +81,7 @@ const routes: Routes = [
   },
   {
     path: 'clases',
-    component: VideosCatalogueComponent,
+    component: AllClassesComponent,
     data: { animation: 'openClosePage' },
   },
   {
@@ -160,6 +161,11 @@ const routes: Routes = [
   },
   {
     path: 'collection/:collectionName/:id',
+    component: SingleClassComponent,
+    data: { animation: 'openClosePage' },
+  },
+  {
+    path: 'clases/:id',
     component: SingleClassComponent,
     data: { animation: 'openClosePage' },
   },

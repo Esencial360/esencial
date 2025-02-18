@@ -78,19 +78,6 @@ export class SingleCollectionClassesComponent implements OnInit {
     console.log(videoIdsArray);
     if (videoIdsArray.length === 0) {
     } else if (videoIdsArray.length === 1) {
-      // this.bunnystreamService.getVideo(videoIds.previewVideoIds).subscribe(
-      //   (response: any) => {
-      //     this.videos = [response];
-      //     this.links = this.videos.map((video) => {
-      //       const link = `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`;
-      //       return this.sanitizer.bypassSecurityTrustResourceUrl(link);
-      //     });
-      //     console.log(this.videos)
-      //   },
-      //   (error) => {
-      //     console.error('Error retrieving videos:', error);
-      //   }
-      // );
       from(videoIdsArray)
         .pipe(
           concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),

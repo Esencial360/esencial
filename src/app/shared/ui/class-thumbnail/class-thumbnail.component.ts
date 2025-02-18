@@ -20,6 +20,9 @@ export class ClassThumbnailComponent implements OnInit {
   @Input()
   classes!: any[] 
 
+  @Input()
+  allClasses!: boolean
+
   @Output()
   actionClassSelected = new EventEmitter<string>()
 
