@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { News } from '../Models/News';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/news';
+  private apiUrl = `${environment.apiUrl}news`
 
   constructor(private http: HttpClient) { }
 

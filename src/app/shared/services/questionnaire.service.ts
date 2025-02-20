@@ -19,7 +19,7 @@ export interface QuestionnaireAnswers {
   providedIn: 'root',
 })
 export class QuestionnaireService {
-  private apiUrl = `https://seal-app-jeede.ondigitalocean.app/questionnaire`;
+  private apiUrl = `${environment.apiUrl}questionnaire`;
 
   constructor(private http: HttpClient) {}
 

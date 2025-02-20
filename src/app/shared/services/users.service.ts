@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../Models/User';
 import { map } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/users';
+  private apiUrl = `${environment.apiUrl}users`
 
   constructor(private http: HttpClient) {}
 

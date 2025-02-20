@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Banner } from '../Models/Banner';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BannerService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/banner'; 
+  private apiUrl = `${environment.apiUrl}banner`
   constructor(private http: HttpClient) {}
 
   getAllBanners(page: string): Observable<Banner[]> {

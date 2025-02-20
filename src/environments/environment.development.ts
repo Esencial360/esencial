@@ -8,7 +8,9 @@ export const environment = {
     },
     dev: {
       serverUrl: 'https://seal-app-jeede.ondigitalocean.app/'
-    }
+    },
+    apiUrl: 'http://localhost:3000/'
+
   };
 
 

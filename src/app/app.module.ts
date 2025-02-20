@@ -92,6 +92,8 @@ import { StoreModule } from '@ngrx/store';
 import { userReducer } from './state/user.reducer';
 import { ModalComponent } from './shared/ui/modal/modal.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
+import { InstructorProfileComponent } from './pages/user-profile/instructor-profile/instructor-profile.component';
+import { AdminProfileComponent } from './pages/user-profile/admin-profile/admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +154,8 @@ import { AllClassesComponent } from './pages/classes/all-classes/all-classes.com
     CreateBannerComponent,
     ModalComponent,
     AllClassesComponent,
+    InstructorProfileComponent,
+    AdminProfileComponent,
   ],
   imports: [
     BrowserModule,

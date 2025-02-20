@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Instructor } from '../Models/Instructor'; // Import the Instructor model interface
+import { Instructor } from '../Models/Instructor'; 
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstructorService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/instructors';
+  private apiUrl = `${environment.apiUrl}instructors`;
 
   constructor(private http: HttpClient) { }
 
