@@ -27,6 +27,10 @@ export class UserService {
     return this.http.delete(url);
   }
 
+  createUser(user: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create`, user)
+  }
+
   getStreak(id: string): Observable<{ streak: number }> {
     return this.http.get<{ streak: number }>(`${this.apiUrl}/get-streak/${id}`);
   }

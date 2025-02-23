@@ -52,7 +52,6 @@ export class UserDashboardComponent implements OnInit {
   streak!: number;
   showRecommendation!: boolean;
 
-
   constructor(
     public authService: AuthService,
     private bunnystreamService: BunnystreamService,
@@ -82,17 +81,44 @@ export class UserDashboardComponent implements OnInit {
             if (user) {
               const namespace = 'https://test-assign-roles.com';
               this.roles = user[`${namespace}roles`][0] || [];
+              // this.userService.getUser(user.email).subscribe({
+              //   next: (response) => {
+              //     console.log(response);
+
+              //     this.userId = response._id;
+              //     this.userService
+              //       .updateStreak(this.userId)
+              //       .subscribe((response) => {
+              //         console.log(response);
+              //       });
+              //     this.userService.getStreak(this.userId).subscribe((res) => {
+              //       this.streak = res.streak;
+              //     });
+              //   },
+              // });
               this.userService.getUser(user.email).subscribe({
                 next: (response) => {
-                  this.userId = response._id;
-                  this.userService
-                    .updateStreak(this.userId)
-                    .subscribe((response) => {
-                      console.log(response);
+                  if (!response) {
+                    const newUser = {
+                      email: user.email,
+                      firstname: user.given_name,
+                      lastname: user.family_name,
+                    };
+                    this.userService.createUser(newUser).subscribe((newUser) => {
+                      console.log('User created:', newUser);
+
+                      this.userId = newUser._id;
+                      this.updateAndFetchStreak();
                     });
-                  this.userService.getStreak(this.userId).subscribe((res) => {
-                    this.streak = res.streak;
-                  });
+                  } else {
+                    console.log(response);
+
+                    this.userId = response._id;
+                    this.updateAndFetchStreak();
+                  }
+                },
+                error: (err) => {
+                  console.error('Error fetching user:', err);
                 },
               });
             }
@@ -106,6 +132,16 @@ export class UserDashboardComponent implements OnInit {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  updateAndFetchStreak() {
+    this.userService.updateStreak(this.userId).subscribe((response) => {
+      console.log(response);
+    });
+
+    this.userService.getStreak(this.userId).subscribe((res) => {
+      this.streak = res.streak;
+    });
   }
 
   onUploadVideo() {

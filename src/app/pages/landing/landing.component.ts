@@ -105,7 +105,6 @@ export class LandingComponent implements OnInit  {
     await this.blogService.getAllBlogs().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (blogs: Blog[]) => {
         this.blogs = blogs;
-        console.log(this.blogs);
       },
       (error) => {
         console.error('Error fetching blogs:', error);
@@ -117,7 +116,6 @@ export class LandingComponent implements OnInit  {
     await this.instructorService.getAllInstructors().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (instructors: Instructor[]) => {
         this.instructors = instructors;
-        console.log(this.instructors);
       },
       (error) => {
         console.error('Error fetching blogs:', error);

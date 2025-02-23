@@ -94,6 +94,7 @@ import { ModalComponent } from './shared/ui/modal/modal.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 import { InstructorProfileComponent } from './pages/user-profile/instructor-profile/instructor-profile.component';
 import { AdminProfileComponent } from './pages/user-profile/admin-profile/admin-profile.component';
+import { StudentProfileComponent } from './pages/user-profile/student-profile/student-profile.component';
 
 @NgModule({
   declarations: [
@@ -156,6 +157,7 @@ import { AdminProfileComponent } from './pages/user-profile/admin-profile/admin-
     AllClassesComponent,
     InstructorProfileComponent,
     AdminProfileComponent,
+    StudentProfileComponent,
   ],
   imports: [
     BrowserModule,
