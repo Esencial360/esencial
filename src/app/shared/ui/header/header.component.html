@@ -1,5 +1,5 @@
 @if (!newLanding) {
-  <header
+<header
   class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[9999]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
@@ -19,13 +19,17 @@
     <ul
       class="flex anton items-center uppercase pointer text-base cursor-pointer"
     >
+    <div class="flex items-center">
+      <span class="text-xl">🔥</span>
+      <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+    </div>
       <li class="mr-10">
         <a (click)="onInstructors()" class="hover:text-gray-400"
           >INSTRUCTORES</a
         >
       </li>
       <li class="mr-10">
-        <a (click)="onMenu()" class="hover:text-gray-400">Clases</a>
+        <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
       <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
@@ -99,7 +103,6 @@
   </nav>
 </header>
 
-<!-- @if (!isOpen) { -->
 <header
   class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[9999]"
   style="
@@ -119,26 +122,8 @@
         Esencial<span class="text-strongBrown">360</span>
       </h3>
     </div>
-    <!-- <button class="lg:hidden text-black focus:outline-none" (click)="toggle()">
-      <svg
-        class="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16m-7 6h7"
-        ></path>
-      </svg>
-    </button> -->
   </div>
 </header>
-<!-- } -->
-
 <section
   class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[9999]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
@@ -156,13 +141,19 @@
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-white">Esencial<span class="text-strongBrown">360</span></h3>
+    <h3 class="text-white">
+      Esencial<span class="text-strongBrown">360</span>
+    </h3>
   </div>
   <div class="container mx-auto px-4 mt-16">
     @if(userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="ml-1 font-semibold text-lg">{{ streak }}</span>
+      </div>
       <li class="mb-5">YOGA</li>
-      <li class="ml-2">CLASES</li>
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
       <li class="ml-2">INSTRUCTORES</li>
       <li class="ml-2">NOSOTROS</li>
       <li class="border-t border-gray-700 pt-4 my-8"></li>
@@ -207,8 +198,8 @@
   </div>
 </section>
 } @else {
-  <header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full  top-0 z-[9999]"
+<header
+  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[9999]"
 >
   <div class="flex justify-center items-center">
     <img
@@ -217,9 +208,15 @@
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-white text-2xl">Esencial<span class="text-strongBrown">360</span></h3>
+    <h3 class="text-white text-2xl">
+      Esencial<span class="text-strongBrown">360</span>
+    </h3>
   </div>
   <nav>
+    <!-- <div class="flex items-center">
+      <span class="text-xl">🔥</span>
+      <span class="ml-1 font-semibold text-lg">{{ streak$ | async }}</span>
+    </div> -->
     <ul
       class="flex anton items-center uppercase pointer text-base cursor-pointer"
     >
@@ -229,7 +226,7 @@
         >
       </li>
       <li class="mr-10">
-        <a (click)="onMenu()" class="hover:text-gray-400">Clases</a>
+        <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
       <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
@@ -303,4 +300,3 @@
   </nav>
 </header>
 }
-

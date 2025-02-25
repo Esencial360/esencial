@@ -14,3 +14,10 @@ export const UserApiActions = createActionGroup({
         'Retrieved user list': props<{users: ReadonlyArray<User>}>()
     }
 })
+
+export const ActiveUserApiActions = createActionGroup({
+    source: 'User API',
+    events: {
+        'Retrieved active user': props<{user: any}>()
+    }
+})

@@ -81,7 +81,7 @@ import { PreviousClassesComponent } from './pages/classes/previous-classes/previ
 import { BadgesComponent } from './pages/user-profile/badges/badges.component';
 import { PaymentsComponent } from './pages/user-profile/payments/payments.component';
 import { QrComponent } from './pages/user-profile/qr/qr.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { DialogPopupComponent } from './shared/ui/dialog-popup/dialog-popup.component';
 import { PartnersComponent } from './pages/partners/partners.component';
 import { CommunityComponent } from './pages/community/community.component';
@@ -89,12 +89,17 @@ import { RecommendationClassesComponent } from './shared/ui/recommendation-class
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 import { StoreModule } from '@ngrx/store';
-import { userReducer } from './state/user.reducer';
+import { userActiveReducer, userReducer } from './state/user.reducer';
 import { ModalComponent } from './shared/ui/modal/modal.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 import { InstructorProfileComponent } from './pages/user-profile/instructor-profile/instructor-profile.component';
 import { AdminProfileComponent } from './pages/user-profile/admin-profile/admin-profile.component';
 import { StudentProfileComponent } from './pages/user-profile/student-profile/student-profile.component';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+export function localStorageSyncReducer(reducer: any) {
+  return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
+}
 
 @NgModule({
   declarations: [
@@ -170,12 +175,6 @@ import { StudentProfileComponent } from './pages/user-profile/student-profile/st
     CheckMarkComponent,
     MatTabsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    // AuthModule.forRoot({
-    //   ... environment.auth0,
-    //   httpInterceptor: {
-    //     allowedList: [`${environment.dev.serverUrl}`]
-    //   },
-    // })
     AuthModule.forRoot({
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,
@@ -186,27 +185,12 @@ import { StudentProfileComponent } from './pages/user-profile/student-profile/st
         allowedList: [`${environment.dev.serverUrl}`],
       },
     }),
-    StoreModule.forRoot({users: userReducer}),
+    StoreModule.forRoot(
+      { user: userActiveReducer },
+      { metaReducers: [localStorageSyncReducer] }
+    ),
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthHttpInterceptor,
-    //   multi: true,
-    //   useFactory: (platformId: Object) => {
-    //     if (isPlatformBrowser(platformId)) {
-    //       return provideAuth0({
-    //         domain: environment.auth0.domain,
-    //         clientId: environment.auth0.clientId,
-    //         authorizationParams: {
-    //           redirect_uri: environment.auth0.redirectUri,
-    //         },
-    //       });
-    //     }
-    //     return [];
-    //   },
-    //   deps: [PLATFORM_ID],
-    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
@@ -252,5 +236,4 @@ import { StudentProfileComponent } from './pages/user-profile/student-profile/st
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

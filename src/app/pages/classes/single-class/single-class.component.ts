@@ -29,7 +29,7 @@ export class SingleClassComponent implements OnInit {
   isLoading!: boolean;
   roles!: string;
   isLiked = false;
-  userId!: string
+  userId!: string;
   private ngUnsubscribe = new Subject<void>();
   users$!: any;
 
@@ -44,7 +44,7 @@ export class SingleClassComponent implements OnInit {
     private userService: UserService,
     private store: Store
   ) {
-    this.users$ = this.store.select(selectAllUsers).subscribe(users => {
+    this.users$ = this.store.select(selectAllUsers).subscribe((users) => {
       console.log('Users from store:', users);
     });
   }
@@ -57,32 +57,36 @@ export class SingleClassComponent implements OnInit {
       this.videoId = params.get('id');
     });
     this.getVideo();
-    
+
     this.authService.user$
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((user) => {
-          this.authService.user$.subscribe((user) => {
-            if (user) {
-              const namespace = 'https://test-assign-roles.com';
-              this.roles = user[`${namespace}roles`][0] || [];
-              this.userService.getUser(user.email).subscribe({
-                next: (response) => {
-                  this.userId = response._id
-                  this.likedClassesService.getLikedVideos(this.userId).subscribe(
-                    likedVideos => {
-                      this.isLiked = likedVideos.includes(this.videoId);
-                    }
-                  );
-  
-                },
-                error: (error) => {
-                  console.error('Error user retreival:', error);
-                },
-              })
-              this.isLoading = false;
-            }
-          });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((user) => {
+        this.authService.user$.subscribe((user) => {
+          if (user) {
+            const namespace = 'https://test-assign-roles.com';
+            this.roles = user[`${namespace}roles`][0] || [];
+            this.userService.getUser(user.email).subscribe({
+              next: (response) => {
+                this.userId = response._id;
+                this.likedClassesService.getLikedVideos(this.userId).subscribe(
+                  (likedVideos) => {
+                    this.isLiked =
+                      Array.isArray(likedVideos.likedVideos) &&
+                      likedVideos.likedVideos.includes(this.videoId);
+                  },
+                  (error) => {
+                    console.log('error getting liked video', error);
+                  }
+                );
+              },
+              error: (error) => {
+                console.error('Error user retreival:', error);
+              },
+            });
+            this.isLoading = false;
+          }
         });
+      });
   }
 
   getVideo() {
@@ -170,15 +174,16 @@ export class SingleClassComponent implements OnInit {
   }
 
   toggleLike() {
-    this.likedClassesService.toggleVideoLike(this.videoId, this.userId).subscribe(
-      response => {
-        this.isLiked = true
-        
-      },
-      error => {
-        console.error('Error toggling like:', error);
-        this.isLiked = true
-      }
-    );
+    this.likedClassesService
+      .toggleVideoLike(this.videoId, this.userId)
+      .subscribe(
+        (response) => {
+          this.isLiked = true;
+        },
+        (error) => {
+          console.error('Error toggling like:', error);
+          this.isLiked = true;
+        }
+      );
   }
 }

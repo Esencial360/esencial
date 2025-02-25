@@ -1,10 +1,20 @@
-import { Component, Renderer2, Input, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  Renderer2,
+  Input,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { burgerMenuAnimation } from '../../animations/burger-menu.animations';
 // import { AuthService } from '../services/auth.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
+import { selectStreak } from '../../../state/user.selectors';
+import { selectActiveUser } from '../../../state/user.selectors';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -20,31 +30,28 @@ export class HeaderComponent {
   userConnected!: boolean;
 
   @Input()
-  newLanding!: boolean 
+  newLanding!: boolean;
 
   isOpen: boolean = false;
+  user$: any;
+  streak!: any
 
   constructor(
     private route: Router,
     private renderer: Renderer2,
     public authService: AuthService,
-    @Inject(DOCUMENT) public document: Document, @Inject(PLATFORM_ID) private platformId: Object
+    private store: Store,
+    @Inject(DOCUMENT) public document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    // this.getUserInfo();
+    this.user$ = this.store.select(selectActiveUser).subscribe(user => {
+      this.streak = user.streak.count
+      console.log(user);
+      
+    });
   }
 
-  ngOnInit() {
-    // Check if running in the browser
-
-    }
-
-    // getUserInfo(): void {
-    //   this.authService.getUserInfo().subscribe(
-    //     info => this.userInfo = info,
-    //     error => console.error('Failed to get user info', error)
-    //   );
-    // }
-
+  ngOnInit() {}
   onHome() {
     this.route.navigate(['']);
   }
@@ -69,18 +76,21 @@ export class HeaderComponent {
     this.route.navigate(['/nosotros']);
   }
 
-  onUserSettings () {
-    this.route.navigate(['/ajustes'])
+  onUserSettings() {
+    this.route.navigate(['/ajustes']);
   }
 
   onInstructors() {
-    this.route.navigate(['/instructores'])
+    this.route.navigate(['/instructores']);
   }
 
   onCommunity() {
-    this.route.navigate(['/comunidad'])
+    this.route.navigate(['/comunidad']);
   }
-  
+
+  onClasses() {
+    this.route.navigate(['clases']);
+  }
 
   toggle() {
     this.isOpen = !this.isOpen;
@@ -93,10 +103,9 @@ export class HeaderComponent {
 
   public signOut(): void {
     this.authService.logout({
-      logoutParams: { returnTo: '' }
+      logoutParams: { returnTo: '' },
     });
   }
-
 
   // login(): void {
   //   this.authService.login();

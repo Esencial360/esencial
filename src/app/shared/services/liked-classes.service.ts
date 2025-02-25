@@ -16,9 +16,7 @@ export class LikedClassesService {
     return this.http.post(`${this.apiUrl}/like-video`, { videoId, userId });
   }
 
-  getLikedVideos(userId: string): Observable<string[]> {
-    console.log('userid' ,userId);
-    
-    return this.http.get<string[]>(`${this.apiUrl}/liked-videos/${userId}`);
+  getLikedVideos(userId: string): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/liked-videos/${userId}`);
   }
 }
