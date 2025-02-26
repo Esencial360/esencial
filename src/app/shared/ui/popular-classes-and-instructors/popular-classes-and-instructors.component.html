@@ -40,6 +40,7 @@
   >
     @for(instructor of instructors; track $index) {
     <div
+      (click)="onInstructor(instructor._id)"
       data-aos="fade-up"
       data-aos-duration="1000"
       class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
@@ -55,7 +56,7 @@
         ></div>
         <div class="absolute bottom-4 left-4 right-4 text-white">
           <h3 class="text-2xl font-bold mb-1 capitalize">
-            {{ instructor.name }}
+            {{ instructor.firstname }}{{ instructor.lastname }}
           </h3>
           <div class="flex items-center text-sm">
             <span
