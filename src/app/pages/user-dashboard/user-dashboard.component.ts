@@ -23,7 +23,7 @@ import { UserService } from '../../shared/services/users.service';
 import { User } from '../../shared/Models/User';
 import { Store } from '@ngrx/store';
 import { selectUsers } from '../../state/user.selectors';
-import { UserApiActions } from '../../state/user.actions';
+import { UserApiActions, ActiveUserApiActions } from '../../state/user.actions';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -51,7 +51,6 @@ export class UserDashboardComponent implements OnInit {
   userId: string = '';
   streak!: number;
   showRecommendation!: boolean;
-
 
   constructor(
     public authService: AuthService,
@@ -84,15 +83,36 @@ export class UserDashboardComponent implements OnInit {
               this.roles = user[`${namespace}roles`][0] || [];
               this.userService.getUser(user.email).subscribe({
                 next: (response) => {
-                  this.userId = response._id;
-                  this.userService
-                    .updateStreak(this.userId)
-                    .subscribe((response) => {
-                      console.log(response);
-                    });
-                  this.userService.getStreak(this.userId).subscribe((res) => {
-                    this.streak = res.streak;
-                  });
+                  if (!response) {
+                    const newUser = {
+                      email: user.email,
+                      firstname: user.given_name,
+                      lastname: user.family_name,
+                    };
+                    this.userService
+                      .createUser(newUser)
+                      .subscribe((newUser) => {
+                        this.userId = newUser._id;
+                        this.updateAndFetchStreak();
+                        this.store.dispatch(
+                          ActiveUserApiActions.retrievedActiveUser({
+                            user: newUser,
+                          })
+                        );
+                      });
+
+                  } else {
+                    this.userId = response._id;
+                    this.updateAndFetchStreak();
+                    this.store.dispatch(
+                      ActiveUserApiActions.retrievedActiveUser({
+                        user: response,
+                      })
+                    );
+                  }
+                },
+                error: (err) => {
+                  console.error('Error fetching user:', err);
                 },
               });
             }
@@ -108,6 +128,14 @@ export class UserDashboardComponent implements OnInit {
     this.ngUnsubscribe.complete();
   }
 
+  updateAndFetchStreak() {
+    this.userService.updateStreak(this.userId).subscribe((response) => {});
+
+    this.userService.getStreak(this.userId).subscribe((res) => {
+      this.streak = res.streak;
+    });
+  }
+
   onUploadVideo() {
     this.router.navigateByUrl('/nuevo-video');
   }
@@ -120,14 +148,8 @@ export class UserDashboardComponent implements OnInit {
       html: '<p>This is a <strong>test</strong> email.</p>',
     };
     this.emailService.sendEmail(emailData).subscribe({
-      next: (response) => {
-        console.log('Email sent successfully:', response);
-        // Handle success (e.g., show a success message)
-      },
-      error: (error) => {
-        console.error('Error sending email:', error);
-        // Handle error (e.g., show an error message)
-      },
+      next: (response) => {},
+      error: (error) => {},
     });
   }
 
@@ -165,8 +187,6 @@ export class UserDashboardComponent implements OnInit {
     this.bunnystreamService.getVideosList().subscribe(
       (response: any) => {
         this.videos = response.items;
-        console.log(this.videos);
-        console.log(this.videos[0].guid);
         this.links = this.videos.map((video) => {
           const link =
             'https://iframe.mediadelivery.net/embed/248742/' +
@@ -185,7 +205,6 @@ export class UserDashboardComponent implements OnInit {
     this.bunnystreamService.getCollectionList().subscribe(
       (response: any) => {
         this.collectionList = response.items;
-        console.log(this.collectionList);
       },
       (error) => {
         console.error('Error retrieving collection:', error);

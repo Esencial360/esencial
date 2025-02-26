@@ -8,6 +8,7 @@ export const environment = {
     },
     dev: {
       serverUrl: 'https://seal-app-jeede.ondigitalocean.app/'
-    }
+    },
+    apiUrl: 'https://seal-app-jeede.ondigitalocean.app/'
   };
 

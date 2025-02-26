@@ -3,15 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Blog } from '../Models/Blog';
 import { Category } from '../Models/Category';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BlogService {
-  private apiUrlBlogs = 'https://seal-app-jeede.ondigitalocean.app/blog'
-  private apiUrlCategories = 'https://seal-app-jeede.ondigitalocean.app/categories'
+  private apiUrlBlogs = `${environment.apiUrl}blog`;
+  private apiUrlCategories = `${environment.apiUrl}categories`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllBlogs(): Observable<Blog[]> {
     return this.http.get<Blog[]>(this.apiUrlBlogs);

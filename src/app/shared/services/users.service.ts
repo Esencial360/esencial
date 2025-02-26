@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../Models/User';
 import { map } from 'rxjs';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/users';
+  private apiUrl = `${environment.apiUrl}users`
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +24,10 @@ export class UserService {
   deleteUser(id: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);
+  }
+
+  createUser(user: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create`, user)
   }
 
   getStreak(id: string): Observable<{ streak: number }> {

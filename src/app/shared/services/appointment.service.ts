@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Appointment } from '../Models/Appointment';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = 'https://seal-app-jeede.ondigitalocean.app/appointments';
+  private apiUrl = `${environment.apiUrl}appointments`; 
 
   constructor(private http: HttpClient) {}
 

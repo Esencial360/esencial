@@ -9,7 +9,7 @@
     class="relative overflow-hidden rounded shadow-xl max-w-md montserrat-normal cursor-pointer"
   >
     <img
-      [src]="class.safeThumbnail.changingThisBreaksApplicationSecurity"
+      [src]="class?.safeThumbnail?.changingThisBreaksApplicationSecurity"
       alt="Woman doing Pilates"
       class="w-full h-56 object-cover relative"
     />
@@ -28,11 +28,13 @@
       <h2 class="text-lg font-bold mb-1 uppercase text-strongBrown">
         {{ class.video.title }}
       </h2>
-      <p class="text-sm text-strongBrown">{{ class.instructor }}</p>
-      <p class="text-strongBrown mb-2">
-        Breathing plays an essential role in our well-being. Follow the advice
-        of Dr. Marie
-      </p>
+      @if (!allClasses) {
+        <p class="text-sm text-strongBrown">{{ class.instructor }}</p>
+        <p class="text-strongBrown mb-2">
+          Breathing plays an essential role in our well-being. Follow the advice
+          of Dr. Marie
+        </p>
+      }
       <p class="text-xs text-strongBrown">
         Fitness / Yoga • <span class="text-blue">Principiante</span>
       </p>
