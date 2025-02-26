@@ -119,7 +119,7 @@ export class UserDashboardComponent implements OnInit {
           });
         });
     }
-    this.getVideos();
+    // this.getVideos();
     this.getCollectionList();
   }
 
@@ -183,23 +183,23 @@ export class UserDashboardComponent implements OnInit {
       });
   }
 
-  getVideos() {
-    this.bunnystreamService.getVideosList().subscribe(
-      (response: any) => {
-        this.videos = response.items;
-        this.links = this.videos.map((video) => {
-          const link =
-            'https://iframe.mediadelivery.net/embed/248742/' +
-            video.guid +
-            '?autoplay=true&loop=false&muted=false&preload=true&responsive=true';
-          return this.sanitizer.bypassSecurityTrustResourceUrl(link);
-        });
-      },
-      (error) => {
-        console.error('Error retrieving videos:', error);
-      }
-    );
-  }
+  // getVideos() {
+  //   this.bunnystreamService.getVideosList().subscribe(
+  //     (response: any) => {
+  //       this.videos = response.items;
+  //       this.links = this.videos.map((video) => {
+  //         const link =
+  //           'https://iframe.mediadelivery.net/embed/248742/' +
+  //           video.guid +
+  //           '?autoplay=true&loop=false&muted=false&preload=true&responsive=true';
+  //         return this.sanitizer.bypassSecurityTrustResourceUrl(link);
+  //       });
+  //     },
+  //     (error) => {
+  //       console.error('Error retrieving videos:', error);
+  //     }
+  //   );
+  // }
 
   getCollectionList() {
     this.bunnystreamService.getCollectionList().subscribe(
