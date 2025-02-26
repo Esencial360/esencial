@@ -12,9 +12,7 @@ export class FavoriteClassesComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    console.log(this.favoriteClasses);
-  }
+  ngOnInit() {}
 
   onWatchSingleClass(id: string) {
     this.router

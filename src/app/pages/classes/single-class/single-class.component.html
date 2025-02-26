@@ -72,20 +72,24 @@
         allowfullscreen="true"
       ></iframe>
     </div>
-    <div class="video-container">
-      <button (click)="toggleLike()">
-        {{ isLiked ? "❤️" : "🤍" }}
+    <div class="video-container relative">
+      <button
+        (click)="toggleLike()"
+        class="absolute top-2 text-2xl right-2 p-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-white transition-all duration-300 shadow-lg"
+        aria-label="Toggle Favorite"
+      >
+        {{ isLiked ? "⭐" : "☆" }}
       </button>
     </div>
   </div>
 </div>
+@if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
-<!-- @if (roles === 'Admin' || roles === 'Instructor') {
 <app-class-statistics
   [videoGuid]="videoId"
   class="flex justify-center"
 ></app-class-statistics>
-} -->
+}
 <app-page-title
   [pageDescription]="'Descubre nuestra gran variedad de clases'"
 ></app-page-title>

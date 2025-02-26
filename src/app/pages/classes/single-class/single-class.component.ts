@@ -12,8 +12,12 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Subject, takeUntil } from 'rxjs';
 import { LikedClassesService } from '../../../shared/services/liked-classes.service';
 import { UserService } from '../../../shared/services/users.service';
-import { selectUsers, selectAllUsers } from '../../../state/user.selectors';
+import {
+  selectAllUsers,
+  selectActiveUser,
+} from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
+import { ActiveUserApiActions } from '../../../state/user.actions';
 
 @Component({
   selector: 'app-single-class',
@@ -32,6 +36,8 @@ export class SingleClassComponent implements OnInit {
   userId!: string;
   private ngUnsubscribe = new Subject<void>();
   users$!: any;
+  user$!: any;
+  user!: any
 
   constructor(
     private route: ActivatedRoute,
@@ -41,21 +47,21 @@ export class SingleClassComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private likedClassesService: LikedClassesService,
-    private userService: UserService,
     private store: Store
   ) {
-    this.users$ = this.store.select(selectAllUsers).subscribe((users) => {
-      console.log('Users from store:', users);
+    this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
+      this.userId = user._id;
+      this.user = user;
     });
   }
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    // AOS.init({ once: true });
     this.isLoading = true;
     this.route.paramMap.subscribe((params) => {
       this.videoId = params.get('id');
     });
+    this.isLiked = this.user.likedVideos.includes(this.videoId);
     this.getVideo();
 
     this.authService.user$
@@ -65,24 +71,6 @@ export class SingleClassComponent implements OnInit {
           if (user) {
             const namespace = 'https://test-assign-roles.com';
             this.roles = user[`${namespace}roles`][0] || [];
-            this.userService.getUser(user.email).subscribe({
-              next: (response) => {
-                this.userId = response._id;
-                this.likedClassesService.getLikedVideos(this.userId).subscribe(
-                  (likedVideos) => {
-                    this.isLiked =
-                      Array.isArray(likedVideos.likedVideos) &&
-                      likedVideos.likedVideos.includes(this.videoId);
-                  },
-                  (error) => {
-                    console.log('error getting liked video', error);
-                  }
-                );
-              },
-              error: (error) => {
-                console.error('Error user retreival:', error);
-              },
-            });
             this.isLoading = false;
           }
         });
@@ -104,10 +92,7 @@ export class SingleClassComponent implements OnInit {
   }
 
   deleteVideo() {
-    // Store the current scroll position
     const scrollPosition = window.pageYOffset;
-
-    // Prevent scrolling
     document.body.style.top = `-${scrollPosition}px`;
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
@@ -178,11 +163,16 @@ export class SingleClassComponent implements OnInit {
       .toggleVideoLike(this.videoId, this.userId)
       .subscribe(
         (response) => {
-          this.isLiked = true;
+          this.store.dispatch(
+            ActiveUserApiActions.retrievedActiveUser({
+              user: response,
+            })
+          );
+          this.isLiked = this.user.likedVideos.includes(this.videoId);
         },
         (error) => {
           console.error('Error toggling like:', error);
-          this.isLiked = true;
+          this.isLiked = this.user.likedVideos.includes(this.videoId);
         }
       );
   }

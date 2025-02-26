@@ -34,7 +34,7 @@ export class HeaderComponent {
 
   isOpen: boolean = false;
   user$: any;
-  streak!: any
+  streak!: any;
 
   constructor(
     private route: Router,
@@ -44,10 +44,8 @@ export class HeaderComponent {
     @Inject(DOCUMENT) public document: Document,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.user$ = this.store.select(selectActiveUser).subscribe(user => {
-      this.streak = user.streak.count
-      console.log(user);
-      
+    this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
+      this.streak = user.streak.count;
     });
   }
 

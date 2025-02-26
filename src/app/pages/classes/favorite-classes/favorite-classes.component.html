@@ -10,7 +10,5 @@
       clases favoritas
     </h4>
   </div>
-  @for(class of favoriteClasses; track $index) {
     <app-class-thumbnail [classes]="favoriteClasses" (actionClassSelected)="onWatchSingleClass($event)"></app-class-thumbnail>
-  }
 </section>
