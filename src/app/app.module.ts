@@ -53,7 +53,7 @@ import { SingleClassComponent } from './pages/classes/single-class/single-class.
 import { DialogComponent } from './shared/ui/dialog/dialog.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ClassStatisticsComponent } from './pages/classes/class-statistics/class-statistics.component';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 import { PricingPlanComponent } from './components/pricing-plan/pricing-plan.component';
 import { NewsAndBlogsComponent } from './components/news-and-blogs/news-and-blogs.component';
 import { BannerComponent } from './components/banner/banner.component';
@@ -215,13 +215,6 @@ export function localStorageSyncReducer(reducer: any) {
     provideClientHydration(),
     provideHttpClient(withFetch()),
     [
-      // provideAuth0({
-      //   domain: environment.auth0.domain,
-      //   clientId: environment.auth0.clientId,
-      //   authorizationParams: {
-      //     redirect_uri: environment.auth0.redirectUri,
-      //   },
-      // }),
       provideAnimationsAsync(),
       provideAnimations(),
     ],
