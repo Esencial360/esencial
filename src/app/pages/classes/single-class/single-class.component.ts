@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -19,13 +19,21 @@ import {
 import { Store } from '@ngrx/store';
 import { ActiveUserApiActions } from '../../../state/user.actions';
 
+declare global {
+  interface Window {
+    BunnyPlayer: any;
+  }
+}
+
 @Component({
   selector: 'app-single-class',
   templateUrl: './single-class.component.html',
   styleUrl: './single-class.component.css',
 })
 export class SingleClassComponent implements OnInit {
+  
   @ViewChild('dialogAnchor') dialogAnchor!: ElementRef;
+  @ViewChild('bunnyVideo') videoIframe!: ElementRef;
   videoId!: any;
 
   videos!: any;
@@ -38,6 +46,7 @@ export class SingleClassComponent implements OnInit {
   users$!: any;
   user$!: any;
   user!: any
+  private intervalId: any;
 
   constructor(
     private route: ActivatedRoute,

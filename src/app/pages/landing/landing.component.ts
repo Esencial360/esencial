@@ -79,15 +79,9 @@ export class LandingComponent implements OnInit  {
     });
     }
     this.services = [
-      { title: 'YOGA', image: '../../../assets/images/yoga.jpg '},
-      { title: 'FITNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'MINDFULNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'ROUTINES', image: '../../../assets/images/yoga.jpg' },
-      { 
-        title: 'Ready to start your journey?', 
-        image: '../../../assets/images/yoga.jpg',
-        special: true
-      }
+      { title: 'YOGA', image: '../../../assets/images/6.png'},
+      { title: 'FITNESS', image: '../../../assets/images/7.png' },
+      { title: 'MINDFULNESS', image: '../../../assets/images/8.png' },
     ];
     this.fetchBlogs();
     this.fetchInstructors();

@@ -12,13 +12,13 @@
 <section class="h-full relative">
   <app-parallax
     [parallaxSpeed]="0.5"
-    [imagePath]="'assets/images/yoga1.jpg'"
+    [imagePath]="'assets/images/5.png'"
   ></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
   >
-    <h1 class="font-bold text-8xl uppercase">Inspira tu vida</h1>
-    <p class="text-2xl">Yoga. Sanar. Transformacion.</p>
+    <h1 class="font-bold text-8xl uppercase">Fluye Consciente</h1>
+    <p class="text-2xl">yoga, meditaciónes y talleres</p>
   </div>
   <span
     class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
@@ -49,56 +49,25 @@
         (inView)="onInView()"
         class="md:w-1/2 mb-8 md:mb-0 lg:mr-[180px] montserrat-normal"
       >
-        <!-- <div class="flex items-center mb-4">
-          <div class="flex -space-x-2 mr-4">
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-          </div>
-          <div class="flex items-center">
-            <span class="text-lightBrown text-2xl">★★★★★</span>
-            <span class="ml-2 text-2xl font-bold">5.0</span>
-          </div>
-        </div> -->
-        <!-- <p class="text-sm mb-6 text-blue">from 200+ reviews</p> -->
         <h1
           class="text-4xl md:text-5xl font-bold mb-4 text-strongBrown uppercase"
         >
-          Explore the Path<br />of Balance
+          ¡Bienvenidos a esencial360!
         </h1>
         <p class="text-lg mb-6 text-strongBrown">
-          Bienvenido a Esencial360, Tu plataforma integral para el bienestar,
-          diseñada pensando en nuestra comunidad latina. Explora una amplia
-          variedad de prácticas de yoga, meditaciones, y talleres, disponibles
-          en cualquier momento y lugar.
+          Este es tu espacio seguro, un punto de encuentro donde el bienestar y
+          el crecimiento personal son la esencia de tu vida. Aquí eres parte de
+          una comunidad que te inspira y te acompaña en cada paso de tu
+          transformación personal.
         </p>
-        <app-button [text]="'COMIENZA TU VIAJE'"></app-button>
+        <app-button
+          [bgColor]="'bg-blue'"
+          [text]="'COMIENZA TU VIAJE'"
+        ></app-button>
       </div>
       <div class="mt-5 md:mt-0 md:w-1/2">
         <img
-          src="../../../assets/images/yoga1.jpg"
+          src="../../../assets/images/4.png"
           alt="Yoga pose"
           class="rounded-xl object-cover w-full h-[27rem]"
         />
@@ -118,13 +87,11 @@
   <div
     class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
   >
-    <h4 class="text-blue">NOSOTROS</h4>
-    <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
-      Descubre nuestros servicios
+    <h3 class="text-4xl lg:text-6xl my-2 text-strongBrown uppercase">
+      ¡Descubre tu equilibrio!
     </h3>
-    <p class="text-strongBrown">
-      Discover the unique benefits of Esencial360 designed to support your yoga
-      journey.
+    <p class="text-strongBrown lg:text-xl my-4">
+      Estas herramientas de esencial<span class="text-blue">360</span> te ayudarán en tu proceso.
     </p>
   </div>
   <div
@@ -133,23 +100,6 @@
     (inView)="onInView()"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
   >
-    <!-- <div>
-      <h2
-        [@fadeIn]="elementState"
-        appInView
-        (inView)="onInView()"
-        class="text-green-600 font-semibold mb-2 text-blue"
-      >
-        OUR SERVICES
-      </h2>
-      <h1 class="text-2xl font-bold mb-4 text-strongBrown">
-        Our services for a healthy body
-      </h1>
-      <p class="text-gray-600 text-sm text-strongBrown">
-        Explore the ancient heritage of yoga through our classes, which are
-        accessible to all levels and accompanied by a balanced diet.
-      </p>
-    </div> -->
     @for (service of services; track $index) {
     <div
       [ngClass]="{
@@ -176,11 +126,15 @@
 </section>
 <app-news-and-blogs></app-news-and-blogs>
 <app-banner
-  [title]="'A better path to a healthy life'"
+  [title]="'¡Contenido de calidad garantizado!'"
   [description]="
-    'Discover the transformative power of yoga: Strengthen your body & calm your mind.'
+    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
   "
+   [buttonText]="'¡Conoce al consejo e360!'"
+   [description]="'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'"
+   [image]="'../../../assets/images/1.png'"
   [addMargin]="true"
+  [contact]="true"
 ></app-banner>
 <app-catalogue-view
   [title]="'OUR BLOG'"
@@ -192,10 +146,13 @@
 ></app-catalogue-view>
 <app-pricing-plan></app-pricing-plan>
 <app-banner
-  [title]="'Quieres formar parte del equipo de intructores?'"
-  [description]="'Sube tus propias clases y crea una comunidad.'"
+  [title]="'¡Aprende de los mejores!'"
+  [description]="
+    'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'
+  "
   [addMargin]="true"
   [contact]="true"
+  [buttonText]="'¡Conoce a los instructores e360!'"
   (onActionButton)="onInstructorContact()"
 ></app-banner>
 <app-faq></app-faq>
