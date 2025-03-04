@@ -91,7 +91,8 @@
       ¡Descubre tu equilibrio!
     </h3>
     <p class="text-strongBrown lg:text-xl my-4">
-      Estas herramientas de esencial<span class="text-blue">360</span> te ayudarán en tu proceso.
+      Estas herramientas de esencial<span class="text-blue">360</span> te
+      ayudarán en tu proceso.
     </p>
   </div>
   <div
@@ -123,6 +124,15 @@
     </div>
     }
   </div>
+  <div
+    class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
+  >
+    <button
+      class="bg-blue text-white px-8 py-4 uppercase font-bold w-4/12 text-sm rounded-md flex items-center justify-center w-full"
+    >
+      ¡Comenzar mi viaje esencial360!
+    </button>
+  </div>
 </section>
 <app-news-and-blogs></app-news-and-blogs>
 <app-banner
@@ -130,20 +140,22 @@
   [description]="
     'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
   "
-   [buttonText]="'¡Conoce al consejo e360!'"
-   [description]="'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'"
-   [image]="'../../../assets/images/1.png'"
+  [buttonText]="'¡Conoce al consejo e360!'"
+  [description]="
+    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
+  "
+  [image]="'../../../assets/images/1.png'"
   [addMargin]="true"
   [contact]="true"
 ></app-banner>
-<app-catalogue-view
+<!-- <app-catalogue-view
   [title]="'OUR BLOG'"
   [subtitle]="'CHECK OUT OUR BLOG'"
   [description]="
     'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
   "
   [catalogue]="blogs"
-></app-catalogue-view>
+></app-catalogue-view> -->
 <app-pricing-plan></app-pricing-plan>
 <app-banner
   [title]="'¡Aprende de los mejores!'"
@@ -153,6 +165,16 @@
   [addMargin]="true"
   [contact]="true"
   [buttonText]="'¡Conoce a los instructores e360!'"
+  (onActionButton)="onInstructorContact()"
+></app-banner>
+<app-banner
+  [title]="'¿Quieres ser instructor e360?'"
+  [description]="
+    'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'
+  "
+  [addMargin]="true"
+  [contact]="true"
+  [buttonText]="'¡Quiero ser instructor e360!'"
   (onActionButton)="onInstructorContact()"
 ></app-banner>
 <app-faq></app-faq>

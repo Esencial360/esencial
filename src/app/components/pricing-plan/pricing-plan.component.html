@@ -1,43 +1,52 @@
-<section class="container mx-auto px-4 py-8 montserrat-normal" data-aos="fade-up" data-aos-duration="1000">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-            <h2 class="text-blue mb-2">FEATURES</h2>
-            <h1 class="text-3xl font-bold mb-4 uppercase text-strongBrown">Our plan for a journey of well-being</h1>
-            <p class=" mb-8">
-              Explore the ancient heritage of yoga through our classes, which are accessible to all levels and accompanied by a balanced diet.
-            </p>
-        </div>
-        @for (plan of plans; track $index) {
-            <div class="bg-white rounded-lg border border-strongBrown overflow-hidden">
-                <div class="p-6">
-                  <div class="flex items-center justify-between mb-4">
-                    <span class="text-blue">
-                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 3.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 12a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
-                        <path d="M13.5 10a.5.5 0 0 1-.5.5h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H7a.5.5 0 0 1 0-1h2.5V7a.5.5 0 0 1 1 0v2.5H13a.5.5 0 0 1 .5.5z"/>
-                      </svg>
-                    </span>
-                    <h3 class="text-strongBrown font-bold">{{ plan.name }}</h3>
-                  </div>
-                  <p class="text-3xl text-strongBrown mb-6">${{ plan.price }}/mth</p>
-                  <ul class="space-y-3">
-                    <li *ngFor="let feature of plan.features" class="flex items-center text-strongBrown">
-                      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                      </svg>
-                      {{ feature }}
-                    </li>
-                  </ul>
-                </div>
-                <div class="bg-green-700 p-4">
-                  <button class="bg-white text-strongBrown border border-strongBrown hover:bg-lightBrown hover:text-white px-4 py-2 rounded-full flex items-center justify-center w-full">
-                    Subscribe
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-        }
+<section
+  class="container mx-auto px-4 py-8 montserrat-normal"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="flex flex-col justify-center">
+      <h2 class="text-4xl mb-4 uppercase text-strongBrown">
+        ¡Estás cerca de ser parte de esta maravillosa comunidad!
+      </h2>
+      <p class="mb-8 text-lg md:text-2xl">
+        Cada precio incluye un descuento especial del
+        <span class="text-blue">25%</span> para ti.
+      </p>
+      <button
+        class="bg-blue text-white px-8 py-4 uppercase w-4/12 text-sm rounded-md flex items-center justify-center"
+      >
+        ¡Quiero comenzar mi viaje esencial360!
+      </button>
     </div>
-  </section>
+    <div>
+      @for (plan of plans; track $index) {
+      <div class="bg-white rounded-lg overflow-hidden flex">
+        <img [src]="plan.image" class="w-1/2 object-cover" alt="">
+        <div class="p-6 flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-veige font-bold">{{ plan.name }}</h3>
+          </div>
+          <p class="text-3xl text-strongBrown mb-6 font-bold">
+            ${{ plan.price }} USD
+          </p>
+          <ul class="space-y-3">
+            <li
+              *ngFor="let feature of plan.features"
+              class="flex items-center text-strongBrown"
+            >
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
