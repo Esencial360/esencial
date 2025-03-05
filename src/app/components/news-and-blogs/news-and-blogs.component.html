@@ -47,20 +47,29 @@
   </div>
 </div>
 } @else {
-<div class="container mx-auto px-4 py-12 text-center montserrat-normal">
-  <div class="flex flex-col justify-evenly items-center bg-bone md:h-96">
-    <img src="/assets/images/12.png" class="h-48 bg-cover w-min" alt="">
-    <h2 class="lg:text-7xl text-veige mb-4 uppercase">
-      ¡Descubre esencial<span class="text-blue">360!</span>
-    </h2>
+<div class="container mx-auto px-4 py-12 text-center montserrat-normal rounded-3xl">
+  <div class="flex">
+    <div class="flex flex-col justify-evenly items-center md:h-96">
+      <img src="/assets/images/12.png" class="h-48 bg-cover w-min" alt="">
+      <h2 class="lg:text-7xl text-white mb-4 uppercase">
+        ¡Descubre esencial<span class="text-blue">360!</span>
+      </h2>
+    </div>
+    <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
+      <img
+        src="../../../assets/images/3.png"
+        alt="Yoga at sunset"
+        class="w-full h-96 object-cover rounded-lg shadow-xl"
+      />
+    </div>
   </div>
   <div
     class="flex flex-row justify-center mb-12 items-center mt-12"
     data-aos="fade-up"
     data-aos-duration="1000"
   >
-    <p class="text-strongBrown max-w-4xl mr-10 mx-auto text-start w-7/12">
-      <span class="text-veige">esencial<span class="text-blue">360</span></span> nace de nuestra pasión por el bienestar y el deseo de crear un
+    <p class="text-strongBrown max-w-4xl  mx-auto text-start text-white">
+      <span class="text-white">esencial<span class="text-blue">360</span></span> nace de nuestra pasión por el bienestar y el deseo de crear un
       espacio accesible y enriquecedor para el desarrollo personal. Por eso
       reunimos a los mejores profesionales del yoga, meditación y el desarrollo
       personal, para ofrecerte herramientas esenciales que transformen tu día a
@@ -83,15 +92,43 @@
       <br /> <br />
       ¡Nos emociona que seas parte de esta comunidad! Te vemos en clase.
         <br /> <br />
-      <span class="text-blue">-Caro, Lulú y Pau.</span>
+      <span class="italic">-Caro, Lulú y Pau.</span>
     </p>
-    <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
-      <img
-        src="../../../assets/images/3.png"
-        alt="Yoga at sunset"
-        class="w-full h-96 object-cover rounded-lg shadow-lg"
-      />
-    </div>
   </div>
+  <app-banner
+  [title]="'¡Contenido de calidad garantizado!'"
+  [description]="
+    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
+  "
+  [buttonText]="'¡Conoce al consejo e360!'"
+  [description]="
+    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
+  "
+  [image]="'../../../assets/images/1.png'"
+  [addMargin]="true"
+  [contact]="true"
+></app-banner>
+<app-banner
+  [title]="'¡Aprende de los mejores!'"
+  [description]="
+    'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'
+  "
+  [addMargin]="true"
+  [contact]="true"
+  [buttonText]="'¡Conoce a los instructores e360!'"
+  [image]="'../../../assets/images/9.png'"
+  (onActionButton)="onInstructorContact()"
+></app-banner>
+<app-banner
+  [title]="'¿Quieres ser instructor e360?'"
+  [description]="
+    'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'
+  "
+  [addMargin]="true"
+  [contact]="true"
+  [buttonText]="'¡Quiero ser instructor e360!'"
+  [image]="'../../../assets/images/1.png'"
+  (onActionButton)="onInstructorContact()"
+></app-banner>
 </div>
 }

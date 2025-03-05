@@ -21,7 +21,8 @@
     <p class="text-2xl">yoga, meditaciónes y talleres</p>
   </div>
   <span
-   (click)="scrollArrow()" class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
+    (click)="scrollArrow()"
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
   >
     keyboard_arrow_down
   </span>
@@ -155,19 +156,6 @@
   </div>
 </section>
 <app-news-and-blogs></app-news-and-blogs>
-<app-banner
-  [title]="'¡Contenido de calidad garantizado!'"
-  [description]="
-    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
-  "
-  [buttonText]="'¡Conoce al consejo e360!'"
-  [description]="
-    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
-  "
-  [image]="'../../../assets/images/1.png'"
-  [addMargin]="true"
-  [contact]="true"
-></app-banner>
 <app-banner-v2
   [title]="' Todo a Tu tiempo.'"
   [text]="
@@ -176,28 +164,6 @@
   [image]="'/assets/images/12.png'"
 ></app-banner-v2>
 <app-pricing-plan></app-pricing-plan>
-<app-banner
-  [title]="'¡Aprende de los mejores!'"
-  [description]="
-    'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'
-  "
-  [addMargin]="true"
-  [contact]="true"
-  [buttonText]="'¡Conoce a los instructores e360!'"
-  [image]="'../../../assets/images/9.png'"
-  (onActionButton)="onInstructorContact()"
-></app-banner>
-<app-banner
-  [title]="'¿Quieres ser instructor e360?'"
-  [description]="
-    'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'
-  "
-  [addMargin]="true"
-  [contact]="true"
-  [buttonText]="'¡Quiero ser instructor e360!'"
-  [image]="'../../../assets/images/1.png'"
-  (onActionButton)="onInstructorContact()"
-></app-banner>
 <app-faq></app-faq>
 } }
 
