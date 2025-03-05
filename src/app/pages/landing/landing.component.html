@@ -21,7 +21,7 @@
     <p class="text-2xl">yoga, meditaciónes y talleres</p>
   </div>
   <span
-    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+   (click)="scrollArrow()" class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
   >
     keyboard_arrow_down
   </span>
@@ -36,6 +36,7 @@
     appInView
     (inView)="onInView()"
     class="bg-white lg:p-8 relative overflow-hidden flex flex-col items-center h-5/6"
+    id="scrollContent"
   >
     <h1
       class="text-4xl md:text-5xl font-medium mb-4 text-strongBrown uppercase"

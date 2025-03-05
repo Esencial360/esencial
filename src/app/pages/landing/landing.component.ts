@@ -169,4 +169,11 @@ export class LandingComponent implements OnInit  {
       console.error(`An error occurred during navigation: ${error.message}`);
     });
   }
+
+  scrollArrow() {
+    const element = document.getElementById('scrollContent')
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth'})
+    } 
+  }
 }
