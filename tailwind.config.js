@@ -10,7 +10,7 @@ module.exports = {
       strongBrown: '#362317',
       lightBrown: '#825F3E',
       veige: '#B89B80',
-      bone: '#DACBAE',
+      bone: '#f7f5ef',
       blue: '#48A2A1',
     },
   },

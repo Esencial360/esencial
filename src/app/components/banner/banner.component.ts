@@ -36,6 +36,10 @@ export class BannerComponent implements OnInit {
   @Input()
   contact!: boolean;
 
+  @Input()
+  buttonText!: string
+
+
   constructor() {}
 
   ngOnInit() {

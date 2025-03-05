@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface RetreatFeature {
   title: string;
@@ -19,6 +20,8 @@ export class NewsAndBlogsComponent implements OnInit {
   aboutView!: boolean;
 
   retreatFeatures: RetreatFeature[] = []
+  
+  constructor(private router: Router){}
 
 
   ngOnInit() {
@@ -68,6 +71,21 @@ export class NewsAndBlogsComponent implements OnInit {
         }
       ];
     }
+  }
+
+  onInstructorContact() {
+    this.router
+    .navigateByUrl('/carrera-instructor')
+    .then((navigationSuccess) => {
+      if (navigationSuccess) {
+        console.log('Navigation to carrera-instructor page successful');
+      } else {
+        console.error('Navigation to carrera-instructor page failed');
+      }
+    })
+    .catch((error) => {
+      console.error(`An error occurred during navigation: ${error.message}`);
+    });
   }
 
 }

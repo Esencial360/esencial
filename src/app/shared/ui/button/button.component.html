@@ -1,10 +1,12 @@
 <button
 (click)="onActionButton()"
-class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
+class="group flex items-center rounded-full px-4 hover:bg-veige py-2 transition-colors duration-200"
+[ngClass]="bgColor ? bgColor : 'bg-lightBrown hover:bg-strongBrown'"
 >
 <span class="text-white text-sm font-medium uppercase">{{text}}</span>
 <div
-  class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
+  class="ml-2 rounded-full w-5 h-5 flex items-center justify-center transition-colors duration-200"
+  [ngClass]="bgColor"
 >
   <svg
     class="w-3 h-3 text-white"

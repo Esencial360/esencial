@@ -50,6 +50,14 @@ export class LandingComponent implements OnInit  {
   services: Service[] = [];
   backgroundImageUrl = '../../../assets/images/yoga.jpg';
   isLoading!: boolean;
+  welcomeLines = [
+    {title: 'Clases de yoga', description: 'Diferentes estilos, instructores y duraciones, que se adaptan a tus necesidades y nivel.'},
+    {title: 'Meditaciones guiadas', description: 'Para comenzar o atravesar el día con intención, claridad y equilibrio.'},
+    {title: 'Charlas y foros', description: 'Espacios para encontrar inspiración y conocimiento wellness, impartido por expertas y expertos.'},
+    {title: 'Asesorías personalizadas', description: 'Sesiones guiadas por expertos que te ayudarán a profundizar en tu crecimiento personal y expandir tu bienestar.'},
+    {title: '¡Descuentos y acceso exclusivo!', description: 'A cursos y talleres cuidadosamente seleccionados para enriquecer tu práctica.'},
+
+  ]
   
   private ngUnsubscribe = new Subject<void>();
 
@@ -79,15 +87,9 @@ export class LandingComponent implements OnInit  {
     });
     }
     this.services = [
-      { title: 'YOGA', image: '../../../assets/images/yoga.jpg '},
-      { title: 'FITNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'MINDFULNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'ROUTINES', image: '../../../assets/images/yoga.jpg' },
-      { 
-        title: 'Ready to start your journey?', 
-        image: '../../../assets/images/yoga.jpg',
-        special: true
-      }
+      { title: 'YOGA', image: '../../../assets/images/6.png'},
+      { title: 'FITNESS', image: '../../../assets/images/7.png' },
+      { title: 'MINDFULNESS', image: '../../../assets/images/8.png' },
     ];
     this.fetchBlogs();
     this.fetchInstructors();
@@ -166,5 +168,12 @@ export class LandingComponent implements OnInit  {
     .catch((error) => {
       console.error(`An error occurred during navigation: ${error.message}`);
     });
+  }
+
+  scrollArrow() {
+    const element = document.getElementById('scrollContent')
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth'})
+    } 
   }
 }
