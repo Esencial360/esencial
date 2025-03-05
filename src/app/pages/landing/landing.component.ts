@@ -50,6 +50,14 @@ export class LandingComponent implements OnInit  {
   services: Service[] = [];
   backgroundImageUrl = '../../../assets/images/yoga.jpg';
   isLoading!: boolean;
+  welcomeLines = [
+    {title: 'Clases de yoga', description: 'Diferentes estilos, instructores y duraciones, que se adaptan a tus necesidades y nivel.'},
+    {title: 'Meditaciones guiadas', description: 'Para comenzar o atravesar el día con intención, claridad y equilibrio.'},
+    {title: 'Charlas y foros', description: 'Espacios para encontrar inspiración y conocimiento wellness, impartido por expertas y expertos.'},
+    {title: 'Asesorías personalizadas', description: 'Sesiones guiadas por expertos que te ayudarán a profundizar en tu crecimiento personal y expandir tu bienestar.'},
+    {title: '¡Descuentos y acceso exclusivo!', description: 'A cursos y talleres cuidadosamente seleccionados para enriquecer tu práctica.'},
+
+  ]
   
   private ngUnsubscribe = new Subject<void>();
 

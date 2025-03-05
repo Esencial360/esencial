@@ -96,6 +96,7 @@ import { InstructorProfileComponent } from './pages/user-profile/instructor-prof
 import { AdminProfileComponent } from './pages/user-profile/admin-profile/admin-profile.component';
 import { StudentProfileComponent } from './pages/user-profile/student-profile/student-profile.component';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { BannerV2Component } from './shared/ui/banner-v2/banner-v2.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
@@ -163,6 +164,7 @@ export function localStorageSyncReducer(reducer: any) {
     InstructorProfileComponent,
     AdminProfileComponent,
     StudentProfileComponent,
+    BannerV2Component,
   ],
   imports: [
     BrowserModule,

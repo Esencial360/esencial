@@ -17,7 +17,7 @@
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
   >
-    <h1 class="font-bold text-8xl uppercase">Fluye Consciente</h1>
+    <h1 class="font-bold text-2xl md:text-8xl uppercase">Fluye Consciente</h1>
     <p class="text-2xl">yoga, meditaciónes y talleres</p>
   </div>
   <span
@@ -35,42 +35,54 @@
     [@fadeIn]="elementState"
     appInView
     (inView)="onInView()"
-    class="bg-white lg:p-8 relative overflow-hidden flex flex-col h-5/6"
+    class="bg-white lg:p-8 relative overflow-hidden flex flex-col items-center h-5/6"
   >
+    <h1
+      class="text-4xl md:text-5xl font-medium mb-4 text-strongBrown uppercase"
+    >
+      ¡Bienvenidos a esencial<span class="text-blue">360!</span>
+    </h1>
     <div
       [@fadeIn]="elementState"
       appInView
       (inView)="onInView()"
       class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
     >
+      <div class="mt-5 md:mt-0 md:w-1/2">
+        <img
+          src="../../../assets/images/4.png"
+          alt="Yoga pose"
+          class="rounded-xl object-cover lg:h-[40rem] mb-4"
+        />
+        <app-button
+          [bgColor]="'bg-blue'"
+          [text]="'¡Comenzar mi viaje esencial360!'"
+          [width]="'w-full'"
+        ></app-button>
+      </div>
+
       <div
         [@fadeIn]="elementState"
         appInView
         (inView)="onInView()"
-        class="md:w-1/2 mb-8 md:mb-0 lg:mr-[180px] montserrat-normal"
+        class="md:w-1/2 mb-8 md:mb-0 lg:ml-[80px] montserrat-normal"
       >
-        <h1
-          class="text-4xl md:text-5xl font-bold mb-4 text-strongBrown uppercase"
-        >
-          ¡Bienvenidos a esencial360!
-        </h1>
         <p class="text-lg mb-6 text-strongBrown">
           Este es tu espacio seguro, un punto de encuentro donde el bienestar y
           el crecimiento personal son la esencia de tu vida. Aquí eres parte de
           una comunidad que te inspira y te acompaña en cada paso de tu
           transformación personal.
         </p>
-        <app-button
-          [bgColor]="'bg-blue'"
-          [text]="'COMIENZA TU VIAJE'"
-        ></app-button>
-      </div>
-      <div class="mt-5 md:mt-0 md:w-1/2">
-        <img
-          src="../../../assets/images/4.png"
-          alt="Yoga pose"
-          class="rounded-xl object-cover w-full h-[27rem]"
-        />
+        @for (item of welcomeLines; track $index) {
+        <div class="flex flex-col my-4">
+          <h4 class="text-blue text-2xl uppercase">{{ item.title }}</h4>
+          <p>{{ item.description }}</p>
+        </div>
+        }
+        <p class="text-blue font-bold">
+          ¡Disfruta de recompensas y beneficios que celebran tu compromiso y te
+          inspiran a seguir avanzando!
+        </p>
       </div>
     </div>
     <app-scrolling-banner class="flex justify-center"></app-scrolling-banner>
@@ -79,6 +91,13 @@
     class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
   ></div>
 </section>
+<app-banner-v2
+  [reverse]="true"
+  [text]="
+    'Para las culturas indígenas, el quetzal es más que un ave: simboliza libertad, una riqueza profunda y un lazo con lo esencial. Un recordatorio de vivir en equilibrio.'
+  "
+  [image]="'/assets/images/12.png'"
+></app-banner-v2>
 <section
   class="container mx-auto px-4 py-8"
   data-aos="fade-up"
@@ -128,7 +147,7 @@
     class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
   >
     <button
-      class="bg-blue text-white px-8 py-4 uppercase font-bold w-4/12 text-sm rounded-md flex items-center justify-center w-full"
+      class="bg-blue text-white px-8 py-4 uppercase font-bold md:w-4/12 text-sm rounded-md flex items-center justify-center w-full"
     >
       ¡Comenzar mi viaje esencial360!
     </button>
@@ -148,14 +167,13 @@
   [addMargin]="true"
   [contact]="true"
 ></app-banner>
-<!-- <app-catalogue-view
-  [title]="'OUR BLOG'"
-  [subtitle]="'CHECK OUT OUR BLOG'"
-  [description]="
-    'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
+<app-banner-v2
+  [title]="' Todo a Tu tiempo.'"
+  [text]="
+    'El caracol, un símbolo usado en la cultura maya que representa el agua y la tierra, nos recuerda el poder del agua para fluir con claridad y la firmeza de la tierra para decidir con certeza.'
   "
-  [catalogue]="blogs"
-></app-catalogue-view> -->
+  [image]="'/assets/images/12.png'"
+></app-banner-v2>
 <app-pricing-plan></app-pricing-plan>
 <app-banner
   [title]="'¡Aprende de los mejores!'"
@@ -165,6 +183,7 @@
   [addMargin]="true"
   [contact]="true"
   [buttonText]="'¡Conoce a los instructores e360!'"
+  [image]="'../../../assets/images/9.png'"
   (onActionButton)="onInstructorContact()"
 ></app-banner>
 <app-banner
@@ -175,6 +194,7 @@
   [addMargin]="true"
   [contact]="true"
   [buttonText]="'¡Quiero ser instructor e360!'"
+  [image]="'../../../assets/images/1.png'"
   (onActionButton)="onInstructorContact()"
 ></app-banner>
 <app-faq></app-faq>
