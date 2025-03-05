@@ -129,10 +129,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   updateAndFetchStreak() {
-    this.userService.updateStreak(this.userId).subscribe((response) => {});
-
-    this.userService.getStreak(this.userId).subscribe((res) => {
-      this.streak = res.streak;
+    this.userService.updateStreak(this.userId).subscribe((response) => {
+      this.userService.getStreak(this.userId).subscribe((res) => {
+        this.streak = res.streak;
+      });
     });
   }
 
