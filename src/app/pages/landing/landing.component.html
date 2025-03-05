@@ -40,7 +40,7 @@
     id="scrollContent"
   >
     <h1
-      class="text-4xl md:text-5xl font-medium mb-4 text-strongBrown uppercase"
+      class="text-4xl md:text-5xl text-center lg:text-start font-medium mb-4 text-strongBrown uppercase"
     >
       ¡Bienvenidos a esencial<span class="text-blue">360!</span>
     </h1>
@@ -48,7 +48,7 @@
       [@fadeIn]="elementState"
       appInView
       (inView)="onInView()"
-      class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
+      class="flex md:flex-row flex-col items-center justify-around bg-white px-8 lg:py-16 rounded-xl max-w-6xl mx-auto"
     >
       <div class="mt-5 md:mt-0 md:w-1/2">
         <img
@@ -67,7 +67,7 @@
         [@fadeIn]="elementState"
         appInView
         (inView)="onInView()"
-        class="md:w-1/2 mb-8 md:mb-0 lg:ml-[80px] montserrat-normal"
+        class="md:w-1/2 mb-8 mt-10 lg:mt-0 md:mb-0 lg:ml-[80px] montserrat-normal"
       >
         <p class="text-lg mb-6 text-strongBrown">
           Este es tu espacio seguro, un punto de encuentro donde el bienestar y
@@ -87,11 +87,11 @@
         </p>
       </div>
     </div>
-    <app-scrolling-banner class="flex justify-center"></app-scrolling-banner>
+    <!-- <app-scrolling-banner class="flex justify-center"></app-scrolling-banner> -->
   </div>
-  <div
+  <!-- <div
     class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
-  ></div>
+  ></div> -->
 </section>
 <app-banner-v2
   [reverse]="true"
@@ -133,7 +133,7 @@
       <img
         [src]="service.image"
         [alt]="service.title"
-        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer brightness-75"
       />
       <div class="">
         <h3
