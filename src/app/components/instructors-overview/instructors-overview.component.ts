@@ -14,9 +14,6 @@ interface Instructor {
 })
 export class InstructorsOverviewComponent implements OnInit{
 
-  // @Input()
-  // instructors!: Instructor[]
-
   constructor(private router: Router) {}
 
   instructors: Instructor[] = [

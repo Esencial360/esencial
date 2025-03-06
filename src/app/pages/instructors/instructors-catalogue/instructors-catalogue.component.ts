@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import AOS from 'aos';
+import { catchError, Subject, takeUntil, tap } from 'rxjs';
 
 interface PreviewInstructor {
   _id: number;
@@ -18,6 +19,7 @@ interface PreviewInstructor {
 export class InstructorsCatalogueComponent implements OnInit, OnDestroy {
   instructors: any;
   filteredInstructors: PreviewInstructor[] = [];
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -31,16 +33,18 @@ export class InstructorsCatalogueComponent implements OnInit, OnDestroy {
   }
 
   getAllInstructors() {
-    this.instructorService.getAllInstructors().subscribe(
-      (instructors) => {
-        this.instructors = instructors;
-        console.log(this.instructors);
-        this.filteredInstructors = this.instructors;
-      },
-      (error) => {
-        console.error('Error fetching instructors:', error);
-      }
-    );
+    this.instructorService.getAllInstructors()
+      .pipe(
+        takeUntil(this.destroy$),
+        tap((instructors) => {
+          this.instructors = instructors;
+        }),
+        catchError((error) => {
+          console.error('Error fetching instructors:', error);
+          return [];
+        })
+      )
+      .subscribe();
   }
 
   onFilterChange(filter: string) {
@@ -64,6 +68,13 @@ export class InstructorsCatalogueComponent implements OnInit, OnDestroy {
     console.log('navigate');
   }
   ngOnDestroy() {
-    console.log('InstructorsCatalogueComponent destroyed');
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  scrollArrow() {
+    const element = document.getElementById('scrollContent')
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth'})
+    } 
   }
 }
