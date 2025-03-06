@@ -67,6 +67,7 @@ export class InstructorsCatalogueComponent implements OnInit, OnDestroy {
     this.router.navigate([`/instructores/${id}`]);
     console.log('navigate');
   }
+  
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
