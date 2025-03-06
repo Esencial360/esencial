@@ -4,6 +4,8 @@ import { concatMap, from, map, toArray } from 'rxjs';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InstructorService } from '../../services/instructor.service';
+import { InstructorActions } from '../../../state/instructor.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-popular-classes-and-instructors',
@@ -18,13 +20,14 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
   constructor(
     private bunnystreamService: BunnystreamService,
     private router: Router,
-    private sanitizer: DomSanitizer, 
-    private instructorService: InstructorService
+    private sanitizer: DomSanitizer,
+    private instructorService: InstructorService,
+    private store: Store
   ) {}
 
   ngOnInit() {
     this.getPopularClasses();
-    this.getAllInstructors()
+    this.getAllInstructors();
   }
 
   getPopularClasses() {
@@ -43,6 +46,11 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
     this.instructorService.getAllInstructors().subscribe(
       (instructors) => {
         this.instructors = instructors.slice(0, 3);
+        this.store.dispatch(
+          InstructorActions.retrievedInstructorList({
+            instructors: instructors,
+          })
+        );
       },
       (error) => {
         console.error('Error fetching instructors:', error);
@@ -93,7 +101,7 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
         .subscribe({
           next: (videos) => {
             this.classes = videos;
-            
+
             this.loadingClasses = false;
           },
           error: (error) => {

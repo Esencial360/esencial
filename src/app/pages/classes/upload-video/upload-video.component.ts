@@ -35,6 +35,7 @@ export class UploadVideoComponent implements OnInit {
   collectionList: any[] = [];
   newVideoForm!: FormGroup;
   selectedFile!: File;
+  isModalOpen = false;
   firstStep: boolean = true;
   secondStep: boolean = false;
   thirdStep: boolean = false;
@@ -51,7 +52,6 @@ export class UploadVideoComponent implements OnInit {
     this.newVideoForm = this.fb.group({
       title: ['', Validators.required],
       collectionId: ['', Validators.required],
-      thumbnailTime: [5000, Validators.required],
       instructor: ['', Validators.required]
     });
   }
@@ -67,6 +67,14 @@ export class UploadVideoComponent implements OnInit {
         console.error('Instructors error', error)
       }
     )
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 
   getCollectionList() {
@@ -87,26 +95,9 @@ export class UploadVideoComponent implements OnInit {
     if (this.newVideoForm.valid) {
       const formData = this.newVideoForm.value;
       this.createVideo();
-      // if (this.newVideoForm.value.instructor == '') {
-        
-      // }
       console.log('Form submitted:', formData);
     }
   }
-
-  // putVideoInstructor() {
-  //   const videos = [this.videoId]
-  //   const selectedInstructor = this.instructors.find(instructor => instructor._id === this.newVideoForm.value.instructor)
-  //   const instructorData: Instructor = {...selectedInstructor, videos}
-  //   this.instructorService.updateInstructor(instructorData).subscribe(
-  //     (response: any) => {
-  //       console.log('Instructs update successfully', response);
-  //     },
-  //     (error) => {
-  //       console.error('Error Instructs update :', error);
-  //     }
-  //   )
-  // }
 
   putVideoInstructor() {
     const selectedInstructor = this.instructors.find(instructor => instructor._id === this.newVideoForm.value.instructor);
@@ -115,7 +106,7 @@ export class UploadVideoComponent implements OnInit {
 
       const newVideo = {
         videoId: this.videoId,
-        status: 'Pending' // Mark as pending initially
+        status: 'Pending'
       };
       const updatedInstructor: Instructor = {
         ...selectedInstructor,
@@ -152,7 +143,7 @@ export class UploadVideoComponent implements OnInit {
       .createVideo(
         this.newVideoForm.value.title,
         this.newVideoForm.value.collectionId,
-        this.newVideoForm.value.thumbnailTime
+        5000
       )
       .pipe(take(1))
       .subscribe(

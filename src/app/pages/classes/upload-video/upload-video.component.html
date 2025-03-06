@@ -1,90 +1,72 @@
 <app-header></app-header>
-@if(firstStep) {
-  <div class="relative max-w-lg mx-auto">
-    <form
-      [formGroup]="newVideoForm"
-      class="bg-white shadow-lg rounded-xl p-8 space-y-6"
+<section class="h-[75vh] w-full">
+@if (isModalOpen) {
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+>
+  <div
+    class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative animate-fadeIn"
+  >
+    <button
+      (click)="closeModal()"
+      class="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
     >
-      <!-- Title Input -->
+      ✕
+    </button>
+    @if (firstStep) {
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Create a New Video</h2>
+    <form [formGroup]="newVideoForm" class="space-y-6">
       <div>
-        <label class="block text-gray-800 font-semibold mb-1" for="title">
-          Title
-        </label>
+        <label class="block text-gray-700 font-medium mb-1">Title</label>
         <input
-          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-          id="title"
           type="text"
-          placeholder="Enter blog title"
           formControlName="title"
+          placeholder="Enter video title"
+          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
           [ngClass]="{
-            'border-red-500': newVideoForm.get('title')?.invalid &&
-                              (newVideoForm.get('title')?.dirty || newVideoForm.get('title')?.touched)
+            'border-red-500':
+              newVideoForm.get('title')?.invalid &&
+              (newVideoForm.get('title')?.dirty ||
+                newVideoForm.get('title')?.touched)
           }"
         />
-        <div
-          *ngIf="newVideoForm.get('title')?.invalid &&
-                (newVideoForm.get('title')?.dirty || newVideoForm.get('title')?.touched)"
-          class="text-red-500 text-sm mt-1"
+        <p
+          *ngIf="
+            newVideoForm.get('title')?.invalid &&
+            (newVideoForm.get('title')?.dirty ||
+              newVideoForm.get('title')?.touched)
+          "
+          class="text-red-500 text-sm"
         >
           Title is required.
-        </div>
+        </p>
       </div>
-
-      <!-- Category Select -->
       <div>
-        <label class="block text-gray-800 font-semibold mb-1" for="collectionId">
-          Category
-        </label>
+        <label class="block text-gray-700 font-medium mb-1">Category</label>
         <select
-          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-          id="collectionId"
           formControlName="collectionId"
+          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
         >
           <option value="" disabled selected>Select a Category</option>
-          @for(collection of collectionList; track $index;) {
-            <option [value]="collection.guid">{{ collection.name }}</option>
+          @for (collection of collectionList; track $index;) {
+          <option [value]="collection.guid">{{ collection.name }}</option>
           }
         </select>
       </div>
-
-      <!-- Thumbnail Time Input -->
       <div>
-        <label class="block text-gray-800 font-semibold mb-1" for="thumbnailTime">
-          Thumbnail Time (MS)
-        </label>
-        <input
-          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-          id="thumbnailTime"
-          type="number"
-          placeholder="Enter thumbnail time"
-          formControlName="thumbnailTime"
-          [ngClass]="{
-            'border-red-500': newVideoForm.get('thumbnailTime')?.invalid &&
-                              (newVideoForm.get('thumbnailTime')?.dirty || newVideoForm.get('thumbnailTime')?.touched)
-          }"
-        />
-      </div>
-
-      <!-- Instructor Select -->
-      <div>
-        <label class="block text-gray-800 font-semibold mb-1" for="instructor">
-          Instructor
-        </label>
+        <label class="block text-gray-700 font-medium mb-1">Instructor</label>
         <select
-          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-          id="instructor"
           formControlName="instructor"
+          class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
         >
           <option value="" selected>No Instructor</option>
-          @for(singleInstructor of instructors; track $index;) {
-            <option [value]="singleInstructor._id">
-              {{ singleInstructor.firstname }} {{singleInstructor.lastname}}
-            </option>
+          @for (singleInstructor of instructors; track $index;) {
+          <option [value]="singleInstructor._id">
+            {{ singleInstructor.firstname }} {{ singleInstructor.lastname }}
+          </option>
           }
         </select>
       </div>
-
-      <!-- Submit Button -->
       <div>
         <button
           type="submit"
@@ -95,27 +77,48 @@
         </button>
       </div>
     </form>
-  </div>
-}
-
-@if (secondStep) {
-  <input type="file" #videoInput (change)="onFileSelected($event)" />
-  <button (click)="onUploadVideo()">Upload Video</button>
-}
-@if(thirdStep) {
-  <div class="flex flex-col justify-center items-center h-full">
-    <app-check-mark></app-check-mark>
-    <div class="md:mx-10 mx-2 text-center">
-      <h4>Para nosotros, tu participación es ESENCIAL.</h4>
-      <p class="my-4">
-        ¡Muchas gracias por tu video! El video con tu material se ha
-        enviado exitosamente. Lo revisamos y de daremos feedback.
+    } @if (secondStep) {
+    <div class="text-center space-y-4">
+      <h2 class="text-lg font-semibold">Upload Your Video</h2>
+      <input
+        type="file"
+        #videoInput
+        (change)="onFileSelected($event)"
+        class="border p-2 rounded w-full"
+      />
+      <button
+        (click)="onUploadVideo()"
+        class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
+      >
+        Upload Video
+      </button>
+    </div>
+    } @if (thirdStep) {
+    <div class="flex flex-col items-center text-center space-y-4">
+      <app-check-mark></app-check-mark>
+      <h4 class="text-lg font-semibold">
+        Your participation is essential to us!
+      </h4>
+      <p class="text-gray-600">
+        Thank you for your video! We have received your material and will review
+        it to provide feedback.
       </p>
-      <h4>El equipo de ESENCIAL360</h4>
+      <h4 class="font-semibold">The ESENCIAL360 Team</h4>
+      <button
+        (click)="onProcessDone()"
+        class="mt-5 py-3 px-6 bg-black text-white rounded-lg hover:bg-gray-800 transition duration-200"
+      >
+        HOME
+      </button>
     </div>
-    <div class="mt-5" (click)="onProcessDone()">
-      <app-button [text]="'HOME'"></app-button>
-    </div>
+    }
   </div>
+</div>
+} @else {
+<section>
+  <h2>Upload your class</h2>
+  <app-button [text]="'click here'" (click)="openModal()"></app-button>
+</section>
 }
+</section>
 <app-footer></app-footer>

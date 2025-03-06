@@ -89,7 +89,8 @@ import { RecommendationClassesComponent } from './shared/ui/recommendation-class
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 import { StoreModule } from '@ngrx/store';
-import { userActiveReducer, userReducer } from './state/user.reducer';
+import { userActiveReducer } from './state/user.reducer';
+import { instructorReducer } from './state/instructor.reducer';
 import { ModalComponent } from './shared/ui/modal/modal.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 import { InstructorProfileComponent } from './pages/user-profile/instructor-profile/instructor-profile.component';
@@ -188,7 +189,10 @@ export function localStorageSyncReducer(reducer: any) {
       },
     }),
     StoreModule.forRoot(
-      { user: userActiveReducer },
+      {
+        user: userActiveReducer,
+        instructors: instructorReducer
+      },
       { metaReducers: [localStorageSyncReducer] }
     ),
   ],
@@ -216,10 +220,7 @@ export function localStorageSyncReducer(reducer: any) {
     },
     provideClientHydration(),
     provideHttpClient(withFetch()),
-    [
-      provideAnimationsAsync(),
-      provideAnimations(),
-    ],
+    [provideAnimationsAsync(), provideAnimations()],
     provideLottieOptions({ player: () => player }),
     provideCacheableAnimationLoader(),
     provideClientHydration(),
