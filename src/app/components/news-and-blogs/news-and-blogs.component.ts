@@ -19,6 +19,9 @@ export class NewsAndBlogsComponent implements OnInit {
   @Input()
   aboutView!: boolean;
 
+  @Input()
+  instructorCatalogueView!: boolean;
+
   retreatFeatures: RetreatFeature[] = []
   
   constructor(private router: Router){}

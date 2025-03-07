@@ -4,8 +4,13 @@
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center w-full lg:w-8/12"
   >
-    <h2 class="font-bold text-5xl uppercase lg:text-7xl">¡aprende e inspira!</h2>
-    <p class="text-xl mt-5">Descubre a los guías que te acompañarán en tu crecimiento personal o únete a nuestro equipo compartiendo tu conocimiento con la comunidad e360.</p>
+    <h2 class="font-bold text-5xl uppercase lg:text-7xl">
+      ¡aprende e inspira!
+    </h2>
+    <p class="text-xl mt-5">
+      Descubre a los guías que te acompañarán en tu crecimiento personal o únete
+      a nuestro equipo compartiendo tu conocimiento con la comunidad e360.
+    </p>
   </div>
   <span
     class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
@@ -15,56 +20,52 @@
   </span>
 </section>
 <div class="bg-white">
-  <section class="container mx-auto px-4 py-8 montserrat-normal" id="scrollContent">
-    <h2 class="text-veige text-2xl lg:text-6xl uppercase text-center font-bold my-10">Conoce a tus guías e<span class="text-blue">360</span></h2>
+  <section
+    class="container mx-auto px-4 py-8 montserrat-normal"
+    id="scrollContent"
+  >
+    <h2
+      class="text-veige text-2xl lg:text-6xl uppercase text-center font-bold my-10"
+    >
+      Conoce a tus guías e<span class="text-blue">360</span>
+    </h2>
     <!-- <app-instructor-filter></app-instructor-filter> -->
     <div class="grid grid-cols-1 gap-6">
       @for(instructor of instructors; track $index;) {
-        <div class="flex items-center gap-6 p-6 my-5 cursor-pointer" (click)="onInstructor(instructor._id)">
-          <div class="w-64 h-64 rounded-full object-cover flex-shrink-0  overflow-hidden border-4 border-teal-500">
-            <img src="/assets/images/examplePerson.jpg" alt="Anna Vega Langarica" class="w-full h-full object-cover">
-          </div>
-          <div class="text-gray-700 lg:ml-10">
-            <h2 class="text-teal-600 font-bold text-lg lg:text-2xl uppercase text-blue">{{ instructor.firstname + " " + instructor.lastname }}</h2>
-            <p class="text-sm my-5 leading-relaxed">
-              {{instructor.description}}
-            </p>
-          </div>
-        </div>
-        
-      <!-- <div
-        data-aos="fade-up"
-        data-aos-duration="1000"
-        class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+      <div
+        class="flex items-center gap-6 p-6 my-5 cursor-pointer"
         (click)="onInstructor(instructor._id)"
       >
-        <div class="relative">
+        <div
+          class="w-64 h-64 rounded-full object-cover flex-shrink-0 overflow-hidden border-4 border-teal-500"
+        >
           <img
-            [src]="'/assets/images/examplePerson.jpg'"
-            [alt]="instructor.title"
-            class="w-full h-56 object-cover"
+            src="/assets/images/examplePerson.jpg"
+            alt="Anna Vega Langarica"
+            class="w-full h-full object-cover"
           />
-          <div
-            class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"
-          ></div>
-          <div class="absolute bottom-4 left-4 right-4 text-white">
-            <h3 class="text-2xl font-bold mb-1 capitalize">
-              {{ instructor.firstname + " " + instructor.lastname }}
-            </h3>
-            <div class="flex items-center text-sm">
-              <span
-                class="text-white py-1 rounded-full text-xs uppercase tracking-wide"
-              >
-                {{ instructor.title }}
-              </span>
-              <span class="mx-2">•</span>
-              <span>Esencial<span class="text-blue">360</span> Instructor</span>
-            </div>
-          </div>
         </div>
-      </div> -->
+        <div class="text-gray-700 lg:ml-10">
+          <h2
+            class="text-teal-600 font-bold text-lg lg:text-2xl uppercase text-blue"
+          >
+            {{ instructor.firstname + " " + instructor.lastname }}
+          </h2>
+          <p class="text-sm my-5 leading-relaxed">
+            {{ instructor.description }}
+          </p>
+        </div>
+      </div>
       }
     </div>
   </section>
+  <app-banner-v2
+    [title]="'despierta tu jaguar interior.'"
+    [text]="
+      'Venerado por mayas, aztecas y otras culturas indígenas, el jaguar simboliza  liderazgo, poder, intuición y protección, siendo un guía espiritual y físico en las comunidades indígenas.'
+    "
+    [image]="'/assets/images/jaguar.jpg'"
+  ></app-banner-v2>
+  <app-news-and-blogs [instructorCatalogueView]="true"></app-news-and-blogs>
 </div>
 <app-footer></app-footer>

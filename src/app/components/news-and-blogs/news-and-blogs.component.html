@@ -47,17 +47,30 @@
   </div>
 </div>
 } @else {
-<div class="container mx-auto px-4 py-12 text-center montserrat-normal rounded-3xl">
+<div
+  class="container mx-auto px-4 py-12 text-center montserrat-normal rounded-3xl my-10"
+  [ngClass]="instructorCatalogueView ? 'bg-bone w-9/12' : 'containerSection'"
+>
   <div class="flex flex-col lg:flex-row">
     <div class="flex flex-col justify-evenly items-center md:h-96">
-      <img src="/assets/images/12.png" class="h-48 bg-cover w-min" alt="">
+      <img src="/assets/images/logoBlue.png" class="h-48 bg-cover w-min" alt="" />
+      @if (!instructorCatalogueView) {
       <h2 class="lg:text-7xl text-white mb-4 uppercase">
         ¡Descubre esencial<span class="text-blue">360!</span>
       </h2>
+      } @else {
+      <h2 class="lg:text-7xl text-strongBrown mb-4 uppercase">
+        Conviertete en guía e<span class="text-blue">360</span>
+      </h2>
+      }
     </div>
     <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
       <img
-        src="../../../assets/images/3.png"
+        [src]="
+          instructorCatalogueView
+            ? '/assets/images/9.png'
+            : '/assets/images/3.png'
+        "
         alt="Yoga at sunset"
         class="w-full h-96 object-contain lg:object-cover rounded-lg shadow-xl"
       />
@@ -68,67 +81,142 @@
     data-aos="fade-up"
     data-aos-duration="1000"
   >
-    <p class="text-strongBrown max-w-4xl  mx-auto text-start text-white">
-      <span class="text-white">esencial<span class="text-blue">360</span></span> nace de nuestra pasión por el bienestar y el deseo de crear un
-      espacio accesible y enriquecedor para el desarrollo personal. Por eso
-      reunimos a los mejores profesionales del yoga, meditación y el desarrollo
-      personal, para ofrecerte herramientas esenciales que transformen tu día a
-      día.
-      <br /> <br />
+    @if (instructorCatalogueView) {
+    <div class="flex flex-col text-start">
+      <p
+        class="text-strongBrown max-w-4xl mx-auto text-start font-bold text-xl"
+      >
+        Con <span class="">esencial<span class="text-blue">360</span></span
+        >, no solo amplías tu alcance, sino que también te rodeas de colegas
+        expertos con quienes podrás aprender y crecer, recibiendo asesoría
+        continua. <br />
+        <br />
+        Súmate y accede a beneficios exclusivos diseñados para potenciar tu
+        enseñanza:
+        <br />
+        <br />
+      </p>
+      <h4 class="text-blue font-bold my-4">Crecimiento y comunidad</h4>
+      <ul>
+        <li class="my-2">
+          ✔️ Ser parte de una comunidad avalada por expertos del consejo
+          esencial360.
+        </li>
+        <li class="my-2">
+          ✔️ Espacios de retroalimentación y capacitación con otros yoguis.
+        </li>
+        <li class="my-2">✔️ Organización de eventos y talleres exclusivos.</li>
+      </ul>
+      <h4 class="text-blue font-bold my-4">Expansión y visibilidad</h4>
+      <ul>
+        <li class="my-2">
+          ✔️ Promoción interna de tu marca o estudio personal.
+        </li>
+        <li class="my-2">
+          ✔️ Alcance y presencia con una comunidad de +1000 practicantes.
+        </li>
+        <li class="my-2">
+          ✔️ Asesoramiento para la producción de tu contenido.
+        </li>
+      </ul>
+      <h4 class="text-blue font-bold my-4">Beneficios y recompensas</h4>
+      <ul>
+        <li class="my-2">
+          ✔️ 25% de comisión por cada alumno recomendado que se inscriba.
+        </li>
+        <li class="my-2">
+          ✔️ Descuento especial para instructores y acceso total a la
+          plataforma.
+        </li>
+        <li class="my-2">
+          ✔️ Bonificaciones y beneficios adicionales en reconocimiento a tu
+          impacto
+        </li>
+      </ul>
+
+      <h4 class="text-blue font-bold mt-5 text-xl">
+        ¡Comparte tu práctica en cualquier lugar y en cualquier momento!
+      </h4>
+
+      <app-button
+        [width]="'w-[20rem]'"
+        [height]="'h-[3rem]'"
+        [text]="'¡Quiero Aplicar!'"
+        [bgColor]="'bg-blue'"
+        class="flex justify-center mt-10"
+        (click)="onInstructorContact()"
+      ></app-button>
+    </div>
+    } @else {
+    <p class="text-strongBrown max-w-4xl mx-auto text-start text-white">
+      <span class="text-white">esencial<span class="text-blue">360</span></span>
+      nace de nuestra pasión por el bienestar y el deseo de crear un espacio
+      accesible y enriquecedor para el desarrollo personal. Por eso reunimos a
+      los mejores profesionales del yoga, meditación y el desarrollo personal,
+      para ofrecerte herramientas esenciales que transformen tu día a día.
+      <br />
+      <br />
       Como latinas expat, sabemos lo importante que es sentirse acompañadas en
       el camino de crecimiento personal especialmente cuando estamos lejos de
       casa, por eso esencial360 es también una comunidad de sangre latina
       orgullosa de sus raíces y dispuesta a brindar apoyo y compañía en el
       proceso de cada una de sus integrantes.
-      <br /> <br />
+      <br />
+      <br />
       Desde el inicio, nos propusimos un compromiso inquebrantable brindarte
       contenido de calidad, veráz y profesional. Para ello, contamos con un
       equipo excepcional de instructores y facilitadores, así como con un
       Consejo de Expertos esencial360, que supervisa y enriquece cada
       experiencia que llega a ti.
-      <br /> <br />
+      <br />
+      <br />
       esencial360 es el espacio que elevará tu bienestar a cualquier hora, en
       cualquier lugar.
-      <br /> <br />
+      <br />
+      <br />
       ¡Nos emociona que seas parte de esta comunidad! Te vemos en clase.
-        <br /> <br />
+      <br />
+      <br />
       <span class="italic">-Caro, Lulú y Pau.</span>
     </p>
+    }
   </div>
+  @if (!instructorCatalogueView) {
   <app-banner
-  [title]="'¡Contenido de calidad garantizado!'"
-  [description]="
-    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
-  "
-  [buttonText]="'¡Conoce al consejo e360!'"
-  [description]="
-    'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
-  "
-  [image]="'../../../assets/images/1.png'"
-  [addMargin]="true"
-  [contact]="true"
-></app-banner>
-<app-banner
-  [title]="'¡Aprende de los mejores!'"
-  [description]="
-    'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'
-  "
-  [addMargin]="true"
-  [contact]="true"
-  [buttonText]="'¡Conoce a los instructores e360!'"
-  [image]="'../../../assets/images/9.png'"
-  (onActionButton)="onInstructorContact()"
-></app-banner>
-<app-banner
-  [title]="'¿Quieres ser instructor e360?'"
-  [description]="
-    'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'
-  "
-  [addMargin]="true"
-  [contact]="true"
-  [buttonText]="'¡Quiero ser instructor e360!'"
-  [image]="'../../../assets/images/1.png'"
-  (onActionButton)="onInstructorContact()"
-></app-banner>
+    [title]="'¡Contenido de calidad garantizado!'"
+    [description]="
+      'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
+    "
+    [buttonText]="'¡Conoce al consejo e360!'"
+    [description]="
+      'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
+    "
+    [image]="'../../../assets/images/1.png'"
+    [addMargin]="true"
+    [contact]="true"
+  ></app-banner>
+  <app-banner
+    [title]="'¡Aprende de los mejores!'"
+    [description]="
+      'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'
+    "
+    [addMargin]="true"
+    [contact]="true"
+    [buttonText]="'¡Conoce a los instructores e360!'"
+    [image]="'../../../assets/images/9.png'"
+    (onActionButton)="onInstructorContact()"
+  ></app-banner>
+  <app-banner
+    [title]="'¿Quieres ser instructor e360?'"
+    [description]="
+      'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'
+    "
+    [addMargin]="true"
+    [contact]="true"
+    [buttonText]="'¡Quiero ser instructor e360!'"
+    [image]="'../../../assets/images/1.png'"
+    (onActionButton)="onInstructorContact()"
+  ></app-banner>
+  }
 </div>
 }

@@ -1,7 +1,7 @@
 <button
 (click)="onActionButton()"
-class="group flex items-center rounded-full px-4 hover:bg-veige py-2 transition-colors duration-200"
-[ngClass]="bgColor ? bgColor : 'bg-lightBrown hover:bg-strongBrown'"
+class="group flex items-center justify-center rounded-full px-4 hover:bg-veige py-2 transition-colors duration-200"
+[ngClass]="[bgColor, width, height]"
 >
 <span class="text-white text-sm font-medium uppercase">{{text}}</span>
 <div
