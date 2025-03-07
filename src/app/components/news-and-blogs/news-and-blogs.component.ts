@@ -91,4 +91,19 @@ export class NewsAndBlogsComponent implements OnInit {
     });
   }
 
+  onInstructorCatalogue() {
+    this.router
+    .navigateByUrl('/instructores')
+    .then((navigationSuccess) => {
+      if (navigationSuccess) {
+        console.log('Navigation to instructoresr page successful');
+      } else {
+        console.error('Navigation to instructoresr page failed');
+      }
+    })
+    .catch((error) => {
+      console.error(`An error occurred during navigation: ${error.message}`);
+    });
+  }
+
 }
