@@ -19,7 +19,7 @@ export class PricingPlanComponent {
       name: 'esencial360',
       highlight: '360',
       price: 98,
-      image: '/assets/images/10.png',
+      image: '/assets/images/10.jpg',
       features: [
         'Acceso completo de la plataforma.',
         'Asesoría personalizada.',
@@ -30,7 +30,7 @@ export class PricingPlanComponent {
     {
       name: 'esencial',
       price: 58,
-      image: '/assets/images/11.png',
+      image: '/assets/images/11.jpg',
       features: [
         'Accesso a clases de yoga y meditaciones',
         'Asesoría básica.',

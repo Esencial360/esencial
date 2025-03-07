@@ -19,6 +19,9 @@ export class NewsAndBlogsComponent implements OnInit {
   @Input()
   aboutView!: boolean;
 
+  @Input()
+  instructorCatalogueView!: boolean;
+
   retreatFeatures: RetreatFeature[] = []
   
   constructor(private router: Router){}
@@ -81,6 +84,21 @@ export class NewsAndBlogsComponent implements OnInit {
         console.log('Navigation to carrera-instructor page successful');
       } else {
         console.error('Navigation to carrera-instructor page failed');
+      }
+    })
+    .catch((error) => {
+      console.error(`An error occurred during navigation: ${error.message}`);
+    });
+  }
+
+  onInstructorCatalogue() {
+    this.router
+    .navigateByUrl('/instructores')
+    .then((navigationSuccess) => {
+      if (navigationSuccess) {
+        console.log('Navigation to instructoresr page successful');
+      } else {
+        console.error('Navigation to instructoresr page failed');
       }
     })
     .catch((error) => {

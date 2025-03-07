@@ -18,6 +18,9 @@ export class LoadingComponent {
   @Input()
   height!: string;
 
+  @Input()
+  text!: string;
+
   options: AnimationOptions = {
     path: '/assets/lottie/loading.json',
     loop: true,
