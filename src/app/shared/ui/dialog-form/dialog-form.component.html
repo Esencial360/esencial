@@ -1,6 +1,6 @@
 @if (isOpen) {
 <div
-  class="z-50 fixed inset-0 bg-gray-600 bg-opacity-50 montserrat-normal overflow-y-auto h-full w-full flex items-center justify-center"
+  class="z-50 fixed inset-0 bg-gray-600 bg-opacity-50 montserrat-normal overflow-y-auto h-full w-full flex items-center justify-center text-blue"
 >
   <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
   <div
@@ -29,7 +29,7 @@
     </div>
     @if (!onSubmittingForm && !formSuccess) {
     <div class="p-6">
-      <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
+      <h2 class="text-2xl font-bold mb-6 text-center">
         Déjanos saber más de tu trayectoria
       </h2>
 
@@ -40,7 +40,7 @@
       >
         <div class="flex justify-between">
           <div class="mb-4 mr-2">
-            <label for="name" class="block w-full mb-2 font-bold text-gray-700"
+            <label for="name" class="block w-full mb-2 font-bold "
               >Nombre Completo</label
             >
             <input
@@ -48,7 +48,7 @@
               id="name"
               formControlName="name"
               required
-              class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+              class="w-full px-3 py-2 border rounded-lg focus:outline-none"
             />
             @if ( instructorForm.get('name')?.invalid &&
             (instructorForm.get('name')?.dirty ||
@@ -61,7 +61,7 @@
             }
           </div>
           <div class="mb-4 ml-2">
-            <label for="experience" class="block mb-2 font-bold text-gray-700"
+            <label for="experience" class="block mb-2 font-bold "
               >Años de experiencia</label
             >
             <input
@@ -69,7 +69,7 @@
               id="years"
               formControlName="years"
               required
-              class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+              class="w-full px-3 py-2  border rounded-lg focus:outline-none"
             />
             <div
               *ngIf="
@@ -90,7 +90,7 @@
         </div>
 
         <div class="mb-4">
-          <label for="email" class="block mb-2 font-bold text-gray-700"
+          <label for="email" class="block mb-2 font-bold "
             >Email</label
           >
           <input
@@ -98,7 +98,7 @@
             id="email"
             formControlName="email"
             required
-            class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+            class="w-full px-3 py-2  border rounded-lg focus:outline-none"
           />
           <div
             *ngIf="
@@ -117,14 +117,14 @@
           </div>
         </div>
         <div class="mb-4">
-          <label for="message" class="block mb-2 font-bold text-gray-700"
+          <label for="message" class="block mb-2 font-bold "
             >Bio</label
           >
           <textarea
             id="message"
             formControlName="message"
             required
-            class="w-full justify-center px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+            class="w-full justify-center px-3 py-2  border rounded-lg focus:outline-none"
             placeholder="Nos encantaría conocer más de ti, en un párrafo"
           ></textarea>
           @if ( instructorForm.get('message')?.invalid &&
@@ -139,7 +139,7 @@
         </div>
         <div class="flex !flex-col !md:flex-row justify-between">
           <div class="mb-2 mr-2">
-            <label for="resume" class="block mb-2 font-bold text-gray-700"
+            <label for="resume" class="block mb-2 font-bold "
               >CV</label
             >
             <span class="text-xs text-gray-500 block mb-1">
@@ -150,7 +150,7 @@
               id="resume"
               (change)="onFileSelected($event)"
               accept=".pdf"
-              class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+              class="w-full px-3 py-2  border rounded-lg focus:outline-none"
             />
             @if (resumeError) {
             <div class="text-red-500 mt-1">
@@ -159,7 +159,7 @@
             }
           </div>
           <div class="mb-4 ml-2">
-            <label for="resume" class="block mb-2 font-bold text-gray-700"
+            <label for="resume" class="block mb-2 font-bold "
               >Video</label
             >
             <span class="text-xs text-gray-500 block mb-1">
@@ -171,7 +171,7 @@
               id="video"
               accept="video/*"
               (change)="onVideoSelected($event)"
-              class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+              class="w-full px-3 py-2  border rounded-lg focus:outline-none"
             />
             @if (videoError) {
             <div class="text-red-500 mt-1">
@@ -197,7 +197,7 @@
     </div>
     } @else if (onSubmittingForm && !error && !formSuccess) {
     <div class="flex flex-col justify-center items-center h-full">
-      <app-loading></app-loading>
+      <app-loading [text]="'Mandando tu solicitud'"></app-loading>
     </div>
     } @else if (error) {
     <div class="flex justify-center items-center">

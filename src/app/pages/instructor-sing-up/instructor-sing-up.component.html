@@ -3,76 +3,59 @@
 <section class="h-full relative">
   <app-parallax [imagePath]="'assets/images/1.png'"></app-parallax>
   <div
-    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center lg:w-9/12"
   >
-    <h1 class="font-bold text-5xl">Forma parte de Esencial360</h1>
-    <p class="text-xl">Se parte de nuestra gran comunidad de instructores.</p>
+    <h1 class="font-bold text-3xl uppercase lg:text-7xl">
+      Únete como guía esencial360
+    </h1>
   </div>
   <span
-    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+    (click)="scrollArrow()"
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
   >
     keyboard_arrow_down
   </span>
 </section>
-<div class="flex flex-col bg-white p-6 text-center md:mx-10 rounded-lg montserrat-normal">
+<div
+  class="flex flex-col bg-white p-6 text-center md:mx-10 rounded-lg montserrat-normal"
+>
   <section
     class="container mx-auto px-4 py-8"
     data-aos="fade-up"
     data-aos-duration="1000"
+    id="scrollContent"
   >
-    <div
-      class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
-    >
-      <h4 class="text-blue">INSTRUCTOR DE ESENCIAL360</h4>
-      <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
-        Llegaste al lugar correcto
-      </h3>
-      <p class="text-strongBrown">
-        Si eres instructor de Yoga, o facilitador de alguna las disciplinas siguientes, y quieres que tu práctica, material y/o clases tengan la mejor plataforma para ser vistas por cientos de alumnos y usuarios, estás en el lugar ideal. 
-      </p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      @for (service of services; track $index) {
-      <div
-        [ngClass]="{
-          'bg-gray-100': !service.special,
-          'bg-purple-100': service.special
-        }"
-        class="rounded-lg overflow-hidden relative group"
-      >
-        <img
-          [src]="service.image"
-          [alt]="service.title"
-          class="w-full h-48 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-        />
-        <div class="">
-          <h3
-            class="text-base text-center w-11/12 uppercase text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
-          >
-            {{ service.title }}
-          </h3>
-        </div>
-      </div>
-      }
-    </div>
+    <app-banner-v2
+      class="my-5"
+      [title]="'estas en el lugar correcto.'"
+      [text]="
+        'Si eres instructor de Yoga, o facilitador de alguna las disciplinas siguientes, y quieres que tu práctica, material y/o clases tengan la mejor plataforma para ser vistas por cientos de alumnos y usuarios, estás en el lugar ideal.'
+      "
+      [image]="'/assets/images/logoBlue.png'"
+      [reverse]="true"
+    ></app-banner-v2>
+    @for (service of services; track $index) {
+    <app-banner-v2
+      class="my-5"
+      [title]="service.title"
+      [text]="service.description"
+      [image]="service.image"
+      [reverse]="$index % 2 !== 0"
+    ></app-banner-v2>
+    }
   </section>
-  <app-news-and-blogs [instructorView]="true"></app-news-and-blogs>
   <app-banner
-    [title]="'EMPIEZA EL PROCESO AHORA'"
-    [description]="'Llegaste al foro que fue planeado para ti. Es el momento de volverte ESENCIAL360. Adelante, estás a unos sencillos pasos de volverte ESENCIAL.'"
+    [title]="'un paso más cerca de alcanzar tus metas.'"
     [addMargin]="true"
     [contact]="true"
     (onActionButton)="onContinueToForm()"
+    [buttonText]="'EMPEZAR EL PROCESO'"
   ></app-banner>
 </div>
 
 <app-dialog-form
   [isOpen]="formView ? true : false"
   (onCloseDialog)="onDialogClosed()"
-  (processComplete)="processComplete"
+  (processComplete)="(processComplete)"
 ></app-dialog-form>
-
-<!-- <app-dialog-form>
-  <form [formGroup]="instructorForm" (ngSubmit)="onSubmit()"></form>
-</app-dialog-form> -->
 <app-footer></app-footer>
