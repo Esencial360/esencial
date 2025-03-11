@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +10,15 @@ interface FaqItem {
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
-  styleUrl: './faq.component.css'
+  styleUrl: './faq.component.css',
+  animations: [
+    trigger('faqToggle', [
+      state('closed', style({ height: '0px', opacity: 0, overflow: 'hidden' })),
+      state('open', style({ height: '*', opacity: 1 })),
+      transition('closed <=> open', animate('300ms ease-in-out')),
+    ]),
+  ],
+
 })
 export class FaqComponent {
 
