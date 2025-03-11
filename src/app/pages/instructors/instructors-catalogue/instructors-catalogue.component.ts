@@ -63,7 +63,7 @@ export class InstructorsCatalogueComponent implements OnInit, OnDestroy {
     }
   }
 
-  onInstructor(id: number) {
+  onInstructor(id: string) {
     this.router.navigate([`/instructores/${id}`]);
     console.log('navigate');
   }

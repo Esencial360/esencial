@@ -1,15 +1,14 @@
 <app-header [newLanding]="true"></app-header>
 <section class="h-full relative">
-  <app-parallax [imagePath]="'assets/images/yoga1.jpg'"></app-parallax>
+  <app-parallax [imagePath]="'assets/images/7.jpg'"></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center w-full lg:w-8/12"
   >
     <h2 class="font-bold text-5xl uppercase lg:text-7xl">
-      ¡aprende e inspira!
+      nuestro consejo de expertos
     </h2>
     <p class="text-xl mt-5">
-      Descubre a los guías que te acompañarán en tu crecimiento personal o únete
-      a nuestro equipo compartiendo tu conocimiento con la comunidad e360.
+      Conoce a los expertos que respaldan tu crecimiento en esencial3560
     </p>
   </div>
   <span
@@ -19,53 +18,41 @@
     keyboard_arrow_down
   </span>
 </section>
-<div class="bg-white">
-  <section
-    class="container mx-auto px-4 py-8 montserrat-normal"
-    id="scrollContent"
+<section>
+  <div
+    class="flex flex-col lg:flex-row justify-evenly items-center bg-blue text-white py-10 lg:h-[60vh] montserrat-normal px-5 lg:px-14"
   >
-    <h2
-      class="text-veige text-2xl lg:text-6xl uppercase text-center font-bold my-10"
-    >
-      Conoce a tus guías e<span class="text-blue">360</span>
-    </h2>
-    <!-- <app-instructor-filter></app-instructor-filter> -->
-    <div class="grid grid-cols-1 gap-6">
-      @for(counselor of counselors; track $index;) {
-      <div
-        class="flex items-center gap-6 p-6 my-5 cursor-pointer"
-        (click)="onCounselor(counselor._id)"
-      >
-        <div
-          class="w-64 h-64 rounded-full object-cover flex-shrink-0 overflow-hidden border-4 border-teal-500"
-        >
-          <img
-            src="/assets/images/examplePerson.jpg"
-            alt="Anna Vega Langarica"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div class="text-gray-700 lg:ml-10">
-          <h2
-            class="text-teal-600 font-bold text-lg lg:text-2xl uppercase text-blue"
-          >
-            {{ counselor.firstname + " " + counselor.lastname }}
-          </h2>
-          <p class="text-sm my-5 leading-relaxed">
-            {{ counselor.description }}
-          </p>
-        </div>
-      </div>
-      }
-    </div>
-  </section>
+    <img
+      src="/assets/images/logoWhite.png"
+      class="lg:w-5/12 object-cover"
+      alt=""
+    />
+    <p class="lg:text-xl">
+      En esencial360, la calidad y autenticidad de nuestro contenido es una
+      prioridad. Por eso, contamos con un Consejo de Expertos conformado por
+      referentes en yoga, meditación y desarrollo personal, todos con una
+      trayectoria impecable y un profundo compromiso con el bienestar.
+      <br />
+      <br />
+      Cada uno de ellos revisa y valida el material que llega a nuestra
+      comunidad, asegurando que cada clase, meditación y taller mantenga los más
+      altos estándares. Más que especialistas, son guías con historias de
+      transformación personal y profesional, cuyas aportaciones enriquecen y
+      fortalecen este espacio.
+    </p>
+  </div>
   <app-banner-v2
-    [title]="'despierta tu jaguar interior.'"
+    [reverse]="true"
     [text]="
-      'Venerado por mayas, aztecas y otras culturas indígenas, el jaguar simboliza  liderazgo, poder, intuición y protección, siendo un guía espiritual y físico en las comunidades indígenas.'
+      'En muchas culturas indígenas, el buho representa un guardián del conocimiento y un protector espiritual contra influencias negativas..'
     "
     [image]="'/assets/images/jaguar.png'"
   ></app-banner-v2>
-  <app-news-and-blogs [instructorCatalogueView]="true"></app-news-and-blogs>
-</div>
+</section>
+
+<app-instructor-counselor-preview
+  [title]="'Conoce a los guardianes del contenido'"
+  [team]="counselors"
+></app-instructor-counselor-preview>
+
 <app-footer></app-footer>

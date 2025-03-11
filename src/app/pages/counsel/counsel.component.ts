@@ -39,23 +39,9 @@ export class CounselComponent {
         .subscribe();
     }
   
-    // onFilterChange(filter: string) {
-    //   switch (filter) {
-    //     case 'Most Popular':
-    //       break;
-    //     case 'Newest':
-    //       break;
-    //     case 'A-Z':
-    //       this.filteredInstructors = [...this.instructors].sort((a, b) =>
-    //         a.name.localeCompare(b.name)
-    //       );
-    //       break;
-    //   }
+    // onCounselor(id: number) {
+    //   this.router.navigate([`/counselors/${id}`]);
     // }
-  
-    onCounselor(id: number) {
-      this.router.navigate([`/counselors/${id}`]);
-    }
     
     ngOnDestroy() {
       this.destroy$.next();

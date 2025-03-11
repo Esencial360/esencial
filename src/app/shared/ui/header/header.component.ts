@@ -90,6 +90,10 @@ export class HeaderComponent {
     this.route.navigate(['clases']);
   }
 
+  onCounsel() {
+    this.route.navigate(['consejo'])
+  }
+
   toggle() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {

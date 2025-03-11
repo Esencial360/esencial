@@ -33,6 +33,7 @@ import { CommunityComponent } from './pages/community/community.component';
 import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/appointment-scheduler.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
+import { CounselComponent } from './pages/counsel/counsel.component';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -194,6 +195,10 @@ const routes: Routes = [
   {
     path: 'banner',
     component: CreateBannerComponent
+  },
+  {
+    path: 'consejo',
+    component: CounselComponent
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
   // Catch-all for invalid routes (404)`
