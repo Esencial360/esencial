@@ -18,6 +18,8 @@ import {
 } from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
 import { ActiveUserApiActions } from '../../../state/user.actions';
+import { Location } from '@angular/common';
+
 
 declare global {
   interface Window {
@@ -45,7 +47,24 @@ export class SingleClassComponent implements OnInit {
   private ngUnsubscribe = new Subject<void>();
   users$!: any;
   user$!: any;
-  user!: any
+  user!: any;
+  class = {
+    title: 'FLUYE CONSCIENTE CON LULÚ FRAGA',
+    duration: '30 MIN',
+    level: 'I/A',
+    description: 'En esta clase de Vinyasa aprenderás a postergar la ansiedad. Saldrás para mejorar la resistencia, aumentar la flexibilidad y encontrar un flujo continuo en tu práctica.',
+    items: [
+      { icon: 'yoga-mat', text: 'Tapete de yoga' },
+      { icon: 'water-bottle', text: 'Botella de agua' },
+      { icon: 'towel', text: 'Toalla corta' }
+    ],
+    recommendations: [
+      { icon: 'sunrise', text: 'Al despertar' },
+      { icon: 'bowl', text: 'Uso de cuencos' },
+      { icon: 'sun', text: 'Al aire libre para recibir la energía del sol' },
+      { icon: 'blocks', text: 'Uso de bloques' }
+    ]
+  };
   private intervalId: any;
 
   constructor(
@@ -56,7 +75,8 @@ export class SingleClassComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private likedClassesService: LikedClassesService,
-    private store: Store
+    private store: Store,
+    private location: Location
   ) {
     this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
       this.userId = user._id;
@@ -184,5 +204,9 @@ export class SingleClassComponent implements OnInit {
           this.isLiked = this.user.likedVideos.includes(this.videoId);
         }
       );
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

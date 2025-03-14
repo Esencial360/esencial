@@ -4,8 +4,7 @@
 } @else {
 <app-page-title
   [pageTitle]="videos?.title"
-  [pageDescription]="'Disfruta de tu clase con Jane Doe.'"
-  [arrowBack]="true"
+  [pageDescription]="'Fluye consciente con lulú fraga'"
 ></app-page-title>
 @if (roles === 'Admin') {
 <app-button
@@ -18,14 +17,13 @@
   #dialogAnchor
   class="cdk-visually-hidden"
   cdkTrapFocus
-  class="flex flex-col md:flex-row items-center md:items-start justify-center bg-white p-6 md:p-10 mx-4 rounded-xl shadow-xl montserrat-normal space-y-6 md:space-y-0 md:space-x-8"
+  class="flex flex-col md:flex-row items-center md:items-start justify-center bg-white p-6 md:p-10 mx-4 montserrat-normal space-y-6 md:space-y-0 md:space-x-8"
 >
   <div
     class="md:w-1/2 w-full mt-6 md:mt-0"
     data-aos="fade-up"
     data-aos-duration="1000"
   >
-    <!-- Video Wrapper with Responsive Aspect Ratio -->
     <div
       class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-lg"
     >
@@ -38,8 +36,6 @@
         allowfullscreen
       ></iframe>
     </div>
-
-    <!-- Floating Like Button -->
     <div class="relative mt-4">
       <button
         (click)="toggleLike()"
@@ -51,6 +47,120 @@
     </div>
   </div>
 </div>
+<div
+  class="max-w-7xl mx-auto text-strongBrown p-4 flex flex-col items-center w-full montserrat-normal"
+>
+  <div class="mb-16">
+    <h2 class="text-xl lg:text-4xl font-bold mb-2 text-center pb-6">
+      DESCRIPCIÓN
+    </h2>
+    <p class="mb-4 text-xl">{{ class.description }}</p>
+    <div class="flex justify-between mb-6 w-full">
+      @for (item of class.items; track $index) {
+      <div class="flex items-center">
+        <div class="bg-teal-100 p-3 rounded-full mb-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-teal-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              *ngIf="item.icon === 'yoga-mat'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+            />
+            <path
+              *ngIf="item.icon === 'water-bottle'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+            <path
+              *ngIf="item.icon === 'towel'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 10h16M4 14h16M4 18h16"
+            />
+          </svg>
+        </div>
+        <span class="text-xl text-gray-600 text-center">{{ item.text }}</span>
+      </div>
+      }
+    </div>
+    <h3 class="text-xl font-bold text-teal-500 mb-4 w-full">
+      RECOMENDACIONES PARA TU PRÁCTICA
+    </h3>
+    <div class="grid grid-cols-2 gap-4 mb-6 w-full my-10">
+      <div *ngFor="let rec of class.recommendations" class="flex items-center">
+        <div class="bg-teal-100 p-2 rounded-full mr-3 text-lg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-teal-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              *ngIf="rec.icon === 'sunrise'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+            <path
+              *ngIf="rec.icon === 'bowl'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+            />
+            <path
+              *ngIf="rec.icon === 'sun'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+            <path
+              *ngIf="rec.icon === 'blocks'"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+        </div>
+        <span class="text-xl text-gray-600">{{ rec.text }}</span>
+      </div>
+    </div>
+    <button
+      class="bg-teal-500 text-white font-medium py-2 px-4 rounded-2xl w-3/12 flex items-center justify-center"
+      (click)="goBack()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
+      </svg>
+      VOLVER
+    </button>
+  </div>
+</div>
 
 @if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
@@ -59,8 +169,8 @@
   class="flex justify-center"
 ></app-class-statistics>
 }
-<app-page-title
+<!-- <app-page-title
   [pageDescription]="'Descubre nuestra gran variedad de clases'"
-></app-page-title>
+></app-page-title> -->
 }
 <app-footer></app-footer>
