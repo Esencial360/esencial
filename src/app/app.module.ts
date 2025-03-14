@@ -100,6 +100,7 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 import { BannerV2Component } from './shared/ui/banner-v2/banner-v2.component';
 import { CounselComponent } from './pages/counsel/counsel.component';
 import { InstructorCounselorPreviewComponent } from './shared/ui/instructor-counselor-preview/instructor-counselor-preview.component';
+import { TitleV2Component } from './shared/ui/title-v2/title-v2.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
@@ -170,6 +171,7 @@ export function localStorageSyncReducer(reducer: any) {
     BannerV2Component,
     CounselComponent,
     InstructorCounselorPreviewComponent,
+    TitleV2Component,
   ],
   imports: [
     BrowserModule,
