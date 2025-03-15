@@ -104,6 +104,7 @@ import { TitleV2Component } from './shared/ui/title-v2/title-v2.component';
 import { MoodCollectionComponent } from './shared/ui/mood-collection/mood-collection.component';
 import { BannerV3Component } from './shared/ui/banner-v3/banner-v3.component';
 import { ButtonV2Component } from './shared/ui/button-v2/button-v2.component';
+import { InstructorDashboardComponent } from './pages/instructor-dashboard/instructor-dashboard.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
@@ -178,6 +179,7 @@ export function localStorageSyncReducer(reducer: any) {
     MoodCollectionComponent,
     BannerV3Component,
     ButtonV2Component,
+    InstructorDashboardComponent,
   ],
   imports: [
     BrowserModule,

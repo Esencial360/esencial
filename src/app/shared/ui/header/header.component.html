@@ -19,10 +19,10 @@
     <ul
       class="flex anton items-center uppercase pointer text-base cursor-pointer"
     >
-    <div class="flex items-center">
-      <span class="text-xl">🔥</span>
-      <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-    </div>
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+      </div>
       <li class="mr-10">
         <a (click)="onInstructors()" class="hover:text-gray-400"
           >INSTRUCTORES</a
@@ -113,15 +113,16 @@
   <div class="flex items-center justify-between w-full">
     <div class="flex justify-center items-center">
       <img
-        src="../../../assets/images/logo.png"
+        src="../../../assets/images/logoBlue.png"
         alt="Logo"
-        class="max-h-20 cursor-pointer rounded-lg"
+        class="max-h-20 -ml-8  cursor-pointer rounded-lg"
         (click)="onHome()"
       />
-      <h3 class="text-white">
-        Esencial<span class="text-veige">360</span>
+      <h3 class="-ml-6 text-veige">
+        esencial<span class="text-blue">360</span>
       </h3>
     </div>
+    <span (click)="toggle()" class="material-symbols-outlined text-blue w-4 mr-6 font-bold"> menu </span>
   </div>
 </header>
 <section
@@ -132,18 +133,16 @@
     class="lg:hidden text-white focus:outline-none absolute top-[3%] right-[5%]"
     (click)="toggle()"
   >
-    <span class="material-symbols-outlined"> close </span>
+    <span class="material-symbols-outlined text-blue"> close </span>
   </button>
-  <div class="flex justify-center items-center">
+  <div class="flex justify-start items-center">
     <img
-      src="../../../assets/images/logo.png"
+      src="../../../assets/images/logoBlue.png"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-white">
-      esencial<span class="text-veige">360</span>
-    </h3>
+    <h3 class="text-veige -ml-6">esencial<span class="text-blue">360</span></h3>
   </div>
   <div class="container mx-auto px-4 mt-16">
     @if(userConnected) {
@@ -156,9 +155,7 @@
       <li (click)="onClasses()" class="ml-2">CLASES</li>
       <li class="ml-2">INSTRUCTORES</li>
       <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400"
-          >CONSEJO</a
-        >
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
       </li>
       <li class="ml-2">NOSOTROS</li>
       <li class="border-t border-gray-700 pt-4 my-8"></li>
@@ -231,9 +228,7 @@
         >
       </li>
       <li class="mr-10">
-        <a (click)="onCounsel()" class="hover:text-gray-400"
-          >CONSEJO</a
-        >
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
       </li>
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
