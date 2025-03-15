@@ -4,18 +4,16 @@
 } @else {
 <app-page-title
   [pageTitle]="'MI PERFIL'"
-  [pageDescription]="
-    activeFilter === 'MIS CLASES'
-      ? 'Haz click para ver la tu respectiva clase y las estadisticas del mismo.'
-      : ''
-  "
 ></app-page-title>
-@if (roles === 'Instructor') {
-<app-instructor-profile [filters]="filters"></app-instructor-profile>
-} @else if (roles === 'Admin') {
-<app-admin-profile [filters]="filters"></app-admin-profile>
-} @else {
-<app-student-profile [filters]="filters"></app-student-profile>
-} }
+<section class="modern-tab-container">
+  @if (roles === 'Instructor') {
+  <app-instructor-profile [filters]="filters"></app-instructor-profile>
+  } @else if (roles === 'Admin') {
+  <app-admin-profile [filters]="filters"></app-admin-profile>
+  } @else {
+  <app-student-profile [filters]="filters"></app-student-profile>
+  }
+</section>
+}
 
 <app-footer [ngClass]="isLoading ? 'fixed bottom-0 w-full' : ''"></app-footer>

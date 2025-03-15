@@ -18,37 +18,22 @@
     keyboard_arrow_down
   </span>
 </section>
-<section>
-  <div
-    class="flex flex-col lg:flex-row justify-evenly items-center bg-blue text-white py-10 lg:h-[60vh] montserrat-normal px-5 lg:px-14"
-  >
-    <img
-      src="/assets/images/logoWhite.png"
-      class="lg:w-5/12 object-cover"
-      alt=""
-    />
-    <p class="lg:text-xl">
-      En esencial360, la calidad y autenticidad de nuestro contenido es una
-      prioridad. Por eso, contamos con un Consejo de Expertos conformado por
-      referentes en yoga, meditación y desarrollo personal, todos con una
-      trayectoria impecable y un profundo compromiso con el bienestar.
-      <br />
-      <br />
-      Cada uno de ellos revisa y valida el material que llega a nuestra
-      comunidad, asegurando que cada clase, meditación y taller mantenga los más
-      altos estándares. Más que especialistas, son guías con historias de
-      transformación personal y profesional, cuyas aportaciones enriquecen y
-      fortalecen este espacio.
-    </p>
-  </div>
-  <app-banner-v2
-    [reverse]="true"
-    [text]="
-      'En muchas culturas indígenas, el buho representa un guardián del conocimiento y un protector espiritual contra influencias negativas..'
-    "
-    [image]="'/assets/images/jaguar.png'"
-  ></app-banner-v2>
-</section>
+<app-banner-v3
+  [image]="'/assets/images/logoWhite.png'"
+  [firstDescriptions]="
+    'En esencial360, la calidad y autenticidad de nuestro contenido es una prioridad. Por eso, contamos con un Consejo de Expertos conformado por referentes en yoga, meditación y desarrollo personal, todos con una trayectoria impecable y un profundo compromiso con el bienestar.'
+  "
+  [secondDescription]="
+    '  Cada uno de ellos revisa y valida el material que llega a nuestra comunidad, asegurando que cada clase, meditación y taller mantenga los más altos estándares. Más que especialistas, son guías con historias de transformación personal y profesional, cuyas aportaciones enriquecen y fortalecen este espacio.'
+  "
+></app-banner-v3>
+<app-banner-v2
+[reverse]="true"
+[text]="
+  'En muchas culturas indígenas, el buho representa un guardián del conocimiento y un protector espiritual contra influencias negativas..'
+"
+[image]="'/assets/images/jaguar.png'"
+></app-banner-v2>
 
 <app-instructor-counselor-preview
   [title]="'Conoce a los guardianes del contenido'"

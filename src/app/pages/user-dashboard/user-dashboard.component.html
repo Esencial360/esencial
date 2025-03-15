@@ -31,6 +31,7 @@
   </div>
 </div>
 }
+<app-mood-collection></app-mood-collection>
 <app-popular-classes-and-instructors></app-popular-classes-and-instructors>
 <app-classes-catalogue
   [collectionName]="'CATEGORIAS'"
@@ -39,6 +40,23 @@
   "
   [collectionList]="collectionList"
 ></app-classes-catalogue>
+<app-banner-v2
+[reverse]="true"
+[title]="'alimenta tu fuego con cada práctica.'"
+[text]="
+  'En la Amazonía colombiana, pueblos como los barasana y los makuna consideran que el fuego es una manifestación de la energía vital y un medio para la transformación personal. '
+"
+[image]="'/assets/images/jaguar.png'"
+></app-banner-v2>
+<app-banner-v3
+  [image]="'/assets/images/logoWhite.png'"
+  [firstDescriptions]="
+    'En esencial360, la calidad y autenticidad de nuestro contenido es una prioridad. Por eso, contamos con un Consejo de Expertos conformado por referentes en yoga, meditación y desarrollo personal, todos con una trayectoria impecable y un profundo compromiso con el bienestar.'
+  "
+  [secondDescription]="
+    '  Cada uno de ellos revisa y valida el material que llega a nuestra comunidad, asegurando que cada clase, meditación y taller mantenga los más altos estándares. Más que especialistas, son guías con historias de transformación personal y profesional, cuyas aportaciones enriquecen y fortalecen este espacio.'
+  "
+></app-banner-v3>
 <app-instructors-overview></app-instructors-overview>
 <app-catalogue-view
   [title]="'EVENTOS Y NOTICIAS'"

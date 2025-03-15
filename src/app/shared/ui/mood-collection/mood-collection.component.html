@@ -1,0 +1,57 @@
+<!-- mood-selection.component.html -->
+<div class="min-h-screen bg-bone py-8 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h1
+      class="text-center text-2xl md:text-3xl font-medium text-lightBrown mb-8"
+    >
+      ¿EN QUE FRECUENCIA TE ENCUENTRAS HOY?
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      @for (option of moodOptions; track $index) {
+      <div class="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center">
+        <div class="w-24 h-24 flex items-center justify-center mb-4">
+          <span class="text-8xl material-symbols-outlined text-blue">
+            {{ option.icon }}
+          </span>
+        </div>
+
+        <h2 class="text-lg font-medium text-strongBrown font-bold text-center">
+          {{ option.title }}
+        </h2>
+        <p class="text-sm text-gray-600 text-center mb-6">
+          {{ option.subtitle }}
+        </p>
+
+        <div class="w-full space-y-4">
+          @for (classOption of option.classes; track $index) {
+          <div
+            class="w-full relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md"
+            (click)="selectClass(classOption)"
+          >
+            <img
+              [src]="classOption.imagePath"
+              [alt]="classOption.title"
+              class="w-full h-36 object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+            >
+              <p class="text-white text-xs font-medium px-4 text-center">
+                {{ classOption.title }}
+              </p>
+            </div>
+          </div>
+          }
+        </div>
+        <button
+          (click)="seeMore(option)"
+          class="mt-6 text-teal-500 text-sm lg:text-xl font-medium hover:text-teal-600 transition-colors"
+        >
+          VER MÁS
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+</div>
