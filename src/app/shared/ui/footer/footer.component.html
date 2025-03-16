@@ -1,26 +1,49 @@
-<footer class="
- text-strongBrown py-6 mt- montserrat-normal w-full"
- style="background: linear-gradient(90deg, rgba(61,41,28,1) 0%, rgba(171,143,117,1) 100%);"
- >
-  <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-    <div class="flex justify-center items-center">
+<footer
+  class="text-strongBrown py-6 w-full rounded-t-lg montserrat-normal"
+  style="
+    background: linear-gradient(
+      90deg,
+      rgba(212, 200, 174, 1) 0%,
+      rgba(77, 63, 49, 1) 69%
+    );
+  "
+>
+  <div
+    class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center"
+  >
+    <div
+      class="flex items-center cursor-pointer mb-4 md:mb-0"
+      (click)="onHome()"
+    >
       <img
-        src="../../../assets/images/logo.png"
+        src="../../../assets/images/logoWhite.png"
         alt="Logo"
-        class="max-h-20 cursor-pointer rounded-lg"
+        class="max-h-16 md:max-h-20 cursor-pointer rounded-lg"
       />
-      <h3 class="text-white">esencial<span class="text-blue">360</span></h3>
+      <h3 class="text-white text-xl md:text-2xl -ml-3 md:-ml-5">
+        esencial<span class="text-lightBrown">360</span>
+      </h3>
     </div>
-    <nav>
-      <ul class="flex text-white flex-col md:flex-row space-x-6">
-        <li class="my-2"><a href="#">Yoga</a></li>
-        <li class="my-2"><a href="#">Instructores</a></li>
-        <li class="my-2"><a href="#">Noticias</a></li>
-        <li class="my-2"><a href="#">Blog</a></li>
-        <li class="my-2"><a href="#">Contact</a></li>
+    <nav class="w-full md:w-auto">
+      <ul
+        class="flex flex-col md:flex-row text-white text-center md:text-left space-y-3 md:space-y-0 md:space-x-6"
+      >
+        <li class="cursor-pointer hover:underline" (click)="onCounsel()">
+          Nosotros
+        </li>
+        <li class="cursor-pointer hover:underline" (click)="onInstructors()">
+          Instructores
+        </li>
+        <li class="cursor-pointer hover:underline" (click)="onCommunity()">
+          Comunidad
+        </li>
+        <li class="cursor-pointer hover:underline" (click)="onClasses()">
+          Clases
+        </li>
       </ul>
     </nav>
-
-    <div class="text-sm text-white my-4">© 2025 esencial360</div>
+    <div class="text-sm text-white mt-4 md:mt-0 text-center md:text-right">
+      © 2025 esencial360
+    </div>
   </div>
 </footer>

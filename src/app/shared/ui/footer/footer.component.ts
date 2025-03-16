@@ -18,4 +18,44 @@ export class FooterComponent {
     this.route.navigate(['/carrera-instructor'])
   }
 
+  onHome() {
+    this.route.navigate(['']);
+  }
+
+  onMenu() {
+    this.route.navigate(['/menu']);
+  }
+
+  onSignIn() {
+    this.route.navigate(['/iniciar-sesion']);
+  }
+
+  onSignUp() {
+    this.route.navigate(['/subscribirse']);
+  }
+
+  onAbout() {
+    this.route.navigate(['/nosotros']);
+  }
+
+  onUserSettings() {
+    this.route.navigate(['/ajustes']);
+  }
+
+  onInstructors() {
+    this.route.navigate(['/instructores']);
+  }
+
+  onCommunity() {
+    this.route.navigate(['/comunidad']);
+  }
+
+  onClasses() {
+    this.route.navigate(['clases']);
+  }
+
+  onCounsel() {
+    this.route.navigate(['consejo'])
+  }
+
 }
