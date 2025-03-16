@@ -5,7 +5,7 @@ import { Instructor } from '../../../shared/Models/Instructor';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { concatMap, from, map, toArray } from 'rxjs';
-import AOS from "aos";
+import AOS from 'aos';
 
 @Component({
   selector: 'app-single-instructor',
@@ -41,7 +41,7 @@ export class SingleInstructorComponent implements OnInit {
 
   async ngOnInit() {
     AOS.init({ once: true });
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
     this.route.paramMap.subscribe((params) => {
       this.instructorId = params.get('id');
       // fetch instructor details based on the instructorId
@@ -51,8 +51,14 @@ export class SingleInstructorComponent implements OnInit {
       (response) => {
         console.log('Instructor get successfully', response);
         this.instructor = response;
-        console.log(this.instructor.videos);
-        this.getVideo(this.instructor.videos);
+        const activeVideo = this.instructor.videos?.find(
+          (video) => video.status === 'approve'      
+        );
+        console.log(activeVideo);
+        
+        if (activeVideo) {
+          this.getVideo(activeVideo.videoId); // Pass only videoId
+        }
       },
       (error) => {
         console.error('Instructor get error', error);
@@ -60,54 +66,36 @@ export class SingleInstructorComponent implements OnInit {
     );
   }
 
-  async getVideo(videoIds: any) {
-    console.log(videoIds);
-
-    if (videoIds.length === 0) {
-    } else if (videoIds.length === 1) {
-      from(videoIds)
-        .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-            console.log(this.videos);
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
-    } else if (videoIds.length > 1) {
-      from(videoIds)
-        .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-            console.log(this.videos);
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
+  getVideo(videoIds: string | string[]) {
+    if (!videoIds) {
+      console.warn('No video IDs provided.');
+      return;
     }
-  }
+  
+    const videoIdArray = Array.isArray(videoIds) ? videoIds : [videoIds];
+  
+    from(videoIdArray)
+      .pipe(
+        concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+        map((video) => ({
+          video: video,
+          safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
+          ),
+        })),
+        toArray()
+      )
+      .subscribe({
+        next: (videos) => {
+          this.videos = videos;
+          console.log('Retrieved videos:', this.videos);
+        },
+        error: (error) => {
+          console.error('Error retrieving videos:', error);
+        },
+      });
+    }
+
 
   onWatchSingleClass(video: any) {
     const collectionName = this.bunnystreamService.getCollection(

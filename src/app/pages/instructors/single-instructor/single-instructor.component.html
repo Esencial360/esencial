@@ -1,5 +1,54 @@
 <app-header></app-header>
-<app-page-title
+<div class="w-full flex flex-col items-center montserrat-normal">
+  <!-- Instructor Section -->
+  <div
+    class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 cursor-pointer  max-w-4xl"
+  >
+    <div
+      class="w-64 h-64 rounded-full object-cover flex-shrink-0 overflow-hidden border-4 border-teal-500"
+    >
+      <img
+        src="/assets/images/examplePerson.jpg"
+        alt="Anna Vega Langarica"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="text-gray-700 lg:ml-10">
+      <h2
+        class="font-bold text-lg lg:text-2xl uppercase text-blue drop-shadow-lg"
+      >
+        {{ instructor.firstname + " " + instructor.lastname }}
+      </h2>
+      <p class="text-sm my-5 leading-relaxed drop-shadow-lg">
+        {{ instructor.description }}
+      </p>
+    </div>
+  </div>
+  <div class="mt-10  max-w-4xl flex flex-col items-center lg:items-start w-full">
+    <h3 class="text-lg lg:text-3xl font-bold text-primary uppercase text-blue">FLUYE CON {{instructor.firstname}}</h3>
+    <p class="text-strongBrown mt-2 text-sm lg:text-base font-bold">Explora su estilo y déjate guiar en tu práctica.</p>
+
+    <section data-aos="fade-up" data-aos-duration="1000" class="container mx-auto px-4 py-8 montserrat-normal">
+      <app-class-thumbnail [classes]="videos" (actionClassSelected)="onWatchSingleClass($event)"></app-class-thumbnail>
+    </section>
+  </div>
+  <div class="mt-10  text-center bg-bone w-full flex flex-col h-[50vh] lg:h-[40vh] items-center justify-center">
+    <h3 class="text-lg lg:text-3xl mb-4 font-bold text-primary uppercase text-lightBrown">Conoce más de {{instructor.firstname}}</h3>
+    <div class="flex justify-center flex-col lg:flex-row gap-8 mt-4 text-blue">
+      <a href="#" class="text-primary text-7xl">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="#" class="text-primary text-7xl">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="#" class="text-primary text-7xl">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- <app-page-title
   [pageDescription]="instructor.title"
   [arrowBack]="true"
   [pageTitle]="instructor.firstname + ' ' + instructor.lastname"
@@ -90,5 +139,5 @@ data-aos="fade-up" data-aos-duration="1000"
     </div>
     }
   </div>
-</section>
+</section> -->
 <app-footer></app-footer>
