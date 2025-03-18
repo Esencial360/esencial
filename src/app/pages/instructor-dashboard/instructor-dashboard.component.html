@@ -23,7 +23,7 @@
       Sigue compartiendo con intención y pasión, impactando la práctica y el
       crecimiento de cada alumno.
       <br /><br />
-      <app-button [bgColor]="'bg-blue'" [text]="'Subir una clase'"></app-button>
+      <app-button (onActionTrigger)="onNewClass()" [bgColor]="'bg-blue'" [text]="'Subir una clase'"></app-button>
     </p>
   </div>
 </div>
@@ -34,4 +34,7 @@
   "
   [image]="'/assets/images/jaguar.png'"
 ></app-banner-v2>
+<section class="modern-tabs">
+  <app-instructor-profile [filters]="filters"></app-instructor-profile>
+</section>
 } }

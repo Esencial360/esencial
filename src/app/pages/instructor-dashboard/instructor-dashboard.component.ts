@@ -5,6 +5,7 @@ import { ActiveUserApiActions } from '../../state/user.actions';
 import { isPlatformBrowser } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-instructor-dashboard',
@@ -14,6 +15,11 @@ import { AuthService } from '@auth0/auth0-angular';
 export class InstructorDashboardComponent implements OnInit {
   isLoading!: boolean;
   userId: string = '';
+  filters = [
+    'MIS CLASES',
+    'PAGOS',
+    'CODIGO',
+  ];
 
   private ngUnsubscribe = new Subject<void>();
 
@@ -21,6 +27,7 @@ export class InstructorDashboardComponent implements OnInit {
     private userService: UserService,
     private store: Store,
     public authService: AuthService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -70,5 +77,9 @@ export class InstructorDashboardComponent implements OnInit {
           });
         });
     }
+  }
+
+  onNewClass() {
+    this.router.navigate(['/nuevo-video'])
   }
 }
