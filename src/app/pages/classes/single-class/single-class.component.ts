@@ -54,15 +54,15 @@ export class SingleClassComponent implements OnInit {
     level: 'I/A',
     description: 'En esta clase de Vinyasa aprenderás a postergar la ansiedad. Saldrás para mejorar la resistencia, aumentar la flexibilidad y encontrar un flujo continuo en tu práctica.',
     items: [
-      { icon: 'yoga-mat', text: 'Tapete de yoga' },
-      { icon: 'water-bottle', text: 'Botella de agua' },
-      { icon: 'towel', text: 'Toalla corta' }
+      { icon: '/assets/images/yogaMat.png', text: 'Tapete de yoga' },
+      { icon: '/assets/images/waterBottle.png', text: 'Botella de agua' },
+      { icon: '/assets/images/towl.png', text: 'Toalla corta' }
     ],
     recommendations: [
-      { icon: 'sunrise', text: 'Al despertar' },
-      { icon: 'bowl', text: 'Uso de cuencos' },
-      { icon: 'sun', text: 'Al aire libre para recibir la energía del sol' },
-      { icon: 'blocks', text: 'Uso de bloques' }
+      { icon: '/assets/images/waking.png', text: 'Al despertar' },
+      { icon: '/assets/images/bowl.png', text: 'Uso de cuencos' },
+      { icon: '/assets/images/sun.png', text: 'Al aire libre' },
+      { icon: '/assets/images/boxes.png', text: 'Uso de bloques' }
     ]
   };
   private intervalId: any;
