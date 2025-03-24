@@ -1,12 +1,17 @@
 <app-header></app-header>
 @if (isLoading) {
 <app-loading></app-loading>
-} @else {
+} @else { @if (instructorInfo) {
 <app-page-title
   [pageTitle]="videos?.title"
-  [pageDescription]="'Fluye consciente con lulú fraga'"
+  [pageDescription]="
+    'Fluye consciente con ' +
+    instructorInfo.firstname +
+    ' ' +
+    instructorInfo.lastname
+  "
 ></app-page-title>
-@if (roles === 'Admin') {
+} @if (roles === 'Admin') {
 <app-button
   (click)="deleteVideo()"
   [text]="'BORRAR EL VIDEO'"
@@ -57,8 +62,8 @@
     <div class="flex flex-col lg:flex-row justify-between mb-6 w-full">
       @for (item of class.items; track $index) {
       <div class="flex flex-col lg:flex-row items-center">
-        <div class=" p-3 rounded-full mb-2">
-          <img [src]="item.icon" class="w-40 object-cover" alt="">
+        <div class="p-3 rounded-full mb-2">
+          <img [src]="item.icon" class="w-40 object-cover" alt="" />
         </div>
         <span class="text-xl text-gray-600 text-center">{{ item.text }}</span>
       </div>
@@ -70,7 +75,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 w-full my-10">
       <div *ngFor="let rec of class.recommendations" class="flex items-center">
         <div class="p-2 rounded-full mr-3 text-lg">
-          <img [src]="rec.icon" class="w-40 object-cover" alt="">
+          <img [src]="rec.icon" class="w-40 object-cover" alt="" />
         </div>
         <span class="text-xl text-gray-600">{{ rec.text }}</span>
       </div>

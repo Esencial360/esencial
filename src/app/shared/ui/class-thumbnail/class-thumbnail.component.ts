@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 
 interface Class {
   name: string,
@@ -12,7 +12,7 @@ interface Class {
   templateUrl: './class-thumbnail.component.html',
   styleUrl: './class-thumbnail.component.css'
 })
-export class ClassThumbnailComponent implements OnInit {
+export class ClassThumbnailComponent implements OnInit, OnChanges {
 
   @Input()
   img!: string;
@@ -21,13 +21,21 @@ export class ClassThumbnailComponent implements OnInit {
   classes!: any[] 
 
   @Input()
+  classesIds!: string[]
+
+  @Input()
   allClasses!: boolean
 
   @Output()
   actionClassSelected = new EventEmitter<string>()
 
-  ngOnInit() {
-    
+  ngOnInit() {    
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['classes']) {
+      console.log('classes changed:', this.classes);
+    }
   }
 
   onClassSelected($event: string) {
