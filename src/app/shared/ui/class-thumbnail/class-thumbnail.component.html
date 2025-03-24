@@ -4,40 +4,45 @@
   data-aos-duration="1000"
 >
   @for (class of classes; track $index) {
-  <div
-    (click)="onClassSelected(class.video.guid)"
-    class="relative overflow-hidden rounded shadow-xl max-w-md montserrat-normal cursor-pointer"
-  >
-    <img
-      [src]="class?.safeThumbnail?.changingThisBreaksApplicationSecurity"
-      alt="Woman doing Pilates"
-      class="w-full h-56 object-cover relative"
-    />
-
+  <div class="flex flex-col">
+    <app-class-statistics
+      [adminView]="true"
+      [videoGuid]="class?.video?.guid"
+      [previewView]="true"
+    ></app-class-statistics>
     <div
-      class="absolute top-2 left-2 bg-white text-strongBrown px-2 py-1 rounded text-sm font-semibold"
+      (click)="onClassSelected(class.video.guid)"
+      class="relative overflow-hidden rounded-xl shadow-lg max-w-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl"
     >
-      10:17
-    </div>
-    <span
-      class="material-symbols-outlined text-white absolute -translate-x-2/4 top-[20%] left-2/4 text-8xl"
-    >
-      play_circle
-    </span>
-    <div class="p-4 bg-white">
-      <h2 class="text-lg font-bold mb-1 uppercase text-strongBrown">
-        {{ class.video.title }}
-      </h2>
-      @if (!allClasses) {
-        <p class="text-sm text-strongBrown">{{ class.instructor }}</p>
-        <p class="text-strongBrown mb-2">
-          Breathing plays an essential role in our well-being. Follow the advice
-          of Dr. Marie
-        </p>
-      }
-      <p class="text-xs text-strongBrown">
-        Fitness / Yoga • <span class="text-blue">Principiante</span>
-      </p>
+      <div class="relative">
+        <img
+          [src]="class?.safeThumbnail?.changingThisBreaksApplicationSecurity"
+          alt="Class Thumbnail"
+          class="w-full h-56 object-cover rounded-xl"
+        />
+
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+        <div
+          class="absolute top-2 left-2 bg-white text-strongBrown px-3 py-1 rounded-lg text-xs font-semibold shadow-md"
+        >
+          {{class.video.length}} sec
+        </div>
+
+        <h2
+          class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold uppercase text-center px-4"
+        >
+          {{ class.video.title }}
+        </h2>
+
+        <div
+          class="absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity"
+        >
+          <span class="material-symbols-outlined text-white text-7xl"
+            >play_circle</span
+          >
+        </div>
+      </div>
     </div>
   </div>
   }

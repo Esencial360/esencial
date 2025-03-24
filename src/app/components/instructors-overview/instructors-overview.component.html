@@ -1,16 +1,47 @@
-<div class="container mx-auto px-4">
-    <div class="flex justify-between items-center my-20">
-      <h2 class="text-3xl font-bold">INSTRUCTORS</h2>
-      <a class="text-gray-600 hover:underline" (click)="onSeeAll()">See All &gt;</a>
-    </div>
-    <div class="flex space-x-4 overflow-x-auto no-scrollbar">
-        @for (instructor of instructors; track $index;) {
-            <div class="flex-none" data-aos="fade-up" data-aos-duration="1000">
-                <div class="w-48 h-48 rounded-full overflow-hidden mb-2">
-                  <img [src]="instructor.imageUrl" [alt]="instructor.name" class="w-full h-full object-cover">
-                </div>
-                <p class="text-center">{{ instructor.name }}</p>
-              </div>
-        }
-    </div>
+<section
+  class="container mx-auto w-10/12 px-4 py-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div
+    class="flex flex-col text-col w-full items-start justify-center text-start montserrat-normal my-8"
+  >
+    <h4 class="text-strongBrown uppercase text-4xl font-bold">
+      Instructores de e<span class="text-blue">360</span>
+    </h4>
   </div>
+  <div class="flex space-x-4 overflow-x-auto no-scrollbar">
+    @for(instructor of instructors; track $index) {
+    <div
+      (click)="onInstructor(instructor._id)"
+      class="bg-white rounded-xl shadow-lg overflow-hidden w-[400px] cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+    >
+      <div class="relative">
+        <img
+          [src]="'/assets/images/examplePerson.jpg'"
+          [alt]="instructor.title"
+          class="w-full h-56 object-cover"
+        />
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"
+        ></div>
+        <div class="absolute bottom-4 left-4 right-4 text-white">
+          <h3 class="text-2xl font-bold mb-1 capitalize">
+            {{ instructor.firstname + " " }}{{ instructor.lastname }}
+          </h3>
+          <div class="flex items-center text-sm">
+            <span
+              class="text-white py-1 rounded-full text-xs uppercase tracking-wide"
+            >
+              {{ instructor.title }}
+            </span>
+            <span class="mx-2">•</span>
+            <span>Esencial<span class="text-blue">360</span> Instructor</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  <app-button-v2 class="flex justify-end" (onClickAction)="onAllInstructors()" [text]="'ver todos'"></app-button-v2>
+</section>

@@ -1,0 +1,17 @@
+.mat-mdc-tab-label-container {
+    border-bottom: 0 !important;
+}
+
+.border-bottom-width {
+    border-bottom-width: 0 !important;
+}
+
+.custom-tab-group {
+    border-bottom: none;
+}
+
+::ng-deep .custom-tab-group .mat-mdc-tab-label-container {
+    border-bottom: none;
+    box-shadow: none;
+  }
+  

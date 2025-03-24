@@ -1,0 +1,39 @@
+/* mood-selection.component.scss */
+:host {
+    display: block;
+  }
+  
+  /* Ensure consistent card heights */
+  .grid > div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Set fixed height for subtitle container with overflow handling */
+  .h-32 {
+    height: 8rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  /* Optional: add ellipsis for very long descriptions */
+  .h-32 p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  
+  /* Ensure consistent spacing between sections */
+  .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+  
+  /* Make all class image containers the same height */
+  .w-full img.h-28 {
+    height: 7rem;
+    width: 100%;
+  }

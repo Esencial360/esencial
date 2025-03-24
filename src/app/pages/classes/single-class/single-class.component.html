@@ -1,13 +1,17 @@
 <app-header></app-header>
 @if (isLoading) {
 <app-loading></app-loading>
-} @else {
+} @else { @if (instructorInfo) {
 <app-page-title
   [pageTitle]="videos?.title"
-  [pageDescription]="'Disfruta de tu clase con Jane Doe.'"
-  [arrowBack]="true"
+  [pageDescription]="
+    'Fluye consciente con ' +
+    instructorInfo.firstname +
+    ' ' +
+    instructorInfo.lastname
+  "
 ></app-page-title>
-@if (roles === 'Admin') {
+} @if (roles === 'Admin') {
 <app-button
   (click)="deleteVideo()"
   [text]="'BORRAR EL VIDEO'"
@@ -18,14 +22,13 @@
   #dialogAnchor
   class="cdk-visually-hidden"
   cdkTrapFocus
-  class="flex flex-col md:flex-row items-center md:items-start justify-center bg-white p-6 md:p-10 mx-4 rounded-xl shadow-xl montserrat-normal space-y-6 md:space-y-0 md:space-x-8"
+  class="flex flex-col md:flex-row items-center md:items-start justify-center bg-white p-6 md:p-10 mx-4 montserrat-normal space-y-6 md:space-y-0 md:space-x-8"
 >
   <div
     class="md:w-1/2 w-full mt-6 md:mt-0"
     data-aos="fade-up"
     data-aos-duration="1000"
   >
-    <!-- Video Wrapper with Responsive Aspect Ratio -->
     <div
       class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-lg"
     >
@@ -38,8 +41,6 @@
         allowfullscreen
       ></iframe>
     </div>
-
-    <!-- Floating Like Button -->
     <div class="relative mt-4">
       <button
         (click)="toggleLike()"
@@ -51,6 +52,56 @@
     </div>
   </div>
 </div>
+<div
+  class="max-w-7xl mx-auto text-strongBrown p-4 flex flex-col items-center w-full montserrat-normal"
+>
+  <div class="mb-16">
+    <h3 class="text-xl font-bold text-teal-500 mb-4 w-full">
+      ESENCIALES PARA TU PRÁCTICA
+    </h3>
+    <div class="flex flex-col lg:flex-row justify-between mb-6 w-full">
+      @for (item of class.items; track $index) {
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="p-3 rounded-full mb-2">
+          <img [src]="item.icon" class="w-40 object-cover" alt="" />
+        </div>
+        <span class="text-xl text-gray-600 text-center">{{ item.text }}</span>
+      </div>
+      }
+    </div>
+    <h3 class="text-xl font-bold text-teal-500 mb-4 w-full">
+      RECOMENDACIONES PARA TU PRÁCTICA
+    </h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 w-full my-10">
+      <div *ngFor="let rec of class.recommendations" class="flex items-center">
+        <div class="p-2 rounded-full mr-3 text-lg">
+          <img [src]="rec.icon" class="w-40 object-cover" alt="" />
+        </div>
+        <span class="text-xl text-gray-600">{{ rec.text }}</span>
+      </div>
+    </div>
+    <button
+      class="bg-teal-500 text-white font-medium py-2 px-4 rounded-2xl w-full lg:w-3/12 flex items-center justify-center"
+      (click)="goBack()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
+      </svg>
+      VOLVER
+    </button>
+  </div>
+</div>
 
 @if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
@@ -59,8 +110,8 @@
   class="flex justify-center"
 ></app-class-statistics>
 }
-<app-page-title
+<!-- <app-page-title
   [pageDescription]="'Descubre nuestra gran variedad de clases'"
-></app-page-title>
+></app-page-title> -->
 }
 <app-footer></app-footer>

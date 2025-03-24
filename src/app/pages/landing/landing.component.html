@@ -2,17 +2,22 @@
 <app-loading></app-loading>
 } @else { @if(authService.isAuthenticated$ | async) {
 <app-header></app-header>
+@if (roles === 'Instructor') {
+<app-instructor-dashboard> </app-instructor-dashboard>
+} @else if (roles === 'Admin') {
+<app-admin-dashboard></app-admin-dashboard>
+} @else {
 <app-user-dashboard
   [blogs]="blogs"
   [instructors]="instructors"
   class="w-full montserrat-normal"
 ></app-user-dashboard>
-} @else {
+} } @else {
 <app-header [newLanding]="true"></app-header>
 <section class="h-full relative">
   <app-parallax
     [parallaxSpeed]="0.5"
-    [imagePath]="'assets/images/5.png'"
+    [imagePath]="'assets/images/1.jpg'"
   ></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"

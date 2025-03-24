@@ -3,9 +3,6 @@ import { BunnystreamService } from '../../services/bunny-stream.service';
 import { concatMap, from, map, toArray } from 'rxjs';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InstructorService } from '../../services/instructor.service';
-import { InstructorActions } from '../../../state/instructor.actions';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-popular-classes-and-instructors',
@@ -21,13 +18,10 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
     private bunnystreamService: BunnystreamService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private instructorService: InstructorService,
-    private store: Store
   ) {}
 
   ngOnInit() {
     this.getPopularClasses();
-    this.getAllInstructors();
   }
 
   getPopularClasses() {
@@ -40,26 +34,6 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
         console.error('Unable to retrieve classes', error);
       }
     );
-  }
-
-  getAllInstructors() {
-    this.instructorService.getAllInstructors().subscribe(
-      (instructors) => {
-        this.instructors = instructors.slice(0, 3);
-        this.store.dispatch(
-          InstructorActions.retrievedInstructorList({
-            instructors: instructors,
-          })
-        );
-      },
-      (error) => {
-        console.error('Error fetching instructors:', error);
-      }
-    );
-  }
-
-  onInstructor(id: number) {
-    this.router.navigate([`/instructores/${id}`]);
   }
 
   getVideo(videos: any) {

@@ -17,6 +17,9 @@ export class ClassStatisticsComponent implements OnInit {
   videoStatistics!: any
   filteredKeys = ['countryViewCounts', 'countryWatchTime'];
 
+  @Input() 
+  previewView!: boolean;
+
 
   @Input()
   videoGuid!: string; 
@@ -51,8 +54,8 @@ export class ClassStatisticsComponent implements OnInit {
     return Object.entries(obj);
   }
 
-  getVideoStatistics() {
-    this.bunnystreamService.getVideoStatistics(this.videoGuid).subscribe(
+ getVideoStatistics() {
+     this.bunnystreamService.getVideoStatistics(this.videoGuid).subscribe(
       (response: any) => {
         console.log(response)
         this.videoStatistics = response

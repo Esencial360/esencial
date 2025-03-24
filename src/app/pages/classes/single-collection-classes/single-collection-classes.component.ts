@@ -16,7 +16,7 @@ export class SingleCollectionClassesComponent implements OnInit {
   collectionName: any;
 
   matchingCollection!: any;
-
+  videoIdsArray!: string[]
   videos!: any[];
 
   links: SafeResourceUrl[] = [];
@@ -74,11 +74,10 @@ export class SingleCollectionClassesComponent implements OnInit {
   }
 
   getVideo(videos: any) {
-    const videoIdsArray = videos.map((video: { guid: any; }) => video.guid);
-    console.log(videoIdsArray);
-    if (videoIdsArray.length === 0) {
-    } else if (videoIdsArray.length === 1) {
-      from(videoIdsArray)
+     this.videoIdsArray = videos.map((video: { guid: any; }) => video.guid);
+    if (this.videoIdsArray.length === 0) {
+    } else if (this.videoIdsArray.length === 1) {
+      from(this.videoIdsArray)
         .pipe(
           concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
           map((video) => ({
@@ -97,8 +96,8 @@ export class SingleCollectionClassesComponent implements OnInit {
             console.error('Error retrieving videos:', error);
           },
         });
-    } else if (videoIdsArray.length > 1) {
-      from(videoIdsArray)
+    } else if (this.videoIdsArray.length > 1) {
+      from(this.videoIdsArray)
         .pipe(
           concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
           map((video) => ({
@@ -112,6 +111,8 @@ export class SingleCollectionClassesComponent implements OnInit {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
+            console.log(this.videos);
+            
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
@@ -134,4 +135,5 @@ export class SingleCollectionClassesComponent implements OnInit {
         console.error(`An error occurred during navigation: ${error.message}`);
       });
   }
+
 }

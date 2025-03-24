@@ -1,0 +1,40 @@
+@if (isLoading) {
+<app-loading></app-loading>
+} @else { @if (authService.user$ | async; as user) {
+<div
+  class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-7xl mx-auto montserrat-normal"
+>
+  <div class="mt-5 md:mt-0 md:w-1/2">
+    <img
+      src="../../../assets/images/yoga1.jpg"
+      alt="Person doing yoga"
+      class="rounded-xl object-cover w-10/12 h-64"
+    />
+  </div>
+  <div class="flex-1">
+    <h2 class="!text-4xl font-bold text-strongBrown uppercase mb-4">
+      ¡Bienvenido {{ user.given_name ? user.given_name : user.nickname }}!
+    </h2>
+    <br />
+    <p class="text-olive-600 text-lg">
+      ¡Gracias por ser parte esencial de esta comunidad! Tu guía inspira y
+      transforma en cada clase.
+      <br /><br />
+      Sigue compartiendo con intención y pasión, impactando la práctica y el
+      crecimiento de cada alumno.
+      <br /><br />
+      <app-button (onActionTrigger)="onNewClass()" [bgColor]="'bg-blue'" [text]="'Subir una clase'"></app-button>
+    </p>
+  </div>
+</div>
+<app-banner-v2
+[reverse]="true"
+  [text]="
+    'El sol, nuestra fuente de energía,  crecimiento y vida, representa un símbolo de vitalidad, prosperidad y nuevos comienzos.'
+  "
+  [image]="'/assets/images/jaguar.png'"
+></app-banner-v2>
+<section class="modern-tabs">
+  <app-instructor-profile [filters]="filters"></app-instructor-profile>
+</section>
+} }

@@ -55,6 +55,8 @@ getCollectionVideosList(collection: string): Observable<any> {
   }
 
   getVideo(videoId: any): Observable<any> {
+    console.log(videoId);
+    
     const url = `${this.apiUrl}/videos/${videoId}`;
     const headers = { 'AccessKey': this.apiKey };
     return this.http.get(url, { headers }).pipe(   
