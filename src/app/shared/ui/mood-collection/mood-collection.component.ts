@@ -30,7 +30,7 @@ export class MoodCollectionComponent {
       id: 'energetic',
       title: 'Activo/a y con energía',
       subtitle: 'Quieres una práctica dinámica que te rete.',
-      icon: 'sunny',
+      icon: 'assets/images/sun.png',
       classes: [
         {
           id: 'class1',
@@ -59,7 +59,7 @@ export class MoodCollectionComponent {
       id: 'relaxed',
       title: 'Con ganas de relajarte',
       subtitle: 'Quieres una práctica suave y restaurativa',
-      icon: ' brightness_3',
+      icon: 'assets/images/moon.png',
       classes: [
         {
           id: 'class4',
@@ -88,7 +88,7 @@ export class MoodCollectionComponent {
       id: 'restorative',
       title: 'Necesito soltar y resetear',
       subtitle: 'Buscas liberar y restaurar.',
-      icon: 'tsunami',
+      icon: 'assets/images/wave.png',
       classes: [
         {
           id: 'class7',

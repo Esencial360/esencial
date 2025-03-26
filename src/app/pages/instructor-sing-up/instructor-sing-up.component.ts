@@ -52,18 +52,18 @@ export class InstructorSingUpComponent implements OnInit {
     this.services = [
       {
         title: 'Experiencia',
-        image: '../../../assets/images/logoBlue.png',
+        image: '../../../assets/images/yogaPose.png',
         description:
           'Nosotros valoramos tu trayectoria. Como parte de esencial360, te pedimos generar 5 contenidos al mes, asistir a reuniones de alineación y recibir asesoría. Nosotras te proporcionamos los lineamientos necesarios para facilitar la producción de tu contenido.',
       },
       {
         title: 'Intercambio',
-        image: '../../../assets/images/logoBlue.png',
+        image: '../../../assets/images/change.png',
         description: 'Tu impacto es clave. Apreciamos las referencias de tus alumnos o conocidos, y como intercambio, recibirás el 25% de la mensualidad de cada recomendado que se inscriba.',
       },
       {
         title: 'Crecimiento',
-        image: '../../../assets/images/logoBlue.png',
+        image: '../../../assets/images/leaf.png',
         description:
           'Te brindamos una plataforma para conectar con más alumnos, visibilidad para tu marca y el respaldo de una comunidad sólida que valora tu conocimiento.',
       },

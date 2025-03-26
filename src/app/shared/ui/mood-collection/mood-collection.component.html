@@ -10,10 +10,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       @for (option of moodOptions; track $index) {
       <div class="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center">
-        <div class="w-24 h-24 flex items-center justify-center mb-4">
-          <span class="text-8xl material-symbols-outlined text-blue">
-            {{ option.icon }}
-          </span>
+        <div class="w-36 h-36 flex items-center justify-center mb-4">
+          <img [src]="option.icon" alt="">
         </div>
 
         <h2 class="text-lg font-medium text-strongBrown font-bold text-center">

@@ -11,7 +11,7 @@ module.exports = {
       lightBrown: '#825F3E',
       veige: '#B89B80',
       bone: '#f7f5ef',
-      blue: '#48A2A1',
+      blue: '#5C7A83',
       teal: {
         100: '#e6fffa',
         200: '#b2f5ea',
