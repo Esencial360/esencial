@@ -9,10 +9,9 @@ import { concatMap, from, map, toArray } from 'rxjs';
 @Component({
   selector: 'app-instructor-admin-view',
   templateUrl: './instructor-admin-view.component.html',
-  styleUrl: './instructor-admin-view.component.css'
+  styleUrl: './instructor-admin-view.component.css',
 })
 export class InstructorAdminViewComponent {
-
   instructorId: any;
   bannerImageUrl = 'assets/images/banner-image.jpg';
   instagramIconUrl = 'assets/images/instagram-icon.png';
@@ -58,12 +57,13 @@ export class InstructorAdminViewComponent {
     );
   }
 
-  
   getVideo(videos: any) {
     this.loadingClasses = true;
-    const videoIdsArray = videos.map((video: { videoId: any; }) => video.videoId);
+    const videoIdsArray = videos.map(
+      (video: { videoId: any }) => video.videoId
+    );
     if (videoIdsArray.length === 0) {
-      this.loadingClasses = false
+      this.loadingClasses = false;
     } else if (videoIdsArray.length === 1) {
       from(videoIdsArray)
         .pipe(
@@ -79,8 +79,7 @@ export class InstructorAdminViewComponent {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            this.loadingClasses = false
-            
+            this.loadingClasses = false;
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
@@ -101,8 +100,7 @@ export class InstructorAdminViewComponent {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            this.loadingClasses = false
-            
+            this.loadingClasses = false;
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
@@ -125,4 +123,14 @@ export class InstructorAdminViewComponent {
       });
   }
 
+  onRemoveInstructor() {
+    this.instructorService.deleteInstructor(this.instructorId).subscribe({
+      next: (response) => {
+        console.log('Instructor removed successfully', response);
+      },
+      error: (error) => {
+        console.log('Instructor removed error', error);
+      },
+    });
+  }
 }
