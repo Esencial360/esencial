@@ -106,6 +106,7 @@ import { BannerV3Component } from './shared/ui/banner-v3/banner-v3.component';
 import { ButtonV2Component } from './shared/ui/button-v2/button-v2.component';
 import { InstructorDashboardComponent } from './pages/instructor-dashboard/instructor-dashboard.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { FormatDurationPipe } from './shared/pipes/format-duration.pipe';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
@@ -182,6 +183,7 @@ export function localStorageSyncReducer(reducer: any) {
     ButtonV2Component,
     InstructorDashboardComponent,
     AdminDashboardComponent,
+    FormatDurationPipe,
   ],
   imports: [
     BrowserModule,

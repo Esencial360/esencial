@@ -22,6 +22,7 @@ export class InstructorAdminViewComponent {
   websiteUrl = 'https://www.your-website.com';
   instructor!: Instructor;
   videos!: any[];
+  loadingClasses!: boolean;
 
   links: SafeResourceUrl[] = [];
 
@@ -43,14 +44,12 @@ export class InstructorAdminViewComponent {
     console.log('single initialized');
     this.route.paramMap.subscribe((params) => {
       this.instructorId = params.get('id');
-      // fetch instructor details based on the instructorId
     });
 
     await this.instructorService.getInstructor(this.instructorId).subscribe(
       (response) => {
         console.log('Instructor get successfully', response);
         this.instructor = response;
-        console.log(this.instructor.videos);
         this.getVideo(this.instructor.videos);
       },
       (error) => {
@@ -59,12 +58,14 @@ export class InstructorAdminViewComponent {
     );
   }
 
-  async getVideo(videoIds: any) {
-    console.log(videoIds);
-
-    if (videoIds.length === 0) {
-    } else if (videoIds.length === 1) {
-      from(videoIds)
+  
+  getVideo(videos: any) {
+    this.loadingClasses = true;
+    const videoIdsArray = videos.map((video: { videoId: any; }) => video.videoId);
+    if (videoIdsArray.length === 0) {
+      this.loadingClasses = false
+    } else if (videoIdsArray.length === 1) {
+      from(videoIdsArray)
         .pipe(
           concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
           map((video) => ({
@@ -78,14 +79,15 @@ export class InstructorAdminViewComponent {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            console.log(this.videos);
+            this.loadingClasses = false
+            
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
           },
         });
-    } else if (videoIds.length > 1) {
-      from(videoIds)
+    } else if (videoIdsArray.length > 1) {
+      from(videoIdsArray)
         .pipe(
           concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
           map((video) => ({
@@ -99,7 +101,8 @@ export class InstructorAdminViewComponent {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            console.log(this.videos);
+            this.loadingClasses = false
+            
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
@@ -107,14 +110,9 @@ export class InstructorAdminViewComponent {
         });
     }
   }
-
   onWatchSingleClass(video: any) {
-    const collectionName = this.bunnystreamService.getCollection(
-      video.collectionId
-    );
-    console.log(collectionName);
     this.router
-      .navigate([`/collection/${collectionName}/${video.guid}`])
+      .navigate([`/clases/${video}`])
       .then((navigationSuccess) => {
         if (navigationSuccess) {
           console.log('Navigation to class successful');
