@@ -79,9 +79,11 @@
         </div>
       </form>
       } @if (secondStep) {
+
       <div class="text-center space-y-4">
         <h2 class="text-lg font-semibold">Subir Archivo</h2>
-        <input
+        @if (!loading) {
+          <input
           type="file"
           #videoInput
           (change)="onFileSelected($event)"
@@ -92,7 +94,10 @@
           class="w-full py-3 text-white font-semibold rounded-lg  bg-blue hover:bg-lightBrown  0transition duration-200"
         >
         Subir Archivo
-        </button>
+        </button> 
+        } @else {
+          <app-loading></app-loading>
+        }
       </div>
       } @if (thirdStep) {
       <div class="flex flex-col items-center text-center space-y-4">
