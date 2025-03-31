@@ -48,7 +48,7 @@ export class HeaderComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
-      this.streak = user.streak.count;
+      this.streak = user.streak?.count;
     });
   }
 

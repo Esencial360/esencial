@@ -16,7 +16,7 @@ export class InstructorService {
     return this.http.get<Instructor[]>(this.apiUrl);
   }
 
-  getInstructor(id: string): Observable<Instructor> {
+  getInstructor(id?: string): Observable<Instructor> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Instructor>(url);
   }
