@@ -6,9 +6,14 @@
 >
   @if(showTab('MIS CLASES')) {
   <mat-tab label="MIS CLASES">
+    <app-class-status
+    [pendingVideos]="pendingVideosCount"
+    [approvedVideos]="totalVideosCount"
+  ></app-class-status>
     <app-page-title
       [pageDescription]="'Haz click para subir un nuevo video.'"
     ></app-page-title>
+
     <div class="w-full flex justify-center">
       <button
         (click)="onUploadVideo()"
@@ -72,5 +77,5 @@
   <mat-tab label="CODIGO">
     <app-qr></app-qr>
   </mat-tab>
-  } 
+  }
 </mat-tab-group>
