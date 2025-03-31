@@ -5,6 +5,7 @@ import { InstructorService } from '../../../shared/services/instructor.service';
 import {
   catchError,
   filter,
+  forkJoin,
   from,
   map,
   mergeMap,
@@ -34,8 +35,8 @@ export class InstructorProfileComponent implements OnInit {
   videos!: any[];
   userId!: string;
   instructor!: any;
-  pendingVideosCount!: number
-  totalVideosCount!: number
+  pendingVideosCount!: number;
+  totalVideosCount!: number;
 
   payments = [
     {
@@ -67,41 +68,34 @@ export class InstructorProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.userId)
+    console.log(this.userId);
+    this.getInstructorVideos();
+  }
+
+  getInstructorVideos() {
     this.instructorService
       .getInstructor(this.userId)
       .pipe(
-        tap((response) =>
-          console.log('Instructor fetched successfully', response)
-        ), // ✅ Log response
-        filter((instructor) => !!instructor), // ✅ Ensure instructor exists
+        tap((response) => console.log('Instructor fetched successfully', response)),
+        filter((instructor) => !!instructor),
         tap((instructor) => {
-          this.instructor = instructor; // ✅ Store instructor in component
-
-          // Count pending videos
-          this.pendingVideosCount =
-            instructor.videos?.filter((video) => video.status === 'Pending')
-              .length || 0;
-
-          // Count total videos (pending + approved)
+          this.instructor = instructor;
+          this.pendingVideosCount = instructor.videos?.filter(video => video.status === 'pending').length || 0;
           this.totalVideosCount = instructor.videos?.length || 0;
-
-          console.log(
-            `Pending videos: ${this.pendingVideosCount}, Total videos: ${this.totalVideosCount}`
-          );
         }),
-        map((instructor) =>
-          instructor.videos?.find((video) => video.status === 'approve')
-        ), // ✅ Find active video
-        filter((activeVideo) => !!activeVideo), // ✅ Only proceed if an approved video is found
-        switchMap(async (activeVideo) => this.getVideo(activeVideo!.videoId)), // ✅ Fetch video details
-        takeUntil(this.destroy$) // ✅ Cleanup on component destroy
+        map((instructor) => 
+          instructor.videos?.filter(video => video.status === 'approve').map(video => video.videoId) || []
+        ),
+        filter((videoIds) => videoIds.length > 0),
+        switchMap(async (videoIds) => this.getVideo(videoIds)),
+        takeUntil(this.destroy$),
       )
       .subscribe({
-        next: (video) => console.log('Video retrieved:', video),
+        next: (videos) => console.log('Videos retrieved:', videos),
         error: (error) => console.error('Error:', error),
       });
   }
+  
 
   getVideo(videoIds: string | string[]) {
     if (!videoIds || (Array.isArray(videoIds) && videoIds.length === 0)) {
@@ -117,7 +111,7 @@ export class InstructorProfileComponent implements OnInit {
           this.bunnystreamService.getVideo(videoId).pipe(
             catchError((error) => {
               console.error(`Error fetching video ID ${videoId}:`, error);
-              return of(null); // Return a null placeholder to avoid breaking the stream
+              return of(null);
             }),
             map((video) =>
               video
