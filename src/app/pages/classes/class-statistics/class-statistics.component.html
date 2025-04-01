@@ -1,46 +1,84 @@
-<section class="w-10/12" data-aos="fade-up" data-aos-duration="1000" [ngClass]="adminView ? 'text-center' : 'grid grid-cols-1 md:grid-cols-3 gap-6'">
+@if (previewView) {
+<div class="flex justify-end">
+  @if (videoStatistics) {
+    @for (key of filteredKeys; track $index) {
+        @for (entry of
+        getEntries(videoStatistics?.[key]); track $index) {
+        <div class="flex text-blue">
+          <span class="material-symbols-outlined"> {{ key === "countryWatchTime" ? "timer" : "visibility" }} </span>
+          {{ key === "countryWatchTime" ? entry[1] + "min" : entry[1] }}
+        </div>
+        } 
+    }
+  } @else {
+    <app-loading width="30px" height="30px"></app-loading>
+  }
+
+</div>
+} 
+<!-- } @else {
+
+<section
+  class="w-10/12"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+  [ngClass]="
+    adminView ? 'text-center' : 'grid grid-cols-1 md:grid-cols-3 gap-6'
+  "
+>
   @for (key of filteredKeys; track $index) { @for (entry of
   getEntries(videoStatistics[key]); track $index) {
   <div class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
-    <p class="montserrat-normal  text-strongBrown text-center" [ngClass]="adminView ? 'text-2xl' : 'text-8xl'">
+    <p
+      class="montserrat-normal text-strongBrown text-center"
+      [ngClass]="adminView ? 'text-2xl' : 'text-8xl'"
+    >
       {{ key === "countryWatchTime" ? entry[1] + "min" : entry[1] }}
     </p>
     <div class="p-4">
-      <h3 class=" text-strongBrown font-semibold mb-2 capitalize" [ngClass]="adminView ? 'text-base' : 'text-xl'">
+      <h3
+        class="text-strongBrown font-semibold mb-2 capitalize"
+        [ngClass]="adminView ? 'text-base' : 'text-xl'"
+      >
         {{ key === "countryWatchTime" ? "Tiempo de reproduccion" : "Visitas" }}
       </h3>
       @if (!adminView) {
-        <p class="text-strongBrown mb-4">
-          Breathing plays an essential role in our well-being. Follow the advice
-          of Dr. Marie
-        </p>
+      <p class="text-strongBrown mb-4">
+        Breathing plays an essential role in our well-being. Follow the advice
+        of Dr. Marie
+      </p>
       }
     </div>
   </div>
   } }
 
   <div class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
-    <!-- <p class="montserrat-normal text-strongBrown text-center" [ngClass]="adminView ? 'text-2xl' : 'text-8xl'">
+    <p class="montserrat-normal text-strongBrown text-center" [ngClass]="adminView ? 'text-2xl' : 'text-8xl'">
       {{ videoStatistics["engagementScore"] + "%" }}
-    </p> -->
-      <div class="p-4">
-        <h3 class="text-strongBrown font-semibold mb-2 capitalize" [ngClass]="adminView ? 'text-base' : 'text-xl'">
-          Engagement Score
-        </h3>
-        @if (!adminView) {
-        <p class="text-strongBrown mb-4">
-          Breathing plays an essential role in our well-being. Follow the advice
-          of Dr. Marie
-        </p>
+    </p>
+    <div class="p-4">
+      <h3
+        class="text-strongBrown font-semibold mb-2 capitalize"
+        [ngClass]="adminView ? 'text-base' : 'text-xl'"
+      >
+        Engagement Score
+      </h3>
+      @if (!adminView) {
+      <p class="text-strongBrown mb-4">
+        Breathing plays an essential role in our well-being. Follow the advice
+        of Dr. Marie
+      </p>
       }
-      </div>
+    </div>
   </div>
-  <!-- <div *ngFor="let key of filteredKeys">
+  <div *ngFor="let key of filteredKeys">
         <h3>{{ key }}</h3>
         <ul>
           <li *ngFor="let entry of getEntries(videoStatistics[key])">
             {{ entry[0] }}: {{ entry[1] }}
           </li>
         </ul>
-      </div> -->
+      </div>
 </section>
+
+} -->

@@ -1,52 +1,49 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import AOS from "aos";
-
-interface Instructor {
-  name: string;
-  imageUrl: string;
-}
+import { Instructor } from '../../shared/Models/Instructor';
+import { InstructorService } from '../../shared/services/instructor.service';
+import { InstructorActions } from '../../state/instructor.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-instructors-overview',
   templateUrl: './instructors-overview.component.html',
   styleUrl: './instructors-overview.component.css',
 })
-export class InstructorsOverviewComponent implements OnInit{
+export class InstructorsOverviewComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private instructorService: InstructorService,
+    private store: Store
+  ) {}
 
-  // @Input()
-  // instructors!: Instructor[]
+  instructors: Instructor[] = [];
 
-  constructor(private router: Router) {}
-
-  instructors: Instructor[] = [
-    { name: 'Ashley Galvin', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Jacy Cunningham', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Emily Sferra', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Josh Kramer', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Briohny Smyth', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Emily Sferra', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Josh Kramer', imageUrl: '../../../assets/images/examplePerson.jpg' },
-    { name: 'Briohny Smyth', imageUrl: '../../../assets/images/examplePerson.jpg' },
-  ];
-
-  ngOnInit(){
-    AOS.init({once: true})
+  ngOnInit() {
+    this.getAllInstructors();
   }
 
-  onSeeAll() {
-    this.router
-    .navigateByUrl('/instructores')
-    .then((navigationSuccess) => {
-      if (navigationSuccess) {
-        console.log('Navigation to instructores page successful');
-      } else {
-        console.error('Navigation to instructores page failed');
+  getAllInstructors() {
+    this.instructorService.getAllInstructors().subscribe(
+      (instructors) => {
+        this.instructors = instructors.slice(0, 3);
+        this.store.dispatch(
+          InstructorActions.retrievedInstructorList({
+            instructors: instructors,
+          })
+        );
+      },
+      (error) => {
+        console.error('Error fetching instructors:', error);
       }
-    })
-    .catch((error) => {
-      console.error(`An error occurred during navigation: ${error.message}`);
-    });
+    );
   }
 
+  onInstructor(id: string) {
+    this.router.navigate([`/instructores/${id}`]);
+  }
+
+  onAllInstructors() {
+    this.router.navigate(['/instructores'])
+  }
 }

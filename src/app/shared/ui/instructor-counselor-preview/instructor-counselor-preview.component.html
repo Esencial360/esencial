@@ -1,0 +1,38 @@
+<section
+class="container mx-auto px-4 py-8 montserrat-normal"
+id="scrollContent"
+>
+<h2
+  class="text-veige text-2xl lg:text-6xl uppercase text-center font-bold my-10"
+>
+{{title}} e<span class="text-blue">360</span>
+</h2>
+<div class="grid grid-cols-1 gap-6">
+  @for(teamMember of team; track $index;) {
+  <div
+    class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 cursor-pointer"
+    (click)="onTeamClick(teamMember._id)"
+  >
+    <div
+      class="w-64 h-64 rounded-full object-cover flex-shrink-0 overflow-hidden border-4 border-teal-500"
+    >
+      <img
+        src="/assets/images/examplePerson.jpg"
+        alt="Anna Vega Langarica"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="text-gray-700 lg:ml-10">
+      <h2
+        class="text-teal-600 font-bold text-lg lg:text-2xl uppercase text-blue"
+      >
+        {{ teamMember.firstname + " " + teamMember.lastname }}
+      </h2>
+      <p class="text-sm my-5 leading-relaxed">
+        {{ teamMember.description }}
+      </p>
+    </div>
+  </div>
+  }
+</div>
+</section>

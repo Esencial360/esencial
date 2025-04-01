@@ -4,68 +4,61 @@
   [arrowBack]="true"
   [pageTitle]="instructor.firstname + ' ' + instructor.lastname"
 ></app-page-title>
-<div
-  class="flex flex-col justify-center md:flex-row bg-white p-6 mx-10 rounded-lg montserrat-normal"
->
-  <div class="md:w-4/12 mt-6 md:mt-0">
-    <img
-      [src]="'../../../../assets/images/yoga1.jpg'"
-      [alt]="instructor.title"
-      class="rounded-lg"
-    />
+<div class="w-full flex flex-col items-center montserrat-normal">
+  <div
+    class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 cursor-pointer max-w-4xl"
+  >
+    <div
+      class="w-64 h-64 rounded-full object-cover flex-shrink-0 overflow-hidden border-4 border-teal-500"
+    >
+      <img
+        src="/assets/images/examplePerson.jpg"
+        alt="Anna Vega Langarica"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="text-gray-700 lg:ml-10">
+      <h2
+        class="font-bold text-lg lg:text-2xl uppercase text-blue drop-shadow-lg"
+      >
+        {{ instructor.firstname + " " + instructor.lastname }}
+      </h2>
+      <p class="text-sm my-5 leading-relaxed drop-shadow-lg">
+        {{ instructor.description }}
+      </p>
+    </div>
+  </div>
+  <div class="mt-10 max-w-4xl flex flex-col items-center lg:items-start w-full">
+    <h3 class="text-lg lg:text-3xl font-bold text-primary uppercase text-blue">
+      CLASES DE {{ instructor.firstname }}
+    </h3>
+    <p class="text-strongBrown mt-2 text-sm lg:text-base font-bold">
+      DA CLICK EN UNA CLASE PARA EDITAR
+    </p>
+
+    <section
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      class="container mx-auto px-4 py-8 montserrat-normal"
+    >
+    @if (loadingClasses) {
+      <app-loading></app-loading>
+      } @else {
+      <app-class-thumbnail
+        [classes]="videos"
+        [allClasses]="true"
+        (actionClassSelected)="onWatchSingleClass($event)"
+      ></app-class-thumbnail>
+      }
+    </section>
+    <app-button
+    [bgColor]="'bg-blue'"
+    [text]="'Eliminar perfil'"
+    [width]="'w-full'"
+    class="my-10"
+    (onActionTrigger)="onRemoveInstructor()"
+  ></app-button>
   </div>
 </div>
 
-<app-page-title
-  [pageTitle]="'Clases de ' + instructor.firstname"
-></app-page-title>
-<section class="container mx-auto px-4 py-8 montserrat-normal">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    @for(video of videos; track $index;) {
-
-    <div
-      class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
-      (click)="onWatchSingleClass(video.video)"
-    >
-      <img
-        [src]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
-        [alt]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
-        class="w-full h-48 object-cover"
-      />
-      <div class="p-4">
-        <div class="flex items-center text-sm text-blue mb-2">
-          <span>Esencial360</span>
-          <span class="mx-2">•</span>
-        </div>
-        <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
-          {{ video.video.title }}
-        </h3>
-        <p class="text-strongBrown mb-4">
-          Breathing plays an essential role in our well-being. Follow the advice
-          of Dr. Marie
-        </p>
-        <div class="flex items-center justify-between">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 text-gray-400"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </div>
-      </div>
-      <app-class-statistics
-      [adminView]="true"
-      [videoGuid]="video.video.guid"
-      class="flex justify-center"
-    ></app-class-statistics>
-    </div>
-    }
-  </div>
-</section>
 <app-footer></app-footer>

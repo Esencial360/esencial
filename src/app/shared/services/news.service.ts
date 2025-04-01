@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { News } from '../Models/News'; // Import the News model interface
+import { News } from '../Models/News';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = 'http://localhost:3000/news'; // Replace with your API URL
+  private apiUrl = `${environment.apiUrl}news`
 
   constructor(private http: HttpClient) { }
 

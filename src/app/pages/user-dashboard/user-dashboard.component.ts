@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Inject,
+  PLATFORM_ID,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 // import { AuthService } from '../../shared/services/auth.service';
 import { takeUntil } from 'rxjs/operators';
@@ -11,6 +19,11 @@ import { Blog } from '../../shared/Models/Blog';
 import { Instructor } from '../../shared/Models/Instructor';
 import AOS from 'aos';
 import { isPlatformBrowser } from '@angular/common';
+import { UserService } from '../../shared/services/users.service';
+import { User } from '../../shared/Models/User';
+import { Store } from '@ngrx/store';
+import { selectUsers } from '../../state/user.selectors';
+import { UserApiActions, ActiveUserApiActions } from '../../state/user.actions';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -24,6 +37,10 @@ export class UserDashboardComponent implements OnInit {
   @Input()
   instructors!: any[];
 
+  @Input() users: ReadonlyArray<User> = [];
+
+  @Output() add = new EventEmitter<string>();
+
   private ngUnsubscribe = new Subject<void>();
   videos!: any[];
   links: SafeResourceUrl[] = [];
@@ -31,7 +48,9 @@ export class UserDashboardComponent implements OnInit {
   isLoading!: boolean;
   userRoles: string[] = [];
   roles: string[] = [];
-  showRecommendation!: boolean
+  userId: string = '';
+  streak!: number;
+  showRecommendation!: boolean;
 
   constructor(
     public authService: AuthService,
@@ -39,10 +58,16 @@ export class UserDashboardComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private emailService: EmailService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private userService: UserService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private store: Store
   ) {}
 
   async ngOnInit() {
+    this.userService.getAllUsers().subscribe((users) => {
+      this.store.dispatch(UserApiActions.retrievedUserList({ users }));
+    });
+
     AOS.init({ once: true });
     this.isLoading = true;
     if (isPlatformBrowser(this.platformId)) {
@@ -50,26 +75,65 @@ export class UserDashboardComponent implements OnInit {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((user) => {
           if (user) {
-            console.log('User:', user);
             this.isLoading = false;
           }
           this.authService.user$.subscribe((user) => {
             if (user) {
               const namespace = 'https://test-assign-roles.com';
               this.roles = user[`${namespace}roles`][0] || [];
-              console.log(this.roles);
-              
+              this.userService.getUser(user.email).subscribe({
+                next: (response) => {
+                  if (!response) {
+                    const newUser = {
+                      email: user.email,
+                      firstname: user.given_name,
+                      lastname: user.family_name,
+                    };
+                    this.userService
+                      .createUser(newUser)
+                      .subscribe((newUser) => {
+                        this.userId = newUser._id;
+                        this.updateAndFetchStreak();
+                        this.store.dispatch(
+                          ActiveUserApiActions.retrievedActiveUser({
+                            user: newUser,
+                          })
+                        );
+                      });
+
+                  } else {
+                    this.userId = response._id;
+                    this.updateAndFetchStreak();
+                    this.store.dispatch(
+                      ActiveUserApiActions.retrievedActiveUser({
+                        user: response,
+                      })
+                    );
+                  }
+                },
+                error: (err) => {
+                  console.error('Error fetching user:', err);
+                },
+              });
             }
           });
         });
     }
-    this.getVideos();
+    // this.getVideos();
     this.getCollectionList();
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  updateAndFetchStreak() {
+    this.userService.updateStreak(this.userId).subscribe((response) => {
+      this.userService.getStreak(this.userId).subscribe((res) => {
+        this.streak = res.streak;
+      });
+    });
   }
 
   onUploadVideo() {
@@ -84,14 +148,8 @@ export class UserDashboardComponent implements OnInit {
       html: '<p>This is a <strong>test</strong> email.</p>',
     };
     this.emailService.sendEmail(emailData).subscribe({
-      next: (response) => {
-        console.log('Email sent successfully:', response);
-        // Handle success (e.g., show a success message)
-      },
-      error: (error) => {
-        console.error('Error sending email:', error);
-        // Handle error (e.g., show an error message)
-      },
+      next: (response) => {},
+      error: (error) => {},
     });
   }
 
@@ -125,31 +183,28 @@ export class UserDashboardComponent implements OnInit {
       });
   }
 
-  getVideos() {
-    this.bunnystreamService.getVideosList().subscribe(
-      (response: any) => {
-        this.videos = response.items;
-        console.log(this.videos);
-        console.log(this.videos[0].guid);
-        this.links = this.videos.map((video) => {
-          const link =
-            'https://iframe.mediadelivery.net/embed/248742/' +
-            video.guid +
-            '?autoplay=true&loop=false&muted=false&preload=true&responsive=true';
-          return this.sanitizer.bypassSecurityTrustResourceUrl(link);
-        });
-      },
-      (error) => {
-        console.error('Error retrieving videos:', error);
-      }
-    );
-  }
+  // getVideos() {
+  //   this.bunnystreamService.getVideosList().subscribe(
+  //     (response: any) => {
+  //       this.videos = response.items;
+  //       this.links = this.videos.map((video) => {
+  //         const link =
+  //           'https://iframe.mediadelivery.net/embed/248742/' +
+  //           video.guid +
+  //           '?autoplay=true&loop=false&muted=false&preload=true&responsive=true';
+  //         return this.sanitizer.bypassSecurityTrustResourceUrl(link);
+  //       });
+  //     },
+  //     (error) => {
+  //       console.error('Error retrieving videos:', error);
+  //     }
+  //   );
+  // }
 
   getCollectionList() {
     this.bunnystreamService.getCollectionList().subscribe(
       (response: any) => {
         this.collectionList = response.items;
-        console.log(this.collectionList);
       },
       (error) => {
         console.error('Error retrieving collection:', error);
@@ -158,14 +213,14 @@ export class UserDashboardComponent implements OnInit {
   }
 
   onRemoveRecommendation() {
-    this.showRecommendation = false
+    this.showRecommendation = false;
   }
 
   onAddRecommendation() {
-    this.showRecommendation = true
+    this.showRecommendation = true;
   }
 
   onRecommendationDone() {
-    this.showRecommendation = false
+    this.showRecommendation = false;
   }
 }

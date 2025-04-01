@@ -48,8 +48,17 @@ export class LandingComponent implements OnInit  {
   instructors: Instructor[] = [];
   blogs: Blog[] = [];
   services: Service[] = [];
+  roles!: string;
   backgroundImageUrl = '../../../assets/images/yoga.jpg';
   isLoading!: boolean;
+  welcomeLines = [
+    {title: 'Clases de yoga', description: 'Diferentes estilos, instructores y duraciones, que se adaptan a tus necesidades y nivel.'},
+    {title: 'Meditaciones guiadas', description: 'Para comenzar o atravesar el día con intención, claridad y equilibrio.'},
+    {title: 'Charlas y foros', description: 'Espacios para encontrar inspiración y conocimiento wellness, impartido por expertas y expertos.'},
+    {title: 'Asesorías personalizadas', description: 'Sesiones guiadas por expertos que te ayudarán a profundizar en tu crecimiento personal y expandir tu bienestar.'},
+    {title: '¡Descuentos y acceso exclusivo!', description: 'A cursos y talleres cuidadosamente seleccionados para enriquecer tu práctica.'},
+
+  ]
   
   private ngUnsubscribe = new Subject<void>();
 
@@ -73,21 +82,17 @@ export class LandingComponent implements OnInit  {
           this.authService.user$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((user) => {
       if (user) {
         this.isLoading = false;
+        const namespace = 'https://test-assign-roles.com';
+        this.roles = user[`${namespace}roles`][0] || [];
       } else {
         this.isLoading = false;
       }
     });
     }
     this.services = [
-      { title: 'YOGA', image: '../../../assets/images/yoga.jpg '},
-      { title: 'FITNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'MINDFULNESS', image: '../../../assets/images/yoga.jpg' },
-      { title: 'ROUTINES', image: '../../../assets/images/yoga.jpg' },
-      { 
-        title: 'Ready to start your journey?', 
-        image: '../../../assets/images/yoga.jpg',
-        special: true
-      }
+      { title: 'YOGA', image: '../../../assets/images/6.png'},
+      { title: 'MEDITACIONES', image: '../../../assets/images/7.png' },
+      { title: 'TALLERES', image: '../../../assets/images/8.png' },
     ];
     this.fetchBlogs();
     this.fetchInstructors();
@@ -105,7 +110,6 @@ export class LandingComponent implements OnInit  {
     await this.blogService.getAllBlogs().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (blogs: Blog[]) => {
         this.blogs = blogs;
-        console.log(this.blogs);
       },
       (error) => {
         console.error('Error fetching blogs:', error);
@@ -117,7 +121,6 @@ export class LandingComponent implements OnInit  {
     await this.instructorService.getAllInstructors().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (instructors: Instructor[]) => {
         this.instructors = instructors;
-        console.log(this.instructors);
       },
       (error) => {
         console.error('Error fetching blogs:', error);
@@ -168,5 +171,12 @@ export class LandingComponent implements OnInit  {
     .catch((error) => {
       console.error(`An error occurred during navigation: ${error.message}`);
     });
+  }
+
+  scrollArrow() {
+    const element = document.getElementById('scrollContent')
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth'})
+    } 
   }
 }

@@ -2,26 +2,32 @@
 <app-loading></app-loading>
 } @else { @if(authService.isAuthenticated$ | async) {
 <app-header></app-header>
+@if (roles === 'Instructor') {
+<app-instructor-dashboard> </app-instructor-dashboard>
+} @else if (roles === 'Admin') {
+<app-admin-dashboard></app-admin-dashboard>
+} @else {
 <app-user-dashboard
   [blogs]="blogs"
   [instructors]="instructors"
   class="w-full montserrat-normal"
 ></app-user-dashboard>
-} @else {
+} } @else {
 <app-header [newLanding]="true"></app-header>
 <section class="h-full relative">
   <app-parallax
     [parallaxSpeed]="0.5"
-    [imagePath]="'assets/images/yoga1.jpg'"
+    [imagePath]="'assets/images/1.jpg'"
   ></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
   >
-    <h1 class="font-bold text-8xl uppercase">Inspira tu vida</h1>
-    <p class="text-2xl">Yoga. Sanar. Transformacion.</p>
+    <h1 class="font-bold text-2xl md:text-8xl uppercase">Fluye Consciente</h1>
+    <p class="text-2xl">yoga, meditaciónes y talleres</p>
   </div>
   <span
-    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+    (click)="scrollArrow()"
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
   >
     keyboard_arrow_down
   </span>
@@ -35,81 +41,70 @@
     [@fadeIn]="elementState"
     appInView
     (inView)="onInView()"
-    class="bg-white lg:p-8 relative overflow-hidden flex flex-col h-5/6"
+    class="bg-white lg:p-8 relative overflow-hidden flex flex-col items-center h-5/6"
+    id="scrollContent"
   >
+    <h1
+      class="text-4xl md:text-5xl text-center lg:text-start font-medium mb-4 text-strongBrown uppercase"
+    >
+      ¡Bienvenidos a esencial<span class="text-blue">360!</span>
+    </h1>
     <div
       [@fadeIn]="elementState"
       appInView
       (inView)="onInView()"
-      class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
+      class="flex md:flex-row flex-col items-center justify-around bg-white px-8 lg:py-16 rounded-xl max-w-6xl mx-auto"
     >
+      <div class="mt-5 md:mt-0 md:w-1/2">
+        <img
+          src="../../../assets/images/4.png"
+          alt="Yoga pose"
+          class="rounded-xl object-cover lg:h-[40rem] mb-4"
+        />
+        <app-button
+          [bgColor]="'bg-blue'"
+          [text]="'¡Comenzar mi viaje esencial360!'"
+          [width]="'w-full'"
+        ></app-button>
+      </div>
+
       <div
         [@fadeIn]="elementState"
         appInView
         (inView)="onInView()"
-        class="md:w-1/2 mb-8 md:mb-0 lg:mr-[180px] montserrat-normal"
+        class="md:w-1/2 mb-8 mt-10 lg:mt-0 md:mb-0 lg:ml-[80px] montserrat-normal"
       >
-        <!-- <div class="flex items-center mb-4">
-          <div class="flex -space-x-2 mr-4">
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-            <img
-              src="../../../assets/images/examplePerson.jpg"
-              class="w-8 h-8 rounded-full border-2 border-white"
-              alt="User avatar"
-            />
-          </div>
-          <div class="flex items-center">
-            <span class="text-lightBrown text-2xl">★★★★★</span>
-            <span class="ml-2 text-2xl font-bold">5.0</span>
-          </div>
-        </div> -->
-        <!-- <p class="text-sm mb-6 text-blue">from 200+ reviews</p> -->
-        <h1
-          class="text-4xl md:text-5xl font-bold mb-4 text-strongBrown uppercase"
-        >
-          Explore the Path<br />of Balance
-        </h1>
         <p class="text-lg mb-6 text-strongBrown">
-          Bienvenido a Esencial360, Tu plataforma integral para el bienestar,
-          diseñada pensando en nuestra comunidad latina. Explora una amplia
-          variedad de prácticas de yoga, meditaciones, y talleres, disponibles
-          en cualquier momento y lugar.
+          Este es tu espacio seguro, un punto de encuentro donde el bienestar y
+          el crecimiento personal son la esencia de tu vida. Aquí eres parte de
+          una comunidad que te inspira y te acompaña en cada paso de tu
+          transformación personal.
         </p>
-        <app-button [text]="'COMIENZA TU VIAJE'"></app-button>
-      </div>
-      <div class="mt-5 md:mt-0 md:w-1/2">
-        <img
-          src="../../../assets/images/yoga1.jpg"
-          alt="Yoga pose"
-          class="rounded-xl object-cover w-full h-[27rem]"
-        />
+        @for (item of welcomeLines; track $index) {
+        <div class="flex flex-col my-4">
+          <h4 class="text-blue text-2xl uppercase">{{ item.title }}</h4>
+          <p>{{ item.description }}</p>
+        </div>
+        }
+        <p class="text-blue font-bold">
+          ¡Disfruta de recompensas y beneficios que celebran tu compromiso y te
+          inspiran a seguir avanzando!
+        </p>
       </div>
     </div>
-    <app-scrolling-banner class="flex justify-center"></app-scrolling-banner>
+    <!-- <app-scrolling-banner class="flex justify-center"></app-scrolling-banner> -->
   </div>
-  <div
+  <!-- <div
     class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
-  ></div>
+  ></div> -->
 </section>
+<app-banner-v2
+  [reverse]="true"
+  [text]="
+    'Para las culturas indígenas, el quetzal es más que un ave: simboliza libertad, una riqueza profunda y un lazo con lo esencial. Un recordatorio de vivir en equilibrio.'
+  "
+  [image]="'/assets/images/bird.png'"
+></app-banner-v2>
 <section
   class="container mx-auto px-4 py-8"
   data-aos="fade-up"
@@ -118,13 +113,12 @@
   <div
     class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
   >
-    <h4 class="text-blue">NOSOTROS</h4>
-    <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
-      Descubre nuestros servicios
+    <h3 class="text-4xl lg:text-6xl my-2 text-strongBrown uppercase">
+      ¡Descubre tu equilibrio!
     </h3>
-    <p class="text-strongBrown">
-      Discover the unique benefits of Esencial360 designed to support your yoga
-      journey.
+    <p class="text-strongBrown lg:text-xl my-4">
+      Estas herramientas de esencial<span class="text-blue">360</span> te
+      ayudarán en tu proceso.
     </p>
   </div>
   <div
@@ -133,23 +127,6 @@
     (inView)="onInView()"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
   >
-    <!-- <div>
-      <h2
-        [@fadeIn]="elementState"
-        appInView
-        (inView)="onInView()"
-        class="text-green-600 font-semibold mb-2 text-blue"
-      >
-        OUR SERVICES
-      </h2>
-      <h1 class="text-2xl font-bold mb-4 text-strongBrown">
-        Our services for a healthy body
-      </h1>
-      <p class="text-gray-600 text-sm text-strongBrown">
-        Explore the ancient heritage of yoga through our classes, which are
-        accessible to all levels and accompanied by a balanced diet.
-      </p>
-    </div> -->
     @for (service of services; track $index) {
     <div
       [ngClass]="{
@@ -161,11 +138,11 @@
       <img
         [src]="service.image"
         [alt]="service.title"
-        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer brightness-75"
       />
       <div class="">
         <h3
-          class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+          class="text-xl lg:text-3xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
         >
           {{ service.title }}
         </h3>
@@ -173,31 +150,25 @@
     </div>
     }
   </div>
+  <div
+    class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
+  >
+    <button
+      class="bg-blue text-white px-8 py-4 uppercase font-bold md:w-4/12 text-sm rounded-md flex items-center justify-center w-full"
+    >
+      ¡Comenzar mi viaje esencial360!
+    </button>
+  </div>
 </section>
 <app-news-and-blogs></app-news-and-blogs>
-<app-banner
-  [title]="'A better path to a healthy life'"
-  [description]="
-    'Discover the transformative power of yoga: Strengthen your body & calm your mind.'
+<app-banner-v2
+  [title]="' Todo a Tu tiempo.'"
+  [text]="
+    'El caracol, un símbolo usado en la cultura maya que representa el agua y la tierra, nos recuerda el poder del agua para fluir con claridad y la firmeza de la tierra para decidir con certeza.'
   "
-  [addMargin]="true"
-></app-banner>
-<app-catalogue-view
-  [title]="'OUR BLOG'"
-  [subtitle]="'CHECK OUT OUR BLOG'"
-  [description]="
-    'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
-  "
-  [catalogue]="blogs"
-></app-catalogue-view>
+  [image]="'/assets/images/snail.png'"
+></app-banner-v2>
 <app-pricing-plan></app-pricing-plan>
-<app-banner
-  [title]="'Quieres formar parte del equipo de intructores?'"
-  [description]="'Sube tus propias clases y crea una comunidad.'"
-  [addMargin]="true"
-  [contact]="true"
-  (onActionButton)="onInstructorContact()"
-></app-banner>
 <app-faq></app-faq>
 } }
 

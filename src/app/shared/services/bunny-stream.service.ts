@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class BunnystreamService {
   constructor(private http: HttpClient) { }
 
   getCollectionList(): Observable<any> {
-    const url = `${this.apiUrl}/collections?page=1&itemsPerPage=100&orderBy=date&includeThumbnails=false`;
+    const url = `${this.apiUrl}/collections?page=1&itemsPerPage=100&orderBy=date`;
     const headers = { 'AccessKey': this.apiKey };
     return this.http.get(url, { headers });
   }
@@ -23,26 +24,22 @@ export class BunnystreamService {
     return this.http.get(url, { headers });
   }
 
-  getVideosList(): Observable<any> {
-    const url = `${this.apiUrl}/videos?page=1&itemsPerPage=100&orderBy=date`;
+  getVideosList(amount?: string): Observable<any> {
+    console.log(amount);
+    
+    const url = `${this.apiUrl}/videos?page=1&itemsPerPage=${amount ? amount : '100'}&orderBy=date`;
+    console.log(url);
+    
     const headers = { 'AccessKey': this.apiKey };
     return this.http.get(url, { headers });
   }
 
-  // getVideo(videoId: string): Observable<any> {
-  //   console.log(videoId)
-  //   const url = `https://video.bunnycdn.com/library/248742/videos/8a68a656-e0b1-4341-aa55-a96a979e0a9c`
-  //   const headers = { 'AccessKey': this.apiKey };
-  //   return this.http.get(url, { headers });
-  // }
-  getVideo(videoId: any): Observable<any> {
-    const url = `${this.apiUrl}/videos/${videoId}`;
-    const headers = { 'AccessKey': this.apiKey };
   
+getCollectionVideosList(collection: string): Observable<any> {
+    const url = `${this.apiUrl}/videos?page=1&itemsPerPage=100&collection=${collection}&orderBy=date`;
+    const headers = { 'AccessKey': this.apiKey };
     return this.http.get(url, { headers }).pipe(   
       tap(response => {
-      console.log('Full response:', response); 
-      console.log('Video data:', response);
     }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
@@ -52,7 +49,28 @@ export class BunnystreamService {
         } else {
           console.error('An error occurred:', error.message);
         }
-        return throwError('Failed to fetch video'); // Or handle the error differently
+        return throwError('Failed to fetch video');
+      })
+    );
+  }
+
+  getVideo(videoId: any): Observable<any> {
+    console.log(videoId);
+    
+    const url = `${this.apiUrl}/videos/${videoId}`;
+    const headers = { 'AccessKey': this.apiKey };
+    return this.http.get(url, { headers }).pipe(   
+      tap(response => {
+    }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          console.error('Unauthorized: Check your BunnyStream API key.');
+        } else if (error.status === 404) {
+          console.error('Not Found: Verify the video ID and URL.');
+        } else {
+          console.error('An error occurred:', error.message);
+        }
+        return throwError('Failed to fetch video'); 
       })
     );
   }

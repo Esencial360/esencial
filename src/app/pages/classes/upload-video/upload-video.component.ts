@@ -10,6 +10,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { take } from 'rxjs';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import { Instructor } from '../../../shared/Models/Instructor';
+import { Router } from '@angular/router';
+import { ClassesService } from '../../../shared/services/classes.service';
+import { Classes } from '../../../shared/Models/Classes';
 
 interface UploadVideo {
   title: string;
@@ -34,37 +37,48 @@ export class UploadVideoComponent implements OnInit {
   collectionList: any[] = [];
   newVideoForm!: FormGroup;
   selectedFile!: File;
+  isModalOpen = false;
   firstStep: boolean = true;
   secondStep: boolean = false;
   thirdStep: boolean = false;
   videoId!: string;
-  instructors!: Instructor[]
+  instructors!: Instructor[];
   selectedInstructor!: string;
+  loading!: boolean
 
   constructor(
     private bunnyStreamService: BunnystreamService,
     private fb: FormBuilder,
-    private instructorService: InstructorService
+    private instructorService: InstructorService,
+    private router: Router,
+    private classesService: ClassesService
   ) {
     this.newVideoForm = this.fb.group({
       title: ['', Validators.required],
       collectionId: ['', Validators.required],
-      thumbnailTime: [5000, Validators.required],
-      instructor: ['', Validators.required]
+      instructor: ['', Validators.required],
     });
   }
 
   ngOnInit() {
     this.getCollectionList();
     this.instructorService.getAllInstructors().subscribe(
-      response => {
-        this.instructors = response
+      (response) => {
+        this.instructors = response;
         console.log('Instructs successfully', response);
       },
-      error => {
-        console.error('Instructors error', error)
+      (error) => {
+        console.error('Instructors error', error);
       }
-    )
+    );
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 
   getCollectionList() {
@@ -81,58 +95,77 @@ export class UploadVideoComponent implements OnInit {
 
   onSubmit() {
     console.log(this.newVideoForm.valid);
-    
+
     if (this.newVideoForm.valid) {
       const formData = this.newVideoForm.value;
       this.createVideo();
-      // if (this.newVideoForm.value.instructor == '') {
-        
-      // }
       console.log('Form submitted:', formData);
     }
   }
 
-  // putVideoInstructor() {
-  //   const videos = [this.videoId]
-  //   const selectedInstructor = this.instructors.find(instructor => instructor._id === this.newVideoForm.value.instructor)
-  //   const instructorData: Instructor = {...selectedInstructor, videos}
-  //   this.instructorService.updateInstructor(instructorData).subscribe(
-  //     (response: any) => {
-  //       console.log('Instructs update successfully', response);
-  //     },
-  //     (error) => {
-  //       console.error('Error Instructs update :', error);
-  //     }
-  //   )
-  // }
-
   putVideoInstructor() {
-    const selectedInstructor = this.instructors.find(instructor => instructor._id === this.newVideoForm.value.instructor);
+    const selectedInstructor = this.instructors.find(
+      (instructor) => instructor._id === this.newVideoForm.value.instructor
+    );
     if (selectedInstructor) {
-      const instructorVideos = selectedInstructor.videos ? selectedInstructor.videos : [];
+      const instructorVideos = selectedInstructor.videos
+        ? selectedInstructor.videos
+        : [];
 
       const newVideo = {
         videoId: this.videoId,
-        status: 'Pending' // Mark as pending initially
+        status: 'Pending',
       };
       const updatedInstructor: Instructor = {
         ...selectedInstructor,
-        videos: [...instructorVideos, newVideo] 
-      }; 
-      
+        videos: [...instructorVideos, newVideo],
+      };
+
       const videos = this.videoId ? [this.videoId] : [];
       const instructorData: Instructor = { ...updatedInstructor };
-  
-      this.instructorService.updateInstructor(instructorData).subscribe(
-        (response: any) => {
+      const classVideo: Classes = {
+        classId: this.videoId,
+        instructorId: selectedInstructor._id,
+      };
+      this.classesService.createClass(classVideo).subscribe({
+        next: (response) => {
+          console.log('Class created successfully', response);
+        },
+        error: (error) => {
+          console.error('Error creating Classr:', error);
+        },
+        complete: () => {
+          console.log('Cration process completed.');
+        },
+      });
+      this.instructorService.updateInstructor(instructorData).subscribe({
+        next: (response) => {
           console.log('Instructor updated successfully', response);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error updating instructor:', error);
-        }
-      );
+        },
+        complete: () => {
+          console.log('Update process completed.');
+        },
+      });
     } else {
       console.error('No instructor found with the provided id');
+      const classVideo: Classes = {
+        classId: this.videoId,
+        instructorId: '',
+      };
+      this.classesService.createClass(classVideo).subscribe({
+        next: (response) => {
+          console.log('Class created successfully', response);
+        },
+        error: (error) => {
+          console.error('Error creating Classr:', error);
+        },
+        complete: () => {
+          console.log('Cration process completed.');
+        },
+      });
     }
   }
 
@@ -150,14 +183,14 @@ export class UploadVideoComponent implements OnInit {
       .createVideo(
         this.newVideoForm.value.title,
         this.newVideoForm.value.collectionId,
-        this.newVideoForm.value.thumbnailTime
+        5000
       )
       .pipe(take(1))
       .subscribe(
         (response: any) => {
           console.log('Video uploaded successfully:', response);
           this.videoId = response.guid;
-          this.putVideoInstructor()
+          this.putVideoInstructor();
           this.firstStep = false;
           this.secondStep = true;
         },
@@ -168,6 +201,7 @@ export class UploadVideoComponent implements OnInit {
   }
 
   onUploadVideo() {
+    this.loading = true
     this.bunnyStreamService
       .uploadVideo(this.videoId, this.selectedFile)
       .pipe(take(1))
@@ -175,11 +209,16 @@ export class UploadVideoComponent implements OnInit {
         (response) => {
           console.log('Upload video successfully', response);
           this.secondStep = false;
+          this.loading = false;
           this.thirdStep = true;
         },
         (error) => {
           console.error('Error uploading video:', error);
         }
       );
+  }
+
+  onProcessDone() {
+    this.router.navigate(['/home']);
   }
 }

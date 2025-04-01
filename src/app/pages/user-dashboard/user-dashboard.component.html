@@ -7,26 +7,31 @@
 ></app-recommendation-classes>
 }
 <div
-      class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
-    >
-      <div class="flex-1 pr-8">
-        <h2 class="!text-4xl font-bold text-strongBrown mb-4">
-          Bienvenido {{ user.given_name ? user.given_name : user.nickname }}
-        </h2>
-        <p class="text-olive-600 text-lg">
-          Gira, fluye, equilibra y estira con esta colección de clases de yoga en
-          español.
-        </p>
-      </div>
-      <div class="mt-5 md:mt-0 md:w-1/2">
-        <img
-          src="../../../assets/images/yoga1.jpg"
-          alt="Person doing yoga"
-          class="rounded-xl object-cover w-full h-64"
-        />
-      </div>
-    </div>
+  class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-7xl mx-auto"
+>
+  <div class="flex-1 pr-8">
+    <h2 class="!text-4xl font-bold text-blue uppercase mb-4">
+      Bienvenido {{ user.given_name ? user.given_name : user.nickname }}
+    </h2>
+    <br />
+    <p class="text-olive-600 text-lg">
+      ¡Qué gusto tenerte de vuelta! Disfruta tu práctica de hoy con equilibrio y energía.
+      <br /><br />
+      Recuerda que tu proceso es solo tuyo: fluye a tu ritmo, con intención y presencia.
+      <br /><br />
+      <span class="font-bold"> Fluye Consciente.</span>
+    </p>
+  </div>
+  <div class="mt-5 md:mt-0 md:w-1/2">
+    <img
+      src="../../../assets/images/yoga1.jpg"
+      alt="Person doing yoga"
+      class="rounded-xl object-cover w-full h-64"
+    />
+  </div>
+</div>
 }
+<app-mood-collection></app-mood-collection>
 <app-popular-classes-and-instructors></app-popular-classes-and-instructors>
 <app-classes-catalogue
   [collectionName]="'CATEGORIAS'"
@@ -35,8 +40,25 @@
   "
   [collectionList]="collectionList"
 ></app-classes-catalogue>
+<app-banner-v2
+[reverse]="true"
+[title]="'alimenta tu fuego con cada práctica.'"
+[text]="
+  'En la Amazonía colombiana, pueblos como los barasana y los makuna consideran que el fuego es una manifestación de la energía vital y un medio para la transformación personal. '
+"
+[image]="'/assets/images/flame.png'"
+></app-banner-v2>
+<app-banner-v3
+  [image]="'/assets/images/logoWhite.png'"
+  [firstDescriptions]="
+    'En esencial360, la calidad y autenticidad de nuestro contenido es una prioridad. Por eso, contamos con un Consejo de Expertos conformado por referentes en yoga, meditación y desarrollo personal, todos con una trayectoria impecable y un profundo compromiso con el bienestar.'
+  "
+  [secondDescription]="
+    '  Cada uno de ellos revisa y valida el material que llega a nuestra comunidad, asegurando que cada clase, meditación y taller mantenga los más altos estándares. Más que especialistas, son guías con historias de transformación personal y profesional, cuyas aportaciones enriquecen y fortalecen este espacio.'
+  "
+></app-banner-v3>
 <app-instructors-overview></app-instructors-overview>
-<app-catalogue-view
+<!-- <app-catalogue-view
   [title]="'EVENTOS Y NOTICIAS'"
   [subtitle]="'Descrube lo que esta pasando en la comunidad de Esencial360'"
   [description]="
@@ -51,6 +73,6 @@
     'Weekly inspiration for mindful living. Discover yoga sequences, short workouts, recipes, and mindfulness tips from the experts.'
   "
   [catalogue]="blogs"
-></app-catalogue-view>
+></app-catalogue-view> -->
 }
 <!-- } -->

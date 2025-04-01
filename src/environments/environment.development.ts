@@ -7,8 +7,10 @@ export const environment = {
       audience: 'https://test-assign-roles.com'
     },
     dev: {
-      serverUrl: 'http://localhost:3000'
-    }
+      serverUrl: 'http://localhost:3000/'
+    },
+    apiUrl: 'http://localhost:3000/'
+
   };
 
 

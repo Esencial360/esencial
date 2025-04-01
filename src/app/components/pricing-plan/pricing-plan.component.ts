@@ -3,7 +3,9 @@ import { Component } from '@angular/core';
 interface PricingPlan {
   name: string;
   price: number;
+  highlight?: string;
   features: string[];
+  image: string
 }
 
 @Component({
@@ -14,35 +16,27 @@ interface PricingPlan {
 export class PricingPlanComponent {
   plans: PricingPlan[] = [
     {
-      name: 'ENERGY BOOSTER',
-      price: 18,
+      name: 'esencial360',
+      highlight: '360',
+      price: 98,
+      image: '/assets/images/10.jpg',
       features: [
-        'Dynamic yoga program for energy',
-        '10 yoga classes per month, including dynamic Vinyasa sessions',
-        'Monthly workshops on nutrition and wellness',
-        'Priority access to special events'
+        'Acceso completo de la plataforma.',
+        'Asesoría personalizada.',
+        'Promoción de estudio o marca personal',
+        'Acceso gratutito a talleres especiales y eventos.'
       ]
     },
     {
-      name: 'MINDFUL PRO',
-      price: 24,
+      name: 'esencial',
+      price: 58,
+      image: '/assets/images/11.jpg',
       features: [
-        'Unlimited access to all classes and workshops',
-        'Personalized wellness coaching sessions',
-        'Access to exclusive yoga retreats at a discounted rate',
-        'Access to all basic features'
+        'Accesso a clases de yoga y meditaciones',
+        'Asesoría básica.',
+        'Descuente a talleres especiales y eventos.',
       ]
     },
-    {
-      name: 'ULTIMATE ZEN',
-      price: 32,
-      features: [
-        'Premium yoga experience with exclusive benefits',
-        'Unlimited access + free guest pass to all classes',
-        'Private yoga sessions with international experts',
-        'Premium welcome pack and discounts on partner products'
-      ]
-    }
   ];
 
 }

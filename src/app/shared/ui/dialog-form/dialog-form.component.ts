@@ -45,15 +45,20 @@ export class DialogFormComponent implements OnInit {
   @Input()
   newBlog!: boolean;
 
+  @Input() 
+  title: string = ''
+
   @Input()
   contactForm!: boolean;
   
-
   @Output()
   onCloseDialog = new EventEmitter<boolean>();
 
   @Output()
   onSubmitForm = new EventEmitter<boolean>();
+
+  @Output()
+  close = new EventEmitter<void>()
 
 
   constructor(
@@ -215,5 +220,9 @@ export class DialogFormComponent implements OnInit {
     this.isOpen = false;
     this.onCloseDialog.emit(true);
 
+  }
+
+  closeModal() {
+    this.close.emit();
   }
 }

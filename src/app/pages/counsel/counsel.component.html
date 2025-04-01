@@ -1,0 +1,43 @@
+<app-header [newLanding]="true"></app-header>
+<section class="h-full relative">
+  <app-parallax [imagePath]="'assets/images/7.jpg'"></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center w-full lg:w-8/12"
+  >
+    <h2 class="font-bold text-5xl uppercase lg:text-7xl">
+      nuestro consejo de expertos
+    </h2>
+    <p class="text-xl mt-5">
+      Conoce a los expertos que respaldan tu crecimiento en esencial3560
+    </p>
+  </div>
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
+    (click)="scrollArrow()"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
+<app-banner-v3
+  [image]="'/assets/images/logoWhite.png'"
+  [firstDescriptions]="
+    'En esencial360, la calidad y autenticidad de nuestro contenido es una prioridad. Por eso, contamos con un Consejo de Expertos conformado por referentes en yoga, meditación y desarrollo personal, todos con una trayectoria impecable y un profundo compromiso con el bienestar.'
+  "
+  [secondDescription]="
+    '  Cada uno de ellos revisa y valida el material que llega a nuestra comunidad, asegurando que cada clase, meditación y taller mantenga los más altos estándares. Más que especialistas, son guías con historias de transformación personal y profesional, cuyas aportaciones enriquecen y fortalecen este espacio.'
+  "
+></app-banner-v3>
+<app-banner-v2
+[reverse]="true"
+[text]="
+  'En muchas culturas indígenas, el buho representa un guardián del conocimiento y un protector espiritual contra influencias negativas..'
+"
+[image]="'/assets/images/owl.png'"
+></app-banner-v2>
+
+<app-instructor-counselor-preview
+  [title]="'Conoce a los guardianes del contenido'"
+  [team]="counselors"
+></app-instructor-counselor-preview>
+
+<app-footer></app-footer>
