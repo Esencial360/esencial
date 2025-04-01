@@ -3,7 +3,7 @@ import { Instructor } from "../shared/Models/Instructor";
 
 export const selectInstructors = createFeatureSelector<ReadonlyArray<Instructor>>('instructors')
 
-export const selectAllUsers = createSelector(
+export const selectAllInstructors = createSelector(
     selectInstructors,
     (state) => state
 )

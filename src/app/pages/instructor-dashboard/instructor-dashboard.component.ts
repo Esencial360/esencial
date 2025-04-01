@@ -6,6 +6,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { InstructorService } from '../../shared/services/instructor.service';
+import { InstructorActions } from '../../state/instructor.actions';
 
 @Component({
   selector: 'app-instructor-dashboard',
@@ -15,16 +17,12 @@ import { Router } from '@angular/router';
 export class InstructorDashboardComponent implements OnInit {
   isLoading!: boolean;
   userId: string = '';
-  filters = [
-    'MIS CLASES',
-    'PAGOS',
-    'CODIGO',
-  ];
+  filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
 
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
-    private userService: UserService,
+    private instructorService: InstructorService,
     private store: Store,
     public authService: AuthService,
     private router: Router,
@@ -42,35 +40,23 @@ export class InstructorDashboardComponent implements OnInit {
           }
           this.authService.user$.subscribe((user) => {
             if (user) {
-              this.userService.getUser(user.email).subscribe({
+              this.instructorService
+                .getAllInstructors()
+                .subscribe((instructors) => {
+                  this.store.dispatch(
+                    InstructorActions.retrievedInstructorList({ instructors })
+                  );
+                });
+              this.instructorService.getInstructor(user.email).subscribe({
                 next: (response) => {
-                  if (!response) {
-                    const newUser = {
-                      email: user.email,
-                      firstname: user.given_name,
-                      lastname: user.family_name,
-                    };
-                    this.userService
-                      .createUser(newUser)
-                      .subscribe((newUser) => {
-                        this.userId = newUser._id;
-                        this.store.dispatch(
-                          ActiveUserApiActions.retrievedActiveUser({
-                            user: newUser,
-                          })
-                        );
-                      });
-                  } else {
-                    this.userId = response._id;
-                    this.store.dispatch(
-                      ActiveUserApiActions.retrievedActiveUser({
-                        user: response,
-                      })
-                    );
-                  }
+                  this.store.dispatch(
+                    ActiveUserApiActions.retrievedActiveUser({
+                      user: response,
+                    })
+                  );
                 },
-                error: (err) => {
-                  console.error('Error fetching user:', err);
+                error: (error) => {
+                  console.log('error getting Instructor', error);
                 },
               });
             }
@@ -80,6 +66,6 @@ export class InstructorDashboardComponent implements OnInit {
   }
 
   onNewClass() {
-    this.router.navigate(['/nuevo-video'])
+    this.router.navigate(['/nuevo-video']);
   }
 }

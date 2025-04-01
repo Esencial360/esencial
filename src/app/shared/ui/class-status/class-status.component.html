@@ -1,0 +1,68 @@
+<div
+  class="flex flex-col space-y-6 w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md montserrat-normal"
+>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-2 h-12 rounded-full bg-blue"></div>
+      <span class="text-lg font-medium text-strongBrown"
+        >Esperando aprobación</span
+      >
+    </div>
+
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-blue text-white shadow-sm"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+      <div class="w-20 h-1.5 bg-blue"></div>
+      <div
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-blue text-white font-medium shadow-sm"
+      >
+        {{ pendingVideos }}
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-2 h-12 rounded-full bg-blue"></div>
+      <span class="text-lg font-medium text-strongBrown">Clases aprobadas</span>
+    </div>
+
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-blue text-white shadow-sm"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+      <div class="w-20 h-1.5 bg-blue"></div>
+      <div
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-blue text-white font-medium shadow-sm"
+      >
+        {{ approvedVideos - pendingVideos }}
+      </div>
+    </div>
+  </div>
+</div>

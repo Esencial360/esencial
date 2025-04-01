@@ -67,10 +67,10 @@ export class SingleClassComponent implements OnInit {
     items: [
       { icon: '/assets/images/yogaMat.png', text: 'Tapete de yoga' },
       { icon: '/assets/images/waterBottle.png', text: 'Botella de agua' },
-      { icon: '/assets/images/towl.png', text: 'Toalla corta' },
+      { icon: '/assets/images/towel.png', text: 'Toalla corta' },
     ],
     recommendations: [
-      { icon: '/assets/images/waking.png', text: 'Al despertar' },
+      { icon: '/assets/images/wakingUp.png', text: 'Al despertar' },
       { icon: '/assets/images/bowl.png', text: 'Uso de cuencos' },
       { icon: '/assets/images/sun.png', text: 'Al aire libre' },
       { icon: '/assets/images/boxes.png', text: 'Uso de bloques' },
@@ -139,6 +139,8 @@ export class SingleClassComponent implements OnInit {
       next: (response) => {
         console.log('Class retrieved successfully', response);
         this.classInfo = response;
+        console.log(this.classInfo);
+        
         this.getInstructor(response.instructorId);
       },
       error: (error) => {
@@ -155,7 +157,7 @@ export class SingleClassComponent implements OnInit {
       next: (response) => {
         console.log('instructor retrieved successfully', response);
         this.instructorInfo = response;
-        this.deleteVideoInInstructor()
+        console.log(this.instructorInfo);
       },
       error: (error) => {
         console.error('Error retrieved instructor:', error);
@@ -185,6 +187,7 @@ export class SingleClassComponent implements OnInit {
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {
                   console.log('Class deleted successfully', response);
+                  this.deleteVideoInInstructor()
                 },
                 error: (error) => {
                   console.error('Error deleted Classr:', error);
@@ -210,17 +213,6 @@ export class SingleClassComponent implements OnInit {
   }
 
   deleteVideoInInstructor() {
-    // const selectedInstructor = this.instructors.find(
-    //   (instructor: { videos: { videoId: string }[] }) =>
-    //     instructor.videos?.some(
-    //       (video: { videoId: string }) => video.videoId === this.videoId
-    //     )
-    // );
-    // if (!selectedInstructor) {
-    //   console.error('Instructor not found for this video.');
-    //   return;
-    // }
-
     const updatedVideos = this.instructorInfo.videos?.filter(
       (video: { videoId: string }) => video.videoId !== this.videoId
     );

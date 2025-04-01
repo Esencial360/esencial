@@ -6,6 +6,8 @@ import { BunnystreamService } from '../../../shared/services/bunny-stream.servic
 import { EmailService } from '../../../shared/services/email.service';
 import { Router } from '@angular/router';
 import { concatMap, from, map, toArray } from 'rxjs';
+import { ClassesService } from '../../../shared/services/classes.service';
+import { Classes } from '../../../shared/Models/Classes';
 
 interface PreviewInstructor {
   _id: number;
@@ -33,13 +35,15 @@ export class AdminProfileComponent implements OnInit {
   filteredInstructors: PreviewInstructor[] | undefined;
   pendingVideos: string[] = [];
   isLoading!: boolean;
+  classInfo!: any
 
   constructor(
     private sanitizer: DomSanitizer,
     private instructorService: InstructorService,
     private bunnystreamService: BunnystreamService,
     private emailService: EmailService,
-    private router: Router
+    private router: Router,
+    private classesService: ClassesService
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +68,7 @@ export class AdminProfileComponent implements OnInit {
       this.filteredInstructors = this.instructors;
       this.pendingVideos = [];
       console.log(instructors);
-      
+
       instructors.forEach((instructor) => {
         (instructor.videos ?? [])
           .filter((video) => video.status === 'Pending')
@@ -126,6 +130,7 @@ export class AdminProfileComponent implements OnInit {
   onApprovalVideo(video: any) {
     this.showModal = true;
     this.activeVideoId = video.guid;
+    this.getSingleClass(video.guid)
     const link = `https://iframe.mediadelivery.net/embed/263508/${video.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
     this.linkVideo = this.sanitizer.bypassSecurityTrustResourceUrl(link);
   }
@@ -139,6 +144,18 @@ export class AdminProfileComponent implements OnInit {
     } else {
       this.updateVideoStatus(action);
     }
+  }
+
+  getSingleClass(classId: string) {
+    this.classesService.getClass(classId).subscribe({
+      next: (response) => {
+        this.classInfo = response
+        console.log('class retrieved', response);
+      },
+      error: (error) => {
+        console.log('Error retrieving class', error);
+      },
+    })
   }
 
   updateVideoStatus(status: string, reason?: string) {
@@ -159,6 +176,17 @@ export class AdminProfileComponent implements OnInit {
         video.videoId === this.activeVideoId ? { ...video, status } : video
     );
 
+
+
+    const updatedClass: Classes = {
+      ...this.classInfo,
+      status: status
+    }
+
+    console.log(updatedClass);
+    
+    
+
     const updatedInstructor: Instructor = {
       ...selectedInstructor,
       videos: updatedVideos,
@@ -167,6 +195,14 @@ export class AdminProfileComponent implements OnInit {
     this.instructorService.updateInstructor(updatedInstructor).subscribe(
       (response: any) => {
         console.log(`Instructor video status updated to ${status}`, response);
+        this.classesService.updateClass(updatedClass).subscribe({
+          next: (response) => {
+            console.log('class updated from classes document', response);
+          },
+          error: (error) => {
+            console.log('Error updated classes from document', error);
+          },
+        });
         if (status === 'underObservation') {
           this.sendObservationEmail(
             selectedInstructor.email,
@@ -174,11 +210,18 @@ export class AdminProfileComponent implements OnInit {
             this.activeVideoId
           );
         }
-
         if (status === 'reject') {
           this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
             (response) => {
               console.log('Success deleting video:', response);
+              this.classesService.deleteClass(this.activeVideoId).subscribe({
+                next: (response) => {
+                  console.log('class removed from classes document', response);
+                },
+                error: (error) => {
+                  console.log('Error removing classes from document', error);
+                },
+              });
             },
             (error) => {
               console.error('Error retrieving videos:', error);

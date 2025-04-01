@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { selectStreak } from '../../../state/user.selectors';
 import { selectActiveUser } from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -32,9 +32,12 @@ export class HeaderComponent {
   @Input()
   newLanding!: boolean;
 
+
+  roles!: string;
   isOpen: boolean = false;
   user$: any;
   streak!: any;
+  private ngUnsubscribe = new Subject<void>();
 
   constructor(
     private route: Router,
@@ -45,11 +48,22 @@ export class HeaderComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
-      this.streak = user.streak.count;
+      this.streak = user.streak?.count;
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.user$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((user) => {
+        if (user) {
+          const namespace = 'https://test-assign-roles.com';
+          this.roles = user[`${namespace}roles`][0] || "User";
+          console.log(this.roles);
+          
+        }
+      });
+  }
   onHome() {
     this.route.navigate(['']);
   }
@@ -91,7 +105,7 @@ export class HeaderComponent {
   }
 
   onCounsel() {
-    this.route.navigate(['consejo'])
+    this.route.navigate(['consejo']);
   }
 
   toggle() {
@@ -108,12 +122,4 @@ export class HeaderComponent {
       logoutParams: { returnTo: '' },
     });
   }
-
-  // login(): void {
-  //   this.authService.login();
-  // }
-
-  // logout(): void {
-  //   this.authService.logout();
-  // }
 }

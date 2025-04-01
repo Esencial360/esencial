@@ -56,32 +56,32 @@
   class="max-w-7xl mx-auto text-strongBrown p-4 flex flex-col items-center w-full montserrat-normal"
 >
   <div class="mb-16">
-    <h3 class="text-xl font-bold text-teal-500 mb-4 w-full">
+    <h3 class="text-xl font-bold text-blue mb-4 w-full">
       ESENCIALES PARA TU PRÁCTICA
     </h3>
     <div class="flex flex-col lg:flex-row justify-between mb-6 w-full">
       @for (item of class.items; track $index) {
       <div class="flex flex-col lg:flex-row items-center">
         <div class="p-3 rounded-full mb-2">
-          <img [src]="item.icon" class="w-40 object-cover" alt="" />
+          <img [src]="item.icon" class="w-10 object-cover" alt="" />
         </div>
         <span class="text-xl text-gray-600 text-center">{{ item.text }}</span>
       </div>
       }
     </div>
-    <h3 class="text-xl font-bold text-teal-500 mb-4 w-full">
+    <h3 class="text-xl font-bold text-blue mb-4 w-full">
       RECOMENDACIONES PARA TU PRÁCTICA
     </h3>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 w-full my-10">
       <div *ngFor="let rec of class.recommendations" class="flex items-center">
         <div class="p-2 rounded-full mr-3 text-lg">
-          <img [src]="rec.icon" class="w-40 object-cover" alt="" />
+          <img [src]="rec.icon" class="w-20 object-cover" alt="" />
         </div>
         <span class="text-xl text-gray-600">{{ rec.text }}</span>
       </div>
     </div>
     <button
-      class="bg-teal-500 text-white font-medium py-2 px-4 rounded-2xl w-full lg:w-3/12 flex items-center justify-center"
+      class="bg-blue text-white font-medium py-2 px-4 rounded-2xl w-full lg:w-3/12 flex items-center justify-center"
       (click)="goBack()"
     >
       <svg

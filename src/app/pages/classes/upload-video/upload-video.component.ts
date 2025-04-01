@@ -44,6 +44,7 @@ export class UploadVideoComponent implements OnInit {
   videoId!: string;
   instructors!: Instructor[];
   selectedInstructor!: string;
+  loading!: boolean
 
   constructor(
     private bunnyStreamService: BunnystreamService,
@@ -200,6 +201,7 @@ export class UploadVideoComponent implements OnInit {
   }
 
   onUploadVideo() {
+    this.loading = true
     this.bunnyStreamService
       .uploadVideo(this.videoId, this.selectedFile)
       .pipe(take(1))
@@ -207,6 +209,7 @@ export class UploadVideoComponent implements OnInit {
         (response) => {
           console.log('Upload video successfully', response);
           this.secondStep = false;
+          this.loading = false;
           this.thirdStep = true;
         },
         (error) => {

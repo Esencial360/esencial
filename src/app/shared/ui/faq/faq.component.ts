@@ -27,31 +27,62 @@ export class FaqComponent {
   faqItems: FaqItem[] = [
     {
       question: '¿Qué tipo de yoga enseñan?',
-      answer: 'En esencial360 ofrecemos distintos estilos de yoga para que encuentres la práctica que mejor se adapte a ti: Vinyasa: Fluidez y movimiento sincronizado con la respiración. Power: Yoga dinámico que fortalece y tonifica el cuerpo. Hatha: Práctica más pausada, enfocada en la alineación y la respiración. Puedes elegir el nivel y estilo que mejor se acomode a tus necesidades y ritmo de vida.',
+      answer: `
+        <p>En esencial360 ofrecemos distintos estilos de yoga para que encuentres la práctica ideal:</p>
+        <ul>
+          <li><strong>Vinyasa:</strong> Fluidez y movimiento sincronizado con la respiración.</li>
+          <li><strong>Power:</strong> Yoga dinámico que fortalece y tonifica el cuerpo.</li>
+          <li><strong>Hatha:</strong> Práctica pausada, enfocada en la alineación y la respiración.</li>
+        </ul>
+        <p>Elige el nivel y estilo que mejor se acomode a tu ritmo de vida.</p>
+      `,
       isOpen: false
     },
     {
       question: '¿Hacen livestreams?',
-      answer: 'Sí, tendremos livestreams y talleres en vivo diseñados para enriquecer tu práctica y acompañarte en tu proceso de crecimiento. Mantente al tanto de nuestro calendario para no perderte ninguna sesión.',
+      answer: `
+        <p>💻 <strong>Sí, ofrecemos livestreams y talleres en vivo</strong> para enriquecer tu práctica.</p>
+        <p>Mantente al tanto de nuestro calendario para no perderte ninguna sesión.</p>
+      `,
       isOpen: false
     },
     {
       question: '¿Qué eventos hacen?',
-      answer: 'En esencial360 organizamos eventos diseñados para profundizar en tu bienestar y conectar con nuestra comunidad. Algunos de ellos incluyen: Retiros de yoga y meditación en entornos naturales para desconectarte y reconectar contigo. Workshops y masterclasses con expertos en bienestar, crecimiento personal y mindfulness. Encuentros en vivo para practicar en comunidad y compartir experiencias. Charlas y paneles con profesionales que inspiran y guían en el camino del bienestar. Mantente al tanto de nuestro calendario y nuestras redes sociales para conocer las próximas fechas.',
+      answer: `
+        <p>📅 En esencial360 organizamos eventos diseñados para profundizar en tu bienestar y conectar con nuestra comunidad:</p>
+        <ul>
+          <li>🌿 <strong>Retiros</strong>: Yoga y meditación en entornos naturales.</li>
+          <li>🎓 <strong>Workshops</strong>: Clases magistrales con expertos en bienestar.</li>
+          <li>🤝 <strong>Encuentros</strong>: Prácticas en comunidad y experiencias compartidas.</li>
+          <li>🎤 <strong>Charlas</strong>: Paneles con profesionales del bienestar.</li>
+        </ul>
+        <p>Mantente al tanto de nuestro calendario y redes sociales.</p>
+      `,
       isOpen: false
     },
     {
       question: '¿Puedo producir dinero con e360?',
-      answer: 'Sí. A través de nuestro programa para instructores, formarás parte de esta comunidad de profesionales y recibirás exposición y difusión para ti y tu estudio, ayudándote a seguir creciendo. Además, tendrás acceso a múltiples beneficios y descuentos exclusivos. Si estás interesado en unirte, consulta más detalles en nuestra sección para instructores.',
+      answer: `
+        <p>💰 <strong>Sí, a través de nuestro <em>programa para instructores</em></strong>, recibirás exposición y difusión para ti y tu estudio.</p>
+        <p><strong>Beneficios:</strong></p>
+        <ul>
+          <li>📢 Mayor visibilidad como profesional.</li>
+          <li>🎟️ Acceso a descuentos y beneficios exclusivos.</li>
+        </ul>
+        <p>Si estás interesado, consulta más detalles en nuestra sección para instructores.</p>
+      `,
       isOpen: false
     },
     {
       question: '¿Qué es la comunidad e360?',
-      answer: 'Es un punto de encuentro para latinas y latinos que buscan crecer y sentirse acompañados en su camino de bienestar. Aquí no hay barreras ni etiquetas, solo un espacio seguro donde la inspiración, la motivación y el aprendizaje nos unen, sin importar la distancia.',
+      answer: `
+        <p>🌎 <strong>Es un espacio para latinas y latinos</strong> que buscan crecer y sentirse acompañados en su bienestar.</p>
+        <p>Aquí no hay barreras ni etiquetas, solo inspiración, motivación y aprendizaje en comunidad, sin importar la distancia.</p>
+      `,
       isOpen: false
-    },
+    }
   ];
-
+  
   toggleItem(index: number) {
     this.faqItems[index].isOpen = !this.faqItems[index].isOpen;
   }
