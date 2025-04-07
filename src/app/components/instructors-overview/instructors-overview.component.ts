@@ -11,6 +11,12 @@ import { Store } from '@ngrx/store';
   styleUrl: './instructors-overview.component.css',
 })
 export class InstructorsOverviewComponent implements OnInit {
+
+  @Input() adminView!: boolean;
+
+  openModal!: boolean;
+  processComplete!: boolean;
+
   constructor(
     private router: Router,
     private instructorService: InstructorService,
@@ -39,11 +45,19 @@ export class InstructorsOverviewComponent implements OnInit {
     );
   }
 
-  onInstructor(id: string) {
+  onInstructor(id: string | undefined) {
     this.router.navigate([`/instructores/${id}`]);
   }
 
   onAllInstructors() {
     this.router.navigate(['/instructores'])
+  }
+
+  onNewInstructor() {
+    this.openModal = true;
+  }
+
+  onClose() {
+    this.openModal = false;
   }
 }

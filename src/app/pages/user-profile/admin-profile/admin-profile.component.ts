@@ -35,7 +35,8 @@ export class AdminProfileComponent implements OnInit {
   filteredInstructors: PreviewInstructor[] | undefined;
   pendingVideos: string[] = [];
   isLoading!: boolean;
-  classInfo!: any
+  classInfo!: any;
+  emailData!: any;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -128,11 +129,13 @@ export class AdminProfileComponent implements OnInit {
   }
 
   onApprovalVideo(video: any) {
+    this.isLoading = true;
     this.showModal = true;
     this.activeVideoId = video.guid;
-    this.getSingleClass(video.guid)
+    this.getSingleClass(video.guid);
     const link = `https://iframe.mediadelivery.net/embed/263508/${video.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
     this.linkVideo = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+    this.isLoading = false;
   }
 
   handleAction(action: string) {
@@ -149,13 +152,13 @@ export class AdminProfileComponent implements OnInit {
   getSingleClass(classId: string) {
     this.classesService.getClass(classId).subscribe({
       next: (response) => {
-        this.classInfo = response
+        this.classInfo = response;
         console.log('class retrieved', response);
       },
       error: (error) => {
         console.log('Error retrieving class', error);
       },
-    })
+    });
   }
 
   updateVideoStatus(status: string, reason?: string) {
@@ -176,17 +179,10 @@ export class AdminProfileComponent implements OnInit {
         video.videoId === this.activeVideoId ? { ...video, status } : video
     );
 
-
-
     const updatedClass: Classes = {
       ...this.classInfo,
-      status: status
-    }
-
-    console.log(updatedClass);
-    
-    
-
+      status: status,
+    };
     const updatedInstructor: Instructor = {
       ...selectedInstructor,
       videos: updatedVideos,
@@ -198,18 +194,17 @@ export class AdminProfileComponent implements OnInit {
         this.classesService.updateClass(updatedClass).subscribe({
           next: (response) => {
             console.log('class updated from classes document', response);
+            this.sendObservationEmail(
+              selectedInstructor,
+              'Su clase se ha aprovado.',
+              this.activeVideoId,
+              false
+            );
           },
           error: (error) => {
             console.log('Error updated classes from document', error);
           },
         });
-        if (status === 'underObservation') {
-          this.sendObservationEmail(
-            selectedInstructor.email,
-            'reason',
-            this.activeVideoId
-          );
-        }
         if (status === 'reject') {
           this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
             (response) => {
@@ -261,7 +256,13 @@ export class AdminProfileComponent implements OnInit {
         console.log('Success deleting video:', response);
         this.instructorService.updateInstructor(updatedInstructor).subscribe(
           (response: any) => {
-            console.log('Instructor updated successfully', response);
+            this.deleteClass();
+            this.sendObservationEmail(
+              selectedInstructor,
+              'La clase no alzanzo los requisitos necesarios para ser aprovada. Por favor revise la guia y vuelva a subir la clase una vez que alcanze todos los requisitos solicitados.',
+              this.activeVideoId,
+              false
+            );
           },
           (error) => {
             console.error('Error updating instructor:', error);
@@ -274,27 +275,57 @@ export class AdminProfileComponent implements OnInit {
     );
   }
 
+  deleteClass() {
+    console.log(this.activeVideoId);
+    this.classesService.deleteClass(this.activeVideoId).subscribe({
+      next: (response) => {
+        console.log('class removed from classes document', response);
+      },
+      error: (error) => {
+        console.log('Error removing classes from document', error);
+      },
+    });
+  }
+
   onProcessDone() {
     this.showModal = false;
     this.showModalAfterAction = false;
+    location.reload();
   }
 
-  sendObservationEmail(toEmail: string, reason: string, videoId: string) {
-    console.log(toEmail);
+  sendObservationEmail(
+    instructor: any,
+    reason: string,
+    videoId: string,
+    approve: boolean
+  ) {
+    if (!approve) {
+      this.emailData = {
+        to: instructor.email,
+        subject: 'Tu clase ha sido rechazada',
+        html: `
+          <p>Estiamdo ${instructor.firstname},</p>
+          <p>Su clase (ID: <strong>${videoId}</strong>) ha sido <strong>rechazada</strong>.</p>
+          <p>Reason: <em>${reason}</em></p>
+          <p>Comuníquese con nosotros si tiene alguna pregunta.</p>
+          <p>Saludos cordiales,<br>el consejo de esencial360</p>
+        `,
+      };
+    } else {
+      this.emailData = {
+        to: instructor.email,
+        subject: 'Tu clase ha sido aprovada',
+        html: `
+          <p>Estiamdo ${instructor.firstname},</p>
+          <p>Su clase (ID: <strong>${videoId}</strong>) ha sido <strong>aprovada</strong>.</p>
+          <p>Reason: <em>${reason}</em></p>
+          <p>SU clase ya esta disponible para verse para la comunidad de esencial360</p>
+          <p>Saludos cordiales,<br>el consejo de esencial360</p>
+        `,
+      };
+    }
 
-    const emailData = {
-      to: toEmail,
-      subject: 'Your video is under observation',
-      html: `
-        <p>Dear Instructor,</p>
-        <p>Your video (ID: <strong>${videoId}</strong>) has been marked as <strong>Under Observation</strong>.</p>
-        <p>Reason: <em>${reason}</em></p>
-        <p>Please reach out if you have any questions.</p>
-        <p>Best regards,<br>ESENCIAL360 Team</p>
-      `,
-    };
-
-    this.emailService.sendEmail(emailData).subscribe(
+    this.emailService.sendEmail(this.emailData).subscribe(
       () => {
         console.log('Observation email sent successfully');
       },

@@ -34,6 +34,8 @@ import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/app
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 import { CounselComponent } from './pages/counsel/counsel.component';
+import { ApproveClassComponent } from './pages/classes/approve-class/approve-class.component';
+import { animate } from '@angular/animations';
 
 // export const Auth0Guard = async () => {
 //   const platformService = inject(PlatformService);
@@ -153,7 +155,7 @@ const routes: Routes = [
   {
     path: 'nuevo-video',
     component: UploadVideoComponent,
-    data: { animation: 'openClosePage', },
+    data: { animation: 'openClosePage' },
   },
   {
     path: 'collection/:id',
@@ -171,6 +173,11 @@ const routes: Routes = [
     data: { animation: 'openClosePage' },
   },
   {
+    path: 'revision/:id',
+    component: ApproveClassComponent,
+    data: { animation: 'openClosePage' },
+  },
+  {
     path: 'estadisticas',
     component: ClassStatisticsComponent,
     data: { animation: 'openClosePage' },
@@ -182,28 +189,27 @@ const routes: Routes = [
   },
   {
     path: 'socios',
-    component: PartnersComponent
+    component: PartnersComponent,
   },
   {
     path: 'comunidad',
-    component: CommunityComponent
+    component: CommunityComponent,
   },
   {
     path: 'asesorias',
-    component: AppointmentSchedulerComponent
-  }, 
+    component: AppointmentSchedulerComponent,
+  },
   {
     path: 'banner',
-    component: CreateBannerComponent
+    component: CreateBannerComponent,
   },
   {
     path: 'consejo',
-    component: CounselComponent
+    component: CounselComponent,
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }, 
+  { path: '**', redirectTo: '', pathMatch: 'full' },
   // Catch-all for invalid routes (404)`
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

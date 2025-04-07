@@ -11,6 +11,16 @@
     </h4>
   </div>
   <div class="flex space-x-4 overflow-x-auto no-scrollbar">
+    @if (adminView) {
+      <div class="flex flex-col">
+        <div class="rounded-full w-40 h-40 bg-blue relative cursor-pointer" (click)="onNewInstructor()">
+          <span class="material-symbols-outlined text-strongBrown text-[15rem] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            add
+            </span>
+        </div>
+        <p class="uppercase text-blue mt-3 font-bold text-center">agregar instructor</p>
+      </div>
+    }
     @for(instructor of instructors; track $index) {
     <div
       (click)="onInstructor(instructor._id)"
@@ -45,3 +55,10 @@
   </div>
   <app-button-v2 class="flex justify-end" (onClickAction)="onAllInstructors()" [text]="'ver todos'"></app-button-v2>
 </section>
+
+<app-dialog-form
+  [isOpen]="openModal ? true : false"
+  (onCloseDialog)="onClose()"
+  (processComplete)="(processComplete)"
+  [newInstructorFromAdmin]="true"
+></app-dialog-form>

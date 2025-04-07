@@ -54,7 +54,7 @@ export class SingleClassComponent implements OnInit {
   userId!: string;
   classInfo!: Classes;
   instructorInfo!: Instructor;
-  private ngUnsubscribe = new Subject<void>();
+   
   users$!: any;
   user$!: any;
   user!: any;
@@ -77,6 +77,7 @@ export class SingleClassComponent implements OnInit {
     ],
   };
   private intervalId: any;
+  private destroy$ = new Subject<void>()
 
   constructor(
     private route: ActivatedRoute,
@@ -108,7 +109,7 @@ export class SingleClassComponent implements OnInit {
     this.getVideoInfo();
 
     this.authService.user$
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((user) => {
         this.authService.user$.subscribe((user) => {
           if (user) {
@@ -152,7 +153,7 @@ export class SingleClassComponent implements OnInit {
     });
   }
 
-  getInstructor(instructorId: string) {
+  getInstructor(instructorId: string | undefined) {
     this.instructorService.getInstructor(instructorId).subscribe({
       next: (response) => {
         console.log('instructor retrieved successfully', response);
