@@ -12,15 +12,23 @@
   </div>
   <div class="flex space-x-4 overflow-x-auto no-scrollbar">
     @if (adminView) {
-      <div class="flex flex-col">
-        <div class="rounded-full w-40 h-40 bg-blue relative cursor-pointer" (click)="onNewInstructor()">
-          <span class="material-symbols-outlined text-strongBrown text-[15rem] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div class="flex flex-col items-center mr-10">
+        <div
+          class="w-40 h-40 rounded-full bg-blue text-white shadow-lg hover:shadow-xl hover:bg-blue/80 transition-all duration-200 ease-in-out cursor-pointer relative"
+          (click)="onNewInstructor()"
+        >
+          <span
+            class="material-symbols-outlined text-strongBrown text-[12rem] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          >
             add
-            </span>
+          </span>
         </div>
-        <p class="uppercase text-blue mt-3 font-bold text-center">agregar instructor</p>
+        <p class="uppercase text-blue mt-4 font-bold text-center text-sm tracking-wide">
+          agregar instructor
+        </p>
       </div>
     }
+    
     @for(instructor of instructors; track $index) {
     <div
       (click)="onInstructor(instructor._id)"

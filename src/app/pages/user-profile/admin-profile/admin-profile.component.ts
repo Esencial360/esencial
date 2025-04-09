@@ -37,6 +37,9 @@ export class AdminProfileComponent implements OnInit {
   isLoading!: boolean;
   classInfo!: any;
   emailData!: any;
+  activeVideoInfo!: any;
+  instructorInfo!: Instructor;
+  activeClassInfo!: Classes;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -132,8 +135,9 @@ export class AdminProfileComponent implements OnInit {
     this.isLoading = true;
     this.showModal = true;
     this.activeVideoId = video.guid;
-    this.getSingleClass(video.guid);
-    const link = `https://iframe.mediadelivery.net/embed/263508/${video.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
+    this.activeVideoInfo = video;
+    this.getSingleClass(this.activeVideoId);
+    const link = `https://iframe.mediadelivery.net/embed/263508/${this.activeVideoId}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
     this.linkVideo = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     this.isLoading = false;
   }
@@ -153,6 +157,7 @@ export class AdminProfileComponent implements OnInit {
     this.classesService.getClass(classId).subscribe({
       next: (response) => {
         this.classInfo = response;
+        this.getClassInstructor(this.classInfo.instructorId);
         console.log('class retrieved', response);
       },
       error: (error) => {
@@ -333,5 +338,29 @@ export class AdminProfileComponent implements OnInit {
         console.error('Error sending observation email:', error);
       }
     );
+  }
+
+  getClassInstructor(id: string) {
+    this.instructorService.getInstructor(id).subscribe({
+      next: (response) => {
+        this.instructorInfo = response;
+        console.log('Instructor retrived successfully', response);
+      },
+      error: (error) => {
+        console.log('An error retrieving Instructor info', error);
+      },
+    });
+  }
+
+  getClassInfo(id: string) {
+    this.classesService.getClass(id).subscribe({
+      next: (response) => {
+        this.activeClassInfo = response;
+        console.log('Class retrived successfully', response);
+      },
+      error: (error) => {
+        console.log('An error retrieving Class info', error);
+      },
+    });
   }
 }

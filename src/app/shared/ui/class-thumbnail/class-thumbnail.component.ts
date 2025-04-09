@@ -26,6 +26,12 @@ export class ClassThumbnailComponent implements OnInit, OnChanges {
   @Input()
   allClasses!: boolean
 
+  @Input()
+  allInfo!: boolean;
+
+  @Input()
+  hideStatistics!: boolean;
+
   @Output()
   actionClassSelected = new EventEmitter<string>()
 
