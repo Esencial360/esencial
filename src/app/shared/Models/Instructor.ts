@@ -3,6 +3,7 @@ export interface Instructor {
   firstname: string;
   lastname: string;
   title: string;
+  email?: string
   description: string;
   videos?: {
     videoId: string;

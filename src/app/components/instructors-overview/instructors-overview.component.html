@@ -64,9 +64,34 @@
   <app-button-v2 class="flex justify-end" (onClickAction)="onAllInstructors()" [text]="'ver todos'"></app-button-v2>
 </section>
 
-<app-dialog-form
+@if (openModal) {
+
+}
+  <app-dialog-form
   [isOpen]="openModal ? true : false"
   (onCloseDialog)="onClose()"
   (processComplete)="(processComplete)"
   [newInstructorFromAdmin]="true"
 ></app-dialog-form>
+
+<!-- @if (isUploadingNewInstructor) {
+  <app-loading></app-loading>
+}
+  @else if (newInstructorUploaded) {
+    <div class="flex flex-col items-center text-center space-y-4">
+      <app-check-mark></app-check-mark>
+      <h4 class="text-lg font-semibold text-blue uppercase">
+        ¡Su participación es esencial para nosotros!
+      </h4>
+      <p class="text-lightBrown">
+        ¡Gracias por tu video! Hemos recibido tu material y lo revisaremos para darte nuestra opinión.
+      </p>
+      <h4 class="font-semibold text-blue">El equipo de esencial360</h4>
+      <button
+        (click)="onProcessDone()"
+        class="mt-5 py-3 px-6 bg-black text-white rounded-lg bg-blue hover:bg-lightBrown transition duration-200"
+      >
+        ACEPTAR
+      </button>
+    </div>
+  } -->

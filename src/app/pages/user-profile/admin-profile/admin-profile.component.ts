@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { concatMap, from, map, toArray } from 'rxjs';
 import { ClassesService } from '../../../shared/services/classes.service';
 import { Classes } from '../../../shared/Models/Classes';
+import { FormBuilder } from '@angular/forms';
 
 interface PreviewInstructor {
   _id: number;
@@ -47,7 +48,8 @@ export class AdminProfileComponent implements OnInit {
     private bunnystreamService: BunnystreamService,
     private emailService: EmailService,
     private router: Router,
-    private classesService: ClassesService
+    private classesService: ClassesService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -363,4 +365,5 @@ export class AdminProfileComponent implements OnInit {
       },
     });
   }
+
 }
