@@ -280,6 +280,10 @@ export class DialogFormComponent implements OnInit {
   }
 
   closeDialog() {
+    this.selectedFileNewInstructor = null;
+    this.formView = false
+    this.resumeFile = null
+    this.formSuccess = false;
     document.body.classList.remove('overflow-hidden');
     this.isOpen = false;
     this.onCloseDialog.emit(true);
