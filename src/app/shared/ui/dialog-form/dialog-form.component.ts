@@ -1,9 +1,18 @@
-import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailService } from '../../services/email.service';
 import { Router } from '@angular/router';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
+import { InstructorService } from '../../services/instructor.service';
+import { Instructor } from '../../Models/Instructor';
 
 @Component({
   selector: 'app-dialog-form',
@@ -16,7 +25,10 @@ import { HttpClient } from '@angular/common/http';
         animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' })),
+        animate(
+          '300ms ease-in',
+          style({ opacity: 0, transform: 'scale(0.9)' })
+        ),
       ]),
     ]),
   ],
@@ -24,6 +36,7 @@ import { HttpClient } from '@angular/common/http';
 export class DialogFormComponent implements OnInit {
   consultationForm!: FormGroup;
   instructorForm!: FormGroup;
+  newInstructorForm!: FormGroup;
   resumeFile: File | null = null;
   resumeError: string = '';
   videoError: string = '';
@@ -36,6 +49,7 @@ export class DialogFormComponent implements OnInit {
   onSubmittingForm!: boolean;
   formSuccess!: boolean;
   introForm!: boolean;
+  selectedFileNewInstructor!: File | null;
   @Input()
   isOpen!: boolean;
 
@@ -45,12 +59,12 @@ export class DialogFormComponent implements OnInit {
   @Input()
   newBlog!: boolean;
 
-  @Input() 
-  title: string = ''
+  @Input()
+  title: string = '';
 
   @Input()
   contactForm!: boolean;
-  
+
   @Output()
   onCloseDialog = new EventEmitter<boolean>();
 
@@ -58,25 +72,36 @@ export class DialogFormComponent implements OnInit {
   onSubmitForm = new EventEmitter<boolean>();
 
   @Output()
-  close = new EventEmitter<void>()
+  close = new EventEmitter<void>();
 
+  @Input()
+  newInstructorFromAdmin!: boolean;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private emailService: EmailService,
+    private instructorService: InstructorService
   ) {
-    window.scroll(0, 0)
+    window.scroll(0, 0);
     this.instructorForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       years: [0, [Validators.required, Validators.min(0)]],
       message: ['', Validators.required],
     });
+
+    this.newInstructorForm = this.fb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      profilePicture: [null],
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // ngOnChanges(simpleChanges: SimpleChanges) {
   //   this.isOpen[]
@@ -95,35 +120,20 @@ export class DialogFormComponent implements OnInit {
     }
   }
 
-  // onVideoSelected(event: any) {
-  //   const file: File = event.target.files[0];
-  //   console.log(file);
-
-  //   if (file) {
-  //     if (this.isVideoFile(file)) {
-  //       this.videoFile = file;
-  //       this.videoError = '';
-  //     } else {
-  //       this.videoFile = null;
-  //       this.videoError = 'Invalid file type. Please upload a PDF file.';
-  //     }
-  //   }
-  // }
-
   onVideoSelected(event: any) {
-    const file: File = event.target.files[0];  
+    const file: File = event.target.files[0];
     if (file) {
       if (this.isVideoFile(file) && file.size < 25 * 1024 * 1024) {
         this.videoFile = file;
         this.videoError = '';
         console.log('Is video File true');
-        
       } else if (file.size > 25 * 1024 * 1024) {
         this.videoError = 'Video demasiado grande. Máximo 25 MB permitidos';
         this.videoFile = null;
       } else {
         this.videoFile = null;
-        this.videoError = 'Tipo de archivo no válido. Por favor, cargue un archivo de vídeo válido.';
+        this.videoError =
+          'Tipo de archivo no válido. Por favor, cargue un archivo de vídeo válido.';
       }
     }
   }
@@ -170,7 +180,7 @@ export class DialogFormComponent implements OnInit {
 
           // Send the confirmation email
 
-           const htmlContentPath = '/assets/views/potentialInstructor.html';
+          const htmlContentPath = '/assets/views/potentialInstructor.html';
           const emailData = {
             to: this.instructorForm.value.email,
             subject: 'Muchas gracias por contactarnos.',
@@ -207,19 +217,42 @@ export class DialogFormComponent implements OnInit {
     }
   }
 
+  onFileSelectedNewInstructor(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.selectedFileNewInstructor = target.files[0];
+    }
+  }
+
+  onSubmitNewInstructor() {
+    if (this.newInstructorForm.valid && this.selectedFileNewInstructor) {
+      const newInstructor: Instructor = {
+        firstname: this.newInstructorForm.value.firstname,
+        lastname: this.newInstructorForm.value.lastname,
+        title: this.newInstructorForm.value.title,
+        description: this.newInstructorForm.value.description,
+        profilePicture: this.newInstructorForm.value.profilePicture,
+      };
+
+      this.instructorService
+        .createInstructor(newInstructor)
+        .subscribe((response) => {
+          console.log('Instructor created:', response);
+        });
+    }
+  }
+
   onProcessDone() {
     this.formSuccess = false;
-    this.closeDialog()
-    this.router.navigate(['/'])
+    this.closeDialog();
+    this.router.navigate(['/']);
     document.body.classList.remove('overflow-hidden');
-
   }
 
   closeDialog() {
     document.body.classList.remove('overflow-hidden');
     this.isOpen = false;
     this.onCloseDialog.emit(true);
-
   }
 
   closeModal() {

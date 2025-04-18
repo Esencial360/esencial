@@ -14,7 +14,7 @@ export class InstructorCounselorPreviewComponent {
 
   @Output() teamAction = new EventEmitter<string>()
 
-  onTeamClick(id: string) {
+  onTeamClick(id: string | undefined) {
     this.teamAction.emit(id)
   }
 

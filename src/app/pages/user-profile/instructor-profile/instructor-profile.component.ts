@@ -80,7 +80,7 @@ export class InstructorProfileComponent implements OnInit {
         filter((instructor) => !!instructor),
         tap((instructor) => {
           this.instructor = instructor;
-          this.pendingVideosCount = instructor.videos?.filter(video => video.status === 'pending').length || 0;
+          this.pendingVideosCount = instructor.videos?.filter(video => video.status === 'Pending').length || 0;
           this.totalVideosCount = instructor.videos?.length || 0;
         }),
         map((instructor) => 

@@ -108,6 +108,7 @@ import { InstructorDashboardComponent } from './pages/instructor-dashboard/instr
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { FormatDurationPipe } from './shared/pipes/format-duration.pipe';
 import { ClassStatusComponent } from './shared/ui/class-status/class-status.component';
+import { ApproveClassComponent } from './pages/classes/approve-class/approve-class.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
@@ -186,6 +187,7 @@ export function localStorageSyncReducer(reducer: any) {
     AdminDashboardComponent,
     FormatDurationPipe,
     ClassStatusComponent,
+    ApproveClassComponent,
   ],
   imports: [
     BrowserModule,

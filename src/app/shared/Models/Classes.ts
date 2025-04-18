@@ -1,5 +1,5 @@
 export interface Classes {
   classId: string;
-  instructorId: string;
+  instructorId: string | undefined;
   status?: string;
 }
