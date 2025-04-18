@@ -21,7 +21,7 @@ export class InstructorService {
     return this.http.get<Instructor>(url);
   }
 
-  createInstructor(instructor: Instructor): Observable<Instructor> {
+  createInstructor(instructor: FormData): Observable<Instructor> {
     return this.http.post<Instructor>(this.apiUrl, instructor);
   }
 

@@ -9,7 +9,8 @@ export const environment = {
     dev: {
       serverUrl: 'http://localhost:3000/'
     },
-    apiUrl: 'http://localhost:3000/'
+    apiUrl: 'http://localhost:3000/',
+    pullZone: 'https://esencial360pullzone.b-cdn.net/'
 
   };
 

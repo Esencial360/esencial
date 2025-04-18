@@ -1,6 +1,6 @@
 @if(authService.isAuthenticated$ | async) { @if (!newLanding) {
 <header
-  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[9999]"
+  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -72,7 +72,7 @@
 </header>
 
 <header
-  class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[9999]"
+  class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -99,7 +99,7 @@
   </div>
 </header>
 <section
-  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[9999]"
+  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
@@ -171,7 +171,7 @@
 </section>
 } @else {
 <header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[9999]"
+  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[60]"
 >
   <div class="flex justify-center items-center">
     <img
@@ -243,7 +243,7 @@
 </header>
 } } @else { @if (!newLanding) {
 <header
-  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[9999]"
+  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -314,7 +314,7 @@
 </header>
 
 <header
-  class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[9999]"
+  class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -341,7 +341,7 @@
   </div>
 </header>
 <section
-  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[9999]"
+  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
@@ -395,7 +395,7 @@
 </section>
 } @else {
 <header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[9999]"
+  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[60]"
 >
   <div class="flex justify-center items-center">
     <img

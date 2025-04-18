@@ -226,18 +226,48 @@ export class DialogFormComponent implements OnInit {
 
   onSubmitNewInstructor() {
     if (this.newInstructorForm.valid && this.selectedFileNewInstructor) {
-      const newInstructor: Instructor = {
-        firstname: this.newInstructorForm.value.firstname,
-        lastname: this.newInstructorForm.value.lastname,
-        title: this.newInstructorForm.value.title,
-        description: this.newInstructorForm.value.description,
-        profilePicture: this.newInstructorForm.value.profilePicture,
-      };
+      const formData = new FormData();
 
+      formData.append('firstname', this.newInstructorForm.value.firstname);
+      formData.append('lastname', this.newInstructorForm.value.lastname);
+      formData.append('title', this.newInstructorForm.value.title);
+      formData.append('email', this.newInstructorForm.value.email);
+      formData.append('description', this.newInstructorForm.value.description);
+      formData.append('profilePicture', this.selectedFileNewInstructor); 
       this.instructorService
-        .createInstructor(newInstructor)
-        .subscribe((response) => {
-          console.log('Instructor created:', response);
+        .createInstructor(formData)
+        .subscribe({
+          next: (response) => {
+            console.log('Instructor created:', response);
+            this.onSubmittingForm = true;
+            const emailData = {
+              to: this.newInstructorForm.value.email,
+              subject: 'Hemos confirmado tu admision como instructor.',
+              text: `Ya puede acceder a la plataforma como instructor con sus crendenciales.`,
+              html: `Estamos emocionados de colaborar juntos. El equipo de esencial360`,
+            };
+  
+            this.emailService.sendEmail(emailData).subscribe({
+              next: (emailResponse) => {
+                console.log(
+                  'Confirmation email sent successfully',
+                  emailResponse
+                );
+                this.newInstructorForm.reset();
+                this.selectedFileNewInstructor = null;
+                this.formView = false;
+                this.onSubmittingForm = false;
+                this.formSuccess = true;
+              },
+              error: (emailError) => {
+                console.error('Error sending confirmation email', emailError);
+              },
+            });
+          },
+          error: (error) => {
+            console.log('Error Creating Instructor', error)
+            this.error = error;
+          }
         });
     }
   }
@@ -250,6 +280,10 @@ export class DialogFormComponent implements OnInit {
   }
 
   closeDialog() {
+    this.selectedFileNewInstructor = null;
+    this.formView = false
+    this.resumeFile = null
+    this.formSuccess = false;
     document.body.classList.remove('overflow-hidden');
     this.isOpen = false;
     this.onCloseDialog.emit(true);
