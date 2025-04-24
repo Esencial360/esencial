@@ -17,7 +17,7 @@
 <section class="h-full relative">
   <app-parallax
     [parallaxSpeed]="0.5"
-    [imagePath]="'assets/images/1.jpg'"
+    [imagePath]="pullZone + '/assets/1.jpg'"
   ></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
@@ -57,7 +57,7 @@
     >
       <div class="mt-5 md:mt-0 md:w-1/2">
         <img
-          src="../../../assets/images/4.png"
+          [src]="pullZone + '/assets/4.jpg'"
           alt="Yoga pose"
           class="rounded-xl object-cover lg:h-[40rem] mb-4"
         />
@@ -94,16 +94,13 @@
     </div>
     <!-- <app-scrolling-banner class="flex justify-center"></app-scrolling-banner> -->
   </div>
-  <!-- <div
-    class="flex md:flex-row flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-6xl mx-auto"
-  ></div> -->
 </section>
 <app-banner-v2
   [reverse]="true"
   [text]="
     'Para las culturas indígenas, el quetzal es más que un ave: simboliza libertad, una riqueza profunda y un lazo con lo esencial. Un recordatorio de vivir en equilibrio.'
   "
-  [image]="'/assets/images/bird.png'"
+  [image]="pullZone + '/assets/bird.png'"
 ></app-banner-v2>
 <section
   class="container mx-auto px-4 py-8"
@@ -166,7 +163,7 @@
   [text]="
     'El caracol, un símbolo usado en la cultura maya que representa el agua y la tierra, nos recuerda el poder del agua para fluir con claridad y la firmeza de la tierra para decidir con certeza.'
   "
-  [image]="'/assets/images/snail.png'"
+  [image]="pullZone + '/assets/snail.png'"
 ></app-banner-v2>
 <app-pricing-plan></app-pricing-plan>
 <app-faq></app-faq>

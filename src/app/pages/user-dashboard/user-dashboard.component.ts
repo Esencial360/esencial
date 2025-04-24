@@ -22,8 +22,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../shared/services/users.service';
 import { User } from '../../shared/Models/User';
 import { Store } from '@ngrx/store';
-import { selectUsers } from '../../state/user.selectors';
 import { UserApiActions, ActiveUserApiActions } from '../../state/user.actions';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -51,6 +51,7 @@ export class UserDashboardComponent implements OnInit {
   userId: string = '';
   streak!: number;
   showRecommendation!: boolean;
+  pullZone: string = environment.pullZone
 
   constructor(
     public authService: AuthService,

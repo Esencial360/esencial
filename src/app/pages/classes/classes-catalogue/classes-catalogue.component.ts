@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
 import AOS from "aos";
+import { environment } from '../../../../environments/environment';
 
 interface Category {
   name: string;
@@ -25,6 +26,7 @@ export class ClassesCatalogueComponent implements OnInit {
   collectionSubtitle!: string
 
   dotLottie?: any;
+  pullZone: string = environment.pullZone
 
   constructor(private router: Router, private location: Location) {}
 

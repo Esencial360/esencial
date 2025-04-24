@@ -9,6 +9,8 @@ import { concatMap, from, map, toArray } from 'rxjs';
 import { ClassesService } from '../../../shared/services/classes.service';
 import { Classes } from '../../../shared/Models/Classes';
 import { FormBuilder } from '@angular/forms';
+import { DialogComponent, DialogData } from '../../../shared/ui/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface PreviewInstructor {
   _id: number;
@@ -49,7 +51,7 @@ export class AdminProfileComponent implements OnInit {
     private emailService: EmailService,
     private router: Router,
     private classesService: ClassesService,
-    private fb: FormBuilder
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -145,15 +147,34 @@ export class AdminProfileComponent implements OnInit {
   }
 
   handleAction(action: string) {
-    this.showModal = false;
-    this.resultReviewAction = action;
-    this.showModalAfterAction = true;
     if (action === 'reject') {
-      this.rejectVideo();
+      this.rejectVideoConfirmation();
     } else {
       this.updateVideoStatus(action);
     }
   }
+
+  rejectVideoConfirmation() {
+    const scrollPosition = window.pageYOffset;
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Rechazar video',
+          message: 'Estas seguro de rechazar el video?',
+          confirmText: 'Rechazar',
+          cancelText: 'Volver',
+          onConfirm: () => {
+            this.showModal = false;
+            this.resultReviewAction = 'reject';
+            this.showModalAfterAction = true;
+            this.rejectVideo()
+          },
+        } as DialogData,
+      });
+  
+      dialogRef.afterOpened().subscribe(() => {
+        window.scrollTo(0, scrollPosition);
+      });
+    }
 
   getSingleClass(classId: string) {
     this.classesService.getClass(classId).subscribe({

@@ -24,7 +24,7 @@
   </div>
   <div class="mt-5 md:mt-0 md:w-1/2">
     <img
-      src="../../../assets/images/yoga1.jpg"
+      [src]="pullZone + '/assets/foldedMat.jpg'"
       alt="Person doing yoga"
       class="rounded-xl object-cover w-full h-64"
     />
@@ -46,10 +46,10 @@
 [text]="
   'En la Amazonía colombiana, pueblos como los barasana y los makuna consideran que el fuego es una manifestación de la energía vital y un medio para la transformación personal. '
 "
-[image]="'/assets/images/flame.png'"
+[image]="pullZone + '/assets/flame.png'"
 ></app-banner-v2>
 <app-banner-v3
-  [image]="'/assets/images/logoWhite.png'"
+  [image]="pullZone + '/assets/logoWhite.png'"
   [firstDescriptions]="
     'En esencial360, la calidad y autenticidad de nuestro contenido es una prioridad. Por eso, contamos con un Consejo de Expertos conformado por referentes en yoga, meditación y desarrollo personal, todos con una trayectoria impecable y un profundo compromiso con el bienestar.'
   "

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 interface PricingPlan {
   name: string;
@@ -14,12 +15,13 @@ interface PricingPlan {
   styleUrl: './pricing-plan.component.css'
 })
 export class PricingPlanComponent {
+  pullZone: string = environment.pullZone
   plans: PricingPlan[] = [
     {
       name: 'esencial360',
       highlight: '360',
       price: 98,
-      image: '/assets/images/10.jpg',
+      image: this.pullZone + '/assets/10.jpg',
       features: [
         'Acceso completo de la plataforma.',
         'Asesoría personalizada.',
@@ -30,7 +32,7 @@ export class PricingPlanComponent {
     {
       name: 'esencial',
       price: 58,
-      image: '/assets/images/11.jpg',
+      image: this.pullZone + '/assets/11.jpg',
       features: [
         'Accesso a clases de yoga y meditaciones',
         'Asesoría básica.',

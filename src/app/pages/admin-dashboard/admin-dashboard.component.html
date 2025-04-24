@@ -23,7 +23,7 @@
   </div>
   <div class="mt-5 md:mt-0 md:w-1/2">
     <img
-      src="../../../assets/images/yoga1.jpg"
+      [src]="pullZone + '/assets/foldedMat.jpg'"
       alt="Person doing yoga"
       class="rounded-xl object-cover w-10/12 h-64"
     />
@@ -34,7 +34,7 @@
   [text]="
     'El sol, nuestra fuente de energía,  crecimiento y vida, representa un símbolo de vitalidad, prosperidad y nuevos comienzos.'
   "
-  [image]="'/assets/images/jaguar.png'"
+  [image]="pullZone + '/assets/jaguar.png'"
 ></app-banner-v2>
 <section class="modern-tabs">
   <app-admin-profile [filters]="filters"></app-admin-profile>

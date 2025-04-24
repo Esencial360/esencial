@@ -27,7 +27,7 @@
   </div>
   <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
     <img
-      src="../../../assets/images/3.png"
+      [src]="pullZone + '/assets/3.png'"
       alt="Yoga at sunset"
       class="w-full h-96 object-cover rounded-lg shadow-lg"
     />
@@ -53,7 +53,7 @@
 >
   <div class="flex flex-col lg:flex-row">
     <div class="flex flex-col justify-evenly items-center md:h-96">
-      <img src="/assets/images/logoBlue.png" class="h-48 bg-cover w-min" alt="" />
+      <img [src]="pullZone + '/assets/logoBlue.png'" class="h-48 bg-cover w-min" alt="" />
       @if (!instructorCatalogueView) {
       <h2 class="lg:text-7xl text-white mb-4 uppercase">
         ¡Descubre esencial<span class="text-blue">360!</span>
@@ -68,8 +68,8 @@
       <img
         [src]="
           instructorCatalogueView
-            ? '/assets/images/9.png'
-            : '/assets/images/3.png'
+            ? pullZone + '/assets/9.png'
+            : pullZone + '/assets/3.png'
         "
         alt="Yoga at sunset"
         class="w-full h-96 object-contain lg:object-cover rounded-lg shadow-xl"
@@ -191,7 +191,7 @@
     [description]="
       'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial3 asegurando calidad, veracidad y transformación.'
     "
-    [image]="'../../../assets/images/1.png'"
+    [image]="pullZone + '/assets/1.png'"
     [addMargin]="true"
     [contact]="true"
   ></app-banner>
@@ -203,7 +203,7 @@
     [addMargin]="true"
     [contact]="true"
     [buttonText]="'¡Conoce a los instructores e360!'"
-    [image]="'../../../assets/images/9.png'"
+    [image]="pullZone + '/assets/9.png'"
     (onActionButton)="onInstructorCatalogue()"
   ></app-banner>
   <app-banner
@@ -214,7 +214,7 @@
     [addMargin]="true"
     [contact]="true"
     [buttonText]="'¡Quiero ser instructor e360!'"
-    [image]="'../../../assets/images/1.png'"
+    [image]="pullZone + '/assets/1.png'"
     (onActionButton)="onInstructorContact()"
   ></app-banner>
   }

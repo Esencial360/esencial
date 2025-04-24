@@ -9,6 +9,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { fadeInAnimation } from '../../shared/animations/fade-in.animation';
 import { Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 interface ClassOverview {
   image: string;
@@ -51,6 +52,7 @@ export class LandingComponent implements OnInit  {
   roles!: string;
   backgroundImageUrl = '../../../assets/images/yoga.jpg';
   isLoading!: boolean;
+  pullZone: string = environment.pullZone
   welcomeLines = [
     {title: 'Clases de yoga', description: 'Diferentes estilos, instructores y duraciones, que se adaptan a tus necesidades y nivel.'},
     {title: 'Meditaciones guiadas', description: 'Para comenzar o atravesar el día con intención, claridad y equilibrio.'},
