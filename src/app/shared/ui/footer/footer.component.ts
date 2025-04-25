@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -7,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
+
+  pullZone: string = environment.pullZone
 
   constructor(private route: Router) {}
 

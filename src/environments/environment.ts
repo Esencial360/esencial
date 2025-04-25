@@ -10,6 +10,8 @@ export const environment = {
       serverUrl: 'https://seal-app-jeede.ondigitalocean.app/'
     },
     apiUrl: 'https://seal-app-jeede.ondigitalocean.app/',
-    pullZone: 'https://esencial360pullzone.b-cdn.net/'
+    pullZone: 'https://esencial360pullzone.b-cdn.net/',
+    apiUrlBS: 'https://video.bunnycdn.com/library/263508',
+    apiKeyBS: 'ef2617f6-6d44-4df4-a35b942cef57-555c-4302'
   };
 

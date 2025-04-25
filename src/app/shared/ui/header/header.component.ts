@@ -7,14 +7,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { burgerMenuAnimation } from '../../animations/burger-menu.animations';
-// import { AuthService } from '../services/auth.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
-import { selectStreak } from '../../../state/user.selectors';
 import { selectActiveUser } from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import {Subject, takeUntil } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +35,7 @@ export class HeaderComponent {
   isOpen: boolean = false;
   user$: any;
   streak!: any;
+  pullZone: string = environment.pullZone
   private ngUnsubscribe = new Subject<void>();
 
   constructor(

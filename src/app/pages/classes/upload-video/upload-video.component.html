@@ -1,5 +1,7 @@
 <app-header></app-header>
-<section class="w-full h-[75vh] flex flex-col items-center justify-center text-center montserrat-normal">
+<section
+  class="w-full h-[75vh] flex flex-col items-center justify-center text-center montserrat-normal"
+>
   @if (isModalOpen) {
   <div
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] text-start"
@@ -19,7 +21,9 @@
       </h2>
       <form [formGroup]="newVideoForm" class="space-y-6">
         <div>
-          <label class="block text-blue font-medium mb-1 uppercase">Nombre de la clase</label>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Nombre de la clase</label
+          >
           <input
             type="text"
             formControlName="title"
@@ -43,7 +47,9 @@
           </p>
         </div>
         <div>
-          <label class="block text-blue font-medium mb-1 uppercase">Categoria</label>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Categoria</label
+          >
           <select
             formControlName="collectionId"
             class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
@@ -55,7 +61,9 @@
           </select>
         </div>
         <div>
-          <label class="block text-blue font-medium mb-1 uppercase">Instructor</label>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Instructor</label
+          >
           <select
             formControlName="instructor"
             class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
@@ -69,10 +77,44 @@
           </select>
         </div>
         <div>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Nivel de Dificultad</label
+          >
+          <select
+            formControlName="difficulty"
+            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
+          >
+            <option value="" disabled selected>Selecciona un nivel</option>
+            <option value="Principiante">Principiante</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Subcategoría</label
+          >
+          <select
+            formControlName="subcategory"
+            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
+            [disabled]="!newVideoForm.get('collectionId')?.value"
+          >
+          @for (sub of getSubcategories(); track $index) {
+            <option  [value]="sub">
+              {{ sub }}
+            </option>
+          }
+          </select>
+        </div>
+
+        <div>
           <button
             type="submit"
             (click)="onSubmit()"
-            class="w-full py-3 bg-black text-white font-semibold rounded-lg  bg-blue hover:bg-lightBrown transition duration-200"
+            class="w-full py-3 text-white font-semibold rounded-lg"
+            [disabled]="!newVideoForm.valid"
+            [ngClass]="newVideoForm.valid ? 'bg-blue hover:bg-lightBrown transition duration-200' : 'bg-blue contrast-50'"
           >
             SIGUIENTE
           </button>
@@ -83,20 +125,20 @@
       <div class="text-center space-y-4">
         <h2 class="text-lg font-semibold">Subir Archivo</h2>
         @if (!loading) {
-          <input
+        <input
           type="file"
           #videoInput
           (change)="onFileSelected($event)"
           class="border p-2 rounded w-full"
         />
         <button
-          (click)="onUploadVideo()"
-          class="w-full py-3 text-white font-semibold rounded-lg  bg-blue hover:bg-lightBrown  0transition duration-200"
+          (click)="createVideo()"
+          class="w-full py-3 text-white font-semibold rounded-lg bg-blue hover:bg-lightBrown 0transition duration-200"
         >
-        Subir Archivo
-        </button> 
+          Subir Archivo
+        </button>
         } @else {
-          <app-loading></app-loading>
+        <app-loading></app-loading>
         }
       </div>
       } @if (thirdStep) {
@@ -106,7 +148,8 @@
           ¡Su participación es esencial para nosotros!
         </h4>
         <p class="text-lightBrown">
-          ¡Gracias por tu video! Hemos recibido tu material y lo revisaremos para darte nuestra opinión.
+          ¡Gracias por tu video! Hemos recibido tu material y lo revisaremos
+          para darte nuestra opinión.
         </p>
         <h4 class="font-semibold text-blue">El equipo de esencial360</h4>
         <button
@@ -121,7 +164,9 @@
   </div>
   } @else {
   <section class="">
-    <h2 class="text-blue uppercase text-3xl font-bold drop-shadow-lg">¡sigue inspirando!</h2>
+    <h2 class="text-blue uppercase text-3xl font-bold drop-shadow-lg">
+      ¡sigue inspirando!
+    </h2>
     <div class="max-w-2xl mx-auto p-6">
       <h2 class="text-lg font-bold text-blue text-start">RECOMENDACIONES</h2>
       <p class="text-lightBlue text-sm text-start">
@@ -138,7 +183,7 @@
             <p>Uso de cuencos</p>
           </div>
           <div class="flex items-center space-x-3 cursor-pointer">
-            <span class="material-symbols-outlined text-blue  text-4xl">
+            <span class="material-symbols-outlined text-blue text-4xl">
               wb_sunny
             </span>
             <p>Al aire libre</p>
@@ -187,7 +232,11 @@
       </div>
     </div>
 
-    <app-button [text]="'empezar'" class="flex justify-center" (click)="openModal()"></app-button>
+    <app-button
+      [text]="'empezar'"
+      class="flex justify-center"
+      (click)="openModal()"
+    ></app-button>
   </section>
   }
 </section>
