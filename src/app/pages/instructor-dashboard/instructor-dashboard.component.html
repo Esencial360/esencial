@@ -2,7 +2,7 @@
 <app-loading></app-loading>
 } @else { @if (authService.user$ | async; as user) {
 <div
-  class="flex md:flex-row h-[60vh] flex-col items-center justify-around bg-white px-8 py-16 rounded-xl max-w-7xl mx-auto montserrat-normal"
+  class="flex md:flex-row h-[60vh] flex-col items-center justify-around px-8 py-16 max-w-7xl mx-auto montserrat-normal"
 >
   <div class="mt-5 md:mt-0 md:w-1/2">
     <img
@@ -32,7 +32,7 @@
   [text]="
     'El sol, nuestra fuente de energía,  crecimiento y vida, representa un símbolo de vitalidad, prosperidad y nuevos comienzos.'
   "
-  [image]="'/assets/images/sun.png'"
+  [image]="pullZone + '/assets/sun.png'"
 ></app-banner-v2>
 <section class="modern-tabs">
   <app-instructor-profile [filters]="filters"></app-instructor-profile>
