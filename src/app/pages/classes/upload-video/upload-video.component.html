@@ -139,6 +139,10 @@
         </button>
         } @else {
         <app-loading></app-loading>
+        <div class="montserrat-normal text-blue uppercase">
+          <p>Subiendo video: <span class="font-bold">{{uploadingProgress}}%</span></p>
+          <p>No salgas ni recarges la pagina</p>
+        </div>
         }
       </div>
       } @if (thirdStep) {

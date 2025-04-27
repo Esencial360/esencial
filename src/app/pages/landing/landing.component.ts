@@ -92,9 +92,9 @@ export class LandingComponent implements OnInit  {
     });
     }
     this.services = [
-      { title: 'YOGA', image: '../../../assets/images/6.png'},
-      { title: 'MEDITACIONES', image: '../../../assets/images/7.png' },
-      { title: 'TALLERES', image: '../../../assets/images/8.png' },
+      { title: 'YOGA', image: this.pullZone + '/assets/6.png'},
+      { title: 'MEDITACIONES', image: this.pullZone + '/assets/7.png' },
+      { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
     ];
     this.fetchBlogs();
     this.fetchInstructors();

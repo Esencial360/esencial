@@ -45,6 +45,7 @@ export class UploadVideoComponent implements OnInit {
   instructors!: Instructor[];
   selectedInstructor!: string;
   loading!: boolean;
+  uploadingProgress!: string
 
   constructor(
     private bunnyStreamService: BunnystreamService,
@@ -188,28 +189,6 @@ export class UploadVideoComponent implements OnInit {
     console.log(this.selectedFile);
   }
 
-  // createVideo() {
-  //   this.bunnyStreamService
-  //     .createVideo(
-  //       this.newVideoForm.value.title,
-  //       this.newVideoForm.value.collectionId,
-  //       5000
-  //     )
-  //     .pipe(take(1))
-  //     .subscribe(
-  //       (response: any) => {
-  //         console.log('Video uploaded successfully:', response);
-  //         this.videoId = response.guid;
-  //         this.putVideoInstructor();
-  //         this.firstStep = false;
-  //         this.secondStep = true;
-  //       },
-  //       (error) => {
-  //         console.error('Error uploading video:', error);
-  //       }
-  //     );
-  // }
-
   createVideo() {
     const { title, collectionId } =
       this.newVideoForm.value;
@@ -249,36 +228,16 @@ export class UploadVideoComponent implements OnInit {
         this.putVideoInstructor(this.videoId);
       },
       (error) => {
-        // ❌ onError
         console.error('Error uploading video:', error);
         this.loading = false;
       },
       (progress) => {
-        // ⏳ onProgress (optional)
         console.log(`Uploading: ${progress.toFixed(2)}%`);
-        // You could update a progress bar here if desired
+        this.uploadingProgress = progress.toFixed(2)
       }
     );
   }
 
-  // onUploadVideo() {
-  //   this.loading = true;
-  //   this.bunnyStreamService
-  //     .uploadVideo(this.videoId, this.selectedFile)
-  //     .pipe(take(1))
-  //     .subscribe(
-  //       (response) => {
-  //         console.log('Upload video successfully', response);
-  //         this.secondStep = false;
-  //         this.loading = false;
-  //         this.thirdStep = true;
-  //         this.putVideoInstructor();
-  //       },
-  //       (error) => {
-  //         console.error('Error uploading video:', error);
-  //       }
-  //     );
-  // }
 
   onProcessDone() {
     this.router.navigate(['/home']);
