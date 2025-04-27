@@ -12,6 +12,10 @@ body.menu-opened {
   overflow: hidden;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background-color: #ffffff;
   scroll-behavior: smooth;

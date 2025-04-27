@@ -47,11 +47,19 @@ export class InstructorsOverviewComponent implements OnInit {
   }
 
   onInstructor(id: string | undefined) {
-    this.router.navigate([`/instructores/${id}`]);
+    if (this.adminView) {
+      this.router.navigate([`/instructor-previa/${id}`]);
+    } else {
+      this.router.navigate([`/instructores/${id}`]);
+    }
   }
 
   onAllInstructors() {
-    this.router.navigate(['/instructores']);
+    if (this.adminView) {
+      this.router.navigate(['/instructores']);
+    } else {
+      this.router.navigate(['/instructores']);
+    }
   }
 
   onClose() {

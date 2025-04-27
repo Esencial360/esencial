@@ -120,10 +120,12 @@
   <div class="container mx-auto px-4 mt-16">
     @if(userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
-      <div class="flex items-center">
-        <span class="text-xl">🔥</span>
-        <span class="ml-1 font-semibold text-lg">{{ streak }}</span>
-      </div>
+      @if (roles === "User") {
+        <div class="flex items-center">
+          <span class="text-xl">🔥</span>
+          <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+        </div>
+        } 
       <li class="mb-5">YOGA</li>
       <li (click)="onClasses()" class="ml-2">CLASES</li>
       <li class="ml-2">INSTRUCTORES</li>
@@ -185,10 +187,12 @@
     </h3>
   </div>
   <nav>
-    <div class="flex items-center">
-      <span class="text-xl">🔥</span>
-      <span class="ml-1 font-semibold text-lg">{{ streak | async }}</span>
-    </div>
+    @if (roles === "User") {
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+      </div>
+      } 
     <ul
       class="flex anton items-center uppercase pointer text-base cursor-pointer"
     >

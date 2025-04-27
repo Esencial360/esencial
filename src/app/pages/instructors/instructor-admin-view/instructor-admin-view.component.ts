@@ -5,6 +5,12 @@ import { InstructorService } from '../../../shared/services/instructor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { concatMap, from, map, toArray } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  DialogComponent,
+  DialogData,
+} from '../../../shared/ui/dialog/dialog.component';
 
 @Component({
   selector: 'app-instructor-admin-view',
@@ -22,6 +28,7 @@ export class InstructorAdminViewComponent {
   instructor!: Instructor;
   videos!: any[];
   loadingClasses!: boolean;
+  pullZone = environment.pullZone;
 
   links: SafeResourceUrl[] = [];
 
@@ -30,7 +37,8 @@ export class InstructorAdminViewComponent {
     private instructorService: InstructorService,
     private bunnystreamService: BunnystreamService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   @Input() adminView!: boolean;
@@ -131,6 +139,28 @@ export class InstructorAdminViewComponent {
       error: (error) => {
         console.log('Instructor removed error', error);
       },
+    });
+  }
+
+  deleteConfirmation() {
+    const scrollPosition = window.pageYOffset;
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Eliminar instructor',
+        message: 'Estas seguro de eliminar el instructor?',
+        confirmText: 'Aprovar',
+        cancelText: 'Volver',
+      } as DialogData,
+    });
+
+    dialogRef.afterOpened().subscribe(() => {
+      window.scrollTo(0, scrollPosition);
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.onRemoveInstructor();
+      }
     });
   }
 }
