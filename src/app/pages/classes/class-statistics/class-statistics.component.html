@@ -1,84 +1,73 @@
 @if (previewView) {
 <div class="flex justify-start mt-2">
-  @if (videoStatistics) {
-    @for (key of filteredKeys; track $index) {
-        @for (entry of
-        getEntries(videoStatistics?.[key]); track $index) {
-        <div class="flex text-blue">
-          <span class="material-symbols-outlined"> {{ key === "countryWatchTime" ? "timer" : "visibility" }} </span>
-          {{ key === "countryWatchTime" ? entry[1] + "min" : entry[1] }}
-        </div>
-        } 
-    }
-  } @else {
-    <app-loading width="30px" height="30px"></app-loading>
+  @if (videoStatistics) { @for (key of filteredKeys; track $index) { @for (entry
+  of getEntries(videoStatistics?.[key]); track $index) {
+  <div class="flex text-blue">
+    <span class="material-symbols-outlined">
+      {{ key === "countryWatchTime" ? "timer" : "visibility" }}
+    </span>
+    {{ key === "countryWatchTime" ? entry[1] + "min" : entry[1] }}
+  </div>
+  } } } @else {
+  <app-loading width="30px" height="30px"></app-loading>
   }
-
 </div>
-} 
-<!-- } @else {
+} @else {
 
 <section
-  class="w-10/12"
-  data-aos="fade-up"
-  data-aos-duration="1000"
+  class="w-11/12 mx-auto uppercase montserrat-normal mb-10"
   [ngClass]="
-    adminView ? 'text-center' : 'grid grid-cols-1 md:grid-cols-3 gap-6'
+    adminView ? 'text-center' : 'grid grid-cols-1 md:grid-cols-3 gap-8'
   "
 >
-  @for (key of filteredKeys; track $index) { @for (entry of
-  getEntries(videoStatistics[key]); track $index) {
-  <div class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+  <div
+    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition hover:shadow-2xl cursor-pointer"
+  >
     <p
-      class="montserrat-normal text-strongBrown text-center"
-      [ngClass]="adminView ? 'text-2xl' : 'text-8xl'"
+      class="montserrat-normal text-strongBrown"
+      [ngClass]="adminView ? 'text-3xl mb-2' : 'text-7xl mb-4'"
     >
-      {{ key === "countryWatchTime" ? entry[1] + "min" : entry[1] }}
+      {{ getTotalViews() }}
     </p>
-    <div class="p-4">
-      <h3
-        class="text-strongBrown font-semibold mb-2 capitalize"
-        [ngClass]="adminView ? 'text-base' : 'text-xl'"
-      >
-        {{ key === "countryWatchTime" ? "Tiempo de reproduccion" : "Visitas" }}
-      </h3>
-      @if (!adminView) {
-      <p class="text-strongBrown mb-4">
-        Breathing plays an essential role in our well-being. Follow the advice
-        of Dr. Marie
-      </p>
-      }
-    </div>
+    <h3
+      class="text-blue font-semibold capitalize"
+      [ngClass]="adminView ? 'text-lg' : 'text-2xl'"
+    >
+      Visital Totales
+    </h3>
   </div>
-  } }
-
-  <div class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
-    <p class="montserrat-normal text-strongBrown text-center" [ngClass]="adminView ? 'text-2xl' : 'text-8xl'">
+  <div
+    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition hover:shadow-2xl cursor-pointer"
+  >
+    <p
+      class="montserrat-normal text-strongBrown"
+      [ngClass]="adminView ? 'text-3xl mb-2' : 'text-7xl mb-4'"
+    >
+      {{ getTotalWatchTime() }} min
+    </p>
+    <h3
+      class="text-blue font-semibold capitalize"
+      [ngClass]="adminView ? 'text-lg' : 'text-2xl'"
+    >
+      Tiempo total de reproducción
+    </h3>
+  </div>
+  <div
+    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition hover:shadow-2xl cursor-pointer"
+  >
+    <p
+      class="montserrat-normal text-strongBrown"
+      [ngClass]="adminView ? 'text-3xl mb-2' : 'text-7xl mb-4'"
+    >
       {{ videoStatistics["engagementScore"] + "%" }}
     </p>
-    <div class="p-4">
-      <h3
-        class="text-strongBrown font-semibold mb-2 capitalize"
-        [ngClass]="adminView ? 'text-base' : 'text-xl'"
-      >
-        Engagement Score
-      </h3>
-      @if (!adminView) {
-      <p class="text-strongBrown mb-4">
-        Breathing plays an essential role in our well-being. Follow the advice
-        of Dr. Marie
-      </p>
-      }
-    </div>
+    <h3
+      class="text-blue font-semibold capitalize"
+      [ngClass]="adminView ? 'text-lg' : 'text-2xl'"
+    >
+      Puntuación de participación
+    </h3>
   </div>
-  <div *ngFor="let key of filteredKeys">
-        <h3>{{ key }}</h3>
-        <ul>
-          <li *ngFor="let entry of getEntries(videoStatistics[key])">
-            {{ entry[0] }}: {{ entry[1] }}
-          </li>
-        </ul>
-      </div>
 </section>
 
-} -->
+}
