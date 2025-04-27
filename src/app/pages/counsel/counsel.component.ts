@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Subject, takeUntil, tap } from 'rxjs';
 import { CounselService } from '../../shared/services/counsel.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-counsel',
@@ -11,6 +12,7 @@ import { CounselService } from '../../shared/services/counsel.service';
 export class CounselComponent {
 
     counselors: any;
+    pullZone = environment.pullZone
     private destroy$ = new Subject<void>();
   
     constructor(

@@ -3,6 +3,7 @@ import { BunnystreamService } from '../../../shared/services/bunny-stream.servic
 import { Router } from '@angular/router';
 import { concatMap, from, map, toArray } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-all-classes',
@@ -11,7 +12,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AllClassesComponent implements OnInit {
   videos!: any[];
-  loadingClasses: boolean = true
+  loadingClasses: boolean = true;
+  pullZone = environment.pullZone;
 
   constructor(
     private bunnyStreamService: BunnystreamService,
@@ -27,6 +29,11 @@ export class AllClassesComponent implements OnInit {
     this.bunnyStreamService.getVideosList().subscribe(
       (response) => {
         this.getVideo(response.items);
+        if (response.totalItems <= 0) {
+          this.loadingClasses = false;
+        } else {
+          this.getVideo(response.items);
+        }
       },
       (error) => {
         console.error('Unable to retrieve classes', error);
@@ -52,7 +59,7 @@ export class AllClassesComponent implements OnInit {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            this.loadingClasses = false
+            this.loadingClasses = false;
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);
@@ -73,7 +80,7 @@ export class AllClassesComponent implements OnInit {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            this.loadingClasses = false
+            this.loadingClasses = false;
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);

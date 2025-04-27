@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import AOS from 'aos';
 import { catchError, Subject, takeUntil, tap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface PreviewInstructor {
   _id: number;
@@ -19,6 +20,7 @@ interface PreviewInstructor {
 export class InstructorsCatalogueComponent implements OnInit, OnDestroy {
   instructors: any;
   filteredInstructors: PreviewInstructor[] = [];
+  pullZone = environment.pullZone
   private destroy$ = new Subject<void>();
 
   constructor(
