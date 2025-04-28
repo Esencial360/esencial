@@ -31,13 +31,9 @@ export class BunnystreamService {
   }
 
   getVideosList(amount?: string): Observable<any> {
-    console.log(amount);
-
     const url = `${this.apiUrl}/videos?page=1&itemsPerPage=${
       amount ? amount : '100'
     }&orderBy=date`;
-    console.log(url);
-
     const headers = { AccessKey: this.apiKey };
     return this.http.get(url, { headers });
   }
@@ -61,8 +57,6 @@ export class BunnystreamService {
   }
 
   getVideo(videoId: any): Observable<any> {
-    console.log(videoId);
-
     const url = `${this.apiUrl}/videos/${videoId}`;
     const headers = { AccessKey: this.apiKey };
     return this.http.get(url, { headers }).pipe(

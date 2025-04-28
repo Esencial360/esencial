@@ -1,141 +1,54 @@
-<div class="w-64 bg-white h-full overflow-y-auto montserrat-normal">
-  <div class="p-4">
-    <!-- Difficulty Dropdown -->
-    <div class="mb-4">
-      <button
-        (click)="toggleDropdown('difficulty')"
-        class="w-full text-left py-2 flex justify-between items-center"
-      >
-        DIFICULTAD
-        <svg
-          [ngClass]="{ 'rotate-180': openDropdown === 'difficulty' }"
-          class="w-4 h-4 transition-transform"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
-      </button>
-      <div [@dropdownAnimation]="openDropdown === 'difficulty' ? 'open' : 'closed'" class="overflow-hidden">
-        @if (openDropdown === 'difficulty') {
-            <div class="mt-2">
-              @for (level of difficultyLevels; track $index) {
-              <div class="flex items-center mb-1">
-                <input
-                  type="checkbox"
-                  [id]="level"
-                  [(ngModel)]="selectedDifficulties[level]"
-                  class="mr-2"
-                />
-                <label [for]="level">{{ level }}</label>
-              </div>
-              }
-            </div>
-            }
-      </div>
-  
-    </div>
+<div class="flex flex-wrap items-center gap-4 mb-6 bg-white p-6 rounded-lg shadow-md">
 
-    <!-- Length Dropdown -->
-    <div class="mb-4">
-      <button
-        (click)="toggleDropdown('length')"
-        class="w-full text-left py-2 flex justify-between items-center"
-      >
-        DURACION
-        <svg
-          [ngClass]="{ 'rotate-180':  openDropdown === 'length' }"
-          class="w-4 h-4 transition-transform"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
-      </button>
-      <div [@dropdownAnimation]="openDropdown === 'length' ? 'open' : 'closed'" class="overflow-hidden"> 
-        @if (openDropdown === 'length') {
-            <div class="mt-2">
-              @for (duration of lengthOptions; track $index) {
-              <div class="flex items-center mb-1">
-                <input
-                  type="checkbox"
-                  [id]="duration"
-                  [(ngModel)]="selectedLengths[duration]"
-                  class="mr-2"
-                />
-                <label [for]="duration">{{ duration }}</label>
-              </div>
-              }
-            </div>
-            }
-      </div>
-    </div>
-
-    <!-- Instructors Dropdown -->
-    <div>
-      <button
-        (click)="toggleDropdown('instructors')"
-        class="w-full text-left py-2 flex justify-between items-center"
-      >
-        INSTRUCTORES
-        <svg
-          [ngClass]="{ 'rotate-180': openDropdown === 'instructors'}"
-          class="w-4 h-4 transition-transform"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
-      </button>
-      <div [@dropdownAnimation]="openDropdown === 'instructors' ? 'open' : 'closed'" class="overflow-hidden">
-        @if (openDropdown === 'instructors') {
-            <div class="mt-2 overflow-y-hidden max-h-52 overflow-y-scroll">
-              <div class="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  id="allInstructors"
-                  [(ngModel)]="allInstructorsSelected"
-                  (change)="toggleAllInstructors()"
-                  class="mr-2"
-                />
-                <label for="allInstructors">All Instructors</label>
-              </div>
-              @for (instructor of instructors; track $index) {
-              <div class="flex items-center mb-1">
-                <input
-                  type="checkbox"
-                  [id]="instructor"
-                  [(ngModel)]="selectedInstructors[instructor]"
-                  (change)="updateInstructorSelection()"
-                  class="mr-2"
-                />
-                <label [for]="instructor">{{ instructor }}</label>
-              </div>
-              }
-            </div>
-            }
-      </div>
-    </div>
+  <div class="w-full md:w-auto">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Instructor</label>
+    <select
+      [(ngModel)]="selectedInstructorId"
+      (change)="onFilterChange()"
+      class="w-full md:w-48 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+      <option value="">All Instructors</option>
+      <option *ngFor="let instructor of uniqueInstructors" [value]="instructor.id">
+        {{ instructor.name }}
+      </option>
+    </select>
   </div>
+
+  <div class="w-full md:w-auto">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
+    <select
+      [(ngModel)]="selectedDifficulty"
+      (change)="onFilterChange()"
+      class="w-full md:w-48 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+      <option value="">All Difficulties</option>
+      <option *ngFor="let difficulty of uniqueDifficulties" [value]="difficulty">
+        {{ difficulty }}
+      </option>
+    </select>
+  </div>
+
+  <div class="w-full md:w-auto">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Subcategory</label>
+    <select
+      [(ngModel)]="selectedSubcategory"
+      (change)="onFilterChange()"
+      class="w-full md:w-48 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+      <option value="">All Subcategories</option>
+      <option *ngFor="let subcategory of uniqueSubcategories" [value]="subcategory">
+        {{ subcategory }}
+      </option>
+    </select>
+  </div>
+
+  <div class="w-full md:w-auto flex items-end">
+    <button
+      (click)="resetFilters()"
+      class="mt-4 md:mt-0 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+    >
+      Reset Filters
+    </button>
+  </div>
+
 </div>

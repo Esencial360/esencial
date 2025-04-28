@@ -16,7 +16,7 @@ export class ClassesService {
     return this.http.get<Classes[]>(this.apiUrl);
   }
 
-  getClass(id: string): Observable<Classes> {
+  getClass(id: any): Observable<Classes> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Classes>(url);
   }

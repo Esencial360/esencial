@@ -1,5 +1,14 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectAllInstructors } from '../../../state/instructor.selector';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-class-filter',
@@ -7,55 +16,96 @@ import { Component } from '@angular/core';
   styleUrl: './class-filter.component.css',
   animations: [
     trigger('dropdownAnimation', [
-      state('closed', style({
-        height: '0',
-        opacity: '0',
-        overflow: 'hidden'
-      })),
-      state('open', style({
-        height: '*',
-        opacity: '1'
-      })),
-      transition('closed <=> open', [
-        animate('300ms ease-in-out')
-      ])
-    ])
-  ]
+      state(
+        'closed',
+        style({
+          height: '0',
+          opacity: '0',
+          overflow: 'hidden',
+        })
+      ),
+      state(
+        'open',
+        style({
+          height: '*',
+          opacity: '1',
+        })
+      ),
+      transition('closed <=> open', [animate('300ms ease-in-out')]),
+    ]),
+  ],
 })
-export class ClassFilterComponent {
-  openDropdown: 'difficulty' | 'length' | 'instructors' | null = null;
+export class ClassFilterComponent implements OnInit {
+  @Input() videos: any[] = [];
+  @Output() filtersChanged = new EventEmitter<any[]>();
 
-  difficultyLevels = ['Beginner', 'Intermediate', 'Advanced'];
-  lengthOptions = ['0-15 min', '15-30 min', '30-45 min', '45+ min'];
-  instructors = [
-    'Abiola Akanni', 'Action Jacquelyn', 'Adrian Michael Green',
-    'Adrienne Everett', 'Adrienne Rabena', 'Ajay James',
-    'Andrew Sealy', 'Annie Moves', 'Ashley Galvin'
-  ];
+  instructors$: Observable<any>;
+  instructors: any[] = [];
 
-  selectedDifficulties: { [key: string]: boolean } = {};
-  selectedLengths: { [key: string]: boolean } = {};
-  selectedInstructors: { [key: string]: boolean } = {};
-  allInstructorsSelected = true;
+  selectedDifficulty: string | null = null;
+  selectedSubcategory: string | null = null;
+  selectedInstructorId: string | null = null;
 
-  constructor() {
-    this.difficultyLevels.forEach(level => this.selectedDifficulties[level] = false);
-    this.lengthOptions.forEach(option => this.selectedLengths[option] = false);
-    this.instructors.forEach(instructor => this.selectedInstructors[instructor] = true);
+  constructor(private store: Store) {
+    this.instructors$ = this.store.select(selectAllInstructors);
+    this.instructors$.subscribe((instructors: any) => {
+      this.instructors = instructors;
+    });
   }
 
-  toggleDropdown(dropdown: 'difficulty' | 'length' | 'instructors') {
-    this.openDropdown = this.openDropdown === dropdown ? null : dropdown;
+  ngOnInit() {
+    this.filtersChanged.emit(this.videos);
   }
 
-  toggleAllInstructors() {
-    for (let instructor of this.instructors) {
-      this.selectedInstructors[instructor] = this.allInstructorsSelected;
+  onFilterChange() {
+    let filtered = [...this.videos];
+
+    if (this.selectedDifficulty) {
+      filtered = filtered.filter(
+        (v) => v.difficulty === this.selectedDifficulty
+      );
     }
+
+    if (this.selectedSubcategory) {
+      filtered = filtered.filter(
+        (v) => v.subcategory === this.selectedSubcategory
+      );
+    }
+
+    if (this.selectedInstructorId) {
+      filtered = filtered.filter(
+        (v) => v.instructorId === this.selectedInstructorId
+      );
+    }
+
+    this.filtersChanged.emit(filtered);
   }
 
-  updateInstructorSelection() {
-    this.allInstructorsSelected = this.instructors.every(instructor => this.selectedInstructors[instructor]);
+  get uniqueDifficulties() {
+    return [...new Set(this.videos.map((v) => v.difficulty))];
   }
 
+  get uniqueSubcategories() {
+    return [...new Set(this.videos.map((v) => v.subcategory))];
+  }
+
+  get uniqueInstructors() {
+    const instructorIds = [...new Set(this.videos.map((v) => v.instructorId))];
+    return instructorIds.map((id) => {
+      const instructor = this.instructors.find((i) => i._id === id);
+      return {
+        id: id,
+        name: instructor
+          ? instructor.firstname + ' ' + instructor.lastname
+          : 'Unknown',
+      };
+    });
+  }
+
+  resetFilters() {
+    this.selectedDifficulty = '';
+    this.selectedSubcategory = '';
+    this.selectedInstructorId = '';
+    this.onFilterChange(); // Reset to show all
+  }
 }

@@ -7,8 +7,10 @@
     "
     [image]="pullZone + '/assets/yogaTeacher.png'"
   ></app-title-v2>
+  @if (videos) {
+    <app-class-filter [videos]="videos" (filtersChanged)="onFiltersChanged($event)"></app-class-filter>
+  }
   <div class="flex">
-    <!-- <app-class-filter></app-class-filter> -->
     <div class="container mx-auto px-4 py-8 montserrat-normal">
       <div class="relative">
         <div
@@ -20,7 +22,7 @@
           <app-loading></app-loading>
           } @else {
           <app-class-thumbnail
-            [classes]="videos"
+            [classes]="filteredVideos"
             [allClasses]="true"
             (actionClassSelected)="onWatchSingleClass($event)"
           ></app-class-thumbnail>

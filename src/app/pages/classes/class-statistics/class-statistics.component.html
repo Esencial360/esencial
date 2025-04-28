@@ -1,19 +1,17 @@
 @if (previewView) {
 <div class="flex justify-start mt-2">
-  @if (videoStatistics) { @for (key of filteredKeys; track $index) { @for (entry
-  of getEntries(videoStatistics?.[key]); track $index) {
+  @if (videoStatistics) { @for (key of filteredKeys; track $index) { 
   <div class="flex text-blue">
     <span class="material-symbols-outlined">
       {{ key === "countryWatchTime" ? "timer" : "visibility" }}
     </span>
-    {{ key === "countryWatchTime" ? entry[1] + "min" : entry[1] }}
+    {{ key === "countryWatchTime" ? getTotalWatchTime() + "min" : getTotalViews()}}
   </div>
-  } } } @else {
+   } } @else {
   <app-loading width="30px" height="30px"></app-loading>
   }
 </div>
 } @else {
-
 <section
   class="w-11/12 mx-auto uppercase montserrat-normal mb-10"
   [ngClass]="

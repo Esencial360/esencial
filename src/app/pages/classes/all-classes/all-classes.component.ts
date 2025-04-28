@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { concatMap, from, map, toArray } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
+import { ClassesService } from '../../../shared/services/classes.service';
 
 @Component({
   selector: 'app-all-classes',
@@ -14,14 +15,18 @@ export class AllClassesComponent implements OnInit {
   videos!: any[];
   loadingClasses: boolean = true;
   pullZone = environment.pullZone;
+  classesMetadata!: any;
+  filteredVideos: any[] = [];
 
   constructor(
     private bunnyStreamService: BunnystreamService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private classesService: ClassesService
   ) {}
 
   ngOnInit(): void {
+    this.getAllClassesMetadata();
     this.getAllClasses();
   }
 
@@ -41,52 +46,57 @@ export class AllClassesComponent implements OnInit {
     );
   }
 
+  getAllClassesMetadata() {
+    this.classesService.getAllClasses().subscribe({
+      next: (res) => {
+        this.classesMetadata = res;
+      },
+      error: (err) => {
+        console.error('Error retrieving classes metadata', err);
+      },
+    });
+  }
+
   getVideo(videos: any) {
     const videoIdsArray = videos.map((video: { guid: any }) => video.guid);
     if (videoIdsArray.length === 0) {
-    } else if (videoIdsArray.length === 1) {
-      from(videoIdsArray)
-        .pipe(
-          concatMap((videoId) => this.bunnyStreamService.getVideo(videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-            this.loadingClasses = false;
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
-    } else if (videoIdsArray.length > 1) {
-      from(videoIdsArray)
-        .pipe(
-          concatMap((videoId) => this.bunnyStreamService.getVideo(videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-            this.loadingClasses = false;
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
+      return;
     }
+
+    from(videoIdsArray)
+      .pipe(
+        concatMap((videoId) =>
+          this.bunnyStreamService.getVideo(videoId).pipe(
+            map((video) => {
+              const metadata = this.classesMetadata.find(
+                (meta: any) => meta.classId === video.guid
+              );
+
+              return {
+                video: video,
+                safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+                  `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${
+                    video.thumbnailFileName || 'thumbnail.jpg'
+                  }`
+                ),
+                subcategory: metadata?.subcategory || null,
+                difficulty: metadata?.difficulty || null,
+                instructorId: metadata?.instructorId || null,
+              };
+            })
+          )
+        ),
+        toArray()
+      )
+      .subscribe({
+        next: (videos) => {
+          this.videos = videos;
+          this.loadingClasses = false;
+        },
+        error: (error) => {
+          console.error('Error retrieving videos:', error);
+        },
+      });
   }
 
   onWatchSingleClass(id: string) {
@@ -102,5 +112,11 @@ export class AllClassesComponent implements OnInit {
       .catch((error) => {
         console.error(`An error occurred during navigation: ${error.message}`);
       });
+  }
+
+  onFiltersChanged(filtered: any[]) {
+    console.log(filtered);
+    
+    this.filteredVideos = filtered;
   }
 }
