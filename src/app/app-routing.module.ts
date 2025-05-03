@@ -207,6 +207,10 @@ const routes: Routes = [
     path: 'consejo',
     component: CounselComponent,
   },
+  {
+    path: 'subscribe',
+    component: SignUpComponent
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
   // Catch-all for invalid routes (404)`
 ];
