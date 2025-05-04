@@ -109,10 +109,16 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { FormatDurationPipe } from './shared/pipes/format-duration.pipe';
 import { ClassStatusComponent } from './shared/ui/class-status/class-status.component';
 import { ApproveClassComponent } from './pages/classes/approve-class/approve-class.component';
+import { SubscriptionManagementComponent } from './components/subscription-management/subscription-management.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID } from '@angular/core';
+
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
 }
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -188,6 +194,7 @@ export function localStorageSyncReducer(reducer: any) {
     FormatDurationPipe,
     ClassStatusComponent,
     ApproveClassComponent,
+    SubscriptionManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -219,6 +226,7 @@ export function localStorageSyncReducer(reducer: any) {
     ),
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,

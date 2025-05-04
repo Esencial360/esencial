@@ -5,7 +5,7 @@
   class="modern-tabs"
   animationDuration="300ms" 
 >
-  @if(showTab('CAMBIA TU CONTRASEÑA')) {
+  <!-- @if(showTab('CAMBIA TU CONTRASEÑA')) {
   <mat-tab label="CAMBIA TU CONTRASEÑA">
     <div class="min-h-[60vh]">
       <h2>Change Password</h2>
@@ -71,9 +71,11 @@
       <p *ngIf="message">{{ message }}</p>
     </div>
   </mat-tab>
-  } @if(showTab('MANEJA TU SUBSCRIPCION')) {
+  }  -->
+  @if(showTab('MANEJA TU SUBSCRIPCION')) {
   <mat-tab label="MANEJA TU SUBSCRIPCION">
-    <div class="flex flex-col justify-center items-center mt-10 min-h-[60vh]">
+    <app-subscription-management></app-subscription-management>
+    <!-- <div class="flex flex-col justify-center items-center mt-10 min-h-[60vh]">
       <p>No cuentas con ninguna membresia activa</p>
       <button
         class="bg-blue text-white px-6 py-2 mt-4 rounded-full flex items-center relative"
@@ -85,7 +87,7 @@
         alt="Person doing yoga"
         class="rounded-xl object-cover w-10/12 lg:w-1/4 h-64 my-20"
       />
-    </div>
+    </div> -->
   </mat-tab>
   } @if (showTab('FAVORITOS')) {
   <mat-tab label="FAVORITOS">

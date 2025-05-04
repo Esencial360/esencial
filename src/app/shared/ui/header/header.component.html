@@ -157,7 +157,7 @@
 
       <li class="" (click)="onUserSettings()">SETTINGS</li>
 
-      <!-- <li
+      <li
         class=""
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
@@ -165,13 +165,13 @@
                 }, appState: { target: '/subscribe' }})"
       >
         SUBSCRIBITE
-      </li> -->
-      <li
+      </li>
+      <!-- <li
       class=""
       (click)="onSignUp()"
     >
       SUBSCRIBITE
-    </li>
+    </li> -->
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     }
@@ -290,13 +290,7 @@
       <li class="mr-10" (click)="authService.loginWithRedirect()">
         Inicia Sesion
       </li>
-      <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li>
-      <!-- <button
+      <button
         (click)="authService.loginWithRedirect({ 
                 authorizationParams: {
                     screen_hint: 'signup',
@@ -324,7 +318,7 @@
             ></path>
           </svg>
         </div>
-      </button> -->
+      </button>
     </ul>
   </nav>
 </header>
@@ -395,7 +389,7 @@
       <li class="" (click)="onUserSettings()">SETTINGS</li>
       }
 
-      <!-- <li
+      <li
         class=""
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
@@ -403,13 +397,7 @@
                 }, appState: { target: '/subscribirse' }})"
       >
         SIGN UP
-      </li> -->
-      <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li>
+      </li>
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     }
@@ -455,13 +443,8 @@
       <li class="mr-10" (click)="authService.loginWithRedirect()">
         Inicia Sesion
       </li>
-      <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li>
-      <!-- <button
+
+      <button
         (click)="authService.loginWithRedirect({ 
                 authorizationParams: {
                     screen_hint: 'signup',
@@ -489,7 +472,7 @@
             ></path>
           </svg>
         </div>
-      </button> -->
+      </button>
     </ul>
   </nav>
 </header>

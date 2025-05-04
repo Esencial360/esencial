@@ -1,3 +1,54 @@
 <app-header></app-header>
 
+<div
+  class="flex flex-col items-center min-h-screen bg-gray-100 py-10 montserrat-normal uppercase text-blue"
+>
+  <h2 class="text-3xl font-semibold mb-8">Elige tu membresía</h2>
+
+  <div class="gap-6 w-full max-w-4xl px-6">
+    <div>
+      @for (plan of plans; track $index) {
+      <div
+        class="bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row border border-lightBrown my-4 cursor-pointer transition hover:scale-[1.02]"
+        [ngClass]="{'border-blue ring-2 ring-blue-400': selectedPlan === plan.name}"
+        (click)="selectPlan(plan.name)"
+      >
+        <img [src]="plan.image" class="lg:w-1/2 object-cover" alt="" />
+        <div class="p-6 flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-veige font-bold">{{ plan.name }}</h3>
+          </div>
+          <p class="text-3xl text-strongBrown mb-6 font-bold">
+            ${{ plan.price }} USD
+          </p>
+          <ul class="space-y-3">
+            <li
+              *ngFor="let feature of plan.features"
+              class="flex items-center text-strongBrown"
+            >
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <button
+    class="mt-10 bg-blue hover:bg-strongBrown text-white font-semibold py-3 px-8 rounded-xl transition disabled:opacity-50"
+    [disabled]="!selectedPlan || loading"
+    (click)="subscribe()"
+  >
+    {{ loading ? "Redirecting..." : "Continuar al pago" }}
+  </button>
+</div>
+
 <app-footer></app-footer>
