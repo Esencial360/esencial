@@ -5,10 +5,10 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectAllInstructors } from '../../../state/instructor.selector';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-class-filter',
@@ -35,77 +35,84 @@ import { Observable } from 'rxjs';
     ]),
   ],
 })
-export class ClassFilterComponent implements OnInit {
+export class ClassFilterComponent implements OnInit, OnChanges {
   @Input() videos: any[] = [];
   @Output() filtersChanged = new EventEmitter<any[]>();
 
   instructors$: Observable<any>;
   instructors: any[] = [];
 
+  filteredVideos: any[] = [];
+
   selectedDifficulty: string | null = null;
   selectedSubcategory: string | null = null;
   selectedInstructorId: string | null = null;
 
+  uniqueDifficulties: string[] = [];
+  uniqueSubcategories: string[] = [];
+  uniqueInstructors: { id: string; name: string }[] = [];
+
   constructor(private store: Store) {
     this.instructors$ = this.store.select(selectAllInstructors);
-    this.instructors$.subscribe((instructors: any) => {
-      this.instructors = instructors;
-    });
   }
 
   ngOnInit() {
-    this.filtersChanged.emit(this.videos);
+    this.instructors$.pipe(take(1)).subscribe((instructors: any) => {
+      this.instructors = instructors;
+      this.buildUniqueInstructors();
+    });
   }
 
-  onFilterChange() {
+  ngOnChanges() {
+    this.buildFilterOptions();
+    this.applyFilters();
+  }
+
+  buildFilterOptions() {
+    this.uniqueDifficulties = [...new Set(this.videos.map((v) => v.difficulty))];
+    this.uniqueSubcategories = [...new Set(this.videos.map((v) => v.subcategory))];
+    this.buildUniqueInstructors();
+  }
+
+  buildUniqueInstructors() {
+    const instructorIds = [...new Set(this.videos.map((v) => v.instructorId))];
+    this.uniqueInstructors = instructorIds.map((id) => {
+      const instructor = this.instructors.find((i) => i._id === id);
+      return {
+        id,
+        name: instructor ? `${instructor.firstname} ${instructor.lastname}` : 'Unknown',
+      };
+    });
+  }
+
+  applyFilters() {
     let filtered = [...this.videos];
 
     if (this.selectedDifficulty) {
-      filtered = filtered.filter(
-        (v) => v.difficulty === this.selectedDifficulty
-      );
+      filtered = filtered.filter((v) => v.difficulty === this.selectedDifficulty);
     }
 
     if (this.selectedSubcategory) {
-      filtered = filtered.filter(
-        (v) => v.subcategory === this.selectedSubcategory
-      );
+      filtered = filtered.filter((v) => v.subcategory === this.selectedSubcategory);
     }
 
     if (this.selectedInstructorId) {
-      filtered = filtered.filter(
-        (v) => v.instructorId === this.selectedInstructorId
-      );
+      filtered = filtered.filter((v) => v.instructorId === this.selectedInstructorId);
     }
 
-    this.filtersChanged.emit(filtered);
+    this.filteredVideos = filtered;
+    this.filtersChanged.emit(this.filteredVideos);
   }
 
-  get uniqueDifficulties() {
-    return [...new Set(this.videos.map((v) => v.difficulty))];
-  }
-
-  get uniqueSubcategories() {
-    return [...new Set(this.videos.map((v) => v.subcategory))];
-  }
-
-  get uniqueInstructors() {
-    const instructorIds = [...new Set(this.videos.map((v) => v.instructorId))];
-    return instructorIds.map((id) => {
-      const instructor = this.instructors.find((i) => i._id === id);
-      return {
-        id: id,
-        name: instructor
-          ? instructor.firstname + ' ' + instructor.lastname
-          : 'Unknown',
-      };
-    });
+  onFilterChange() {
+    this.applyFilters();
   }
 
   resetFilters() {
     this.selectedDifficulty = '';
     this.selectedSubcategory = '';
     this.selectedInstructorId = '';
-    this.onFilterChange(); // Reset to show all
+    this.applyFilters();
   }
 }
+

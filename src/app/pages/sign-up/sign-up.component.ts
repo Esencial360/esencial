@@ -78,6 +78,7 @@ export class SignUpComponent {
 
     this.auth.user$.subscribe((user) => {
       if (user) {
+
         const userData = {
           email: user.email,
           userId: user.sub,

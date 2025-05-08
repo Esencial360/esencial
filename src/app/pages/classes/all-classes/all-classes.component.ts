@@ -12,6 +12,7 @@ import { ClassesService } from '../../../shared/services/classes.service';
   styleUrl: './all-classes.component.css',
 })
 export class AllClassesComponent implements OnInit {
+  
   videos!: any[];
   loadingClasses: boolean = true;
   pullZone = environment.pullZone;
@@ -90,6 +91,8 @@ export class AllClassesComponent implements OnInit {
       )
       .subscribe({
         next: (videos) => {
+          console.log(videos);
+          
           this.videos = videos;
           this.loadingClasses = false;
         },
@@ -115,8 +118,6 @@ export class AllClassesComponent implements OnInit {
   }
 
   onFiltersChanged(filtered: any[]) {
-    console.log(filtered);
-    
     this.filteredVideos = filtered;
   }
 }

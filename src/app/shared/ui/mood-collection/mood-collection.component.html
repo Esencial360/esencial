@@ -11,7 +11,7 @@
       @for (option of moodOptions; track $index) {
       <div class="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center">
         <div class="w-36 h-36 flex items-center justify-center mb-4">
-          <img [src]="option.icon" alt="">
+          <img [src]="option.icon" alt="" />
         </div>
 
         <h2 class="text-lg font-medium text-strongBrown font-bold text-center">
@@ -22,7 +22,9 @@
         </p>
 
         <div class="w-full space-y-4">
-          @for (classOption of option.classes; track $index) {
+          <app-class-thumbnail [classes]="option.classes">
+          </app-class-thumbnail>
+          <!-- @for (classOption of option.classes; track $index) {
           <div
             class="w-full relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md"
             (click)="selectClass(classOption)"
@@ -40,7 +42,7 @@
               </p>
             </div>
           </div>
-          }
+          } -->
         </div>
         <button
           (click)="seeMore(option)"

@@ -163,4 +163,8 @@ export class InstructorAdminViewComponent {
       }
     });
   }
+
+  getDescriptionParagraphs(description: string): string[] {
+    return description.split('.').map(p => p.trim()).filter(p => p.length > 0);
+  }
 }

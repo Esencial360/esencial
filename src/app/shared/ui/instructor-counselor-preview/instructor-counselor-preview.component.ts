@@ -18,4 +18,11 @@ export class InstructorCounselorPreviewComponent {
     this.teamAction.emit(id)
   }
 
+  getDescriptionParagraphs(description: string): string[] {
+    return description.split('.').map(p => p.trim()).filter(p => p.length > 0);
+  }
+  
+  
+  
+
 }

@@ -115,4 +115,8 @@ export class SingleInstructorComponent implements OnInit {
         console.error(`An error occurred during navigation: ${error.message}`);
       });
   }
+
+  getDescriptionParagraphs(description: string): string[] {
+    return description.split('.').map(p => p.trim()).filter(p => p.length > 0);
+  }
 }

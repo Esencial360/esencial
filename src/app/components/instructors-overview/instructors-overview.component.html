@@ -1,5 +1,5 @@
 <section
-  class="container mx-auto w-10/12 px-4 py-8"
+  class="container mx-auto w-10/12 lg:px-4 py-8"
   data-aos="fade-up"
   data-aos-duration="1000"
 >
@@ -10,7 +10,7 @@
       Instructores de e<span class="text-blue">360</span>
     </h4>
   </div>
-  <div class="flex space-x-4 overflow-x-auto no-scrollbar">
+  <div class="flex lg:space-x-4 lg:flex-row flex-col lg:overflow-x-auto no-scrollbar">
     @if (adminView) {
       <div class="flex flex-col items-center mr-10">
         <div
@@ -32,13 +32,13 @@
     @for(instructor of instructors; track $index) {
     <div
       (click)="onInstructor(instructor._id)"
-      class="bg-white rounded-xl shadow-lg overflow-hidden w-[400px] cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+      class="bg-white rounded-xl my-2 lg:my-0 shadow-lg overflow-hidden w-full lg:w-[400px] cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
     >
       <div class="relative">
         <img
           [src]="instructor.profilePicture"
           [alt]="instructor.title"
-          class="w-full h-56 object-cover"
+          class="w-full h-56 object-contain"
         />
         <div
           class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"
@@ -53,8 +53,6 @@
             >
               {{ instructor.title }}
             </span>
-            <span class="mx-2">•</span>
-            <span>Esencial<span class="text-blue">360</span> Instructor</span>
           </div>
         </div>
       </div>
