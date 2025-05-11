@@ -19,7 +19,7 @@ export class InstructorCounselorPreviewComponent {
   }
 
   getDescriptionParagraphs(description: string): string[] {
-    return description.split('.').map(p => p.trim()).filter(p => p.length > 0);
+    return description.split('. ').map(p => p.trim()).filter(p => p.length > 0);
   }
   
   

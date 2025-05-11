@@ -246,9 +246,9 @@ export class UploadVideoComponent implements OnInit {
   getSubcategories(): string[] {
     const collection = this.newVideoForm.get('collectionId')?.value;
     if (collection === '0ea815c8-7cf9-42e7-a5b0-4e0f6eef0d15')
-      return ['Power', 'Flow', 'Ashtanga'];
-    if (collection === '472608a1-1a1c-4828-9bdc-12c590ecc759')
       return ['Restaurativo', 'Iyengar', 'Yin'];
+    if (collection === '472608a1-1a1c-4828-9bdc-12c590ecc759')
+      return ['Power', 'Flow', 'Ashtanga'];
     return [];
   }
 }

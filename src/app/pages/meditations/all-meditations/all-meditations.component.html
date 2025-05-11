@@ -1,0 +1,32 @@
+<app-header></app-header>
+<section class="max-w-7xl mx-auto">
+  <app-title-v2
+    [title]="'Meditaciones'"
+    [description]="
+      'Explora nuestras meditaciones diseñadas para acompañarte en distintos momentos de tu día. Ya sea que busques un espacio de calma, enfoque o renovación, aquí encontrarás prácticas que te elevarán al siguiente nivel. Elige entre sesiones cortas de 10-15 min para un respiro rápido o meditaciones profundas de 20-30 min para una conexión más intensa.'
+    "
+    [closingTitle]="'Respira, suelta y regresa a tu centro.'"
+    [image]="pullZone + '/assets/yogaTeacher.png'"
+  ></app-title-v2>
+  <div class="flex">
+    <div class="container mx-auto px-4 py-8 montserrat-normal">
+      <div class="relative">
+        <div
+          class="absolute top-0 right-0 w-1/3 h-64 bg-green-600 rounded-bl-full"
+        ></div>
+        <div class="relative z-10 mb-10">
+          <!-- <app-instructor-filter></app-instructor-filter> -->
+          @if (loading) {
+          <app-loading></app-loading>
+          } @else {
+          <app-meditation-thumbnail
+            [meditations]="meditations"
+            (actionMeditationSelected)="onWatchMeditation($event)"
+          ></app-meditation-thumbnail>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

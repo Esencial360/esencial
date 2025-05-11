@@ -55,8 +55,8 @@ export class MoodCollectionComponent {
       title: 'Necesito soltar y resetear',
       subtitle: 'Buscas liberar y restaurar.',
       icon: this.pullZone + '/assets/wave.png',
-      category: 'vinyasa',
-      subcategory: 'ashtanga',
+      category: 'hatha',
+      subcategories: ['Restaurativo', 'Iyengar', 'Yin'],
     },
   ];
 
@@ -194,10 +194,7 @@ export class MoodCollectionComponent {
           imagePath:
             cls.safeThumbnail?.changingThisBreaksApplicationSecurity ||
             this.pullZone + '/assets/placeholder.jpg',
-          title: `${cls.title || 'NOMBRE DE CLASE'}, ${
-            cls.duration || '0'
-          } MIN`,
-          duration: `${cls.duration || '0'} MIN`,
+          title: `${cls.subcategory || 'NOMBRE DE CLASE'}`,
           instructor: cls.instructor?.firstname || 'INSTRUCTOR',
         })),
       };

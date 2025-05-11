@@ -29,4 +29,8 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  onNewMeditation() {
+    this.router.navigate(['/nueva-meditacion'])
+  }
 }

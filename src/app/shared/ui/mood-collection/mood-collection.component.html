@@ -22,9 +22,9 @@
         </p>
 
         <div class="w-full space-y-4">
-          <app-class-thumbnail [classes]="option.classes">
-          </app-class-thumbnail>
-          <!-- @for (classOption of option.classes; track $index) {
+          <!-- <app-class-thumbnail [classes]="option.classes">
+          </app-class-thumbnail> -->
+          @for (classOption of option.classes; track $index) {
           <div
             class="w-full relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md"
             (click)="selectClass(classOption)"
@@ -37,12 +37,12 @@
             <div
               class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
             >
-              <p class="text-white text-xs font-medium px-4 text-center">
+              <p class="text-white uppercase text-xs font-medium px-4 text-center">
                 {{ classOption.title }}
               </p>
             </div>
           </div>
-          } -->
+          }
         </div>
         <button
           (click)="seeMore(option)"

@@ -258,30 +258,13 @@ export class AdminProfileComponent implements OnInit {
               selectedInstructor,
               'Su clase se ha aprovado.',
               this.activeVideoId,
-              false
+              true
             );
           },
           error: (error) => {
             console.log('Error updated classes from document', error);
           },
         });
-        if (status === 'reject') {
-          this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
-            (response) => {
-              this.classesService.deleteClass(this.activeVideoId).subscribe({
-                next: (response) => {
-                  console.log('class removed from classes document', response);
-                },
-                error: (error) => {
-                  console.log('Error removing classes from document', error);
-                },
-              });
-            },
-            (error) => {
-              console.error('Error retrieving videos:', error);
-            }
-          );
-        }
       },
       (error) => {
         console.error('Error updating instructor:', error);
@@ -362,7 +345,7 @@ export class AdminProfileComponent implements OnInit {
         subject: 'Tu clase ha sido rechazada',
         html: `
           <p>Estiamdo ${instructor.firstname},</p>
-          <p>Su clase (ID: <strong>${videoId}</strong>) ha sido <strong>rechazada</strong>.</p>
+          <p>Su clase (<strong>${this.activeVideoInfo.title}</strong>) ha sido <strong>rechazada</strong>.</p>
           <p>Reason: <em>${reason}</em></p>
           <p>Comuníquese con nosotros si tiene alguna pregunta.</p>
           <p>Saludos cordiales,<br>el consejo de esencial360</p>
@@ -374,9 +357,9 @@ export class AdminProfileComponent implements OnInit {
         subject: 'Tu clase ha sido aprovada',
         html: `
           <p>Estiamdo ${instructor.firstname},</p>
-          <p>Su clase (ID: <strong>${videoId}</strong>) ha sido <strong>aprovada</strong>.</p>
+          <p>Su clase (<strong>${this.activeVideoInfo.title}</strong>) ha sido <strong>aprovada</strong>.</p>
           <p>Reason: <em>${reason}</em></p>
-          <p>SU clase ya esta disponible para verse para la comunidad de esencial360</p>
+          <p>Su clase ya esta disponible para verse para la comunidad de esencial360</p>
           <p>Saludos cordiales,<br>el consejo de esencial360</p>
         `,
       };

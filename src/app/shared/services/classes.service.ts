@@ -1,26 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, switchMap } from 'rxjs';
 import { Classes } from '../Models/Classes';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClassesService {
   private apiUrl = `${environment.apiUrl}classes`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   getAllClasses(): Observable<Classes[]> {
     return this.http.get<Classes[]>(this.apiUrl);
   }
 
-  getClass(id: any): Observable<Classes> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Classes>(url);
-  }
-
+getClass(id: any): Observable<Classes> {
+  return this.auth.getAccessTokenSilently().pipe(
+    switchMap((token: string) => {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+      return this.http.get<Classes>(`${this.apiUrl}/${id}`, { headers });
+    })
+  );
+}
   createClass(classVideo: Classes): Observable<Classes> {
     return this.http.post<Classes>(this.apiUrl, classVideo);
   }

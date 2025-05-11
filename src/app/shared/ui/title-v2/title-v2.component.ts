@@ -10,5 +10,6 @@ export class TitleV2Component {
   @Input() title!: string
   @Input() description!: string
   @Input() image!: string
+  @Input() closingTitle!: string;
 
 }

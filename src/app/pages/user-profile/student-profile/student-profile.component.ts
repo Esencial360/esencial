@@ -107,52 +107,39 @@ export class StudentProfileComponent implements OnInit {
   }
 
   getVideo(videos: any) {
-    const videoIdsArray = videos;
-    if (videoIdsArray.length === 0) {
-    } else if (videoIdsArray.length === 1) {
-      from(videoIdsArray)
-        .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-            console.log(this.videos);
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
-    } else if (videoIdsArray.length > 1) {
-      from(videoIdsArray)
-        .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-            console.log(this.videos);
-            
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
-    }
+    // const videoIdsArray = videos.map((video: { guid: any }) => video.guid);
+    // if (videoIdsArray.length === 0) {
+    //   return;
+    // }
+
+    from(videos)
+      .pipe(
+        concatMap((videoId) =>
+          this.bunnystreamService.getVideo(videoId).pipe(
+            map((video) => {
+              return {
+                video: video,
+                safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+                  `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${
+                    video.thumbnailFileName || 'thumbnail.jpg'
+                  }`
+                ),
+              };
+            })
+          )
+        ),
+        toArray()
+      )
+      .subscribe({
+        next: (videos) => {
+          console.log(videos);
+
+          this.videos = videos;
+        },
+        error: (error) => {
+          console.error('Error retrieving videos:', error);
+        },
+      });
   }
 
   showTab(tabName: string): boolean {

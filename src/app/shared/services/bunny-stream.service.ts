@@ -92,57 +92,6 @@ export class BunnystreamService {
       .pipe(catchError(this.handleError));
   }
 
-  /**
-   * Uploads a video using the TUS protocol with metadata (e.g., difficulty and subcategory)
-   */
-  // uploadVideoWithTus(
-  //   file: File,
-  //   videoId: string,
-  //   title: string,
-  //   collectionId: string,
-  //   difficulty: string,
-  //   subcategory: string
-  // ) {
-  //   const expirationTimestamp =
-  //     Math.floor(Date.now() / 1000) + this.signatureExpireSeconds;
-  //   const signature = this.generateSignature(
-  //     this.libraryId,
-  //     this.apiKey,
-  //     expirationTimestamp,
-  //     videoId
-  //   );
-
-  //   const upload = new tus.Upload(file, {
-  //     endpoint: 'https://video.bunnycdn.com/tusupload',
-  //     retryDelays: [0, 3000, 5000, 10000, 20000, 60000],
-  //     headers: {
-  //       AuthorizationSignature: signature,
-  //       AuthorizationExpire: expirationTimestamp.toString(),
-  //       VideoId: videoId,
-  //       LibraryId: this.libraryId.toString(),
-  //     },
-  //     metadata: {
-  //       filetype: file.type,
-  //       title: title,
-  //       collection: collectionId,
-  //       difficulty,
-  //       subcategory,
-  //     },
-  //     onError: (error: any) => {
-  //       console.error('TUS Upload error:', error);
-  //     },
-  //     onProgress: (bytesUploaded: number, bytesTotal: number) => {
-  //       const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
-  //       console.log(`Uploaded ${percentage}%`);
-  //     },
-  //     onSuccess: () => {
-  //       console.log('TUS Upload complete!');
-  //     },
-  //   });
-
-  //   upload.start();
-  // }
-
   async uploadVideoWithTus(
     file: File,
     videoId: string,
@@ -218,36 +167,6 @@ export class BunnystreamService {
     return hashHex;
   }
 
-  /**
-   * Placeholder SHA256 - Replace with real hash logic or API call to backend
-   */
-
-  // createVideo(title: string, collectionId: string, thumbnailTime?: number) {
-  //   const url = `${this.apiUrl}/videos`;
-  //   const headers = { AccessKey: this.apiKey };
-  //   const body = {
-  //     title: title,
-  //     collectionId: collectionId,
-  //     thumnailTime: thumbnailTime,
-  //   };
-  //   return this.http
-  //     .post(url, body, { headers })
-  //     .pipe(catchError(this.handleError));
-  // }
-
-  // uploadVideo(videoId: string, file: File, thumbnailTime?: number) {
-  //   const url = `${this.apiUrl}/videos/${videoId}`;
-  //   const headers = {
-  //     AccessKey: this.apiKey,
-  //   };
-  //   const formData = new FormData();
-  //   formData.append('file', file, file.name);
-
-  //   return this.http
-  //     .put(url, file, { headers })
-  //     .pipe(catchError(this.handleError));
-  // }
-
   deleteVideo(videoId: string) {
     const url = `${this.apiUrl}/videos/${videoId}`;
     const headers = {
@@ -268,6 +187,12 @@ export class BunnystreamService {
     };
 
     return this.http.get(url, { headers }).pipe(catchError(this.handleError));
+  }
+
+  getFilesStorage() {
+    const url = `${this.apiUrl}/meditations`;
+    const headers = { AccessKey: this.apiKey };
+    return this.http.get(url, { headers });
   }
 
   private handleError(error: any) {

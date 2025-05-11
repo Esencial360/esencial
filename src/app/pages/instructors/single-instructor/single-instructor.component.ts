@@ -98,12 +98,8 @@ export class SingleInstructorComponent implements OnInit {
 
 
   onWatchSingleClass(video: any) {
-    const collectionName = this.bunnystreamService.getCollection(
-      video.collectionId
-    );
-    console.log(collectionName);
     this.router
-      .navigate([`/collection/${collectionName}/${video.guid}`])
+      .navigate([`/clases/${video}`])
       .then((navigationSuccess) => {
         if (navigationSuccess) {
           console.log('Navigation to class successful');

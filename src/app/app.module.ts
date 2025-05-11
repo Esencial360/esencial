@@ -113,6 +113,10 @@ import { SubscriptionManagementComponent } from './components/subscription-manag
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID } from '@angular/core';
+import { AllMeditationsComponent } from './pages/meditations/all-meditations/all-meditations.component';
+import { SingleMeditationComponent } from './pages/meditations/single-meditation/single-meditation.component';
+import { MeditationThumbnailComponent } from './shared/ui/meditation-thumbnail/meditation-thumbnail.component';
+import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 
 
 export function localStorageSyncReducer(reducer: any) {
@@ -195,6 +199,10 @@ registerLocaleData(localeEs, 'es');
     ClassStatusComponent,
     ApproveClassComponent,
     SubscriptionManagementComponent,
+    AllMeditationsComponent,
+    SingleMeditationComponent,
+    MeditationThumbnailComponent,
+    UploadMeditationsComponent,
   ],
   imports: [
     BrowserModule,
