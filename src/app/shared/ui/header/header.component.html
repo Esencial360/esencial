@@ -13,7 +13,7 @@
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-veige ">esencial<span class="text-blue">360</span></h3>
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
   </div>
   <nav>
     <ul
@@ -32,6 +32,9 @@
       </li>
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
+      </li>
+          <li class="mr-10">
+        <a (click)="onMeditations()" class="hover:text-gray-400">MEDITACIONES</a>
       </li>
       <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
@@ -83,12 +86,10 @@
       <img
         [src]="pullZone + '/assets/blueLogo.png'"
         alt="Logo"
-        class="max-h-20  cursor-pointer rounded-lg"
+        class="max-h-20 cursor-pointer rounded-lg"
         (click)="onHome()"
       />
-      <h3 class="text-veige">
-        esencial<span class="text-blue">360</span>
-      </h3>
+      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
     </div>
     <span
       (click)="toggle()"
@@ -121,12 +122,13 @@
     @if(userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
       @if (roles === "User") {
-        <div class="flex items-center">
-          <span class="text-xl">🔥</span>
-          <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-        </div>
-        } 
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+      </div>
+      }
       <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
       <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
       <li class="ml-2">
         <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
@@ -138,6 +140,7 @@
     } @if(!userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
       <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
       <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
       <li class="ml-2">
         <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
@@ -185,11 +188,11 @@
   </div>
   <nav class="flex">
     @if (roles === "User") {
-      <div class="flex items-center">
-        <span class="text-xl">🔥</span>
-        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-      </div>
-      } 
+    <div class="flex items-center">
+      <span class="text-xl">🔥</span>
+      <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+    </div>
+    }
     <ul
       class="flex anton items-center uppercase pointer text-base cursor-pointer"
     >
@@ -204,6 +207,11 @@
       </li>
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
+      </li>
+           <li class="mr-10">
+        <a (click)="onMeditations()" class="hover:text-gray-400"
+          >MEDITACIONES</a
+        >
       </li>
       <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
@@ -257,7 +265,7 @@
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-veige ">esencial<span class="text-blue">360</span></h3>
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
   </div>
   <nav>
     <ul
@@ -423,6 +431,11 @@
       </li>
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
+      </li>
+      <li class="mr-10">
+        <a (click)="onMeditations()" class="hover:text-gray-400"
+          >MEDITACIONES</a
+        >
       </li>
       <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>

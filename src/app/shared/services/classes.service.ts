@@ -17,26 +17,47 @@ export class ClassesService {
     return this.http.get<Classes[]>(this.apiUrl);
   }
 
-getClass(id: any): Observable<Classes> {
-  return this.auth.getAccessTokenSilently().pipe(
-    switchMap((token: string) => {
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-      });
-      return this.http.get<Classes>(`${this.apiUrl}/${id}`, { headers });
-    })
-  );
-}
+  getClass(id: any): Observable<Classes> {
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        console.log(token);
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<Classes>(`${this.apiUrl}/${id}`, { headers });
+      })
+    );
+  }
   createClass(classVideo: Classes): Observable<Classes> {
-    return this.http.post<Classes>(this.apiUrl, classVideo);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<Classes>(this.apiUrl, classVideo, { headers });
+      })
+    );
   }
 
   updateClass(classVideo: Classes): Observable<Classes> {
-    return this.http.put<Classes>(this.apiUrl, classVideo);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.put<Classes>(this.apiUrl, classVideo, { headers });
+      })
+    );
   }
 
   deleteClass(id: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(url);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.delete<Classes>(`${this.apiUrl}/${id}`, { headers });
+      })
+    );
   }
 }

@@ -118,7 +118,6 @@ import { SingleMeditationComponent } from './pages/meditations/single-meditation
 import { MeditationThumbnailComponent } from './shared/ui/meditation-thumbnail/meditation-thumbnail.component';
 import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 
-
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
 }
@@ -220,6 +219,8 @@ registerLocaleData(localeEs, 'es');
       clientId: environment.auth0.clientId,
       authorizationParams: {
         redirect_uri: environment.auth0.redirectUri,
+        audience: environment.auth0.audience,
+        scope: 'openid profile email',
       },
       httpInterceptor: {
         allowedList: [`${environment.dev.serverUrl}`],
@@ -228,7 +229,7 @@ registerLocaleData(localeEs, 'es');
     StoreModule.forRoot(
       {
         user: userActiveReducer,
-        instructors: instructorReducer
+        instructors: instructorReducer,
       },
       { metaReducers: [localStorageSyncReducer] }
     ),
@@ -249,6 +250,8 @@ registerLocaleData(localeEs, 'es');
             clientId: environment.auth0.clientId,
             authorizationParams: {
               redirect_uri: environment.auth0.redirectUri,
+              audience: environment.auth0.audience,
+              scope: 'openid profile email',
             },
           });
         }

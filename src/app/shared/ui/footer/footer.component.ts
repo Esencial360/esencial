@@ -5,20 +5,23 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css'
+  styleUrl: './footer.component.css',
 })
 export class FooterComponent {
-
-  pullZone: string = environment.pullZone
+  pullZone: string = environment.pullZone;
 
   constructor(private route: Router) {}
 
   onContact() {
-    this.route.navigate(['/contacto'])
+    this.route.navigate(['/contacto']);
   }
 
   onBecomeInstructor() {
-    this.route.navigate(['/carrera-instructor'])
+    this.route.navigate(['/carrera-instructor']);
+  }
+
+  onMeditations() {
+    this.route.navigate(['meditaciones']);
   }
 
   onHome() {
@@ -58,7 +61,6 @@ export class FooterComponent {
   }
 
   onCounsel() {
-    this.route.navigate(['consejo'])
+    this.route.navigate(['consejo']);
   }
-
 }

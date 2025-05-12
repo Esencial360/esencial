@@ -84,7 +84,7 @@ export class LandingComponent implements OnInit  {
           this.authService.user$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((user) => {
       if (user) {
         this.isLoading = false;
-        const namespace = 'https://test-assign-roles.com';
+        const namespace = 'https://test-assign-roles.com/';
         this.roles = user[`${namespace}roles`][0] || [];
       } else {
         this.isLoading = false;

@@ -56,7 +56,9 @@ export class HeaderComponent {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
         if (user) {
-          const namespace = 'https://test-assign-roles.com';
+          console.log(user);
+          
+          const namespace = 'https://test-assign-roles.com/';
           this.roles = user[`${namespace}roles`][0] || "User";
           console.log(this.roles);
           
@@ -105,6 +107,10 @@ export class HeaderComponent {
 
   onCounsel() {
     this.route.navigate(['consejo']);
+  }
+
+  onMeditations() {
+    this.route.navigate(['meditaciones'])
   }
 
   toggle() {
