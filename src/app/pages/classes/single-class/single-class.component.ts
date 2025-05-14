@@ -48,7 +48,7 @@ export class SingleClassComponent implements OnInit {
   userId!: string;
   classInfo!: Classes;
   instructorInfo!: Instructor;
-
+  forbidden!: boolean;
   users$!: any;
   user$!: any;
   user!: any;
@@ -102,15 +102,12 @@ export class SingleClassComponent implements OnInit {
       this.videoId = params.get('id');
     });
     this.isLiked = this.user.likedVideos?.includes(this.videoId);
-    this.getVideo();
+    // this.getVideo();
     this.getVideoInfo();
 
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.authService.user$.subscribe((user) => {
         if (user) {
-
-          console.log(user);
-          
           const namespace = 'https://test-assign-roles.com/';
           this.roles = user[`${namespace}roles`][0] || [];
           this.isLoading = false;
@@ -138,9 +135,11 @@ export class SingleClassComponent implements OnInit {
       next: (response) => {
         this.classInfo = response;
         this.getInstructor(response.instructorId);
+        this.getVideo()
       },
       error: (error) => {
-        console.error('Error retrieved Classr:', error);
+        console.error('Error retrieved Class:', error);
+        this.forbidden = true;
       },
       complete: () => {
         console.log('Cration retrieved completed.');
@@ -174,7 +173,6 @@ export class SingleClassComponent implements OnInit {
         onConfirm: () => {
           this.bunnystreamService.deleteVideo(this.videoId).subscribe(
             (response) => {
-              console.log('Success deleting video:', response);
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {
                   this.deleteVideoInInstructor();
@@ -249,10 +247,9 @@ export class SingleClassComponent implements OnInit {
         onConfirm: () => {
           this.bunnystreamService.deleteVideo(this.videoId).subscribe(
             (response) => {
-              console.log('Success deleting video:', response);
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {
-                  console.log('Class deleted successfully', response);
+                  console.log('Class deleted successfully');
                 },
                 error: (error) => {
                   console.error('Error deleted Classr:', error);

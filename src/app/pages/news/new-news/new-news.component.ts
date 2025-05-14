@@ -33,7 +33,7 @@ export class NewNewsComponent implements OnInit {
       console.log(this.newsForm.value);
       this.newsService.createNews(this.newsForm.value).subscribe(
         (response) => {
-          console.log('File uploaded successfully:', response);
+          console.log('File uploaded successfully:');
           this.router.navigate([`/noticias/${response._id}`])
         },
         (error) => {

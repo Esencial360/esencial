@@ -45,126 +45,12 @@ export class ApproveClassComponent {
     this.classesService.getClass(classId).subscribe({
       next: (response) => {
         this.classInfo = response;
-        console.log('class retrieved', response);
       },
       error: (error) => {
         console.log('Error retrieving class', error);
       },
     });
   }
-
-  // updateVideoStatus(status: string, reason?: string) {
-  //   const selectedInstructor = this.instructors.find(
-  //     (instructor: { videos: { videoId: string }[] }) =>
-  //       instructor.videos?.some(
-  //         (video: { videoId: string }) => video.videoId === this.activeVideoId
-  //       )
-  //   );
-
-  //   if (!selectedInstructor) {
-  //     console.error('Instructor not found for this video.');
-  //     return;
-  //   }
-
-  //   const updatedVideos = selectedInstructor.videos.map(
-  //     (video: { videoId: string }) =>
-  //       video.videoId === this.activeVideoId ? { ...video, status } : video
-  //   );
-
-  //   const updatedClass: Classes = {
-  //     ...this.classInfo,
-  //     status: status,
-  //   };
-
-  //   console.log(updatedClass);
-
-  //   const updatedInstructor: Instructor = {
-  //     ...selectedInstructor,
-  //     videos: updatedVideos,
-  //   };
-
-  //   this.instructorService.updateInstructor(updatedInstructor).subscribe(
-  //     (response: any) => {
-  //       console.log(`Instructor video status updated to ${status}`, response);
-  //       this.classesService.updateClass(updatedClass).subscribe({
-  //         next: (response) => {
-  //           console.log('class updated from classes document', response);
-  //         },
-  //         error: (error) => {
-  //           console.log('Error updated classes from document', error);
-  //         },
-  //       });
-  //       if (status === 'underObservation') {
-  //         this.sendObservationEmail(
-  //           selectedInstructor.email,
-  //           'reason',
-  //           this.activeVideoId
-  //         );
-  //       }
-  //       if (status === 'reject') {
-  //         this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
-  //           (response) => {
-  //             console.log('Success deleting video:', response);
-  //             this.classesService.deleteClass(this.activeVideoId).subscribe({
-  //               next: (response) => {
-  //                 console.log('class removed from classes document', response);
-  //               },
-  //               error: (error) => {
-  //                 console.log('Error removing classes from document', error);
-  //               },
-  //             });
-  //           },
-  //           (error) => {
-  //             console.error('Error retrieving videos:', error);
-  //           }
-  //         );
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error('Error updating instructor:', error);
-  //     }
-  //   );
-  // }
-
-  // rejectVideo() {
-  //   const selectedInstructor = this.instructors.find(
-  //     (instructor: { videos: { videoId: string }[] }) =>
-  //       instructor.videos?.some(
-  //         (video: { videoId: string }) => video.videoId === this.activeVideoId
-  //       )
-  //   );
-  //   if (!selectedInstructor) {
-  //     console.error('Instructor not found for this video.');
-  //     return;
-  //   }
-
-  //   const updatedVideos = selectedInstructor.videos?.filter(
-  //     (video: { videoId: string }) => video.videoId !== this.activeVideoId
-  //   );
-
-  //   const updatedInstructor: Instructor = {
-  //     ...selectedInstructor,
-  //     videos: updatedVideos,
-  //   };
-
-  //   this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
-  //     (response) => {
-  //       console.log('Success deleting video:', response);
-  //       this.instructorService.updateInstructor(updatedInstructor).subscribe(
-  //         (response: any) => {
-  //           console.log('Instructor updated successfully', response);
-  //         },
-  //         (error) => {
-  //           console.error('Error updating instructor:', error);
-  //         }
-  //       );
-  //     },
-  //     (error) => {
-  //       console.error('Error retrieving videos:', error);
-  //     }
-  //   );
-  // }
-
   goBack() {
     this.location.back();
   }

@@ -55,7 +55,7 @@ export class InstructorAdminViewComponent {
 
     await this.instructorService.getInstructor(this.instructorId).subscribe(
       (response) => {
-        console.log('Instructor get successfully', response);
+        console.log('Instructor get successfully');
         this.instructor = response;
         this.getVideo(this.instructor.videos);
       },
@@ -134,7 +134,7 @@ export class InstructorAdminViewComponent {
   onRemoveInstructor() {
     this.instructorService.deleteInstructor(this.instructorId).subscribe({
       next: (response) => {
-        console.log('Instructor removed successfully', response);
+        console.log('Instructor removed successfully');
       },
       error: (error) => {
         console.log('Instructor removed error', error);

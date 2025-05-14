@@ -53,7 +53,7 @@ export class UploadMeditationsComponent {
     this.instructorService.getAllInstructors().subscribe(
       (response) => {
         this.instructors = response;
-        console.log('Instructs successfully', response);
+        console.log('Instructs successfully');
       },
       (error) => {
         console.error('Instructors error', error);
@@ -82,49 +82,6 @@ export class UploadMeditationsComponent {
     this.secondStep = true;
   }
 
-  // putVideoInstructor(videoId: string) {
-  //   const selectedInstructor = this.instructors.find(
-  //     (instructor) => instructor._id === this.newMeditationForm.value.instructor
-  //   );
-  //   console.log(selectedInstructor);
-
-  //   if (selectedInstructor) {
-  //     const instructorMeditations = selectedInstructor.meditations
-  //       ? selectedInstructor.meditations
-  //       : [];
-
-  //     const newMeditation = {
-  //       title: videoId,
-  //     };
-  //     const updatedInstructor: Instructor = {
-  //       ...selectedInstructor,
-  //       meditations: [...instructorMeditations, newMeditation],
-  //     };
-
-  //     const videos = videoId ? [videoId] : [];
-  //     const instructorData: Instructor = { ...updatedInstructor };
-  //     const meditationClass: Meditation = {
-  //       title: videoId,
-  //       instructorId: selectedInstructor._id,
-  //     };
-  //     this.onSubmitNewInstructor();
-  //     this.instructorService.updateInstructor(instructorData).subscribe({
-  //       next: (response) => {
-  //         console.log('Instructor updated successfully', response);
-  //       },
-  //       error: (error) => {
-  //         console.error('Error updating instructor:', error);
-  //       },
-  //       complete: () => {
-  //         console.log('Update process completed.');
-  //       },
-  //     });
-  //   } else {
-  //     console.error('No instructor found with the provided id');
-  //     this.onSubmitNewInstructor()
-  //   }
-  // }
-
   onSubmitNewInstructor() {
     this.loading = true;
     this.firstStep = false;
@@ -138,9 +95,6 @@ export class UploadMeditationsComponent {
         instructorId = this.newMeditationForm.value.instructorId;
       }
       const formData = new FormData();
-      console.log('Title:', this.newMeditationForm.value.title);
-      console.log('Instructor ID:', instructorId);
-      console.log('File:', this.selectedFile);
       formData.append('title', this.newMeditationForm.value.title);
       formData.append('instructorId', instructorId);
       formData.append('meditationClass', this.selectedFile);
@@ -148,7 +102,7 @@ export class UploadMeditationsComponent {
 
       this.meditationService.createMeditation(formData).subscribe({
         next: (response) => {
-          console.log('meditation created:', response);
+          console.log('meditation created:');
           this.loading = false;
         },
         error: (error) => {

@@ -4,7 +4,7 @@ export const environment = {
       domain: 'dev-syvyfpm6kjwu0kzp.us.auth0.com',
       clientId: 'atpOOLQH8aatanwIQmv8ZkyD03NqsraF',
       redirectUri: 'https://whale-app-gfb2z.ondigitalocean.app',
-      audience: 'https://test-assign-roles.com'
+      audience: 'https://dev-syvyfpm6kjwu0kzp.us.auth0.com/api/v2/'
     },
     dev: {
       serverUrl: 'https://seal-app-jeede.ondigitalocean.app/'

@@ -119,7 +119,7 @@ import { MeditationThumbnailComponent } from './shared/ui/meditation-thumbnail/m
 import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 
 export function localStorageSyncReducer(reducer: any) {
-  return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
+  return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
 }
 registerLocaleData(localeEs, 'es');
 

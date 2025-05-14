@@ -78,8 +78,6 @@ export class AdminProfileComponent implements OnInit {
       this.instructors = instructors;
       this.filteredInstructors = this.instructors;
       this.pendingVideos = [];
-      console.log(instructors);
-
       instructors.forEach((instructor) => {
         (instructor.videos ?? [])
           .filter((video) => video.status === 'Pending')
@@ -319,7 +317,7 @@ export class AdminProfileComponent implements OnInit {
   deleteClass() {
     this.classesService.deleteClass(this.activeVideoId).subscribe({
       next: (response) => {
-        console.log('class removed from classes document', response);
+        console.log('class removed from classes document');
       },
       error: (error) => {
         console.log('Error removing classes from document', error);

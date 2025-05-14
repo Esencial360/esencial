@@ -73,7 +73,6 @@ export class BlogComponent implements OnInit {
     await this.blogService.getAllBlogs().subscribe(
       (blogs: Blog[]) => {
         this.blogs = blogs;
-        console.log(this.blogs);
       },
       (error) => {
         console.error('Error fetching blogs:', error);
@@ -85,7 +84,6 @@ export class BlogComponent implements OnInit {
     await this.blogService.getAllCategories().subscribe(
       (categories: Category[]) => {
         this.categories = categories;
-        console.log(this.categories);
       },
       (error) => {
         console.error('Error fetching categories:', error);
@@ -115,7 +113,6 @@ export class BlogComponent implements OnInit {
       next: (blob) => {
         const objectUrl = URL.createObjectURL(blob);
         this.safeImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
-        console.log(this.safeImageUrl)
       },
       error: (error) => {
         console.error('Error loading image:', error);

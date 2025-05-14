@@ -68,7 +68,7 @@ export class UploadVideoComponent implements OnInit {
     this.instructorService.getAllInstructors().subscribe(
       (response) => {
         this.instructors = response;
-        console.log('Instructs successfully', response);
+        console.log('Instructs successfully');
       },
       (error) => {
         console.error('Instructors error', error);
@@ -137,7 +137,7 @@ export class UploadVideoComponent implements OnInit {
       };
       this.classesService.createClass(classVideo).subscribe({
         next: (response) => {
-          console.log('Class created successfully', response);
+          console.log('Class created successfully');
         },
         error: (error) => {
           console.error('Error creating Classr:', error);
@@ -148,7 +148,7 @@ export class UploadVideoComponent implements OnInit {
       });
       this.instructorService.updateInstructor(instructorData).subscribe({
         next: (response) => {
-          console.log('Instructor updated successfully', response);
+          console.log('Instructor updated successfully');
         },
         error: (error) => {
           console.error('Error updating instructor:', error);
@@ -168,7 +168,7 @@ export class UploadVideoComponent implements OnInit {
       };
       this.classesService.createClass(classVideo).subscribe({
         next: (response) => {
-          console.log('Class created successfully', response);
+          console.log('Class created successfully');
         },
         error: (error) => {
           console.error('Error creating Classr:', error);
@@ -198,7 +198,7 @@ export class UploadVideoComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (response: any) => {
-          console.log('Video created successfully:', response);
+          console.log('Video created successfully:');
           this.videoId = response.guid;
           this.onUploadVideo();
         },

@@ -91,8 +91,6 @@ export class AllClassesComponent implements OnInit {
       )
       .subscribe({
         next: (videos) => {
-          console.log(videos);
-          
           this.videos = videos;
           this.loadingClasses = false;
         },

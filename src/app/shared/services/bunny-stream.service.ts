@@ -109,7 +109,6 @@ export class BunnystreamService {
       expirationTimestamp,
       videoId
     );
-    console.log(signature);
 
     const upload = new tus.Upload(file, {
       endpoint: 'https://video.bunnycdn.com/tusupload',
@@ -180,8 +179,6 @@ export class BunnystreamService {
 
   getVideoStatistics(videoGuid: string) {
     const url = `${this.apiUrl}/statistics?hourly=false&videoGuid=${videoGuid}`;
-    console.log(url);
-
     const headers = {
       AccessKey: this.apiKey,
     };

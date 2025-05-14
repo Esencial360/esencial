@@ -132,8 +132,6 @@ export class StudentProfileComponent implements OnInit {
       )
       .subscribe({
         next: (videos) => {
-          console.log(videos);
-
           this.videos = videos;
         },
         error: (error) => {

@@ -20,7 +20,6 @@ export class ClassesService {
   getClass(id: any): Observable<Classes> {
     return this.auth.getAccessTokenSilently().pipe(
       switchMap((token: string) => {
-        console.log(token);
         const headers = new HttpHeaders({
           Authorization: `Bearer ${token}`,
         });

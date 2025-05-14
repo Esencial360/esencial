@@ -33,10 +33,6 @@ export class ClassStatisticsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.route.paramMap.subscribe((params) => {
-    //   this.videoId = params.get('id');
-    //   console.log(this.videoId);
-    // });
     this.getVideoStatistics();
   }
 
@@ -55,7 +51,6 @@ export class ClassStatisticsComponent implements OnInit {
   getVideoStatistics() {
     this.bunnystreamService.getVideoStatistics(this.videoGuid).subscribe(
       (response: any) => {
-        console.log(response);
         this.videoStatistics = response;
       },
       (error) => {

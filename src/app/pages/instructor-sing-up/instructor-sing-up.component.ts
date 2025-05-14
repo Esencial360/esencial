@@ -73,7 +73,6 @@ export class InstructorSingUpComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('onsubmit');
   }
 
   onContinueToForm() {

@@ -45,7 +45,7 @@ export class ContactComponent {
       });
       this.emailService.sendContactForm(this.contactForm.value).subscribe(
         (response) => {
-          console.log('form send successfully', response);
+          console.log('form send successfully');
         },
         (error) => {
           console.error('error sending form', error);

@@ -49,12 +49,11 @@ export class SingleInstructorComponent implements OnInit {
 
     await this.instructorService.getInstructor(this.instructorId).subscribe(
       (response) => {
-        console.log('Instructor get successfully', response);
+        console.log('Instructor get successfully');
         this.instructor = response;
         const activeVideo = this.instructor.videos?.find(
           (video) => video.status === 'approve'      
         );
-        console.log(activeVideo);
         
         if (activeVideo) {
           this.getVideo(activeVideo.videoId); // Pass only videoId
@@ -88,7 +87,7 @@ export class SingleInstructorComponent implements OnInit {
       .subscribe({
         next: (videos) => {
           this.videos = videos;
-          console.log('Retrieved videos:', this.videos);
+          console.log('Retrieved videos:');
         },
         error: (error) => {
           console.error('Error retrieving videos:', error);

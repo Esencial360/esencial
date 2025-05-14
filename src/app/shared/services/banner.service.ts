@@ -17,7 +17,6 @@ export class BannerService {
 
   createBanner(banner: any): Observable<any> {
     console.log('posting banner');
-    console.log(this.apiUrl);
     
     return this.http.post(`${this.apiUrl}`, banner);
   }

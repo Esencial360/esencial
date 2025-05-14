@@ -24,7 +24,6 @@ export class AllMeditationsComponent implements OnInit {
     this.meditationService.getAllMeditation().subscribe({
       next: (res) => {
         this.meditations = res;
-        console.log(res);
         this.loading = false
       },
       error: (err) => {

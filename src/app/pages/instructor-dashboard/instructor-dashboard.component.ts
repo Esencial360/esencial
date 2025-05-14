@@ -52,8 +52,6 @@ export class InstructorDashboardComponent implements OnInit {
                 });
               this.instructorService.getInstructor(user.email).subscribe({
                 next: (response) => {
-                  console.log(response);
-                  
                   this.instructorImage = response.profilePicture.toString()
                   this.store.dispatch(
                     ActiveUserApiActions.retrievedActiveUser({

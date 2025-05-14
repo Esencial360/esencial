@@ -14,7 +14,7 @@ export class MeditationThumbnailComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['meditations']) {
-      console.log('meditations changed:', this.meditations);
+      console.log('meditations changed:');
     }
   }
 

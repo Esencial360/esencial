@@ -32,8 +32,6 @@ export class SingleCollectionClassesComponent implements OnInit {
     window.scrollTo(0, 0);
     this.route.paramMap.subscribe((params) => {
       this.collectionName = params.get('id');
-      console.log(this.collectionName);
-      
     });
     this.getCollectionList();
     AOS.init({
@@ -45,8 +43,6 @@ export class SingleCollectionClassesComponent implements OnInit {
     this.bunnystreamService.getCollectionList().subscribe(
       (response: any) => {
         this.collectionList = response.items;
-        console.log(response);
-        
         function findMatchingObject(dataArray: any, name: string) {
           return dataArray.find((item: { name: string }) => item.name === name);
         }
@@ -64,7 +60,6 @@ export class SingleCollectionClassesComponent implements OnInit {
       .getCollectionVideosList(this.collectionName)
       .subscribe(
         (response) => {
-          console.log(response);
           this.getVideo(response.items)
         },
         (error) => {
@@ -111,8 +106,6 @@ export class SingleCollectionClassesComponent implements OnInit {
         .subscribe({
           next: (videos) => {
             this.videos = videos;
-            console.log(this.videos);
-            
           },
           error: (error) => {
             console.error('Error retrieving videos:', error);

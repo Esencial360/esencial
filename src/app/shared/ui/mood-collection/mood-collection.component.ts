@@ -62,96 +62,6 @@ export class MoodCollectionComponent {
 
   moodOptions: any[] = [];
 
-  // moodOptions: MoodOption[] = [
-  //   {
-  //     id: 'energetic',
-  //     title: 'Activo/a y con energía',
-  //     subtitle: 'Quieres una práctica dinámica que te rete.',
-  //     icon: this.pullZone + '/assets/sun.png',
-  //     classes: [
-  //       {
-  //         id: 'class1',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '30 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //       {
-  //         id: 'class2',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '45 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //       {
-  //         id: 'class3',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '60 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 'relaxed',
-  //     title: 'Con ganas de relajarte',
-  //     subtitle: 'Quieres una práctica suave y restaurativa',
-  //     icon: this.pullZone + '/assets/moon.png',
-  //     classes: [
-  //       {
-  //         id: 'class4',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '20 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //       {
-  //         id: 'class5',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '30 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //       {
-  //         id: 'class6',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '40 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 'restorative',
-  //     title: 'Necesito soltar y resetear',
-  //     subtitle: 'Buscas liberar y restaurar.',
-  //     icon: this.pullZone + '/assets/wave.png',
-  //     classes: [
-  //       {
-  //         id: 'class7',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '25 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //       {
-  //         id: 'class8',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '35 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //       {
-  //         id: 'class9',
-  //         imagePath: this.pullZone + '/assets/1.jpg',
-  //         title: 'NOMBRE DE CLASE, DURACIÓN',
-  //         duration: '50 MIN',
-  //         instructor: 'INSTRUCTOR',
-  //       },
-  //     ],
-  //   },
-  // ];
-
   constructor(
     private bunnyStreamService: BunnystreamService,
     private router: Router,
@@ -162,7 +72,6 @@ export class MoodCollectionComponent {
   ngOnInit() {
     this.getAllClasses();
     this.getAllClassesMetadata();
-    // this.filterClassesByMood();
   }
 
   filterClassesByMood() {
@@ -174,7 +83,6 @@ export class MoodCollectionComponent {
       Flow: 'vinyasa',
       Ashtanga: 'vinyasa',
     };
-    console.log('All videos:', this.videos);
 
     this.moodOptions = this.moodConfig.map((config) => {
       const filteredClasses = this.videos
@@ -190,26 +98,23 @@ export class MoodCollectionComponent {
       return {
         ...config,
         classes: filteredClasses.map((cls) => ({
-          id: cls._id,
+          id: cls.video.guid,
           imagePath:
             cls.safeThumbnail?.changingThisBreaksApplicationSecurity ||
             this.pullZone + '/assets/placeholder.jpg',
-          title: `${cls.subcategory || 'NOMBRE DE CLASE'}`,
+          title: `${cls.video.title || 'NOMBRE DE CLASE'}`,
           instructor: cls.instructor?.firstname || 'INSTRUCTOR',
         })),
       };
     });
-
-    console.log('Built moodOptions:', this.moodOptions);
   }
 
   selectClass(classOption: ClassOption): void {
-    console.log('Selected class:', classOption);
-    // Implement your navigation or selection logic here
+    this.router.navigate([`/clases/${classOption.id}`]);
   }
 
   seeMore(option: MoodOption): void {
-    console.log('See more for:', option.title);
+    this.router.navigate(['/clases']);
   }
 
   getAllClasses() {
@@ -253,7 +158,6 @@ export class MoodCollectionComponent {
               const metadata = this.classesMetadata.find(
                 (meta: any) => meta.classId === video.guid
               );
-
               return {
                 video: video,
                 safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -274,7 +178,6 @@ export class MoodCollectionComponent {
         next: (videos) => {
           this.videos = videos;
           this.filterClassesByMood();
-          console.log(this.moodOptions);
           this.loadingClasses = false;
         },
         error: (error) => {

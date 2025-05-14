@@ -11,7 +11,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
 import { selectActiveUser } from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
-import {Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -30,12 +30,11 @@ export class HeaderComponent {
   @Input()
   newLanding!: boolean;
 
-
   roles!: string;
   isOpen: boolean = false;
   user$: any;
   streak!: any;
-  pullZone: string = environment.pullZone
+  pullZone: string = environment.pullZone;
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
@@ -56,12 +55,9 @@ export class HeaderComponent {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
         if (user) {
-          console.log(user);
-          
           const namespace = 'https://test-assign-roles.com/';
-          this.roles = user[`${namespace}roles`][0] || "User";
+          this.roles = user[`${namespace}roles`][0] || 'User';
           console.log(this.roles);
-          
         }
       });
   }
@@ -110,7 +106,7 @@ export class HeaderComponent {
   }
 
   onMeditations() {
-    this.route.navigate(['meditaciones'])
+    this.route.navigate(['meditaciones']);
   }
 
   toggle() {
