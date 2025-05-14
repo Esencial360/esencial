@@ -2,8 +2,9 @@
   fitInkBarToContent
   mat-stretch-tabs="false"
   mat-align-tabs="center"
-  class="modern-tabs"
+  class="modern-tabs min-h-[65vh]"
   animationDuration="300ms" 
+  
 >
   <!-- @if(showTab('CAMBIA TU CONTRASEÑA')) {
   <mat-tab label="CAMBIA TU CONTRASEÑA">
@@ -98,9 +99,10 @@
       [previousClasses]="previousClasses"
     ></app-previous-classes> -->
   </mat-tab>
-  } @if (showTab('BADGES')) {
+  } 
+  <!-- @if (showTab('BADGES')) {
   <mat-tab label="BADGES">
     <app-badges [badges]="badges" [futureBadges]="futureBadges"></app-badges>
   </mat-tab>
-  }
+  } -->
 </mat-tab-group>

@@ -12,7 +12,6 @@ import { ClassesService } from '../../../shared/services/classes.service';
   styleUrl: './all-classes.component.css',
 })
 export class AllClassesComponent implements OnInit {
-  
   videos!: any[];
   loadingClasses: boolean = true;
   pullZone = environment.pullZone;
@@ -27,6 +26,7 @@ export class AllClassesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.getAllClassesMetadata();
     this.getAllClasses();
   }
@@ -35,6 +35,8 @@ export class AllClassesComponent implements OnInit {
     this.bunnyStreamService.getVideosList().subscribe(
       (response) => {
         this.getVideo(response.items);
+        console.log(response.items);
+        
         if (response.totalItems <= 0) {
           this.loadingClasses = false;
         } else {

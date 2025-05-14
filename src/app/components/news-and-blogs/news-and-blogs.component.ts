@@ -100,6 +100,21 @@ export class NewsAndBlogsComponent implements OnInit {
       });
   }
 
+  onCounselCatalogue() {
+        this.router
+      .navigateByUrl('/consejo')
+      .then((navigationSuccess) => {
+        if (navigationSuccess) {
+          console.log('Navigation to consejo page successful');
+        } else {
+          console.error('Navigation to consejo page failed');
+        }
+      })
+      .catch((error) => {
+        console.error(`An error occurred during navigation: ${error.message}`);
+      });
+  }
+
   onInstructorCatalogue() {
     this.router
       .navigateByUrl('/instructores')

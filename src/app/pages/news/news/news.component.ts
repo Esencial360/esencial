@@ -67,7 +67,6 @@ export class NewsComponent implements OnInit {
       next: (blob) => {
         const objectUrl = URL.createObjectURL(blob);
         this.safeImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
-        console.log(this.safeImageUrl)
       },
       error: (error) => {
         console.error('Error loading image:', error);

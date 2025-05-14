@@ -94,9 +94,9 @@ export class LandingComponent implements OnInit  {
     this.services = [
       { title: 'YOGA', image: this.pullZone + '/assets/6.png'},
       { title: 'MEDITACIONES', image: this.pullZone + '/assets/7.png' },
-      { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
+      // { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
     ];
-    this.fetchBlogs();
+    // this.fetchBlogs();
     this.fetchInstructors();
   }
 
@@ -108,16 +108,16 @@ export class LandingComponent implements OnInit  {
     this.elementState = 'visible';
   }
 
-  async fetchBlogs() {
-    await this.blogService.getAllBlogs().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      (blogs: Blog[]) => {
-        this.blogs = blogs;
-      },
-      (error) => {
-        console.error('Error fetching blogs:', error);
-      }
-    );
-  }
+  // async fetchBlogs() {
+  //   await this.blogService.getAllBlogs().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+  //     (blogs: Blog[]) => {
+  //       this.blogs = blogs;
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching blogs:', error);
+  //     }
+  //   );
+  // }
 
   async fetchInstructors() {
     await this.instructorService.getAllInstructors().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
@@ -130,19 +130,27 @@ export class LandingComponent implements OnInit  {
     );
   }
 
-  navigateToBlog() {
-    this.router
-      .navigateByUrl('/blog')
-      .then((navigationSuccess) => {
-        if (navigationSuccess) {
-          console.log('Navigation to blog page successful');
-        } else {
-          console.error('Navigation to blog page failed');
-        }
-      })
-      .catch((error) => {
-        console.error(`An error occurred during navigation: ${error.message}`);
-      });
+  // navigateToBlog() {
+  //   this.router
+  //     .navigateByUrl('/blog')
+  //     .then((navigationSuccess) => {
+  //       if (navigationSuccess) {
+  //         console.log('Navigation to blog page successful');
+  //       } else {
+  //         console.error('Navigation to blog page failed');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(`An error occurred during navigation: ${error.message}`);
+  //     });
+  // }
+
+  onService(title: string) {
+    if (title === 'YOGA') {
+         this.router.navigate(['/clases']) 
+    } else {
+      this.router.navigate(['/meditaciones'])
+    }
   }
 
   navigateToInstructors() {

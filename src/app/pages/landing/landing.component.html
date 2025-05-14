@@ -65,6 +65,10 @@
           [bgColor]="'bg-blue'"
           [text]="'¡Comenzar mi viaje esencial360!'"
           [width]="'w-full'"
+          (click)="authService.loginWithRedirect({ 
+              authorizationParams: {
+                  screen_hint: 'signup',
+                }, appState: { target: '/subscribirse' }})"
         ></app-button>
       </div>
 
@@ -122,7 +126,7 @@
     [@fadeIn]="elementState"
     appInView
     (inView)="onInView()"
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2"
   >
     @for (service of services; track $index) {
     <div
@@ -131,6 +135,7 @@
         'bg-purple-100': service.special
       }"
       class="overflow-hidden relative group"
+      (click)="onService(service.title)"
     >
       <img
         [src]="service.image"
@@ -151,6 +156,10 @@
     class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
   >
     <button
+      (click)="authService.loginWithRedirect({ 
+              authorizationParams: {
+                  screen_hint: 'signup',
+                }, appState: { target: '/subscribirse' }})"
       class="bg-blue text-white px-8 py-4 uppercase font-bold md:w-4/12 text-sm rounded-md flex items-center justify-center w-full"
     >
       ¡Comenzar mi viaje esencial360!
