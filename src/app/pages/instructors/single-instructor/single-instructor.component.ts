@@ -49,12 +49,11 @@ export class SingleInstructorComponent implements OnInit {
 
     await this.instructorService.getInstructor(this.instructorId).subscribe(
       (response) => {
-        console.log('Instructor get successfully', response);
+        console.log('Instructor get successfully');
         this.instructor = response;
         const activeVideo = this.instructor.videos?.find(
           (video) => video.status === 'approve'      
         );
-        console.log(activeVideo);
         
         if (activeVideo) {
           this.getVideo(activeVideo.videoId); // Pass only videoId
@@ -88,7 +87,7 @@ export class SingleInstructorComponent implements OnInit {
       .subscribe({
         next: (videos) => {
           this.videos = videos;
-          console.log('Retrieved videos:', this.videos);
+          console.log('Retrieved videos:');
         },
         error: (error) => {
           console.error('Error retrieving videos:', error);
@@ -98,12 +97,8 @@ export class SingleInstructorComponent implements OnInit {
 
 
   onWatchSingleClass(video: any) {
-    const collectionName = this.bunnystreamService.getCollection(
-      video.collectionId
-    );
-    console.log(collectionName);
     this.router
-      .navigate([`/collection/${collectionName}/${video.guid}`])
+      .navigate([`/clases/${video}`])
       .then((navigationSuccess) => {
         if (navigationSuccess) {
           console.log('Navigation to class successful');
@@ -114,5 +109,9 @@ export class SingleInstructorComponent implements OnInit {
       .catch((error) => {
         console.error(`An error occurred during navigation: ${error.message}`);
       });
+  }
+
+  getDescriptionParagraphs(description: string): string[] {
+    return description.split('.').map(p => p.trim()).filter(p => p.length > 0);
   }
 }

@@ -14,7 +14,6 @@ export const userReducer = createReducer(
 export const userActiveReducer = createReducer(
   initialUserActive,
   on(ActiveUserApiActions.retrievedActiveUser, (state, { user }) => {
-    console.log('Reducer received user:', user);
     return user;
   })
 );

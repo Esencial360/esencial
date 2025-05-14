@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -13,7 +7,6 @@ import {
   DialogComponent,
   DialogData,
 } from '../../../shared/ui/dialog/dialog.component';
-import AOS from 'aos';
 import { AuthService } from '@auth0/auth0-angular';
 import { Subject, takeUntil } from 'rxjs';
 import { LikedClassesService } from '../../../shared/services/liked-classes.service';
@@ -29,6 +22,7 @@ import { ClassesService } from '../../../shared/services/classes.service';
 import { Classes } from '../../../shared/Models/Classes';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import { Instructor } from '../../../shared/Models/Instructor';
+import { environment } from '../../../../environments/environment';
 
 declare global {
   interface Window {
@@ -45,7 +39,7 @@ export class SingleClassComponent implements OnInit {
   @ViewChild('dialogAnchor') dialogAnchor!: ElementRef;
   @ViewChild('bunnyVideo') videoIframe!: ElementRef;
   videoId!: any;
-
+  pullZone = environment.pullZone;
   videos!: any;
   link!: SafeResourceUrl;
   isLoading!: boolean;
@@ -54,7 +48,7 @@ export class SingleClassComponent implements OnInit {
   userId!: string;
   classInfo!: Classes;
   instructorInfo!: Instructor;
-   
+  forbidden!: boolean;
   users$!: any;
   user$!: any;
   user!: any;
@@ -65,19 +59,22 @@ export class SingleClassComponent implements OnInit {
     description:
       'En esta clase de Vinyasa aprenderás a postergar la ansiedad. Saldrás para mejorar la resistencia, aumentar la flexibilidad y encontrar un flujo continuo en tu práctica.',
     items: [
-      { icon: '/assets/images/yogaMat.png', text: 'Tapete de yoga' },
-      { icon: '/assets/images/waterBottle.png', text: 'Botella de agua' },
-      { icon: '/assets/images/towel.png', text: 'Toalla corta' },
+      { icon: this.pullZone + '/assets/yogaMat.png', text: 'Tapete de yoga' },
+      {
+        icon: this.pullZone + '/assets/waterBottle.png',
+        text: 'Botella de agua',
+      },
+      { icon: this.pullZone + '/assets/towel.png', text: 'Toalla corta' },
     ],
     recommendations: [
-      { icon: '/assets/images/wakingUp.png', text: 'Al despertar' },
-      { icon: '/assets/images/bowl.png', text: 'Uso de cuencos' },
-      { icon: '/assets/images/sun.png', text: 'Al aire libre' },
-      { icon: '/assets/images/boxes.png', text: 'Uso de bloques' },
+      { icon: this.pullZone + '/assets/wakingUp.png', text: 'Al despertar' },
+      { icon: this.pullZone + '/assets/bowl.png', text: 'Uso de cuencos' },
+      { icon: this.pullZone + '/assets/sun.png', text: 'Al aire libre' },
+      { icon: this.pullZone + '/assets/boxes.png', text: 'Uso de bloques' },
     ],
   };
   private intervalId: any;
-  private destroy$ = new Subject<void>()
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -104,21 +101,19 @@ export class SingleClassComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.videoId = params.get('id');
     });
-    this.isLiked = this.user.likedVideos.includes(this.videoId);
-    this.getVideo();
+    this.isLiked = this.user.likedVideos?.includes(this.videoId);
+    // this.getVideo();
     this.getVideoInfo();
 
-    this.authService.user$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => {
-        this.authService.user$.subscribe((user) => {
-          if (user) {
-            const namespace = 'https://test-assign-roles.com';
-            this.roles = user[`${namespace}roles`][0] || [];
-            this.isLoading = false;
-          }
-        });
+    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+      this.authService.user$.subscribe((user) => {
+        if (user) {
+          const namespace = 'https://test-assign-roles.com/';
+          this.roles = user[`${namespace}roles`][0] || [];
+          this.isLoading = false;
+        }
       });
+    });
   }
 
   getVideo() {
@@ -138,14 +133,13 @@ export class SingleClassComponent implements OnInit {
   getVideoInfo() {
     this.classesService.getClass(this.videoId).subscribe({
       next: (response) => {
-        console.log('Class retrieved successfully', response);
         this.classInfo = response;
-        console.log(this.classInfo);
-        
         this.getInstructor(response.instructorId);
+        this.getVideo()
       },
       error: (error) => {
-        console.error('Error retrieved Classr:', error);
+        console.error('Error retrieved Class:', error);
+        this.forbidden = true;
       },
       complete: () => {
         console.log('Cration retrieved completed.');
@@ -156,9 +150,7 @@ export class SingleClassComponent implements OnInit {
   getInstructor(instructorId: string | undefined) {
     this.instructorService.getInstructor(instructorId).subscribe({
       next: (response) => {
-        console.log('instructor retrieved successfully', response);
         this.instructorInfo = response;
-        console.log(this.instructorInfo);
       },
       error: (error) => {
         console.error('Error retrieved instructor:', error);
@@ -171,30 +163,25 @@ export class SingleClassComponent implements OnInit {
 
   deleteVideo() {
     const scrollPosition = window.pageYOffset;
-    document.body.style.top = `-${scrollPosition}px`;
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
 
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        title: 'Delete Video',
-        message: 'Are you sure you want to delete this video?',
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
+        title: 'Borrar el video',
+        message: 'Estas seguro de borrar el video?',
+        confirmText: 'Borrar',
+        cancelText: 'Volver',
         onConfirm: () => {
           this.bunnystreamService.deleteVideo(this.videoId).subscribe(
             (response) => {
-              console.log('Success deleting video:', response);
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {
-                  console.log('Class deleted successfully', response);
-                  this.deleteVideoInInstructor()
+                  this.deleteVideoInInstructor();
                 },
                 error: (error) => {
                   console.error('Error deleted Classr:', error);
                 },
                 complete: () => {
-                  console.log('Cration deleted completed.');
+                  console.log('Class deleted completed.');
                 },
               });
               this.showSuccessMessage();
@@ -225,7 +212,7 @@ export class SingleClassComponent implements OnInit {
 
     this.instructorService.updateInstructor(updatedInstructor).subscribe({
       next: (response) => {
-        console.log('instructor updated successfully', response);
+        console.log('instructor updated successfully');
       },
       error: (error) => {
         console.error('Error updated instructor:', error);
@@ -260,10 +247,9 @@ export class SingleClassComponent implements OnInit {
         onConfirm: () => {
           this.bunnystreamService.deleteVideo(this.videoId).subscribe(
             (response) => {
-              console.log('Success deleting video:', response);
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {
-                  console.log('Class deleted successfully', response);
+                  console.log('Class deleted successfully');
                 },
                 error: (error) => {
                   console.error('Error deleted Classr:', error);

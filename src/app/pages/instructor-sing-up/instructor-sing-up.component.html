@@ -1,7 +1,7 @@
 <app-header [newLanding]="true"></app-header>
 
 <section class="h-full relative">
-  <app-parallax [imagePath]="'assets/images/18.jpg'"></app-parallax>
+  <app-parallax [imagePath]="pullZone + '/assets/18.jpg'"></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center lg:w-9/12"
   >
@@ -31,7 +31,7 @@
       [text]="
         'Si eres instructor de Yoga, o facilitador de alguna las disciplinas siguientes, y quieres que tu práctica, material y/o clases tengan la mejor plataforma para ser vistas por cientos de alumnos y usuarios, estás en el lugar ideal.'
       "
-      [image]="'/assets/images/logoBlue.png'"
+      [image]="pullZone + '/assets/blueLogo.png'"
       [reverse]="true"
     ></app-banner-v2>
     @for (service of services; track $index) {

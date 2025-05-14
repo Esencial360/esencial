@@ -43,7 +43,6 @@ export class CreateBannerComponent {
   loadBanners() {
     this.bannerService.getAllBanners('').subscribe((response) => {
       this.banners = response;
-      console.log(this.banners);
     });
   }
 
@@ -59,12 +58,11 @@ export class CreateBannerComponent {
   }
 
   onSubmit() {
-    console.log(this.bannerForm);
     if (this.bannerForm.valid) {
       this.creatingBanner = true;
       this.bannerService.createBanner(this.bannerForm.value).subscribe(
         (response) => {
-          console.log('Banner created:', response);
+          console.log('Banner created:');
           this.creatingBanner = false;
           this.successCreatingBanner = true;
         },
@@ -85,7 +83,7 @@ export class CreateBannerComponent {
       .updateBanner(this.selectedBannerId, this.bannerForm)
       .subscribe(
         (response) => {
-          console.log('Banner updated:', response);
+          console.log('Banner updated:');
           this.loadBanners();
         },
         (error) => {
@@ -102,7 +100,7 @@ export class CreateBannerComponent {
         .subscribe(
           (response) => {
             banner.isActive = response.isActive;
-            console.log('Banner status updated:', response);
+            console.log('Banner status updated:');
           },
           (error) => console.error('Error updating banner status:', error)
         );

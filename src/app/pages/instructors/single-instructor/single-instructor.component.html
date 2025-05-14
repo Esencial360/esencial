@@ -5,7 +5,7 @@
     class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 cursor-pointer  max-w-4xl"
   >
     <div
-      class="w-64 h-64 rounded-full object-cover flex-shrink-0 overflow-hidden border-4 border-teal-500"
+      class="w-80 rounded-full object-cover flex-shrink-0 overflow-hidden"
     >
       <img
         [src]="instructor.profilePicture"
@@ -15,13 +15,15 @@
     </div>
     <div class="text-gray-700 lg:ml-10">
       <h2
-        class="font-bold text-lg lg:text-2xl uppercase text-blue drop-shadow-lg"
+        class="font-bold text-lg lg:text-2xl uppercase text-blue drop-shadow-lg mb-5"
       >
         {{ instructor.firstname + " " + instructor.lastname }}
       </h2>
-      <p class="text-sm my-5 leading-relaxed drop-shadow-lg">
-        {{ instructor.description }}
-      </p>
+      <div class="text-neutral-700 leading-relaxed space-y-4">
+        <p *ngFor="let paragraph of getDescriptionParagraphs(instructor.description)">
+          {{ paragraph }}.
+        </p>
+      </div>
     </div>
   </div>
   <div class="mt-10  max-w-4xl flex flex-col items-center lg:items-start w-full">

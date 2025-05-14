@@ -37,20 +37,7 @@
   (close)="showModal = false"
   class="overflow-hidden"
 >
-  <div style="position: relative; padding-top: 56.25%">
-    @if (isLoading) {
-    <app-loading></app-loading>
-    } @else {
-    <iframe
-      [src]="linkVideo"
-      loading="lazy"
-      class="absolute top-0 left-0 w-full h-full"
-      style="border: none"
-      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-      allowfullscreen
-    ></iframe>
-    }
-  </div>
+@if (!isLoading) {
   <div class="text-center flex flex-col mt-10">
     <h2 class="text-blue uppercase font-bold text-xl tracking-wide">
       {{ activeVideoInfo.title }}
@@ -64,7 +51,7 @@
       Fecha publicado: {{ activeVideoInfo.dateUploaded | date }}
     </p>
   </div>
-  <div class="flex justify-evenly mt-6 text-black">
+  <div class="flex justify-evenly my-6 text-black">
     <button
       (click)="handleAction('approve')"
       class="px-6 py-2 bg-blue text-white rounded-xl shadow-md hover:bg-strongBrown hover:scale-105 transition-all duration-200 ease-in-out"
@@ -77,6 +64,21 @@
     >
       Rechazar
     </button>
+  </div>
+}
+  <div style="position: relative; padding-top: 56.25%">
+    @if (isLoading) {
+    <app-loading></app-loading>
+    } @else {
+    <iframe
+      [src]="linkVideo"
+      loading="lazy"
+      class="absolute top-0 left-0 w-full h-full"
+      style="border: none"
+      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+      allowfullscreen
+    ></iframe>
+    }
   </div>
 </app-modal>
 } @if (showModalAfterAction) {

@@ -16,7 +16,7 @@
       (click)="onHome()"
     >
       <img
-        src="../../../assets/images/logoWhite.png"
+        [src]="pullZone + '/assets/logoWhite.png'"
         alt="Logo"
         class="max-h-16 md:max-h-20 cursor-pointer rounded-lg"
       />
@@ -29,7 +29,7 @@
         class="flex flex-col md:flex-row text-white text-center md:text-left space-y-3 md:space-y-0 md:space-x-6"
       >
         <li class="cursor-pointer hover:underline" (click)="onCounsel()">
-          Nosotros
+          Consejo
         </li>
         <li class="cursor-pointer hover:underline" (click)="onInstructors()">
           Instructores
@@ -39,6 +39,9 @@
         </li>
         <li class="cursor-pointer hover:underline" (click)="onClasses()">
           Clases
+        </li>
+        <li class="cursor-pointer hover:underline" (click)="onMeditations()">
+          Meditaciones
         </li>
       </ul>
     </nav>

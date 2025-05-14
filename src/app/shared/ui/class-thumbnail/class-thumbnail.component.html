@@ -5,13 +5,6 @@
 >
   @for (class of classes; track $index) {
   <div class="flex flex-col">
-    @if (!hideStatistics) {
-      <app-class-statistics
-      [adminView]="true"
-      [videoGuid]="class?.video?.guid"
-      [previewView]="true"
-    ></app-class-statistics>
-    }
     <div
       (click)="allInfo ? onClassSelected(class.video) : onClassSelected(class.video.guid)"
       class="relative overflow-hidden rounded-xl shadow-lg max-w-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl"
@@ -46,6 +39,13 @@
         </div>
       </div>
     </div>
+    @if (!hideStatistics) {
+      <app-class-statistics
+      [adminView]="true"
+      [videoGuid]="class?.video?.guid"
+      [previewView]="true"
+    ></app-class-statistics>
+    }
   </div>
   }
 </div>

@@ -1,112 +1,114 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@auth0/auth0-angular';
+import { StripeService } from '../../shared/services/stripe.service';
+import { environment } from '../../../environments/environment';
+import {
+  DialogComponent,
+  DialogData,
+} from '../../shared/ui/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { FileUploadService } from '../../shared/services/file-upload.service';
 
+interface PricingPlan {
+  name: string;
+  price: number;
+  highlight?: string;
+  features: string[];
+  image: string;
+  priceId: string;
+}
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
-  // signInForm: FormGroup;
-  // firstStep!: boolean;
-  // secondStep!: boolean;
-  // thirdStep!: boolean;
-  // showAlert!: boolean;
-  // selectedPlan: 'freemium' | 'premium' | 'pro' = 'freemium';
-  // promoCode: string = '';
-  // selectedFile: File | null = null;
+  selectedPlan!: string;
+  loading = false;
+  pullZone = environment.pullZone;
+  plans: PricingPlan[] = [
+    {
+      name: 'esencial360',
+      highlight: '360',
+      price: 98,
+      image: this.pullZone + '/assets/10.jpg',
+      features: [
+        'Acceso completo de la plataforma.',
+        'Asesoría personalizada.',
+        'Promoción de estudio o marca personal',
+        'Acceso gratutito a talleres especiales y eventos.',
+      ],
+      priceId: 'price_1RKfvQIKBryFAlYkZTsaDoy6',
+    },
+    {
+      name: 'esencial',
+      price: 58,
+      image: this.pullZone + '/assets/11.jpg',
+      features: [
+        'Accesso a clases de yoga y meditaciones',
+        'Asesoría básica.',
+        'Descuente a talleres especiales y eventos.',
+      ],
+      priceId: 'price_1RKfvAIKBryFAlYk6RjBFO0l',
+    },
+  ];
 
-  // constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,  private fileUploadService: FileUploadService) {
-  //   this.signInForm = this.fb.group({
-  //     firstname: ['', [Validators.required]],
-  //     lastname: ['', Validators.required],
-  //     email: ['', [Validators.required, Validators.email]],
-  //     password: ['', Validators.required],
-  //   });
-  // }
+  constructor(
+    private auth: AuthService,
+    private http: HttpClient,
+    private stripeService: StripeService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
-  // ngOnInit(): void {
-  //   this.firstStep = true;
-  // }
+  selectPlan(plan: string) {
+    this.selectedPlan = plan;
+  }
 
-  // // onSubmit() {
-  // //   if (this.signInForm.valid) {
-  // //     console.log('Form submitted with sanitized values:', this.signInForm);
-  // //     this.onRegisterUser(
-  // //       this.signInForm.value.email,
-  // //       this.signInForm.value.firstname,
-  // //       this.signInForm.value.lastname,
-  // //       this.signInForm.value.password
-  // //     );
-  // //   }
-  // // }
+  async subscribe() {
+    if (!this.selectedPlan) return;
 
-  // onPlanChange(plan: 'freemium' | 'premium' | 'pro') {
-  //   this.selectedPlan = plan;
-  //   console.log(this.selectedPlan);
-  // }
+    this.loading = true;
 
-  // onPromoCodeChange(promoCode: any) {
-  //   this.promoCode = promoCode;
-  //   console.log(this.promoCode);
-  // }
+    const priceId =
+      this.selectedPlan === 'esencial'
+        ? 'price_1RKfvAIKBryFAlYk6RjBFO0l'
+        : 'price_1RKfvQIKBryFAlYkZTsaDoy6';
 
-  // // onChoosePlan() {
-  // // }
+    this.auth.user$.subscribe((user) => {
+      if (user) {
 
-  // onRegisterUser(
-  //   email: string,
-  //   firstname: string,
-  //   lastname: string,
-  //   password: string
-  // ) {
-  //   this.authService
-  //     .registerUser(email, firstname, lastname, password)
-  //     .subscribe(
-  //       (response: any) => {
-  //         if (response.body.success) {
-  //           console.log('Login successful');
-  //           this.showAlert = false;
-  //           // this.router.navigate(['/dashboard']);
-  //           this.firstStep = false;
-  //           this.secondStep = true;
-  //         } else {
-  //           console.log('Login failed');
-  //           this.showAlert = true;
-  //         }
-  //       },
-  //       (error) => {
-  //         // Handle login error
-  //         console.error('Login error:', error);
-  //         this.showAlert = true;
-  //       }
-  //     );
-  // }
+        const userData = {
+          email: user.email,
+          userId: user.sub,
+          priceId,
+        };
+        this.stripeService.createSubscription(userData).subscribe({
+          next: (res: any) => {
+            window.location.href = res.url;
+          },
+          error: (err) => {
+            if (err.error.error === 'User already has an active subscription.') {
+              this.showErrorMessage()
+            }
+            this.loading = false;
+          },
+        });
+      }
+    });
+  }
 
-  // onPlanSelected() {
-  //   this.router.navigate(['/dashboard'])
-  // }
-
-  // onFileSelected(event: any) {
-  //   this.selectedFile = event.target.files[0];
-  // }
-
-  
-  // onFileSubmit() {
-  //   if (this.selectedFile) {
-  //     this.fileUploadService.uploadFile(this.selectedFile).subscribe(
-  //       (response) => {
-  //         console.log('File uploaded successfully:', response);
-  //         // Handle the response from the server
-  //       },
-  //       (error) => {
-  //         console.error('Error uploading file:', error);
-  //         // Handle the error
-  //       }
-  //     );
-  //   }
-  // }
+  showErrorMessage() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Error',
+        message: 'Ya cuentas con una subscripcion activa. Si deseas actualizarla, hazlo desde la pagina de ajustes en tu perfil',
+        confirmText: 'Aceptar',
+        onConfirm: () => {
+          this.router.navigate(['']);
+        },
+      } as DialogData,
+    });
+  }
 }

@@ -3,6 +3,7 @@ import { UserService } from '../../shared/services/users.service';
 import { Store } from '@ngrx/store';
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,6 +18,7 @@ export class AdminDashboardComponent implements OnInit {
     'VIDEOS PENDIENTES',
   ];
   isLoading!: boolean;
+  pullZone: string = environment.pullZone
 
   constructor(
     private userService: UserService,
@@ -27,4 +29,8 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  onNewMeditation() {
+    this.router.navigate(['/nueva-meditacion'])
+  }
 }

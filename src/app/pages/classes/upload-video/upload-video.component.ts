@@ -44,7 +44,8 @@ export class UploadVideoComponent implements OnInit {
   videoId!: string;
   instructors!: Instructor[];
   selectedInstructor!: string;
-  loading!: boolean
+  loading!: boolean;
+  uploadingProgress!: string
 
   constructor(
     private bunnyStreamService: BunnystreamService,
@@ -56,7 +57,9 @@ export class UploadVideoComponent implements OnInit {
     this.newVideoForm = this.fb.group({
       title: ['', Validators.required],
       collectionId: ['', Validators.required],
-      instructor: ['', Validators.required],
+      instructor: [''],
+      difficulty: ['', Validators.required],
+      subcategory: ['', Validators.required],
     });
   }
 
@@ -65,7 +68,7 @@ export class UploadVideoComponent implements OnInit {
     this.instructorService.getAllInstructors().subscribe(
       (response) => {
         this.instructors = response;
-        console.log('Instructs successfully', response);
+        console.log('Instructs successfully');
       },
       (error) => {
         console.error('Instructors error', error);
@@ -94,26 +97,29 @@ export class UploadVideoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.newVideoForm.valid);
-
     if (this.newVideoForm.valid) {
-      const formData = this.newVideoForm.value;
-      this.createVideo();
-      console.log('Form submitted:', formData);
+      this.uploadVideoAndCreateStep();
     }
   }
 
-  putVideoInstructor() {
+  uploadVideoAndCreateStep() {
+    this.firstStep = false;
+    this.secondStep = true;
+  }
+
+  putVideoInstructor(videoId: string) {
     const selectedInstructor = this.instructors.find(
       (instructor) => instructor._id === this.newVideoForm.value.instructor
     );
+    console.log(selectedInstructor);
+    
     if (selectedInstructor) {
       const instructorVideos = selectedInstructor.videos
         ? selectedInstructor.videos
         : [];
 
       const newVideo = {
-        videoId: this.videoId,
+        videoId: videoId,
         status: 'Pending',
       };
       const updatedInstructor: Instructor = {
@@ -121,15 +127,17 @@ export class UploadVideoComponent implements OnInit {
         videos: [...instructorVideos, newVideo],
       };
 
-      const videos = this.videoId ? [this.videoId] : [];
+      const videos = videoId ? [videoId] : [];
       const instructorData: Instructor = { ...updatedInstructor };
       const classVideo: Classes = {
-        classId: this.videoId,
+        classId: videoId,
         instructorId: selectedInstructor._id,
+        difficulty: this.newVideoForm.value.difficulty,
+        subcategory: this.newVideoForm.value.subcategory,
       };
       this.classesService.createClass(classVideo).subscribe({
         next: (response) => {
-          console.log('Class created successfully', response);
+          console.log('Class created successfully');
         },
         error: (error) => {
           console.error('Error creating Classr:', error);
@@ -140,7 +148,7 @@ export class UploadVideoComponent implements OnInit {
       });
       this.instructorService.updateInstructor(instructorData).subscribe({
         next: (response) => {
-          console.log('Instructor updated successfully', response);
+          console.log('Instructor updated successfully');
         },
         error: (error) => {
           console.error('Error updating instructor:', error);
@@ -152,12 +160,15 @@ export class UploadVideoComponent implements OnInit {
     } else {
       console.error('No instructor found with the provided id');
       const classVideo: Classes = {
-        classId: this.videoId,
+        classId: videoId,
         instructorId: '',
+        difficulty: this.newVideoForm.value.difficulty,
+        subcategory: this.newVideoForm.value.subcategory,
+
       };
       this.classesService.createClass(classVideo).subscribe({
         next: (response) => {
-          console.log('Class created successfully', response);
+          console.log('Class created successfully');
         },
         error: (error) => {
           console.error('Error creating Classr:', error);
@@ -179,46 +190,65 @@ export class UploadVideoComponent implements OnInit {
   }
 
   createVideo() {
+    const { title, collectionId } =
+      this.newVideoForm.value;
+
     this.bunnyStreamService
-      .createVideo(
-        this.newVideoForm.value.title,
-        this.newVideoForm.value.collectionId,
-        5000
-      )
+      .createVideo(title, collectionId, 5000)
       .pipe(take(1))
       .subscribe(
         (response: any) => {
-          console.log('Video uploaded successfully:', response);
+          console.log('Video created successfully:');
           this.videoId = response.guid;
-          this.putVideoInstructor();
-          this.firstStep = false;
-          this.secondStep = true;
+          this.onUploadVideo();
         },
         (error) => {
-          console.error('Error uploading video:', error);
+          console.error('Error creating video:', error);
         }
       );
   }
 
-  onUploadVideo() {
-    this.loading = true
-    this.bunnyStreamService
-      .uploadVideo(this.videoId, this.selectedFile)
-      .pipe(take(1))
-      .subscribe(
-        (response) => {
-          console.log('Upload video successfully', response);
-          this.secondStep = false;
-          this.loading = false;
-          this.thirdStep = true;
-        },
-        (error) => {
-          console.error('Error uploading video:', error);
-        }
-      );
+  async onUploadVideo() {
+    const { title, collectionId, } =
+      this.newVideoForm.value;
+    if (!this.selectedFile || !this.videoId) return;
+
+    this.loading = true;
+
+    await this.bunnyStreamService.uploadVideoWithTus(
+      this.selectedFile,
+      this.videoId,
+      title,
+      collectionId,
+      () => {
+        console.log('Upload video successfully');
+        this.secondStep = false;
+        this.loading = false;
+        this.thirdStep = true;
+        this.putVideoInstructor(this.videoId);
+      },
+      (error) => {
+        console.error('Error uploading video:', error);
+        this.loading = false;
+      },
+      (progress) => {
+        console.log(`Uploading: ${progress.toFixed(2)}%`);
+        this.uploadingProgress = progress.toFixed(2)
+      }
+    );
   }
+
 
   onProcessDone() {
     this.router.navigate(['/home']);
+  }
+
+  getSubcategories(): string[] {
+    const collection = this.newVideoForm.get('collectionId')?.value;
+    if (collection === '0ea815c8-7cf9-42e7-a5b0-4e0f6eef0d15')
+      return ['Restaurativo', 'Iyengar', 'Yin'];
+    if (collection === '472608a1-1a1c-4828-9bdc-12c590ecc759')
+      return ['Power', 'Flow', 'Ashtanga'];
+    return [];
   }
 }

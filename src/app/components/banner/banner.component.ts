@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import AOS from "aos";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-banner',
@@ -7,6 +8,7 @@ import AOS from "aos";
   styleUrl: './banner.component.css'
 })
 export class BannerComponent implements OnInit {
+  pullZone = environment.pullZone
 
   @Output()
   onSingleCollection = new EventEmitter<string>()

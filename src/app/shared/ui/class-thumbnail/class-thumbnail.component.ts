@@ -40,7 +40,7 @@ export class ClassThumbnailComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['classes']) {
-      console.log('classes changed:', this.classes);
+      console.log('classes changed:');
     }
   }
 

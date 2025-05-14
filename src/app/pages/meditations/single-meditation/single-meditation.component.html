@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+<ng-container *ngIf="isLoading; else content">
+  <app-loading></app-loading>
+</ng-container>
+
+<ng-template #content>
+  <ng-container *ngIf="instructorInfo">
+    <app-page-title
+      [pageTitle]="videos?.title"
+      [pageDescription]="'Fluye consciente con ' + instructorInfo.firstname + ' ' + instructorInfo.lastname"
+    ></app-page-title>
+  </ng-container>
+
+  <ng-container *ngIf="roles === 'Admin'">
+    <app-button
+      (click)="deleteVideo()"
+      [text]="'BORRAR EL VIDEO'"
+      class="flex justify-center py-2 px-4 w-full mb-8 text-black rounded-md"
+    ></app-button>
+  </ng-container>
+
+  <!-- Meditation Player Card -->
+   @if (meditationInfo) {
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 max-w-2xl mx-auto mb-12 text-center space-y-6">
+    <div class="flex flex-col items-center space-y-2">
+      <span class="text-6xl text-blue material-symbols-outlined"> self_improvement </span>
+      <h3 class="text-2xl font-bold text-blue uppercase">{{ meditationInfo.title }}</h3>
+    </div>
+
+    <audio
+      class="w-full"
+      controls
+      controlsList="nodownload"
+      (click)="$event.stopPropagation()"
+    >
+      <source [src]="meditationInfo.meditationClass" type="audio/mpeg" />
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+  </div>
+   }
+
+  <!-- Practice Essentials -->
+  <div class="max-w-6xl mx-auto px-4 text-strongBrown montserrat-normal">
+    <h3 class="text-xl font-bold text-blue mb-6">ESENCIALES PARA TU PRÁCTICA</h3>
+    <div class="flex flex-col lg:flex-row justify-between gap-6 mb-12">
+      <ng-container *ngFor="let item of class.items; index as i">
+        <div class="flex items-center space-x-4">
+          <img [src]="item.icon" class="w-12 h-12 object-contain" alt="icon-{{ i }}" />
+          <span class="text-lg text-gray-600">{{ item.text }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Recommendations -->
+    <h3 class="text-xl font-bold text-blue mb-6">RECOMENDACIONES PARA TU PRÁCTICA</h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+      <ng-container *ngFor="let rec of class.recommendations; index as j">
+        <div class="flex items-center space-x-4">
+          <img [src]="rec.icon" class="w-16 h-16 object-contain rounded-lg" alt="recommendation-{{ j }}" />
+          <span class="text-lg text-gray-600">{{ rec.text }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Back Button -->
+    <div class="flex justify-center mb-10">
+      <button
+        class="bg-blue text-white font-medium py-2 px-6 rounded-2xl flex items-center gap-2 hover:bg-blue-dark transition"
+        (click)="goBack()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        VOLVER
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+@if (!isLoading) {
+  <app-footer></app-footer>
+}

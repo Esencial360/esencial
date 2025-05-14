@@ -22,8 +22,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../shared/services/users.service';
 import { User } from '../../shared/Models/User';
 import { Store } from '@ngrx/store';
-import { selectUsers } from '../../state/user.selectors';
 import { UserApiActions, ActiveUserApiActions } from '../../state/user.actions';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -51,6 +51,7 @@ export class UserDashboardComponent implements OnInit {
   userId: string = '';
   streak!: number;
   showRecommendation!: boolean;
+  pullZone: string = environment.pullZone
 
   constructor(
     public authService: AuthService,
@@ -79,7 +80,7 @@ export class UserDashboardComponent implements OnInit {
           }
           this.authService.user$.subscribe((user) => {
             if (user) {
-              const namespace = 'https://test-assign-roles.com';
+              const namespace = 'https://test-assign-roles.com/';
               this.roles = user[`${namespace}roles`][0] || [];
               this.userService.getUser(user.email).subscribe({
                 next: (response) => {

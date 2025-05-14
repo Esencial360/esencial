@@ -38,19 +38,6 @@ export class AppointmentSchedulerComponent {
     return this.appointmentForm.controls;
   }
 
-  // onSubmit() {
-  //   this.submitted = true;
-
-  //   if (this.appointmentForm.valid) {
-  //     console.log('Form submitted:', this.appointmentForm.value);
-  //     // Add your appointment scheduling logic here
-      
-  //     // Reset form after successful submission
-  //     this.appointmentForm.reset();
-  //     this.submitted = false;
-  //   }
-  // }
-
   onSubmit() {
     this.submitted = true;
     this.errorMessage = '';
@@ -75,8 +62,6 @@ export class AppointmentSchedulerComponent {
         )
         .subscribe({
           next: (response) => {
-            console.log(response);
-            
             this.successMessage = 'Appointment scheduled successfully!';
             this.appointmentForm.reset();
             this.submitted = false;

@@ -5,7 +5,7 @@
 >
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="flex flex-col justify-center text-center lg:text-start">
-      <h2 class="text-4xl mb-4  uppercase text-strongBrown">
+      <h2 class="text-4xl mb-4 uppercase text-strongBrown">
         ¡Estás cerca de ser parte de esta maravillosa comunidad!
       </h2>
       <p class="mb-8 text-lg md:text-2xl">
@@ -13,6 +13,10 @@
         <span class="text-blue">25%</span> para ti.
       </p>
       <button
+        (click)="authService.loginWithRedirect({ 
+              authorizationParams: {
+                  screen_hint: 'signup',
+                }, appState: { target: '/subscribirse' }})"
         class="bg-blue text-white px-8 py-4 uppercase lg:w-6/12 text-sm rounded-md flex items-center justify-center"
       >
         ¡Quiero comenzar mi viaje esencial360!
@@ -20,8 +24,10 @@
     </div>
     <div>
       @for (plan of plans; track $index) {
-      <div class="bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row">
-        <img [src]="plan.image" class="lg:w-1/2 object-cover" alt="">
+      <div
+        class="bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row"
+      >
+        <img [src]="plan.image" class="lg:w-1/2 object-cover" alt="" />
         <div class="p-6 flex flex-col">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-veige font-bold">{{ plan.name }}</h3>

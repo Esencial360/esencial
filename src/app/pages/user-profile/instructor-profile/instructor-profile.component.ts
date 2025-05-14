@@ -68,7 +68,6 @@ export class InstructorProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.userId);
     this.getInstructorVideos();
   }
 
@@ -76,7 +75,7 @@ export class InstructorProfileComponent implements OnInit {
     this.instructorService
       .getInstructor(this.userId)
       .pipe(
-        tap((response) => console.log('Instructor fetched successfully', response)),
+        tap((response) => console.log('Instructor fetched successfully')),
         filter((instructor) => !!instructor),
         tap((instructor) => {
           this.instructor = instructor;
@@ -91,7 +90,7 @@ export class InstructorProfileComponent implements OnInit {
         takeUntil(this.destroy$),
       )
       .subscribe({
-        next: (videos) => console.log('Videos retrieved:', videos),
+        next: (videos) => console.log('Videos retrieved:'),
         error: (error) => console.error('Error:', error),
       });
   }
@@ -133,7 +132,7 @@ export class InstructorProfileComponent implements OnInit {
       .subscribe({
         next: (videos) => {
           this.videos = videos;
-          console.log('Retrieved videos:', this.videos);
+          console.log('Retrieved videos:');
         },
         error: (error) => {
           console.error('Error retrieving videos:', error);

@@ -9,5 +9,8 @@ export interface Instructor {
     videoId: string;
     status: string;
   }[];
+  meditations?: {
+    meditationId: string;
+  }[]
   profilePicture: File;
 }

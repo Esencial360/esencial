@@ -38,25 +38,12 @@ export class NewsComponent implements OnInit {
     await this.newsService.getAllNews().subscribe(
       (news: News[]) => {
         this.news = news;
-        console.log(this.news);
       },
       (error) => {
         console.error('Error fetching blogs:', error);
       }
     );
   }
-
-  // async fetchCategories() {
-  //   await this.blogService.getAllCategories().subscribe(
-  //     (categories: Category[]) => {
-  //       this.categories = categories;
-  //       console.log(this.categories);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching categories:', error);
-  //     }
-  //   );
-  // }
 
   onNavigateToNews(id: string) {
     this.router
@@ -80,7 +67,6 @@ export class NewsComponent implements OnInit {
       next: (blob) => {
         const objectUrl = URL.createObjectURL(blob);
         this.safeImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
-        console.log(this.safeImageUrl)
       },
       error: (error) => {
         console.error('Error loading image:', error);

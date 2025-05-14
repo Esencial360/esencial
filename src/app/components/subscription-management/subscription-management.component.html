@@ -1,0 +1,81 @@
+@if (subscriptionStatusLoaded) {
+<div
+  class="max-w-2xl mx-auto my-16 px-6 py-10 bg-white shadow-xl rounded-2xl text-center montserrat-normal"
+>
+  @if (hasActiveSubscription) {
+  <h2 class="text-2xl font-semibold text-gray-800 mb-6 uppercase text-blue">
+    Tu Suscripción Actual
+  </h2>
+
+  <p class="text-lg text-gray-700 mb-3">
+    Plan:
+    <span class="font-medium text-blue-700">{{
+      getFallbackPlanName(subscription?.planName)
+    }}</span>
+  </p>
+  <p class="text-md text-gray-600 mb-2">
+    Próximo pago:
+    <span class="font-bold text-gray-800">
+      {{ subscription?.nextPaymentDate | date : "longDate" }}
+    </span>
+  </p>
+  <p class="text-md text-gray-600 mb-6">
+    Monto:
+    <span class="font-bold text-green-700">
+      ${{ subscription?.amount / 100 }} USD
+    </span>
+  </p>
+
+  <div class="mt-6">
+    <button
+      class="w-full py-3 px-4 bg-blue hover:bg-strongBrown text-white font-semibold rounded-xl transition duration-200"
+      (click)="
+        changePlan(
+          subscription?.planName === 'price_1RKfvAIKBryFAlYk6RjBFO0l'
+            ? 'price_1RKfvQIKBryFAlYkZTsaDoy6'
+            : 'price_1RKfvAIKBryFAlYk6RjBFO0l'
+        )
+      "
+      [disabled]="updating"
+    >
+      Cambiar a
+      {{
+        subscription?.planName === "price_1RKfvAIKBryFAlYk6RjBFO0l"
+          ? "esencial360"
+          : "esencial"
+      }}
+    </button>
+  </div>
+
+  <div class="mt-6">
+    <button
+      class="w-full py-3 px-4 bg-[#f31d1d] hover:bg-[#8f0000] text-white font-semibold rounded-xl transition duration-200"
+      (click)="cancelSubscription()"
+      [disabled]="updating"
+    >
+      Cancelar Suscripción
+    </button>
+  </div>
+  } @else {
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+    Sin suscripción activa
+  </h2>
+  <p class="text-gray-600 mb-6">
+    Elige un plan para comenzar a disfrutar del contenido premium.
+  </p>
+  <button
+    class="w-full py-3 px-6 bg-blue hover:bg-strongBrown text-white font-semibold rounded-xl transition duration-200"
+    (click)="subscribe()"
+    [disabled]="updating"
+  >
+    Suscribirse ahora
+  </button>
+  }
+</div>
+} @else {
+<div
+  class="max-w-2xl mx-auto my-16 px-6 py-10 bg-white shadow-xl rounded-2xl text-center montserrat-normal"
+>
+  <app-loading></app-loading>
+</div>
+}

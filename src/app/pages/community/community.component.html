@@ -1,141 +1,164 @@
 <app-header [newLanding]="true"></app-header>
 <section class="h-full relative">
-    <app-parallax [imagePath]="'assets/images/yoga1.jpg'"></app-parallax>
-    <div
-      class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
-    >
-      <h1 class="font-bold text-5xl">Comunidad</h1>
-      <p class="text-xl">La comunidad de Esencial360</p>
-    </div>
-    <span
-      class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
-    >
-      keyboard_arrow_down
-    </span>
-  </section>
-  <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 montserrat-normal">
-    <!-- Header Section -->
-    <section class="max-w-6xl mx-auto text-center mb-20">
-      <h1 class="text-3xl font-bold text-gray-900 mb-6 uppercase">
-        La comunidad de Esencial360
-      </h1>
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <p class="text-xl text-gray-700 mb-4 font-semibold">
-          La importancia y lo que queremos de nuestra comunidad
-        </p>
-        <p class="text-gray-600">
-          En Esencial360, creemos en el poder de la comunidad para transformar vidas. 
-          Nuestro objetivo es crear un espacio donde todos puedan compartir, aprender 
-          y crecer juntos. Unidos, construimos una red de apoyo y conocimiento que 
-          beneficia a cada uno de nuestros miembros.
-        </p>
-      </div>
-    </section>
-    <app-banner [description]="'En Esencial360, creemos en el poder de la comunidad para transformar vidas. Nuestro objetivo es crear un espacio donde todos puedan compartir, aprender  y crecer juntos. Unidos, construimos una red de apoyo y conocimiento que beneficia a cada uno de nuestros miembros.'"></app-banner>
-
-    <!-- How to Join Section -->
-    <section class="max-w-6xl mx-auto mb-20">
-      <h2 class="text-2xl font-bold text-center text-gray-900 mb-8 uppercase">
-        Como formar parte
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        <div class="overflow-hidden relative" >
-            <img
-              [src]="'../../../assets/images/yoga.jpg'"
-              [alt]=""
-              class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-            />
-            <div class="w-full px-4 text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-                <h3 class="text-lg font-semibold mb-4 uppercase">Regístrate</h3>
-                <p class="text-gray-600">
-                  Crear tu cuenta es fácil y gratuito. Solo necesitas unos minutos 
-                  para acceder a todos los beneficios de nuestra comunidad. 
-                  Únete a miles de personas que ya son parte de esta gran familia.
-                </p>
-            </div>
-          </div>
-          <div class="overflow-hidden relative" >
-            <img
-              [src]="'../../../assets/images/yoga.jpg'"
-              [alt]=""
-              class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-            />
-            <div class="text-white z-20 w-full px-4 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-                <h3 class="text-lg font-semibold mb-4 uppercase">Completa tu perfil</h3>
-                <p class="text-gray-600">
-                  Personaliza tu experiencia compartiendo tus intereses y objetivos. 
-                  Esto nos ayuda a conectarte con otros miembros que comparten tus 
-                  mismas pasiones y metas dentro de la comunidad.
-                </p>
-            </div>
-          </div>
-          <div class="overflow-hidden relative" >
-            <img
-              [src]="'../../../assets/images/yoga.jpg'"
-              [alt]=""
-              class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-            />
-            <div class="text-white z-20 font-semibold w-full px-4 absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-                <h3 class="text-lg font-semibold mb-4 uppercase">Participa activamente</h3>
-                <p class="text-gray-600">
-                  Involúcrate en discusiones, comparte tus experiencias y 
-                  aprende de otros. Tu participación enriquece nuestra comunidad 
-                  y te ayuda a crecer profesional y personalmente.
-                </p>
-            </div>
-          </div>
-      </div>
-    </section>
-
-    <!-- Where to Find Us Section -->
-    <section class="max-w-6xl mx-auto">
-      <h2 class="text-2xl font-bold text-center text-gray-900 mb-8 uppercase">
-        Donde nos encontrarás
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        <div class="overflow-hidden relative" >
-            <img
-              [src]="'../../../assets/images/yoga.jpg'"
-              [alt]=""
-              class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-            />
-            <div class="w-full px-4 text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-                <h3 class="text-lg font-semibold mb-4 uppercase">Aplicación móvil</h3>
-                <p class="text-gray-600">
-                  Descarga nuestra app para iOS y Android. Mantente conectado 
-                  y accede a contenido exclusivo desde cualquier lugar.
-                </p>
-            </div>
-          </div>
-          <div class="overflow-hidden relative" >
-            <img
-              [src]="'../../../assets/images/yoga.jpg'"
-              [alt]=""
-              class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-            />
-            <div class="text-white z-20 w-full px-4 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-                <h3 class="text-lg font-semibold mb-4 uppercase">Plataforma web</h3>
-                <p class="text-gray-600">
-                  Accede a través de nuestro portal web para una experiencia 
-                  completa. Ideal para sesiones largas de aprendizaje y networking.
-                </p>
-            </div>
-          </div>
-          <div class="overflow-hidden relative" >
-            <img
-              [src]="'../../../assets/images/yoga1.jpg'"
-              [alt]=""
-              class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
-            />
-            <div class="text-white z-20 font-semibold w-full px-4 absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4">
-                <h3 class="text-lg font-semibold mb-4 uppercase">Redes sociales</h3>
-                <p class="text-gray-600">
-                  Síguenos en nuestras redes sociales para estar al día con 
-                  noticias, eventos y contenido inspirador de la comunidad.
-                </p>
-            </div>
-          </div>
-      </div>
-    </section>
+  <app-parallax [imagePath]="pullZone + '/assets/yoga1.jpg'"></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
+    <h1 class="font-bold text-5xl">Comunidad</h1>
+    <p class="text-xl">La comunidad de Esencial360</p>
   </div>
+  <span
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
+<div
+  class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 montserrat-normal"
+>
+  <!-- Header Section -->
+  <section class="max-w-6xl mx-auto text-center mb-20">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6 uppercase">
+      La comunidad de Esencial360
+    </h1>
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <p class="text-xl text-gray-700 mb-4 font-semibold">
+        La importancia y lo que queremos de nuestra comunidad
+      </p>
+      <p class="text-gray-600">
+        En Esencial360, creemos en el poder de la comunidad para transformar
+        vidas. Nuestro objetivo es crear un espacio donde todos puedan
+        compartir, aprender y crecer juntos. Unidos, construimos una red de
+        apoyo y conocimiento que beneficia a cada uno de nuestros miembros.
+      </p>
+    </div>
+  </section>
+  <app-banner
+    [image]="pullZone + '/assets/yoga1.jpg'"
+    [description]="
+      'En Esencial360, creemos en el poder de la comunidad para transformar vidas. Nuestro objetivo es crear un espacio donde todos puedan compartir, aprender  y crecer juntos. Unidos, construimos una red de apoyo y conocimiento que beneficia a cada uno de nuestros miembros.'
+    "
+  ></app-banner>
+
+  <!-- How to Join Section -->
+  <section class="max-w-6xl mx-auto mb-20">
+    <h2 class="text-2xl font-bold text-center text-gray-900 mb-8 uppercase">
+      Como formar parte
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div class="overflow-hidden relative">
+        <img
+          [src]="pullZone + '/assets/yoga.jpg'"
+          [alt]=""
+          class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div
+          class="w-full px-4 text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          <h3 class="text-lg font-semibold mb-4 uppercase">Regístrate</h3>
+          <p class="text-gray-600">
+            Crear tu cuenta es fácil y gratuito. Solo necesitas unos minutos
+            para acceder a todos los beneficios de nuestra comunidad. Únete a
+            miles de personas que ya son parte de esta gran familia.
+          </p>
+        </div>
+      </div>
+      <div class="overflow-hidden relative">
+        <img
+          [src]="pullZone + '/assets/yoga.jpg'"
+          [alt]=""
+          class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div
+          class="text-white z-20 w-full px-4 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          <h3 class="text-lg font-semibold mb-4 uppercase">
+            Completa tu perfil
+          </h3>
+          <p class="text-gray-600">
+            Personaliza tu experiencia compartiendo tus intereses y objetivos.
+            Esto nos ayuda a conectarte con otros miembros que comparten tus
+            mismas pasiones y metas dentro de la comunidad.
+          </p>
+        </div>
+      </div>
+      <div class="overflow-hidden relative">
+        <img
+          [src]="pullZone + '/assets/yoga.jpg'"
+          [alt]=""
+          class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div
+          class="text-white z-20 font-semibold w-full px-4 absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          <h3 class="text-lg font-semibold mb-4 uppercase">
+            Participa activamente
+          </h3>
+          <p class="text-gray-600">
+            Involúcrate en discusiones, comparte tus experiencias y aprende de
+            otros. Tu participación enriquece nuestra comunidad y te ayuda a
+            crecer profesional y personalmente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where to Find Us Section -->
+  <section class="max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold text-center text-gray-900 mb-8 uppercase">
+      Donde nos encontrarás
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div class="overflow-hidden relative">
+        <img
+          [src]="pullZone + '/assets/yoga.jpg'"
+          [alt]=""
+          class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div
+          class="w-full px-4 text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          <h3 class="text-lg font-semibold mb-4 uppercase">Aplicación móvil</h3>
+          <p class="text-gray-600">
+            Descarga nuestra app para iOS y Android. Mantente conectado y accede
+            a contenido exclusivo desde cualquier lugar.
+          </p>
+        </div>
+      </div>
+      <div class="overflow-hidden relative">
+        <img
+          [src]="pullZone + '/assets/yoga.jpg'"
+          [alt]=""
+          class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div
+          class="text-white z-20 w-full px-4 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          <h3 class="text-lg font-semibold mb-4 uppercase">Plataforma web</h3>
+          <p class="text-gray-600">
+            Accede a través de nuestro portal web para una experiencia completa.
+            Ideal para sesiones largas de aprendizaje y networking.
+          </p>
+        </div>
+      </div>
+      <div class="overflow-hidden relative">
+        <img
+          [src]="pullZone + '/assets/yoga.jpg'"
+          [alt]=""
+          class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+        />
+        <div
+          class="text-white z-20 font-semibold w-full px-4 absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          <h3 class="text-lg font-semibold mb-4 uppercase">Redes sociales</h3>
+          <p class="text-gray-600">
+            Síguenos en nuestras redes sociales para estar al día con noticias,
+            eventos y contenido inspirador de la comunidad.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 <app-footer></app-footer>

@@ -8,12 +8,12 @@
 >
   <div class="flex justify-center items-center">
     <img
-      src="../../../assets/images/logoBlue.png"
+      [src]="pullZone + '/assets/blueLogo.png'"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-veige -ml-5">esencial<span class="text-blue">360</span></h3>
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
   </div>
   <nav>
     <ul
@@ -33,12 +33,15 @@
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
-      <li class="mr-10">
+          <li class="mr-10">
+        <a (click)="onMeditations()" class="hover:text-gray-400">MEDITACIONES</a>
+      </li>
+      <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li>
-      <li class="mr-10">
+      </li> -->
+      <!-- <li class="mr-10">
         <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li>
+      </li> -->
       }
       <li class="mr-10" (click)="signOut()">LOGOUT</li>
       @if (roles === "User") {
@@ -81,14 +84,12 @@
   <div class="flex items-center justify-between w-full">
     <div class="flex justify-center items-center">
       <img
-        src="../../../assets/images/logoBlue.png"
+        [src]="pullZone + '/assets/blueLogo.png'"
         alt="Logo"
-        class="max-h-20 -ml-8 cursor-pointer rounded-lg"
+        class="max-h-20 cursor-pointer rounded-lg"
         (click)="onHome()"
       />
-      <h3 class="-ml-6 text-veige">
-        esencial<span class="text-blue">360</span>
-      </h3>
+      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
     </div>
     <span
       (click)="toggle()"
@@ -103,67 +104,68 @@
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="lg:hidden text-white focus:outline-none absolute top-[3%] right-[5%]"
+    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
     (click)="toggle()"
   >
     <span class="material-symbols-outlined text-blue"> close </span>
   </button>
   <div class="flex justify-start items-center">
     <img
-      src="../../../assets/images/logoBlue.png"
+      [src]="pullZone + '/assets/blueLogo.png'"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-veige -ml-6">esencial<span class="text-blue">360</span></h3>
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
   </div>
   <div class="container mx-auto px-4 mt-16">
     @if(userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
+      @if (roles === "User") {
       <div class="flex items-center">
         <span class="text-xl">🔥</span>
-        <span class="ml-1 font-semibold text-lg">{{ streak }}</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
       </div>
-      <li class="mb-5">YOGA</li>
+      }
       <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li class="ml-2">INSTRUCTORES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
       <li class="ml-2">
         <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
       </li>
-      <li class="ml-2">NOSOTROS</li>
       <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li class="mb-5">NOVEDADES</li>
-      <li class="ml-2">NEWS</li>
-      <li class="ml-2">BLOG</li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li>LOGOUT</li>
+      <li (click)="onSignIn()">SIGN IN</li>
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     } @if(!userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
-      <li class="mb-5">YOGA</li>
-      <li class="ml-2">CLASES</li>
-      <li class="ml-2">INSTRUCTORES</li>
-      <li class="ml-2">NOSOTROS</li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li class="mb-5">NOVEDADES</li>
-      <li class="ml-2">NEWS</li>
-      <li class="ml-2">BLOG</li>
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
       <li class="border-t border-gray-700 pt-4 my-8"></li>
 
       <li class="" (click)="signOut()">LOGOUT</li>
 
       <li class="" (click)="onUserSettings()">SETTINGS</li>
 
-      <li
+      <!-- <li
         class=""
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribirse' }})"
+                }, appState: { target: '/subscribe' }})"
       >
-        SIGN UP
-      </li>
+        SUBSCRIBITE
+      </li> -->
+      <!-- <li
+      class=""
+      (click)="onSignUp()"
+    >
+      SUBSCRIBITE
+    </li> -->
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     }
@@ -175,20 +177,22 @@
 >
   <div class="flex justify-center items-center">
     <img
-      src="../../../assets/images/logoWhite.png"
+      [src]="pullZone + '/assets/logoWhite.png'"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-white text-2xl -ml-6">
+    <h3 class="text-white text-2xl">
       esencial<span class="text-blue">360</span>
     </h3>
   </div>
-  <nav>
+  <nav class="flex">
+    @if (roles === "User") {
     <div class="flex items-center">
       <span class="text-xl">🔥</span>
-      <span class="ml-1 font-semibold text-lg">{{ streak | async }}</span>
+      <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
     </div>
+    }
     <ul
       class="flex anton items-center uppercase pointer text-base cursor-pointer"
     >
@@ -204,12 +208,17 @@
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
-      <li class="mr-10">
+           <li class="mr-10">
+        <a (click)="onMeditations()" class="hover:text-gray-400"
+          >MEDITACIONES</a
+        >
+      </li>
+      <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li>
-      <li class="mr-10">
+      </li> -->
+      <!-- <li class="mr-10">
         <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li>
+      </li> -->
       }
       <li class="mr-10" (click)="signOut()">LOGOUT</li>
       @if (roles === "User") {
@@ -251,12 +260,12 @@
 >
   <div class="flex justify-center items-center">
     <img
-      src="../../../assets/images/logoBlue.png"
+      [src]="pullZone + '/assets/logoWhite.png'"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-veige -ml-5">esencial<span class="text-blue">360</span></h3>
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
   </div>
   <nav>
     <ul
@@ -270,12 +279,12 @@
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
-      <li class="mr-10">
+      <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li>
-      <li class="mr-10">
+      </li> -->
+      <!-- <li class="mr-10">
         <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li>
+      </li> -->
 
       <li class="mr-10" (click)="authService.loginWithRedirect()">
         Inicia Sesion
@@ -323,9 +332,9 @@
   <div class="flex items-center justify-between w-full">
     <div class="flex justify-center items-center">
       <img
-        src="../../../assets/images/logoBlue.png"
+        [src]="pullZone + '/assets/blueLogo.png'"
         alt="Logo"
-        class="max-h-20 -ml-8 cursor-pointer rounded-lg"
+        class="max-h-20 cursor-pointer rounded-lg"
         (click)="onHome()"
       />
       <h3 class="-ml-6 text-veige">
@@ -352,7 +361,7 @@
   </button>
   <div class="flex justify-start items-center">
     <img
-      src="../../../assets/images/logoBlue.png"
+      [src]="pullZone + '/assets/blueLogo.png'"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
@@ -399,7 +408,7 @@
 >
   <div class="flex justify-center items-center">
     <img
-      src="../../../assets/images/logoWhite.png"
+      [src]="pullZone + '/assets/logoWhite.png'"
       alt="Logo"
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
@@ -424,11 +433,16 @@
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
       <li class="mr-10">
+        <a (click)="onMeditations()" class="hover:text-gray-400"
+          >MEDITACIONES</a
+        >
+      </li>
+      <!-- <li class="mr-10">
         <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li>
-      <li class="mr-10">
+      </li> -->
+      <!-- <li class="mr-10">
         <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li>
+      </li> -->
 
       <li class="mr-10" (click)="authService.loginWithRedirect()">
         Inicia Sesion

@@ -9,6 +9,11 @@ import { concatMap, from, map, toArray } from 'rxjs';
 import { ClassesService } from '../../../shared/services/classes.service';
 import { Classes } from '../../../shared/Models/Classes';
 import { FormBuilder } from '@angular/forms';
+import {
+  DialogComponent,
+  DialogData,
+} from '../../../shared/ui/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface PreviewInstructor {
   _id: number;
@@ -49,7 +54,7 @@ export class AdminProfileComponent implements OnInit {
     private emailService: EmailService,
     private router: Router,
     private classesService: ClassesService,
-    private fb: FormBuilder
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -73,8 +78,6 @@ export class AdminProfileComponent implements OnInit {
       this.instructors = instructors;
       this.filteredInstructors = this.instructors;
       this.pendingVideos = [];
-      console.log(instructors);
-
       instructors.forEach((instructor) => {
         (instructor.videos ?? [])
           .filter((video) => video.status === 'Pending')
@@ -146,13 +149,64 @@ export class AdminProfileComponent implements OnInit {
 
   handleAction(action: string) {
     this.showModal = false;
-    this.resultReviewAction = action;
-    this.showModalAfterAction = true;
     if (action === 'reject') {
-      this.rejectVideo();
+      this.rejectVideoConfirmation();
     } else {
-      this.updateVideoStatus(action);
+      this.approveVideoConfirmation();
     }
+  }
+
+  approveVideoConfirmation() {
+    const scrollPosition = window.pageYOffset;
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Aprovar video',
+        message: 'Estas seguro de aprovar el video?',
+        confirmText: 'Aprovar',
+        cancelText: 'Volver',
+      } as DialogData,
+    });
+
+    dialogRef.afterOpened().subscribe(() => {
+      window.scrollTo(0, scrollPosition);
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.resultReviewAction = 'approve';
+        this.showModalAfterAction = true;
+        this.updateVideoStatus(this.resultReviewAction);
+      } else if (!result) {
+        this.showModal = true;
+      }
+    });
+  }
+
+  rejectVideoConfirmation() {
+    const scrollPosition = window.pageYOffset;
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Rechazar video',
+        message: 'Estas seguro de rechazar el video?',
+        confirmText: 'Rechazar',
+        cancelText: 'Volver',
+      } as DialogData,
+    });
+
+    dialogRef.afterOpened().subscribe(() => {
+      window.scrollTo(0, scrollPosition);
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.resultReviewAction = 'reject';
+        this.showModalAfterAction = true;
+        this.rejectVideo();
+        this.updateVideoStatus(this.resultReviewAction);
+      } else if (!result) {
+        this.showModal = true;
+      }
+    });
   }
 
   getSingleClass(classId: string) {
@@ -160,7 +214,6 @@ export class AdminProfileComponent implements OnInit {
       next: (response) => {
         this.classInfo = response;
         this.getClassInstructor(this.classInfo.instructorId);
-        console.log('class retrieved', response);
       },
       error: (error) => {
         console.log('Error retrieving class', error);
@@ -197,39 +250,19 @@ export class AdminProfileComponent implements OnInit {
 
     this.instructorService.updateInstructor(updatedInstructor).subscribe(
       (response: any) => {
-        console.log(`Instructor video status updated to ${status}`, response);
         this.classesService.updateClass(updatedClass).subscribe({
           next: (response) => {
-            console.log('class updated from classes document', response);
             this.sendObservationEmail(
               selectedInstructor,
               'Su clase se ha aprovado.',
               this.activeVideoId,
-              false
+              true
             );
           },
           error: (error) => {
             console.log('Error updated classes from document', error);
           },
         });
-        if (status === 'reject') {
-          this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
-            (response) => {
-              console.log('Success deleting video:', response);
-              this.classesService.deleteClass(this.activeVideoId).subscribe({
-                next: (response) => {
-                  console.log('class removed from classes document', response);
-                },
-                error: (error) => {
-                  console.log('Error removing classes from document', error);
-                },
-              });
-            },
-            (error) => {
-              console.error('Error retrieving videos:', error);
-            }
-          );
-        }
       },
       (error) => {
         console.error('Error updating instructor:', error);
@@ -260,7 +293,6 @@ export class AdminProfileComponent implements OnInit {
 
     this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
       (response) => {
-        console.log('Success deleting video:', response);
         this.instructorService.updateInstructor(updatedInstructor).subscribe(
           (response: any) => {
             this.deleteClass();
@@ -283,10 +315,9 @@ export class AdminProfileComponent implements OnInit {
   }
 
   deleteClass() {
-    console.log(this.activeVideoId);
     this.classesService.deleteClass(this.activeVideoId).subscribe({
       next: (response) => {
-        console.log('class removed from classes document', response);
+        console.log('class removed from classes document');
       },
       error: (error) => {
         console.log('Error removing classes from document', error);
@@ -312,7 +343,7 @@ export class AdminProfileComponent implements OnInit {
         subject: 'Tu clase ha sido rechazada',
         html: `
           <p>Estiamdo ${instructor.firstname},</p>
-          <p>Su clase (ID: <strong>${videoId}</strong>) ha sido <strong>rechazada</strong>.</p>
+          <p>Su clase (<strong>${this.activeVideoInfo.title}</strong>) ha sido <strong>rechazada</strong>.</p>
           <p>Reason: <em>${reason}</em></p>
           <p>Comuníquese con nosotros si tiene alguna pregunta.</p>
           <p>Saludos cordiales,<br>el consejo de esencial360</p>
@@ -324,9 +355,9 @@ export class AdminProfileComponent implements OnInit {
         subject: 'Tu clase ha sido aprovada',
         html: `
           <p>Estiamdo ${instructor.firstname},</p>
-          <p>Su clase (ID: <strong>${videoId}</strong>) ha sido <strong>aprovada</strong>.</p>
+          <p>Su clase (<strong>${this.activeVideoInfo.title}</strong>) ha sido <strong>aprovada</strong>.</p>
           <p>Reason: <em>${reason}</em></p>
-          <p>SU clase ya esta disponible para verse para la comunidad de esencial360</p>
+          <p>Su clase ya esta disponible para verse para la comunidad de esencial360</p>
           <p>Saludos cordiales,<br>el consejo de esencial360</p>
         `,
       };
@@ -346,7 +377,6 @@ export class AdminProfileComponent implements OnInit {
     this.instructorService.getInstructor(id).subscribe({
       next: (response) => {
         this.instructorInfo = response;
-        console.log('Instructor retrived successfully', response);
       },
       error: (error) => {
         console.log('An error retrieving Instructor info', error);
@@ -358,12 +388,10 @@ export class AdminProfileComponent implements OnInit {
     this.classesService.getClass(id).subscribe({
       next: (response) => {
         this.activeClassInfo = response;
-        console.log('Class retrived successfully', response);
       },
       error: (error) => {
         console.log('An error retrieving Class info', error);
       },
     });
   }
-
 }

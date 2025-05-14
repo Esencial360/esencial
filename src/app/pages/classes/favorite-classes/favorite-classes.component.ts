@@ -16,16 +16,16 @@ export class FavoriteClassesComponent implements OnInit {
 
   onWatchSingleClass(id: string) {
     this.router
-      .navigate([`/collection/`])
-      .then((navigationSuccess) => {
-        if (navigationSuccess) {
-          console.log('Navigation to class successful');
-        } else {
-          console.error('Navigation to class failed');
-        }
-      })
-      .catch((error) => {
-        console.error(`An error occurred during navigation: ${error.message}`);
-      });
+    .navigate([`/clases/${id}`])
+    .then((navigationSuccess) => {
+      if (navigationSuccess) {
+        console.log('Navigation to class successful');
+      } else {
+        console.error('Navigation to class failed');
+      }
+    })
+    .catch((error) => {
+      console.error(`An error occurred during navigation: ${error.message}`);
+    });
   }
 }

@@ -11,8 +11,6 @@ export class LikedClassesService {
   constructor(private http: HttpClient) {}
 
   toggleVideoLike(videoId: string, userId: string): Observable<any> {
-    console.log(videoId, userId);
-    
     return this.http.post(`${this.apiUrl}/like-video`, { videoId, userId });
   }
 
