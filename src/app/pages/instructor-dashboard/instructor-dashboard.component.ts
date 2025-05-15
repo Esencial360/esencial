@@ -18,7 +18,8 @@ import { environment } from '../../../environments/environment';
 export class InstructorDashboardComponent implements OnInit {
   isLoading!: boolean;
   userId: string = '';
-  filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
+  // filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
+  filters = ['MIS CLASES']
   pullZone: string = environment.pullZone
   instructorImage!: string;
 

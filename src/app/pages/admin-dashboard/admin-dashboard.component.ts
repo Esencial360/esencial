@@ -18,7 +18,7 @@ export class AdminDashboardComponent implements OnInit {
     'VIDEOS PENDIENTES',
   ];
   isLoading!: boolean;
-  pullZone: string = environment.pullZone
+  pullZone: string = environment.pullZone;
 
   constructor(
     private userService: UserService,
@@ -31,6 +31,10 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {}
 
   onNewMeditation() {
-    this.router.navigate(['/nueva-meditacion'])
+    this.router.navigate(['/nueva-meditacion']);
+  }
+
+  onNewClass() {
+    this.router.navigateByUrl('/nuevo-video');
   }
 }

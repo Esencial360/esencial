@@ -112,7 +112,7 @@ export class SingleMeditationComponent {
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.authService.user$.subscribe((user) => {
         if (user) {
-          const namespace = 'https://test-assign-roles.com';
+          const namespace = 'https://test-assign-roles.com/';
           this.roles = user[`${namespace}roles`][0] || [];
           this.isLoading = false;
         }

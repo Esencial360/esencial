@@ -56,6 +56,10 @@ export class FooterComponent {
     this.route.navigate(['/comunidad']);
   }
 
+  onNewInstructor() {
+    this.route.navigate(['/carrera-instructor'])
+  }
+
   onClasses() {
     this.route.navigate(['clases']);
   }

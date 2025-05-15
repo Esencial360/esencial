@@ -40,7 +40,7 @@ export class MoodCollectionComponent {
       subtitle: 'Quieres una práctica suave y restaurativa',
       icon: this.pullZone + '/assets/moon.png',
       category: 'hatha',
-      subcategories: ['Restaurativo', 'Iyengar', 'Yin'],
+      subcategories: ['Iyengar', 'Yin'],
     },
     {
       id: 'energetic',
@@ -56,7 +56,7 @@ export class MoodCollectionComponent {
       subtitle: 'Buscas liberar y restaurar.',
       icon: this.pullZone + '/assets/wave.png',
       category: 'hatha',
-      subcategories: ['Restaurativo', 'Iyengar', 'Yin'],
+      subcategories: ['Restaurativo'],
     },
   ];
 
