@@ -36,7 +36,7 @@ export class SingleMeditationComponent {
   userId!: string;
   meditationInfo!: Meditation;
   instructorInfo!: Instructor;
-
+  forbidden!: boolean;
   users$!: any;
   user$!: any;
   user!: any;
@@ -128,6 +128,7 @@ export class SingleMeditationComponent {
       },
       error: (error) => {
         console.error('Error retrieved Meditation:', error);
+        this.forbidden = true;
       },
       complete: () => {
         console.log('Cration retrieved completed.');
