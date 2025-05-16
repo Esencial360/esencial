@@ -25,10 +25,12 @@
       </button>
     </div> -->
     <section class="container mx-auto px-4 py-8 montserrat-normal min-h-[60vh]">
+      @if (videos) {
       <app-class-thumbnail
         [classes]="videos"
         (actionClassSelected)="onWatchSingleClass($event)"
       ></app-class-thumbnail>
+      }
     </section>
   </mat-tab>
   } @if (showTab('PAGOS')) {
