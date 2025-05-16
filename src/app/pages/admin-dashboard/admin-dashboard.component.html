@@ -2,7 +2,7 @@
 <app-loading></app-loading>
 } @else { @if (authService.user$ | async; as user) {
 <div
-  class="flex md:flex-row h-[60vh] flex-col items-center justify-around px-8 py-16 rounded-xl  mx-auto montserrat-normal bg-bone"
+  class="flex md:flex-row h-[60vh] flex-col items-center justify-around px-8 py-16 rounded-xl mx-auto montserrat-normal bg-bone"
 >
   <div class="flex-1 lg:px-40">
     <h2 class="!text-4xl font-bold text-strongBrown uppercase mb-4">
@@ -15,15 +15,24 @@
       la esencia de nuestra plataforma.
 
       <br /><br />
-      <span class="font-bold">
-        Gracias por ser parte de este camino.
-      </span>
+      <span class="font-bold"> Gracias por ser parte de este camino. </span>
       <br /><br />
     </p>
+    <app-button
+      (onActionTrigger)="onNewMeditation()"
+      [bgColor]="'bg-blue'"
+      [text]="'Subir una meditacion'"
+    ></app-button>
+    <br />
+    <app-button
+      (onActionTrigger)="onNewClass()"
+      [bgColor]="'bg-blue'"
+      [text]="'Subir una clase'"
+    ></app-button>
   </div>
   <div class="mt-5 md:mt-0 md:w-1/2">
     <img
-      src="../../../assets/images/yoga1.jpg"
+      [src]="pullZone + '/assets/foldedMat.jpg'"
       alt="Person doing yoga"
       class="rounded-xl object-cover w-10/12 h-64"
     />
@@ -34,7 +43,7 @@
   [text]="
     'El sol, nuestra fuente de energía,  crecimiento y vida, representa un símbolo de vitalidad, prosperidad y nuevos comienzos.'
   "
-  [image]="'/assets/images/jaguar.png'"
+  [image]="pullZone + '/assets/jaguar.png'"
 ></app-banner-v2>
 <section class="modern-tabs">
   <app-admin-profile [filters]="filters"></app-admin-profile>

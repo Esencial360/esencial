@@ -1,5 +1,14 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectAllInstructors } from '../../../state/instructor.selector';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-class-filter',
@@ -7,55 +16,103 @@ import { Component } from '@angular/core';
   styleUrl: './class-filter.component.css',
   animations: [
     trigger('dropdownAnimation', [
-      state('closed', style({
-        height: '0',
-        opacity: '0',
-        overflow: 'hidden'
-      })),
-      state('open', style({
-        height: '*',
-        opacity: '1'
-      })),
-      transition('closed <=> open', [
-        animate('300ms ease-in-out')
-      ])
-    ])
-  ]
+      state(
+        'closed',
+        style({
+          height: '0',
+          opacity: '0',
+          overflow: 'hidden',
+        })
+      ),
+      state(
+        'open',
+        style({
+          height: '*',
+          opacity: '1',
+        })
+      ),
+      transition('closed <=> open', [animate('300ms ease-in-out')]),
+    ]),
+  ],
 })
-export class ClassFilterComponent {
-  openDropdown: 'difficulty' | 'length' | 'instructors' | null = null;
+export class ClassFilterComponent implements OnInit, OnChanges {
+  @Input() videos: any[] = [];
+  @Output() filtersChanged = new EventEmitter<any[]>();
 
-  difficultyLevels = ['Beginner', 'Intermediate', 'Advanced'];
-  lengthOptions = ['0-15 min', '15-30 min', '30-45 min', '45+ min'];
-  instructors = [
-    'Abiola Akanni', 'Action Jacquelyn', 'Adrian Michael Green',
-    'Adrienne Everett', 'Adrienne Rabena', 'Ajay James',
-    'Andrew Sealy', 'Annie Moves', 'Ashley Galvin'
-  ];
+  instructors$: Observable<any>;
+  instructors: any[] = [];
 
-  selectedDifficulties: { [key: string]: boolean } = {};
-  selectedLengths: { [key: string]: boolean } = {};
-  selectedInstructors: { [key: string]: boolean } = {};
-  allInstructorsSelected = true;
+  filteredVideos: any[] = [];
 
-  constructor() {
-    this.difficultyLevels.forEach(level => this.selectedDifficulties[level] = false);
-    this.lengthOptions.forEach(option => this.selectedLengths[option] = false);
-    this.instructors.forEach(instructor => this.selectedInstructors[instructor] = true);
+  selectedDifficulty: string | null = null;
+  selectedSubcategory: string | null = null;
+  selectedInstructorId: string | null = null;
+
+  uniqueDifficulties: string[] = [];
+  uniqueSubcategories: string[] = [];
+  uniqueInstructors: { id: string; name: string }[] = [];
+
+  constructor(private store: Store) {
+    this.instructors$ = this.store.select(selectAllInstructors);
   }
 
-  toggleDropdown(dropdown: 'difficulty' | 'length' | 'instructors') {
-    this.openDropdown = this.openDropdown === dropdown ? null : dropdown;
+  ngOnInit() {
+    this.instructors$.pipe(take(1)).subscribe((instructors: any) => {
+      this.instructors = instructors;
+      this.buildUniqueInstructors();
+    });
   }
 
-  toggleAllInstructors() {
-    for (let instructor of this.instructors) {
-      this.selectedInstructors[instructor] = this.allInstructorsSelected;
+  ngOnChanges() {
+    this.buildFilterOptions();
+    this.applyFilters();
+  }
+
+  buildFilterOptions() {
+    this.uniqueDifficulties = [...new Set(this.videos.map((v) => v.difficulty))];
+    this.uniqueSubcategories = [...new Set(this.videos.map((v) => v.subcategory))];
+    this.buildUniqueInstructors();
+  }
+
+  buildUniqueInstructors() {
+    const instructorIds = [...new Set(this.videos.map((v) => v.instructorId))];
+    this.uniqueInstructors = instructorIds.map((id) => {
+      const instructor = this.instructors.find((i) => i._id === id);
+      return {
+        id,
+        name: instructor ? `${instructor.firstname} ${instructor.lastname}` : 'Unknown',
+      };
+    });
+  }
+
+  applyFilters() {
+    let filtered = [...this.videos];
+
+    if (this.selectedDifficulty) {
+      filtered = filtered.filter((v) => v.difficulty === this.selectedDifficulty);
     }
+
+    if (this.selectedSubcategory) {
+      filtered = filtered.filter((v) => v.subcategory === this.selectedSubcategory);
+    }
+
+    if (this.selectedInstructorId) {
+      filtered = filtered.filter((v) => v.instructorId === this.selectedInstructorId);
+    }
+
+    this.filteredVideos = filtered;
+    this.filtersChanged.emit(this.filteredVideos);
   }
 
-  updateInstructorSelection() {
-    this.allInstructorsSelected = this.instructors.every(instructor => this.selectedInstructors[instructor]);
+  onFilterChange() {
+    this.applyFilters();
   }
 
+  resetFilters() {
+    this.selectedDifficulty = '';
+    this.selectedSubcategory = '';
+    this.selectedInstructorId = '';
+    this.applyFilters();
+  }
 }
+

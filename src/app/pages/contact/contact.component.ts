@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailService } from '../../shared/services/email.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -12,6 +13,7 @@ export class ContactComponent {
   submitted = false;
   success = false;
   error = '';
+  pullZone = environment.pullZone
 
   constructor(private fb: FormBuilder, private emailService: EmailService) {
     this.contactForm = this.fb.group({
@@ -43,7 +45,7 @@ export class ContactComponent {
       });
       this.emailService.sendContactForm(this.contactForm.value).subscribe(
         (response) => {
-          console.log('form send successfully', response);
+          console.log('form send successfully');
         },
         (error) => {
           console.error('error sending form', error);

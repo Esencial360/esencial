@@ -6,204 +6,123 @@
 >
   @if (showTab('INSTRUCTORES')) {
   <mat-tab label="INSTRUCTORES">
+    <app-instructors-overview [adminView]="true"></app-instructors-overview>
+  </mat-tab>
+  } @if (showTab('VIDEOS PENDIENTES')) { @if (videos) {
+  <mat-tab label="VIDEOS PENDIENTES">
     <section class="container mx-auto px-4 py-8 montserrat-normal min-h-[60vh]">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        @for(instructor of instructors; track $index;) {
-
-        <div
-          class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
-          (click)="onInstructor(instructor._id)"
-        >
-          <img
-            [src]="'../../../../assets/images/yoga1.jpg'"
-            [alt]="instructor.title"
-            class="w-full h-48 object-cover"
-          />
-          <div class="p-4">
-            <div class="flex items-center text-sm text-blue mb-2 relative">
-              <span>Esencial360</span>
-              <span class="mx-2">•</span>
-              <span class="">Instructor</span>
-            </div>
-            <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
-              {{ instructor.firstname + " " + instructor.lastname }}
-            </h3>
-            <p class="text-strongBrown mb-4">
-              Numero de clases: {{ instructor.videos.length }}
-            </p>
-            <div class="flex items-center justify-between">
-              <span
-                class="bg-blue uppercase text-green-800 px-2 py-1 rounded-full text-sm"
-                >{{ instructor.title }}</span
-              >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-        }
-      </div>
+      @if (videos.length > 0) {
+      <app-class-thumbnail
+        [hideStatistics]="true"
+        [classes]="videos"
+        [allInfo]="true"
+        (actionClassSelected)="onApprovalVideo($event)"
+      ></app-class-thumbnail>
+      } @else {
+      <h2
+        class="uppercase text-blue text-2xl lg:text-6xl text-center font-bold"
+      >
+        Aún no hay clases por revisar
+      </h2>
+      }
     </section>
   </mat-tab>
-  } @if (showTab('VIDEOS PENDIENTES')) {
-    @if (videos) {
-      <mat-tab label="VIDEOS PENDIENTES">
-        <section class="container mx-auto px-4 py-8 montserrat-normal min-h-[60vh]">
-          @if (videos.length > 0) {
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              @for(video of videos; track $index;) {
-             <div
-               class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
-               (click)="onApprovalVideo(video.video)"
-             >
-               <img
-                 [src]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
-                 [alt]="video.safeThumbnail.changingThisBreaksApplicationSecurity"
-                 class="w-full h-48 object-cover"
-               />
-               <div class="p-4">
-                 <div class="flex items-center text-sm text-blue mb-2">
-                   <span>Esencial360</span>
-                   <span class="mx-2">•</span>
-                 </div>
-                 <h3 class="text-xl text-strongBrown font-semibold mb-2 capitalize">
-                   {{ video.video.title }}
-                 </h3>
-                 <p class="text-strongBrown mb-4">
-                   Breathing plays an essential role in our well-being. Follow the
-                   advice of Dr. Marie
-                 </p>
-                 <div class="flex items-center justify-between">
-                   <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     class="h-5 w-5 text-gray-400"
-                     viewBox="0 0 20 20"
-                     fill="currentColor"
-                   >
-                     <path
-                       fill-rule="evenodd"
-                       d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                       clip-rule="evenodd"
-                     />
-                   </svg>
-                 </div>
-               </div>
-             </div>
-             } 
-           </div> 
-          } @else {
-            <h2 class="uppercase text-blue text-2xl lg:text-6xl text-center font-bold">Aún no hay clases por revisar</h2>
-          }
-        </section>
-      </mat-tab>
-    }
-  }
+  } }
 </mat-tab-group>
 
 @if (showModal) {
 <app-modal
   [isOpen]="showModal"
-  [title]="'Déjanos saber más de tu trayectoria'"
+  [title]="'Revisa la clase'"
   (close)="showModal = false"
+  class="overflow-hidden"
 >
-  <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">
-    Review Video
-  </h2>
-
-  <div style="position: relative; padding-top: 56.25%">
-    <iframe
-      [src]="linkVideo"
-      loading="lazy"
-      style="border: 0; position: absolute; top: 0; height: 100%; width: 100%"
-      allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-      allowfullscreen="true"
-    ></iframe>
+@if (!isLoading) {
+  <div class="text-center flex flex-col mt-10">
+    <h2 class="text-blue uppercase font-bold text-xl tracking-wide">
+      {{ activeVideoInfo.title }}
+    </h2>
+    @if(instructorInfo) {
+    <p class="text-strongBrown uppercase">
+      Clase de: {{ instructorInfo.firstname + " " + instructorInfo.lastname }}
+    </p>
+    }
+    <p class="text-strongBrown">
+      Fecha publicado: {{ activeVideoInfo.dateUploaded | date }}
+    </p>
   </div>
-  <div class="flex justify-between mt-6 text-black">
+  <div class="flex justify-evenly my-6 text-black">
     <button
       (click)="handleAction('approve')"
-      class="px-4 py-2 bg-strongBrown text-white rounded-md hover:bg-green-700"
+      class="px-6 py-2 bg-blue text-white rounded-xl shadow-md hover:bg-strongBrown hover:scale-105 transition-all duration-200 ease-in-out"
     >
-      Approve
-    </button>
-    <button
-      (click)="handleAction('underObservation')"
-      class="px-4 py-2 bg-strongBrown text-white rounded-md hover:bg-yellow-700"
-    >
-      Under Observation
+      Aprobar
     </button>
     <button
       (click)="handleAction('reject')"
-      class="px-4 py-2 bg-strongBrown text-white rounded-md hover:bg-red-700"
+      class="px-6 py-2 bg-blue text-white rounded-xl shadow-md hover:bg-strongBrown hover:scale-105 transition-all duration-200 ease-in-out"
     >
-      Reject
+      Rechazar
     </button>
+  </div>
+}
+  <div style="position: relative; padding-top: 56.25%">
+    @if (isLoading) {
+    <app-loading></app-loading>
+    } @else {
+    <iframe
+      [src]="linkVideo"
+      loading="lazy"
+      class="absolute top-0 left-0 w-full h-full"
+      style="border: none"
+      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+      allowfullscreen
+    ></iframe>
+    }
   </div>
 </app-modal>
 } @if (showModalAfterAction) {
 <app-modal
   [isOpen]="showModalAfterAction"
-  [title]="'Review video'"
+  [title]="'Clase ha sido revisada'"
   (close)="showModalAfterAction = false"
+  class="w-full max-w-3xl p-6 rounded-2xl shadow-2xl bg-white"
 >
-  <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">
-    Video {{ resultReviewAction }}
-  </h2>
-
-  @if (resultReviewAction === 'approve') {
-  <div class="flex flex-col justify-center items-center h-full">
-    <app-check-mark></app-check-mark>
-    <div class="md:mx-10 mx-2 text-center">
-      <h4>Video ha sido aprovado.</h4>
-      <p class="my-4">
-        ¡Muchas gracias por tu review! El video ya se encuentra disponible para
-        la comunidad de esencial.
-      </p>
+  <div class="text-center px-4 md:px-10">
+    @if (resultReviewAction === 'approve') {
+    <div class="flex flex-col justify-center items-center space-y-6">
+      <app-check-mark></app-check-mark>
+      <div class="text-center">
+        <h4 class="text-xl font-semibold text-green-600">
+          Video ha sido aprobado
+        </h4>
+        <p class="mt-3 text-gray-600">
+          ¡Muchas gracias por tu revisión! El video ya se encuentra disponible
+          para la comunidad de esencial.
+        </p>
+      </div>
+      <div (click)="onProcessDone()">
+        <app-button [text]="'OK'"></app-button>
+      </div>
     </div>
-    <div class="mt-5" (click)="onProcessDone()">
-      <app-button [text]="'OK'"></app-button>
+    } @else if (resultReviewAction === 'reject') {
+    <div class="flex flex-col justify-center items-center space-y-6">
+      <app-check-mark></app-check-mark>
+      <div class="text-center">
+        <h4 class="text-xl font-semibold text-red-600">
+          Video ha sido rechazado
+        </h4>
+        <p class="mt-3 text-gray-600">
+          ¡Muchas gracias por tu review! Se le avisará al instructor que su
+          video no cumplió con los requisitos para ser aprobado.
+        </p>
+      </div>
+      <div (click)="onProcessDone()">
+        <app-button [text]="'OK'"></app-button>
+      </div>
     </div>
+    }
   </div>
-  } @else if (resultReviewAction === 'underObservation') {
-  <div class="flex flex-col justify-center items-center h-full">
-    <app-check-mark></app-check-mark>
-    <label for="observationReason" class="block mb-2 font-bold text-gray-700">
-      Provide a reason:
-    </label>
-    <textarea
-      id="observationReason"
-      [(ngModel)]="observationReason"
-      class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-      placeholder="Enter reason..."
-    ></textarea>
-    <div class="mt-5" (click)="onProcessDone()">
-      <app-button [text]="'OK'"></app-button>
-    </div>
-  </div>
-  } @else if (resultReviewAction === 'reject') {
-  <div class="flex flex-col justify-center items-center h-full">
-    <app-check-mark></app-check-mark>
-    <div class="md:mx-10 mx-2 text-center">
-      <h4>Video ha sido rechazado.</h4>
-      <p class="my-4">
-        ¡Muchas gracias por tu review! Se le avisara al instructor que su video
-        no cumplio con los requisitos para ser aprovado.
-      </p>
-    </div>
-    <div class="mt-5" (click)="onProcessDone()">
-      <app-button [text]="'OK'"></app-button>
-    </div>
-  </div>
-  }
 </app-modal>
+
 }

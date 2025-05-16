@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Instructor } from '../Models/Instructor'; 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, switchMap } from 'rxjs';
+import { Instructor } from '../Models/Instructor';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InstructorService {
   private apiUrl = `${environment.apiUrl}instructors`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   getAllInstructors(): Observable<Instructor[]> {
     return this.http.get<Instructor[]>(this.apiUrl);
@@ -21,16 +22,37 @@ export class InstructorService {
     return this.http.get<Instructor>(url);
   }
 
-  createInstructor(instructor: Instructor): Observable<Instructor> {
-    return this.http.post<Instructor>(this.apiUrl, instructor);
+  createInstructor(instructor: FormData): Observable<Instructor> {
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<Instructor>(`${this.apiUrl}`, instructor, { headers });
+      })
+    );
   }
 
   updateInstructor(instructor: Instructor): Observable<Instructor> {
-    return this.http.put<Instructor>(this.apiUrl, instructor);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.put<Instructor>(`${this.apiUrl}`, instructor, { headers });
+      })
+    );
   }
 
   deleteInstructor(id: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(url);
+     return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.delete<Instructor>(`${url}`, { headers });
+      })
+    );
   }
 }

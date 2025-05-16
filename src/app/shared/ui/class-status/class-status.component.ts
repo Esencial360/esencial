@@ -8,4 +8,9 @@ import { Component, Input } from '@angular/core';
 export class ClassStatusComponent {
   @Input() pendingVideos: number = 0;
   @Input() approvedVideos: number = 0;
+
+  ngOnInit() {
+    console.log(this.approvedVideos - this.pendingVideos);
+    
+  }
 }

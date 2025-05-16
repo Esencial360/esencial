@@ -108,10 +108,20 @@ import { InstructorDashboardComponent } from './pages/instructor-dashboard/instr
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { FormatDurationPipe } from './shared/pipes/format-duration.pipe';
 import { ClassStatusComponent } from './shared/ui/class-status/class-status.component';
+import { ApproveClassComponent } from './pages/classes/approve-class/approve-class.component';
+import { SubscriptionManagementComponent } from './components/subscription-management/subscription-management.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID } from '@angular/core';
+import { AllMeditationsComponent } from './pages/meditations/all-meditations/all-meditations.component';
+import { SingleMeditationComponent } from './pages/meditations/single-meditation/single-meditation.component';
+import { MeditationThumbnailComponent } from './shared/ui/meditation-thumbnail/meditation-thumbnail.component';
+import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 
 export function localStorageSyncReducer(reducer: any) {
-  return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
+  return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
 }
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -186,6 +196,12 @@ export function localStorageSyncReducer(reducer: any) {
     AdminDashboardComponent,
     FormatDurationPipe,
     ClassStatusComponent,
+    ApproveClassComponent,
+    SubscriptionManagementComponent,
+    AllMeditationsComponent,
+    SingleMeditationComponent,
+    MeditationThumbnailComponent,
+    UploadMeditationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -203,6 +219,8 @@ export function localStorageSyncReducer(reducer: any) {
       clientId: environment.auth0.clientId,
       authorizationParams: {
         redirect_uri: environment.auth0.redirectUri,
+        audience: environment.auth0.audience,
+        scope: 'openid profile email',
       },
       httpInterceptor: {
         allowedList: [`${environment.dev.serverUrl}`],
@@ -211,12 +229,13 @@ export function localStorageSyncReducer(reducer: any) {
     StoreModule.forRoot(
       {
         user: userActiveReducer,
-        instructors: instructorReducer
+        instructors: instructorReducer,
       },
       { metaReducers: [localStorageSyncReducer] }
     ),
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
@@ -231,6 +250,8 @@ export function localStorageSyncReducer(reducer: any) {
             clientId: environment.auth0.clientId,
             authorizationParams: {
               redirect_uri: environment.auth0.redirectUri,
+              audience: environment.auth0.audience,
+              scope: 'openid profile email',
             },
           });
         }

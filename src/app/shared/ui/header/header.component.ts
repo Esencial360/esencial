@@ -7,14 +7,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { burgerMenuAnimation } from '../../animations/burger-menu.animations';
-// import { AuthService } from '../services/auth.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
-import { selectStreak } from '../../../state/user.selectors';
 import { selectActiveUser } from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -32,11 +30,11 @@ export class HeaderComponent {
   @Input()
   newLanding!: boolean;
 
-
   roles!: string;
   isOpen: boolean = false;
   user$: any;
   streak!: any;
+  pullZone: string = environment.pullZone;
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
@@ -57,10 +55,9 @@ export class HeaderComponent {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
         if (user) {
-          const namespace = 'https://test-assign-roles.com';
-          this.roles = user[`${namespace}roles`][0] || "User";
+          const namespace = 'https://test-assign-roles.com/';
+          this.roles = user[`${namespace}roles`][0] || 'User';
           console.log(this.roles);
-          
         }
       });
   }
@@ -77,7 +74,7 @@ export class HeaderComponent {
   }
 
   onSignUp() {
-    this.route.navigate(['/subscribirse']);
+    this.route.navigate(['/subscribe']);
   }
 
   onContact() {
@@ -108,13 +105,17 @@ export class HeaderComponent {
     this.route.navigate(['consejo']);
   }
 
+  onMeditations() {
+    this.route.navigate(['meditaciones']);
+  }
+
   toggle() {
     this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.renderer.addClass(this.document.body, 'menu-opened');
-    } else {
-      this.renderer.removeClass(this.document.body, 'menu-opened');
-    }
+    // if (this.isOpen) {
+    //   this.renderer.addClass(this.document.body, 'menu-opened');
+    // } else {
+    //   this.renderer.removeClass(this.document.body, 'menu-opened');
+    // }
   }
 
   public signOut(): void {

@@ -1,6 +1,6 @@
 <app-header [newLanding]="true"></app-header>
 <section class="h-full relative">
-  <app-parallax [imagePath]="'assets/images/7.jpg'"></app-parallax>
+  <app-parallax [imagePath]="pullZone + '/assets/7.jpg'"></app-parallax>
   <div
     class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center w-full lg:w-8/12"
   >
@@ -19,7 +19,7 @@
   </span>
 </section>
 <app-banner-v3
-  [image]="'/assets/images/logoWhite.png'"
+  [image]="pullZone + '/assets/logoWhite.png'"
   [firstDescriptions]="
     'En esencial360, la calidad y autenticidad de nuestro contenido es una prioridad. Por eso, contamos con un Consejo de Expertos conformado por referentes en yoga, meditación y desarrollo personal, todos con una trayectoria impecable y un profundo compromiso con el bienestar.'
   "
@@ -32,7 +32,7 @@
 [text]="
   'En muchas culturas indígenas, el buho representa un guardián del conocimiento y un protector espiritual contra influencias negativas..'
 "
-[image]="'/assets/images/owl.png'"
+[image]="pullZone + '/assets/owl.png'"
 ></app-banner-v2>
 
 <app-instructor-counselor-preview

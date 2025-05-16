@@ -34,23 +34,11 @@ import { AppointmentSchedulerComponent } from './pages/appointment-scheduler/app
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 import { AllClassesComponent } from './pages/classes/all-classes/all-classes.component';
 import { CounselComponent } from './pages/counsel/counsel.component';
-
-// export const Auth0Guard = async () => {
-//   const platformService = inject(PlatformService);
-
-//   if (!platformService.getIsBrowser()) {
-//     return false;
-//   }
-//   const authService = inject(AuthService);
-
-//   const isAuthenticated = await firstValueFrom(authService.isAuthenticated$);
-
-//   if (!isAuthenticated) {
-//     authService.loginWithRedirect();
-//     return false;
-//   }
-//   return true;
-// };
+import { ApproveClassComponent } from './pages/classes/approve-class/approve-class.component';
+import { animate } from '@angular/animations';
+import { AllMeditationsComponent } from './pages/meditations/all-meditations/all-meditations.component';
+import { SingleMeditationComponent } from './pages/meditations/single-meditation/single-meditation.component';
+import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 
 const routes: Routes = [
   {
@@ -153,7 +141,7 @@ const routes: Routes = [
   {
     path: 'nuevo-video',
     component: UploadVideoComponent,
-    data: { animation: 'openClosePage', },
+    data: { animation: 'openClosePage' },
   },
   {
     path: 'collection/:id',
@@ -171,6 +159,11 @@ const routes: Routes = [
     data: { animation: 'openClosePage' },
   },
   {
+    path: 'revision/:id',
+    component: ApproveClassComponent,
+    data: { animation: 'openClosePage' },
+  },
+  {
     path: 'estadisticas',
     component: ClassStatisticsComponent,
     data: { animation: 'openClosePage' },
@@ -182,28 +175,43 @@ const routes: Routes = [
   },
   {
     path: 'socios',
-    component: PartnersComponent
+    component: PartnersComponent,
   },
   {
     path: 'comunidad',
-    component: CommunityComponent
+    component: CommunityComponent,
   },
   {
     path: 'asesorias',
-    component: AppointmentSchedulerComponent
-  }, 
+    component: AppointmentSchedulerComponent,
+  },
   {
     path: 'banner',
-    component: CreateBannerComponent
+    component: CreateBannerComponent,
   },
   {
     path: 'consejo',
-    component: CounselComponent
+    component: CounselComponent,
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }, 
+  {
+    path: 'subscribe',
+    component: SignUpComponent,
+  },
+  {
+    path: 'meditaciones',
+    component: AllMeditationsComponent,
+  },
+  {
+    path: 'meditaciones/:id',
+    component: SingleMeditationComponent,
+  },
+  {
+    path: 'nueva-meditacion',
+    component: UploadMeditationsComponent,
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
   // Catch-all for invalid routes (404)`
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

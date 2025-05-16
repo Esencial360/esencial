@@ -104,17 +104,11 @@ export class RecommendationClassesComponent {
       this.authService.user$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
-        if (user) {
-          console.log('User:', user);
-        }
         this.authService.user$.subscribe((user) => {
           if (user) {
          this.userService.getUser(user.email).subscribe({
             next: (response) => {
-              console.log('User successful received', response);
               this.user = response
-              console.log(this.user);
-
               this.checkQuestionnaireStatus(this.user._id)
             },
             error: (error) => {
@@ -127,101 +121,6 @@ export class RecommendationClassesComponent {
         });
       });
     }
-
-    // private checkQuestionnaireStatus(userId: string): void {
-    //   this.questionnaireService.checkQuestionnaireStatus(userId).subscribe({
-    //     next: (status: any) => {
-    //       if (status.needsQuestionnaire === false) {
-    //         this.isComplete = true;
-    //         console.log(status);
-
-    //         this.answers = status.previousAnswers;
-    //         // Set recommendation from backend
-    //         if (status.recommendation) {
-    //           this.recommendations = {
-    //             [this.getAnswerKey()]: status.recommendation
-    //           };
-    //         }
-    //       } else if (status.needsQuestionnaire === true) {
-    //         this.isComplete = false
-    //       }
-    //     },
-    //     error: (error: any) => {
-    //       console.error('Error checking questionnaire status:', error);
-    //       // Handle error (show notification, etc.)
-    //     }
-    //   });
-    // }
-
-  //   selectAnswer(value: string): void {
-  //     console.log(this.answers);
-
-  //     this.answers[this.getAnswerKey()] = value;
-
-  //     if (this.currentStep < 3) {
-  //       this.currentStep++;
-  //     } else {
-  //       this.submitQuestionnaire();
-  //     }
-  //   }
-
-  //   private submitQuestionnaire(): void {
-  //     console.log(this.answers);
-
-  //     this.questionnaireService.submitQuestionnaire(this.answers, this.userId).subscribe({
-  //       next: (response: { recommendation: any; }) => {
-  //         this.isComplete = true;
-  //         this.recommendations = {
-  //           [this.getAnswerKey()]: response.recommendation
-  //         };
-  //         console.log(this.recommendations);
-
-  //       },
-  //       error: (error: any) => {
-  //         console.error('Error submitting questionnaire:', error);
-  //         // Handle error (show notification, etc.)
-  //       }
-  //     });
-  //   }
-
-  // ngOnInit(): void {
-  //   this.authService.user$.pipe(
-  //     takeUntil(this.ngUnsubscribe),
-  //     switchMap(user => {
-  //       if (!user?.email) {
-  //         throw new Error('No user email available');
-  //       }
-  //       return this.userService.getUser(user.email);
-  //     }),
-  //     switchMap((user: any) => {
-  //       if (!user?._id) {
-  //         throw new Error('No user ID available');
-  //       }
-  //       this.userId = user._id;
-  //       console.log(this.userId);
-        
-  //       return this.questionnaireService.checkQuestionnaireStatus(user._id);
-  //     }),
-  //     tap((status: any) => {
-  //       this.isComplete = !status.needsQuestionnaire;
-        
-  //       if (!status.needsQuestionnaire && status.previousAnswers) {
-  //         this.answers = status.previousAnswers;
-  //         if (status.recommendation) {
-  //           this.recommendations = {
-  //             [this.getAnswerKey()]: status.recommendation
-  //           };
-  //         }
-  //       }
-  //     }),
-  //     catchError(error => {
-  //       console.error('Error in initialization:', error);
-  //       this.error = 'Failed to initialize questionnaire. Please try again later.';
-  //       return of(null); 
-  //     })
-  //   ).subscribe();
-  // }
-
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
@@ -248,7 +147,7 @@ export class RecommendationClassesComponent {
             this.recommendations = {
               [this.getAnswerKey()]: status.recommendation,
             };
-            console.log('recommendations', this.recommendations);
+            
           }
         }
       });
@@ -297,7 +196,7 @@ export class RecommendationClassesComponent {
         this.recommendations = {
           [this.getAnswerKey()]: response.recommendation,
         };
-        console.log('recommendations', this.recommendations);
+        
         
         this.error = '';
       });
@@ -316,7 +215,6 @@ export class RecommendationClassesComponent {
   }
 
   get recommendation(): Recommendation {
-    console.log(this.answers);
 
     const key = `${this.answers['energyLevel']}-${this.answers['timeAvailable']}-${this.answers['focusArea']}`;
     return (

@@ -14,7 +14,7 @@
       [pageDescription]="'Haz click para subir una nueva clase.'"
     ></app-page-title>
 
-    <div class="w-full flex justify-center">
+    <!-- <div class="w-full flex justify-center">
       <button
         (click)="onUploadVideo()"
         class="group flex items-center mb-4 justify-center rounded-full w-10/12 lg:w-1/4 bg-lightBrown px-4 py-4 hover:bg-strongBrown transition-colors duration-200"
@@ -23,12 +23,14 @@
           >SUBE UNA CLASE</span
         >
       </button>
-    </div>
+    </div> -->
     <section class="container mx-auto px-4 py-8 montserrat-normal min-h-[60vh]">
+      @if (videos) {
       <app-class-thumbnail
         [classes]="videos"
         (actionClassSelected)="onWatchSingleClass($event)"
       ></app-class-thumbnail>
+      }
     </section>
   </mat-tab>
   } @if (showTab('PAGOS')) {

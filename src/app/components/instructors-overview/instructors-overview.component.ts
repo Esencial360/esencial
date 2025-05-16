@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Instructor } from '../../shared/Models/Instructor';
 import { InstructorService } from '../../shared/services/instructor.service';
@@ -11,6 +11,13 @@ import { Store } from '@ngrx/store';
   styleUrl: './instructors-overview.component.css',
 })
 export class InstructorsOverviewComponent implements OnInit {
+  @Input() adminView!: boolean;
+
+  openModal!: boolean;
+  processComplete!: boolean;
+  isUploadingNewInstructor!: boolean;
+  newInstructorUploaded!: boolean;
+
   constructor(
     private router: Router,
     private instructorService: InstructorService,
@@ -39,11 +46,35 @@ export class InstructorsOverviewComponent implements OnInit {
     );
   }
 
-  onInstructor(id: string) {
-    this.router.navigate([`/instructores/${id}`]);
+  onInstructor(id: string | undefined) {
+    if (this.adminView) {
+      this.router.navigate([`/instructor-previa/${id}`]);
+    } else {
+      this.router.navigate([`/instructores/${id}`]);
+    }
   }
 
   onAllInstructors() {
-    this.router.navigate(['/instructores'])
+    if (this.adminView) {
+      this.router.navigate(['/instructores']);
+    } else {
+      this.router.navigate(['/instructores']);
+    }
+  }
+
+  onClose() {
+    this.openModal = false;
+  }
+
+  onNewInstructor() {
+    this.openModal = true;
+  }
+
+  onUploading() {
+    this.openModal = false;
+  }
+
+  onProcessDoneO() {
+    this.newInstructorUploaded = false;
   }
 }

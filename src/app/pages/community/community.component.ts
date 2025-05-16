@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-community',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './community.component.css'
 })
 export class CommunityComponent {
+
+  pullZone = environment.pullZone
 
 }

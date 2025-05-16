@@ -28,9 +28,8 @@ export class NewBlogComponent implements OnInit {
   ngOnInit(): void {
     this.blogService.getAllCategories().subscribe(
       (response) => {
-        console.log('Categories successfuly fetch', response);
+        console.log('Categories successfuly fetch');
         this.categories = response;
-        // console.log(this.categories)
       },
       (error) => {
         console.error('Error uploading file:', error);
@@ -40,10 +39,9 @@ export class NewBlogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.blogForm.valid) {
-      console.log(this.blogForm.value);
       this.blogService.createBlog(this.blogForm.value).subscribe(
         (response) => {
-          console.log('File uploaded successfully:', response);
+          console.log('File uploaded successfully:');
           this.router.navigate([`/blog/${response._id}`])
         },
         (error) => {

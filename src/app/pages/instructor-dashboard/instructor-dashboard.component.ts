@@ -8,6 +8,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
 import { InstructorService } from '../../shared/services/instructor.service';
 import { InstructorActions } from '../../state/instructor.actions';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-instructor-dashboard',
@@ -17,7 +18,10 @@ import { InstructorActions } from '../../state/instructor.actions';
 export class InstructorDashboardComponent implements OnInit {
   isLoading!: boolean;
   userId: string = '';
-  filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
+  // filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
+  filters = ['MIS CLASES']
+  pullZone: string = environment.pullZone
+  instructorImage!: string;
 
   private ngUnsubscribe = new Subject<void>();
 
@@ -49,6 +53,7 @@ export class InstructorDashboardComponent implements OnInit {
                 });
               this.instructorService.getInstructor(user.email).subscribe({
                 next: (response) => {
+                  this.instructorImage = response.profilePicture.toString()
                   this.store.dispatch(
                     ActiveUserApiActions.retrievedActiveUser({
                       user: response,

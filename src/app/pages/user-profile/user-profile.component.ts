@@ -58,7 +58,7 @@ export class UserProfileComponent implements OnInit {
           }
           this.authService.user$.subscribe((user) => {
             if (user) {
-              const namespace = 'https://test-assign-roles.com';
+              const namespace = 'https://test-assign-roles.com/';
               this.roles = user[`${namespace}roles`][0] || [];
               this.setFilters();
             }

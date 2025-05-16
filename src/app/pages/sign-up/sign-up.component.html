@@ -1,237 +1,54 @@
 <app-header></app-header>
-<div class="flex flex-col items-center min-h-screen bg-gray-100 !raleway-regular">
-  <!-- @if (firstStep) {
-<app-page-title [pageTitle]="'SUBSCRIBETE'"></app-page-title>
-  <div class="w-11/12 max-w-md p-8 bg-white rounded-lg shadow-md">
-    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-      <div *ngIf="showAlert" class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-        <p>Make sure all inputs are correct. Please try again.</p>
-      </div>
-      <div class="mb-4">
-        <input
-          type="text"
-          placeholder="Nombre"
-          formControlName="firstname"
-          class="w-full px-3 py-2 pl-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        @if (signInForm.get('firstname')?.invalid &&
-        (signInForm.get('firstname')?.dirty ||
-        signInForm.get('firstname')?.touched)) {
-        <div class="text-red-500 text-xs mt-1">
-          @if(signInForm.get('firstname')?.errors?.['required']) {
-          <div>First name is required.</div>
-          } @if(signInForm.get('firstname')?.errors?.['firstname']) {
-          <div>Invalid name.</div>
-          }
-        </div>
-        }
-      </div>
-      <div class="mb-4">
-        <input
-          type="text"
-          placeholder="Apellido(s)"
-          formControlName="lastname"
-          class="w-full px-3 py-2 pl-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        @if (signInForm.get('lastname')?.invalid &&
-        (signInForm.get('lastname')?.dirty ||
-        signInForm.get('lastname')?.touched)) {
-        <div class="text-red-500 text-xs mt-1">
-          @if(signInForm.get('lastname')?.errors?.['required']) {
-          <div>Lastname is required.</div>
-          } @if(signInForm.get('lastname')?.errors?.['lastname']) {
-          <div>Invalid lastname.</div>
-          }
-        </div>
-        }
-      </div>
-      <div class="mb-4">
-        <input
-          type="email"
-          placeholder="Email Address"
-          formControlName="email"
-          class="w-full px-3 py-2 pl-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        @if (signInForm.get('email')?.invalid && (signInForm.get('email')?.dirty
-        || signInForm.get('email')?.touched)) {
-        <div class="text-red-500 text-xs mt-1">
-          @if(signInForm.get('email')?.errors?.['required']) {
-          <div>Email is required.</div>
-          } @if(signInForm.get('email')?.errors?.['email']) {
-          <div>Invalid email address.</div>
-          }
-        </div>
-        }
-      </div>
-      <div class="mb-4 relative">
-        <input
-          type="password"
-          placeholder="Password"
-          formControlName="password"
-          class="w-full px-3 py-2 pl-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
-        />
-        @if (signInForm.get('password')?.invalid &&
-        (signInForm.get('password')?.dirty ||
-        signInForm.get('password')?.touched)) {
-        <div class="text-red-500 text-xs mt-1">
-          @if (signInForm.get('password')?.errors?.['required']) {
-          <div>Password is required.</div>
-          }
-        </div>
-        }
 
-        <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
-          <svg
-            class="h-5 w-5 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-            ></path>
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-            ></path>
-          </svg>
-        </span>
-      </div>
-      <div class="flex flex-col justify-center items-center mb-4">
-        <p class="text-sm text-gray-600 hover:text-gray-800">
-          By clicking "Continue," you agree to our
-          <span class="cursor-pointer underline font-bold"
-            >terms of Service</span
-          >, and
-          <span class="cursor-pointer underline font-bold">Privacy Policy</span
-          >, and to receive email updates from Alo Moves.
-        </p>
-      </div>
-      <button
-        type="submit"
-        (click)="onSubmit()"
-        class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+<div
+  class="flex flex-col items-center min-h-screen bg-gray-100 py-10 montserrat-normal uppercase text-blue"
+>
+  <h2 class="text-3xl font-semibold mb-8">Elige tu membresía</h2>
+
+  <div class="gap-6 w-full max-w-4xl px-6">
+    <div>
+      @for (plan of plans; track $index) {
+      <div
+        class="bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row border border-lightBrown my-4 cursor-pointer transition hover:scale-[1.02]"
+        [ngClass]="{'border-blue ring-2 ring-blue-400': selectedPlan === plan.name}"
+        (click)="selectPlan(plan.name)"
       >
-        ESCOGE TU PLAN
-      </button>
-    </form>
-    <div class="mt-6 text-center text-gray-600 mt-10">
-      <p class="mb-2">ONE-CLICK SIGN-IN</p>
-      <button
-        class="w-full py-2 px-4 bg-white border border-gray-300 rounded-md mb-2 flex items-center justify-center"
-      >
-        SIGN IN WITH GOOGLE
-      </button>
+        <img [src]="plan.image" class="lg:w-1/2 object-cover" alt="" />
+        <div class="p-6 flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-veige font-bold">{{ plan.name }}</h3>
+          </div>
+          <p class="text-3xl text-strongBrown mb-6 font-bold">
+            ${{ plan.price }} MXN
+          </p>
+          <ul class="space-y-3">
+            <li
+              *ngFor="let feature of plan.features"
+              class="flex items-center text-strongBrown"
+            >
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      }
     </div>
   </div>
-  } -->
-  <!-- @if(firstStep) { 
-  <div class="max-w-md mx-auto px-6">
-    <div class="text-lg font-semibold mb-4">Step 2 of 3</div>
-    <div class="text-2xl font-bold mb-2">CHOOSE YOUR PLAN</div>
-    <div class="text-gray-600 mb-6">
-      When your free trial ends on <span class="font-bold">06/17/2024</span>, your account will be
-      automatically charged for the selected plan. You can <span class="font-bold">change or cancel</span> your
-      plan anytime.
-    </div>
 
-    <div class="mb-4">
-      <div class="flex items-center mb-2">
-        <input
-          type="radio"
-          name="plan"
-          id="plan-freemium"
-          [value]="'freemium'"
-          [(ngModel)]="selectedPlan"
-          (ngModelChange)="onPlanChange('freemium')"
-          class="mr-2"
-        />
-        <label for="plan-freemium" class="font-semibold">Freemium</label>
-      </div>
-      <div class="text-gray-600 text-sm ml-6">
-        After a 30-day free trial, on June 17, 2024, a recurring charge of
-        $12.99 monthly plus applicable tax for your region will automatically
-        apply.
-      </div>
-      <div class="text-gray-600 ml-6 font-bold">$free</div>
-    </div>
-
-    <div class="mb-4">
-      <div class="flex items-center mb-2">
-        <input
-          type="radio"
-          name="plan"
-          id="plan-premium"
-          [value]="'premium'"
-          [(ngModel)]="selectedPlan"
-          (ngModelChange)="onPlanChange('premium')"
-          class="mr-2"
-        />
-        <label for="plan-premium" class="font-semibold">Premium</label>
-        <span class="bg-green-500 text-white px-2 py-1 ml-2 rounded-md"
-          >SAVE 16%</span
-        >
-      </div>
-      <div class="text-gray-600 ml-6 text-sm">
-        After a 30-day free trial, on June 17, 2024, a recurring charge of
-        $129.99 yearly plus applicable tax for your region will automatically
-        apply.
-      </div>
-      <div class="text-gray-600 ml-6 font-bold">
-        $9.99 / month billed annually
-      </div>
-    </div>
-    <div class="mb-4">
-      <div class="flex items-center mb-2">
-        <input
-          type="radio"
-          name="plan"
-          id="plan-pro"
-          [value]="'pro'"
-          [(ngModel)]="selectedPlan"
-          (ngModelChange)="onPlanChange('pro')"
-          class="mr-2"
-        />
-        <label for="plan-pro" class="font-semibold">Pro</label>
-        <span class="bg-green-500 text-white px-2 py-1 ml-2 rounded-md"
-          >SAVE 16%</span
-        >
-      </div>
-      <div class="text-gray-600 ml-6 text-sm">
-        After a 30-day free trial, on June 17, 2024, a recurring charge of
-        $129.99 yearly plus applicable tax for your region will automatically
-        apply.
-      </div>
-      <div class="text-gray-600 ml-6 font-bold">
-        $19.99 / month billed annually
-      </div>
-    </div>
-    <div class="mb-6">
-      <label for="promo-code" class="block mb-2 font-semibold"
-        >Have a promo code?</label
-      >
-      <input
-        type="text"
-        id="promo-code"
-        placeholder="Enter your promo code"
-        (ngModelChange)="onPromoCodeChange($event)"
-        class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-    </div>
-    <button
-    type="submit"
-    (click)="onPlanSelected()"
-    class="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+  <button
+    class="mt-10 bg-blue hover:bg-strongBrown text-white font-semibold py-3 px-8 rounded-xl transition disabled:opacity-50"
+    [disabled]="!selectedPlan || loading"
+    (click)="subscribe()"
   >
-    CONTINUAR CON TU PLAN
+    {{ loading ? "Redirecting..." : "Continuar al pago" }}
   </button>
-  </div>
-  } -->
 </div>
+
 <app-footer></app-footer>

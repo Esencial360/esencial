@@ -9,6 +9,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { fadeInAnimation } from '../../shared/animations/fade-in.animation';
 import { Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 interface ClassOverview {
   image: string;
@@ -51,6 +52,7 @@ export class LandingComponent implements OnInit  {
   roles!: string;
   backgroundImageUrl = '../../../assets/images/yoga.jpg';
   isLoading!: boolean;
+  pullZone: string = environment.pullZone
   welcomeLines = [
     {title: 'Clases de yoga', description: 'Diferentes estilos, instructores y duraciones, que se adaptan a tus necesidades y nivel.'},
     {title: 'Meditaciones guiadas', description: 'Para comenzar o atravesar el día con intención, claridad y equilibrio.'},
@@ -82,7 +84,7 @@ export class LandingComponent implements OnInit  {
           this.authService.user$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((user) => {
       if (user) {
         this.isLoading = false;
-        const namespace = 'https://test-assign-roles.com';
+        const namespace = 'https://test-assign-roles.com/';
         this.roles = user[`${namespace}roles`][0] || [];
       } else {
         this.isLoading = false;
@@ -90,11 +92,11 @@ export class LandingComponent implements OnInit  {
     });
     }
     this.services = [
-      { title: 'YOGA', image: '../../../assets/images/6.png'},
-      { title: 'MEDITACIONES', image: '../../../assets/images/7.png' },
-      { title: 'TALLERES', image: '../../../assets/images/8.png' },
+      { title: 'YOGA', image: this.pullZone + '/assets/6.png'},
+      { title: 'MEDITACIONES', image: this.pullZone + '/assets/7.png' },
+      // { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
     ];
-    this.fetchBlogs();
+    // this.fetchBlogs();
     this.fetchInstructors();
   }
 
@@ -106,16 +108,16 @@ export class LandingComponent implements OnInit  {
     this.elementState = 'visible';
   }
 
-  async fetchBlogs() {
-    await this.blogService.getAllBlogs().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      (blogs: Blog[]) => {
-        this.blogs = blogs;
-      },
-      (error) => {
-        console.error('Error fetching blogs:', error);
-      }
-    );
-  }
+  // async fetchBlogs() {
+  //   await this.blogService.getAllBlogs().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+  //     (blogs: Blog[]) => {
+  //       this.blogs = blogs;
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching blogs:', error);
+  //     }
+  //   );
+  // }
 
   async fetchInstructors() {
     await this.instructorService.getAllInstructors().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
@@ -128,19 +130,27 @@ export class LandingComponent implements OnInit  {
     );
   }
 
-  navigateToBlog() {
-    this.router
-      .navigateByUrl('/blog')
-      .then((navigationSuccess) => {
-        if (navigationSuccess) {
-          console.log('Navigation to blog page successful');
-        } else {
-          console.error('Navigation to blog page failed');
-        }
-      })
-      .catch((error) => {
-        console.error(`An error occurred during navigation: ${error.message}`);
-      });
+  // navigateToBlog() {
+  //   this.router
+  //     .navigateByUrl('/blog')
+  //     .then((navigationSuccess) => {
+  //       if (navigationSuccess) {
+  //         console.log('Navigation to blog page successful');
+  //       } else {
+  //         console.error('Navigation to blog page failed');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(`An error occurred during navigation: ${error.message}`);
+  //     });
+  // }
+
+  onService(title: string) {
+    if (title === 'YOGA') {
+         this.router.navigate(['/clases']) 
+    } else {
+      this.router.navigate(['/meditaciones'])
+    }
   }
 
   navigateToInstructors() {

@@ -6,23 +6,21 @@ import { BunnystreamService } from '../../../shared/services/bunny-stream.servic
 @Component({
   selector: 'app-class-statistics',
   templateUrl: './class-statistics.component.html',
-  styleUrl: './class-statistics.component.css'
+  styleUrl: './class-statistics.component.css',
 })
 export class ClassStatisticsComponent implements OnInit {
-
   videoId!: any;
 
   videos!: any;
   link!: SafeResourceUrl;
-  videoStatistics!: any
+  videoStatistics!: any;
   filteredKeys = ['countryViewCounts', 'countryWatchTime'];
 
-  @Input() 
+  @Input()
   previewView!: boolean;
 
-
   @Input()
-  videoGuid!: string; 
+  videoGuid!: string;
 
   @Input()
   adminView!: boolean;
@@ -35,10 +33,6 @@ export class ClassStatisticsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.route.paramMap.subscribe((params) => {
-    //   this.videoId = params.get('id');
-    //   console.log(this.videoId);
-    // });
     this.getVideoStatistics();
   }
 
@@ -54,11 +48,10 @@ export class ClassStatisticsComponent implements OnInit {
     return Object.entries(obj);
   }
 
- getVideoStatistics() {
-     this.bunnystreamService.getVideoStatistics(this.videoGuid).subscribe(
+  getVideoStatistics() {
+    this.bunnystreamService.getVideoStatistics(this.videoGuid).subscribe(
       (response: any) => {
-        console.log(response)
-        this.videoStatistics = response
+        this.videoStatistics = response;
       },
       (error) => {
         console.error('Error retrieving videos:', error);
@@ -66,5 +59,19 @@ export class ClassStatisticsComponent implements OnInit {
     );
   }
 
+  getTotalViews() {
+    const viewCounts = this.videoStatistics?.countryViewCounts || {};
+    return Object.values(viewCounts).reduce(
+      (acc: any, val) => acc + val,
+      0
+    );
+  }
 
+  getTotalWatchTime() {
+    const watchTimeCounts = this.videoStatistics?.countryWatchTime || {};
+    return Object.values(watchTimeCounts).reduce(
+      (acc: any, val) => acc + val,
+      0
+    );
+  }
 }

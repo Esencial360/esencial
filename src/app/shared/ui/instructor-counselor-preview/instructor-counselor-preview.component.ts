@@ -14,8 +14,15 @@ export class InstructorCounselorPreviewComponent {
 
   @Output() teamAction = new EventEmitter<string>()
 
-  onTeamClick(id: string) {
+  onTeamClick(id: string | undefined) {
     this.teamAction.emit(id)
   }
+
+  getDescriptionParagraphs(description: string): string[] {
+    return description.split('. ').map(p => p.trim()).filter(p => p.length > 0);
+  }
+  
+  
+  
 
 }
