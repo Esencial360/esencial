@@ -3,4 +3,5 @@ export interface Meditation {
   title: string;
   instructorId?: string | undefined;
   meditationClass?: File;
+   audioDuration?: any;
 }

@@ -11,7 +11,7 @@
 >
   <div class="flex-1 pr-8">
     <h2 class="!text-4xl font-bold text-blue uppercase mb-4">
-      Bienvenido {{ user.given_name ? user.given_name : user.nickname }}
+      Bienvenido {{ user['username'] ? user['username'] : user.nickname }}
     </h2>
     <br />
     <p class="text-olive-600 text-lg">

@@ -36,7 +36,7 @@ export class SingleMeditationComponent {
   userId!: string;
   meditationInfo!: Meditation;
   instructorInfo!: Instructor;
-
+  forbidden!: boolean;
   users$!: any;
   user$!: any;
   user!: any;
@@ -112,7 +112,7 @@ export class SingleMeditationComponent {
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.authService.user$.subscribe((user) => {
         if (user) {
-          const namespace = 'https://test-assign-roles.com';
+          const namespace = 'https://test-assign-roles.com/';
           this.roles = user[`${namespace}roles`][0] || [];
           this.isLoading = false;
         }
@@ -128,6 +128,7 @@ export class SingleMeditationComponent {
       },
       error: (error) => {
         console.error('Error retrieved Meditation:', error);
+        this.forbidden = true;
       },
       complete: () => {
         console.log('Cration retrieved completed.');

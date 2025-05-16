@@ -20,6 +20,7 @@ export class AllMeditationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+      window.scrollTo(0, 0);
     this.loading = true
     this.meditationService.getAllMeditation().subscribe({
       next: (res) => {

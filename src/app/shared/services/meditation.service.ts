@@ -28,7 +28,16 @@ export class MeditationService {
     );
   }
   createMeditation(meditationVideo: FormData): Observable<Meditation> {
-    return this.http.post<Meditation>(this.apiUrl, meditationVideo);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<Meditation>(`${this.apiUrl}`, meditationVideo, {
+          headers,
+        });
+      })
+    );
   }
 
   updateMeditation(meditationVideo: Meditation): Observable<Meditation> {

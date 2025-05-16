@@ -250,6 +250,98 @@
     </ul>
   </nav>
 </header>
+<header
+  class="lg:hidden text-white p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
+>
+  <div class="flex items-center justify-between w-full">
+    <div class="flex justify-center items-center">
+      <img
+        [src]="pullZone + '/assets/blueLogo.png'"
+        alt="Logo"
+        class="max-h-20 cursor-pointer rounded-lg"
+        (click)="onHome()"
+      />
+    </div>
+    <span
+      (click)="toggle()"
+      class="material-symbols-outlined text-white text-xl w-4 mr-6 font-bold"
+    >
+      menu
+    </span>
+  </div>
+</header>
+<section
+  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
+  [@menuAnimation]="isOpen ? 'open' : 'closed'"
+>
+  <button
+    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    (click)="toggle()"
+  >
+    <span class="material-symbols-outlined text-blue"> close </span>
+  </button>
+  <div class="flex justify-start items-center">
+    <img
+      [src]="pullZone + '/assets/blueLogo.png'"
+      alt="Logo"
+      class="max-h-20 cursor-pointer rounded-lg"
+      (click)="onHome()"
+    />
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
+  </div>
+  <div class="container mx-auto px-4 mt-16">
+    @if(userConnected) {
+    <ul class="space-y-4 text-lg font-semibold">
+      @if (roles === "User") {
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+      </div>
+      }
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
+      <li class="border-t border-gray-700 pt-4 my-8"></li>
+      <li (click)="onSignIn()">SIGN IN</li>
+      <li class="" (click)="onContact()">CONTACTANOS</li>
+    </ul>
+    } @if(!userConnected) {
+    <ul class="space-y-4 text-lg font-semibold">
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
+      <li class="border-t border-gray-700 pt-4 my-8"></li>
+
+      <li class="" (click)="signOut()">LOGOUT</li>
+
+      <li class="" (click)="onUserSettings()">SETTINGS</li>
+
+      <!-- <li
+        class=""
+        (click)="authService.loginWithRedirect({ 
+              authorizationParams: {
+                  screen_hint: 'signup',
+                }, appState: { target: '/subscribe' }})"
+      >
+        SUBSCRIBITE
+      </li> -->
+      <!-- <li
+      class=""
+      (click)="onSignUp()"
+    >
+      SUBSCRIBITE
+    </li> -->
+      <li class="" (click)="onContact()">CONTACTANOS</li>
+    </ul>
+    }
+  </div>
+</section>
 } } @else { @if (!newLanding) {
 <header
   class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[60]"
@@ -337,9 +429,7 @@
         class="max-h-20 cursor-pointer rounded-lg"
         (click)="onHome()"
       />
-      <h3 class="-ml-6 text-veige">
-        esencial<span class="text-blue">360</span>
-      </h3>
+      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
     </div>
     <span
       (click)="toggle()"
@@ -354,7 +444,7 @@
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="lg:hidden text-white focus:outline-none absolute top-[3%] right-[5%]"
+    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
     (click)="toggle()"
   >
     <span class="material-symbols-outlined text-blue"> close </span>
@@ -366,37 +456,56 @@
       class="max-h-20 cursor-pointer rounded-lg"
       (click)="onHome()"
     />
-    <h3 class="text-veige -ml-6">esencial<span class="text-blue">360</span></h3>
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
   </div>
   <div class="container mx-auto px-4 mt-16">
-    @if(!userConnected) {
+    @if(userConnected) {
     <ul class="space-y-4 text-lg font-semibold">
-      <li class="mb-5">YOGA</li>
-      <li class="ml-2">CLASES</li>
-      <li class="ml-2">INSTRUCTORES</li>
-      <li class="ml-2">NOSOTROS</li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li class="mb-5">NOVEDADES</li>
-      <li class="ml-2">NEWS</li>
-      <li class="ml-2">BLOG</li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      @if(authService.isAuthenticated$ | async) {
-      <li class="" (click)="signOut()">LOGOUT</li>
-      } @else {
-      <li class="" (click)="authService.loginWithRedirect()">SIGN IN</li>
-      } @if(authService.isAuthenticated$ | async) {
-      <li class="" (click)="onUserSettings()">SETTINGS</li>
+      @if (roles === "User") {
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+      </div>
       }
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
+      <li class="border-t border-gray-700 pt-4 my-8"></li>
+      <li (click)="onSignIn()">SIGN IN</li>
+      <li class="" (click)="onContact()">CONTACTANOS</li>
+    </ul>
+    } @if(!userConnected) {
+    <ul class="space-y-4 text-lg font-semibold">
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
+      <li class="border-t border-gray-700 pt-4 my-8"></li>
 
-      <li
+      <li class="" (click)="signOut()">LOGOUT</li>
+
+      <li class="" (click)="onUserSettings()">SETTINGS</li>
+
+      <!-- <li
         class=""
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribirse' }})"
+                }, appState: { target: '/subscribe' }})"
       >
-        SIGN UP
-      </li>
+        SUBSCRIBITE
+      </li> -->
+      <!-- <li
+      class=""
+      (click)="onSignUp()"
+    >
+      SUBSCRIBITE
+    </li> -->
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     }
@@ -480,4 +589,94 @@
     </ul>
   </nav>
 </header>
+<header
+  class="lg:hidden text-white bg-transparent p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
+>
+  <div class="flex items-center justify-between w-full">
+    <div class="flex justify-center items-center">
+      <img
+        [src]="pullZone + '/assets/blueLogo.png'"
+        alt="Logo"
+        class="max-h-20 cursor-pointer rounded-lg"
+        (click)="onHome()"
+      />
+      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
+    </div>
+    <span
+      (click)="toggle()"
+      class="material-symbols-outlined text-white w-4 mr-6 font-bold"
+    >
+      menu
+    </span>
+  </div>
+</header>
+<section
+  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
+  [@menuAnimation]="isOpen ? 'open' : 'closed'"
+>
+  <button
+    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    (click)="toggle()"
+  >
+    <span class="material-symbols-outlined text-blue"> close </span>
+  </button>
+  <div class="flex justify-start items-center">
+    <img
+      [src]="pullZone + '/assets/blueLogo.png'"
+      alt="Logo"
+      class="max-h-20 cursor-pointer rounded-lg"
+      (click)="onHome()"
+    />
+    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
+  </div>
+  <div class="container mx-auto px-4 mt-16">
+    @if(userConnected) {
+    <ul class="space-y-4 text-lg font-semibold">
+      @if (roles === "User") {
+      <div class="flex items-center">
+        <span class="text-xl">🔥</span>
+        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+      </div>
+      }
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
+      <li class="border-t border-gray-700 pt-4 my-8"></li>
+      <li (click)="onSignIn()">SIGN IN</li>
+      <li class="" (click)="onContact()">CONTACTANOS</li>
+    </ul>
+    } @if(!userConnected) {
+    <ul class="space-y-4 text-lg font-semibold">
+      <li (click)="onClasses()" class="ml-2">CLASES</li>
+      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
+      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
+      <li class="ml-2">
+        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
+      </li>
+      <li class="border-t border-gray-700 pt-4 my-8"></li>
+
+      <li class="" (click)="onSignIn()">SIGN IN</li>
+      <li
+        class=""
+        (click)="authService.loginWithRedirect({ 
+              authorizationParams: {
+                  screen_hint: 'signup',
+                }, appState: { target: '/subscribe' }})"
+      >
+        SUBSCRIBITE
+      </li>
+      <!-- <li
+      class=""
+      (click)="onSignUp()"
+    >
+      SUBSCRIBITE
+    </li> -->
+      <li class="" (click)="onContact()">CONTACTANOS</li>
+    </ul>
+    }
+  </div>
+</section>
 } }

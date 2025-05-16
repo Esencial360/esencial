@@ -111,11 +111,11 @@ export class HeaderComponent {
 
   toggle() {
     this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.renderer.addClass(this.document.body, 'menu-opened');
-    } else {
-      this.renderer.removeClass(this.document.body, 'menu-opened');
-    }
+    // if (this.isOpen) {
+    //   this.renderer.addClass(this.document.body, 'menu-opened');
+    // } else {
+    //   this.renderer.removeClass(this.document.body, 'menu-opened');
+    // }
   }
 
   public signOut(): void {
