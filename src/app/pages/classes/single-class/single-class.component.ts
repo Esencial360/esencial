@@ -92,6 +92,8 @@ export class SingleClassComponent implements OnInit {
     this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
       this.userId = user._id;
       this.user = user;
+      console.log(this.userId);
+      console.log(this.user);
     });
   }
 
@@ -111,6 +113,9 @@ export class SingleClassComponent implements OnInit {
           const namespace = 'https://test-assign-roles.com/';
           this.roles = user[`${namespace}roles`][0] || [];
           this.isLoading = false;
+        } else {
+          this.isLoading = false;
+          this.user = undefined;
         }
       });
     });
@@ -135,7 +140,7 @@ export class SingleClassComponent implements OnInit {
       next: (response) => {
         this.classInfo = response;
         this.getInstructor(response.instructorId);
-        this.getVideo()
+        this.getVideo();
       },
       error: (error) => {
         console.error('Error retrieved Class:', error);
