@@ -5,7 +5,7 @@ id="scrollContent"
 <h2
   class="text-veige text-2xl lg:text-6xl uppercase text-center font-bold my-10"
 >
-{{title}} e<span class="text-blue">360</span>
+{{title}} <span class="lowercase">e</span><span class="text-blue">360</span>
 </h2>
 <div class="grid grid-cols-1 gap-6">
   @for(teamMember of team; track $index;) {
@@ -24,7 +24,7 @@ id="scrollContent"
     </div>
     <div class="text-gray-700 lg:ml-10 lg:w-6/12">
       <h2
-        class="text-teal-600 font-bold text-lg lg:text-2xl uppercase text-blue  mb-4"
+        class="font-bold text-lg lg:text-2xl uppercase text-blue  mb-4"
       >
         {{ teamMember.firstname + " " + teamMember.lastname }}
       </h2>
