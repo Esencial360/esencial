@@ -27,7 +27,7 @@ export class AllClassesComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.getAllClassesMetadata();
+                this.getAllClassesMetadata();
     this.getAllClasses();
   }
 
@@ -35,8 +35,7 @@ export class AllClassesComponent implements OnInit {
     this.bunnyStreamService.getVideosList().subscribe(
       (response) => {
         this.getVideo(response.items);
-        console.log(response.items);
-        
+
         if (response.totalItems <= 0) {
           this.loadingClasses = false;
         } else {
@@ -71,7 +70,7 @@ export class AllClassesComponent implements OnInit {
         concatMap((videoId) =>
           this.bunnyStreamService.getVideo(videoId).pipe(
             map((video) => {
-              const metadata = this.classesMetadata.find(
+              const metadata = this.classesMetadata?.find(
                 (meta: any) => meta.classId === video.guid
               );
 
