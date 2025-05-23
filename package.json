@@ -5,8 +5,8 @@
     "ng": "ng",
     "start:dev": "ng serve --configuration=development",
     "start:prod": "ng serve --configuration=production",
-    "build": "ng build --configuration=production",
-    "build-prod": "ng build --configuration=production",
+    "build": "ng build --configuration=production && echo '/*    /index.html   200' > dist/_routes",
+    "build-prod": "ng build --configuration=production && echo '/*    /index.html   200' > dist/_routes",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
