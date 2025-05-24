@@ -87,8 +87,7 @@ export class UserDashboardComponent implements OnInit {
                   if (!response) {
                     const newUser = {
                       email: user.email,
-                      firstname: user.given_name,
-                      lastname: user.family_name,
+                      firstname: user['username'],
                     };
                     this.userService
                       .createUser(newUser)
