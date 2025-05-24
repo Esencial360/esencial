@@ -78,7 +78,7 @@ export class SubscriptionManagementComponent implements OnInit {
 
   getFallbackPlanName(priceId: string): string {
     switch (priceId) {
-      case 'price_1RKfvAIKBryFAlYk6RjBFO0l':
+      case 'price_1RKIDlEmYKUZdsXfxutFY1VS':
         return 'ESPACIO ESENCIAL 360';
       case 'price_1RKfvQIKBryFAlYkZTsaDoy6':
         return 'esencial360';
