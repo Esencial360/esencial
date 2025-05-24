@@ -74,7 +74,7 @@ export class SignUpComponent {
     const priceId =
       this.selectedPlan === 'esencial'
         ? 'price_1RKIDlEmYKUZdsXfxutFY1VS'
-        : 'price_1RKfvQIKBryFAlYkZTsaDoy6';
+        : 'price_1RKIDlEmYKUZdsXfxutFY1VS';
 
     this.auth.user$.subscribe((user) => {
       if (user) {
