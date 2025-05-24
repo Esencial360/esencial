@@ -50,7 +50,7 @@ export class SignUpComponent {
         '⁠Serás parte del grupo que estará guiándonos y retroalimentándonos para finalizar con detalle la mejor versión de nuestro espacio digital.',
         '⁠Atraves de encuestas y preguntas estaremos en contacto contigo para escucharte.',
       ],
-      priceId: 'price_1RKfvAIKBryFAlYk6RjBFO0l',
+      priceId: 'price_1RKIDlEmYKUZdsXfxutFY1VS',
     },
   ];
 
@@ -73,7 +73,7 @@ export class SignUpComponent {
 
     const priceId =
       this.selectedPlan === 'esencial'
-        ? 'price_1RKfvAIKBryFAlYk6RjBFO0l'
+        ? 'price_1RKIDlEmYKUZdsXfxutFY1VS'
         : 'price_1RKfvQIKBryFAlYkZTsaDoy6';
 
     this.auth.user$.subscribe((user) => {
