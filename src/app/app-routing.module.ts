@@ -94,11 +94,6 @@ const routes: Routes = [
     component: SignInComponent,
     data: { animation: 'openClosePage' },
   },
-  {
-    path: 'subscribirse',
-    component: SignUpComponent,
-    data: { animation: 'openClosePage' },
-  },
   { path: 'olvido', component: ForgotComponent },
   {
     path: 'contacto',
