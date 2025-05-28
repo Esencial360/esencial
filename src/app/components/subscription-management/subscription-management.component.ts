@@ -80,8 +80,6 @@ export class SubscriptionManagementComponent implements OnInit {
     switch (priceId) {
       case 'price_1RKIDlEmYKUZdsXfxutFY1VS':
         return 'ESPACIO ESENCIAL 360';
-      case 'price_1RKIDlEmYKUZdsXfxutFY1VS':
-        return 'esencial360';
       default:
         return 'Freemium';
     }

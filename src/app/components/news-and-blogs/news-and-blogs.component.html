@@ -53,14 +53,14 @@
 >
   <div class="flex flex-col lg:flex-row">
     <div class="flex flex-col justify-evenly items-center md:h-96">
-      <img [src]="pullZone + '/assets/blueLogo.png'" class="h-48 bg-cover w-min" alt="" />
+      <img [src]="pullZone + '/assets/blueLogo.png'" class="h-[10rem] lg:h-48 bg-cover w-min" alt="" />
       @if (!instructorCatalogueView) {
-      <h2 class="lg:text-7xl text-white mb-4 uppercase">
-        ¡Descubre esencial<span class="text-blue">360!</span>
+      <h2 class="text-4xl lg:text-7xl text-white mb-4 ">
+        ¡Descubre <span class="lowercase">e</span>sencial<span class="text-blue">360!</span>
       </h2>
       } @else {
       <h2 class="lg:text-7xl text-strongBrown mb-4 uppercase">
-        Conviertete en guía e<span class="text-blue">360</span>
+        Conviertete en guía <span class="lowercase">e</span><span class="text-blue">360</span>
       </h2>
       }
     </div>
@@ -72,12 +72,12 @@
             : pullZone + '/assets/3.png'
         "
         alt="Yoga at sunset"
-        class="w-full h-96 object-contain lg:object-cover rounded-lg shadow-xl"
+        class="w-full lg:h-96 object-contain lg:object-cover rounded-lg lg:shadow-xl"
       />
     </div>
   </div>
   <div
-    class="flex flex-row justify-center mb-12 items-center mt-12"
+    class="flex flex-row justify-center mb-12 items-center mt-4 lg:mt-12"
     data-aos="fade-up"
     data-aos-duration="1000"
   >
@@ -86,7 +86,7 @@
       <p
         class="text-strongBrown max-w-4xl mx-auto text-start font-bold text-xl"
       >
-        Con <span class="">esencial<span class="text-blue">360</span></span
+        Con <span class="lowercase">esencial<span class="text-blue">360</span></span
         >, no solo amplías tu alcance, sino que también te rodeas de colegas
         expertos con quienes podrás aprender y crecer, recibiendo asesoría
         continua. <br />
