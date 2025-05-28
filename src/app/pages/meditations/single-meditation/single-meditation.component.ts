@@ -209,4 +209,8 @@ export class SingleMeditationComponent {
   goBack() {
     this.location.back();
   }
+
+   onSubscribe() {
+    this.router.navigate(['subscribe'])
+  }
 }
