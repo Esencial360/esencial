@@ -10,7 +10,9 @@
       @for (plan of plans; track $index) {
       <div
         class="bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row border border-lightBrown my-4 cursor-pointer transition hover:scale-[1.02]"
-        [ngClass]="{'border-blue ring-2 ring-blue-400': selectedPlan === plan.name}"
+        [ngClass]="{
+          'border-blue ring-2 ring-blue-400': selectedPlan === plan.name
+        }"
         (click)="selectPlan(plan.name)"
       >
         <img [src]="plan.image" class="lg:w-1/2 object-cover" alt="" />
@@ -41,6 +43,18 @@
       }
     </div>
   </div>
+
+  @if (noUser) {
+  <div
+    class="flex text-center flex-col md:flex-row items-center justify-center bg-white p-6 md:p-10 mx-4 montserrat-normal md:space-x-8"
+  >
+    <h3
+      class="text-xl font-bold text-strongBrown drop-shadow-lg w-full uppercase"
+    >
+      Por favor crea o inicia sesión para poder continuar
+    </h3>
+  </div>
+  }
 
   <button
     class="mt-10 bg-blue hover:bg-strongBrown text-white font-semibold py-3 px-8 rounded-xl transition disabled:opacity-50"

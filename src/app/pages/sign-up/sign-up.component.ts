@@ -26,6 +26,7 @@ interface PricingPlan {
 export class SignUpComponent {
   selectedPlan!: string;
   loading = false;
+  noUser!: boolean;
   pullZone = environment.pullZone;
   plans: PricingPlan[] = [
     // {
@@ -64,21 +65,22 @@ export class SignUpComponent {
 
   selectPlan(plan: string) {
     this.selectedPlan = plan;
+
   }
 
-  async subscribe() {
+  subscribe() {
+    console.log(this.selectedPlan);
+    
     if (!this.selectedPlan) return;
 
     this.loading = true;
 
-    const priceId =
-      this.selectedPlan === 'esencial'
-        ? 'price_1RKIDlEmYKUZdsXfxutFY1VS'
-        : 'price_1RKIDlEmYKUZdsXfxutFY1VS';
+    const priceId = 'price_1RKIDlEmYKUZdsXfxutFY1VS'
 
     this.auth.user$.subscribe((user) => {
       if (user) {
-
+        this.noUser = false
+        
         const userData = {
           email: user.email,
           userId: user.sub,
@@ -95,6 +97,10 @@ export class SignUpComponent {
             this.loading = false;
           },
         });
+      } else {
+        
+        this.noUser = true;
+        
       }
     });
   }

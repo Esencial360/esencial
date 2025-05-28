@@ -295,4 +295,8 @@ export class SingleClassComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+  onSubscribe() {
+    this.router.navigate(['subscribe'])
+  }
 }

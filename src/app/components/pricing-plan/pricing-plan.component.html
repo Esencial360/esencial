@@ -17,7 +17,7 @@
               authorizationParams: {
                   screen_hint: 'signup',
                 }, appState: { target: '/subscribirse' }})"
-        class="bg-blue text-white px-8 py-4 uppercase lg:w-6/12 text-sm rounded-md flex items-center justify-center"
+        class="bg-blue text-white px-8 py-4 text-lg lg:w-6/12 text-sm rounded-md flex items-center justify-center"
       >
         ¡Quiero comenzar mi viaje esencial360!
       </button>
@@ -30,7 +30,7 @@
         <img [src]="plan.image" class="lg:w-1/2 object-cover" alt="" />
         <div class="p-6 flex flex-col">
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-veige font-bold">{{ plan.name }}</h3>
+            <h3 class="text-veige font-bold lowercase">{{ plan.name }}</h3>
           </div>
           <p class="text-3xl text-strongBrown mb-6 font-bold">
             ${{ plan.price }} MXN

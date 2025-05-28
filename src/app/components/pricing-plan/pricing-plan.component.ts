@@ -18,18 +18,6 @@ interface PricingPlan {
 export class PricingPlanComponent {
   pullZone: string = environment.pullZone;
   plans: PricingPlan[] = [
-    // {
-    //   name: 'esencial360',
-    //   highlight: '360',
-    //   price: 98,
-    //   image: this.pullZone + '/assets/10.jpg',
-    //   features: [
-    //     'Acceso completo de la plataforma.',
-    //     'Asesoría personalizada.',
-    //     'Promoción de estudio o marca personal',
-    //     'Acceso gratutito a talleres especiales y eventos.',
-    //   ],
-    // },
     {
       name: 'ESPACIO ESENCIAL 360',
       price: 1,
