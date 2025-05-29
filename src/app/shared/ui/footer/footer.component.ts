@@ -37,7 +37,7 @@ export class FooterComponent {
   }
 
   onSignUp() {
-    this.route.navigate(['/subscribe']);
+    this.route.navigate(['/suscribe']);
   }
 
   onAbout() {
