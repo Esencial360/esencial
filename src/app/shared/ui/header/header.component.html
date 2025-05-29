@@ -1,6 +1,6 @@
 @if(authService.isAuthenticated$ | async) { @if (!newLanding) {
 <header
-  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full top-0 z-[60]"
+  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 xl:flex justify-between items-center w-full top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -76,7 +76,7 @@
 </header>
 
 <header
-  class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
+  class="xl:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -100,11 +100,11 @@
   </div>
 </header>
 <section
-  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
+  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
     (click)="toggle()"
   >
     <span class="material-symbols-outlined text-blue"> close </span>
@@ -155,7 +155,7 @@
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribe' }})"
+                }, appState: { target: '/suscribe' }})"
       >
         SUBSCRIBITE
       </li> -->
@@ -172,7 +172,7 @@
 </section>
 } @else {
 <header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[60]"
+  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 xl:flex p-4 xl:absolute justify-between items-center w-full top-0 z-[60]"
 >
   <div class="flex justify-center items-center" (click)="onHome()">
     <img
@@ -249,7 +249,7 @@
   </nav>
 </header>
 <header
-  class="lg:hidden text-white p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
+  class="xl:hidden text-white p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
 >
   <div class="flex items-center justify-between w-full">
     <div class="flex justify-center items-center" (click)="onHome()">
@@ -268,11 +268,11 @@
   </div>
 </header>
 <section
-  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
+  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
     (click)="toggle()"
   >
     <span class="material-symbols-outlined text-blue"> close </span>
@@ -323,7 +323,7 @@
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribe' }})"
+                }, appState: { target: '/suscribe' }})"
       >
         SUBSCRIBITE
       </li> -->
@@ -340,7 +340,7 @@
 </section>
 } } @else { @if (!newLanding) {
 <header
-  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 lg:flex justify-between items-center w-full sticky top-0 z-[60]"
+  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 xl:flex justify-between items-center w-full sticky top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -380,11 +380,11 @@
         (click)="authService.loginWithRedirect({ 
                 authorizationParams: {
                     screen_hint: 'signup',
-                  }, appState: { target: '/subscribe' }})"
+                  }, appState: { target: '/suscribe' }})"
         class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
       >
         <span class="text-white text-sm font-medium uppercase"
-          >subscribirse</span
+          >Suscríbete</span
         >
         <div
           class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
@@ -410,7 +410,7 @@
 </header>
 
 <header
-  class="lg:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
+  class="xl:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
   style="
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
       rgba(35, 41, 54, 0.08) 0px 8px 16px;
@@ -434,11 +434,11 @@
   </div>
 </header>
 <section
-  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
+  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
     (click)="toggle()"
   >
     <span class="material-symbols-outlined text-blue"> close </span>
@@ -490,7 +490,7 @@
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribe' }})"
+                }, appState: { target: '/suscribe' }})"
       >
         SUBSCRIBITE
       </li> -->
@@ -507,7 +507,7 @@
 </section>
 } @else {
 <header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 lg:flex p-4 lg:absolute justify-between items-center w-full top-0 z-[60]"
+  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 xl:flex p-4 xl:absolute justify-between items-center w-full top-0 z-[60]"
 >
   <div class="flex justify-center items-center" (click)="onHome()">
     <img
@@ -554,11 +554,11 @@
         (click)="authService.loginWithRedirect({ 
                 authorizationParams: {
                     screen_hint: 'signup',
-                  }, appState: { target: '/subscribe' }})"
+                  }, appState: { target: '/suscribe' }})"
         class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
       >
         <span class="text-white text-sm font-medium uppercase"
-          >subscribirse</span
+          >Suscríbete</span
         >
         <div
           class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
@@ -583,7 +583,7 @@
   </nav>
 </header>
 <header
-  class="lg:hidden text-white bg-transparent p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
+  class="xl:hidden text-white bg-transparent p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
 >
   <div class="flex items-center justify-between w-full">
     <div class="flex justify-center items-center" (click)="onHome()">
@@ -603,11 +603,11 @@
   </div>
 </header>
 <section
-  class="lg:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
+  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="lg:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
     (click)="toggle()"
   >
     <span class="material-symbols-outlined text-blue"> close </span>
@@ -655,7 +655,7 @@
         (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribe' }})"
+                }, appState: { target: '/suscribe' }})"
       >
         SUBSCRIBITE
       </li>

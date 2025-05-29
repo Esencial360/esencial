@@ -47,7 +47,7 @@
     <h1
       class="text-4xl md:text-5xl text-center lg:text-start font-medium mb-4 text-strongBrown"
     >
-      ¡Bienvenidos a <span class="lowercase">esencial</span><span class="text-blue">360!</span>
+      ¡Bienvenidos y bienvenidas a <span class="lowercase">esencial</span><span class="text-blue">360!</span>
     </h1>
     <div
       [@fadeIn]="elementState"
@@ -68,7 +68,7 @@
           (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribirse' }})"
+                }, appState: { target: '/suscribe' }})"
         ></app-button>
       </div>
 
@@ -159,8 +159,8 @@
       (click)="authService.loginWithRedirect({ 
               authorizationParams: {
                   screen_hint: 'signup',
-                }, appState: { target: '/subscribe' }})"
-      class="bg-blue text-white px-8 py-4 uppercase font-bold md:w-4/12 text-sm rounded-md flex items-center justify-center w-full"
+                }, appState: { target: '/suscribe' }})"
+      class="bg-blue text-white px-8 py-4 font-bold md:w-4/12 text-sm rounded-md flex items-center justify-center w-full"
     >
       ¡Comenzar mi viaje esencial360!
     </button>

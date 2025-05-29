@@ -19,7 +19,7 @@ export class PricingPlanComponent {
   pullZone: string = environment.pullZone;
   plans: PricingPlan[] = [
     {
-      name: 'ESPACIO ESENCIAL 360',
+      name: 'esencial360',
       price: 1,
       image: this.pullZone + '/assets/11.jpg',
       features: [

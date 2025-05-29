@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { concatMap, from, map, toArray } from 'rxjs';
+import { concatMap, forkJoin, from, map, toArray } from 'rxjs';
 import { BunnystreamService } from '../../services/bunny-stream.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -62,6 +62,8 @@ export class MoodCollectionComponent {
 
   moodOptions: any[] = [];
 
+  loading!: boolean;
+
   constructor(
     private bunnyStreamService: BunnystreamService,
     private router: Router,
@@ -70,9 +72,28 @@ export class MoodCollectionComponent {
   ) {}
 
   ngOnInit() {
-    this.getAllClasses();
-    this.getAllClassesMetadata();
+    // this.loading = true;
+    // this.getAllClasses();
+    // this.getAllClassesMetadata();
+      this.loadAllData();
   }
+
+  
+loadAllData() {
+  forkJoin({
+    videosList: this.bunnyStreamService.getVideosList(),
+    metadata: this.classesService.getAllClasses()
+  }).subscribe({
+    next: ({ videosList, metadata }) => {
+      this.classesMetadata = metadata;
+      this.getVideo(videosList.items);
+    },
+    error: (err) => {
+      console.error('Error loading data:', err);
+      this.loading = false;
+    }
+  });
+}
 
   filterClassesByMood() {
     const subcategoryToCategoryMap: Record<string, string> = {
@@ -83,7 +104,7 @@ export class MoodCollectionComponent {
       Flow: 'vinyasa',
       Ashtanga: 'vinyasa',
     };
-
+    
     this.moodOptions = this.moodConfig.map((config) => {
       const filteredClasses = this.videos
         .filter((cls) => {
@@ -94,7 +115,9 @@ export class MoodCollectionComponent {
           );
         })
         .slice(0, 3);
-
+        console.log(this.moodOptions);
+        
+           this.loading = false;
       return {
         ...config,
         classes: filteredClasses.map((cls) => ({
@@ -109,40 +132,32 @@ export class MoodCollectionComponent {
     });
   }
 
-  selectClass(classOption: ClassOption): void {
-    this.router.navigate([`/clases/${classOption.id}`]);
-  }
+  // getAllClasses() {
+  //   this.bunnyStreamService.getVideosList().subscribe(
+  //     (response) => {
+  //       this.getVideo(response.items);
+  //       if (response.totalItems <= 0) {
+  //         this.loadingClasses = false;
+  //       } else {
+  //         this.getVideo(response.items);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Unable to retrieve classes', error);
+  //     }
+  //   );
+  // }
 
-  seeMore(option: MoodOption): void {
-    this.router.navigate(['/clases']);
-  }
-
-  getAllClasses() {
-    this.bunnyStreamService.getVideosList().subscribe(
-      (response) => {
-        this.getVideo(response.items);
-        if (response.totalItems <= 0) {
-          this.loadingClasses = false;
-        } else {
-          this.getVideo(response.items);
-        }
-      },
-      (error) => {
-        console.error('Unable to retrieve classes', error);
-      }
-    );
-  }
-
-  getAllClassesMetadata() {
-    this.classesService.getAllClasses().subscribe({
-      next: (res) => {
-        this.classesMetadata = res;
-      },
-      error: (err) => {
-        console.error('Error retrieving classes metadata', err);
-      },
-    });
-  }
+  // getAllClassesMetadata() {
+  //   this.classesService.getAllClasses().subscribe({
+  //     next: (res) => {
+  //       this.classesMetadata = res;
+  //     },
+  //     error: (err) => {
+  //       console.error('Error retrieving classes metadata', err);
+  //     },
+  //   });
+  // }
 
   getVideo(videos: any) {
     const videoIdsArray = videos.map((video: { guid: any }) => video.guid);
@@ -185,4 +200,13 @@ export class MoodCollectionComponent {
         },
       });
   }
+
+    selectClass(classOption: ClassOption): void {
+    this.router.navigate([`/clases/${classOption.id}`]);
+  }
+
+  seeMore(option: MoodOption): void {
+    this.router.navigate(['/clases']);
+  }
+
 }
