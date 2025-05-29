@@ -23,7 +23,7 @@ interface PricingPlan {
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
   selectedPlan!: string;
   loading = false;
   noUser!: boolean;
@@ -63,14 +63,16 @@ export class SignUpComponent {
     private router: Router
   ) {}
 
+  ngOnInit() {
+    this.loading = false
+  }
+
   selectPlan(plan: string) {
     this.selectedPlan = plan;
 
   }
 
   subscribe() {
-    console.log(this.selectedPlan);
-    
     if (!this.selectedPlan) return;
 
     this.loading = true;
@@ -100,7 +102,7 @@ export class SignUpComponent {
       } else {
         
         this.noUser = true;
-        
+        this.loading = false;
       }
     });
   }
