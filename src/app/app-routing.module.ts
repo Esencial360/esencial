@@ -189,7 +189,7 @@ const routes: Routes = [
     component: CounselComponent,
   },
   {
-    path: 'subscribe',
+    path: 'suscribe',
     component: SignUpComponent,
   },
   {

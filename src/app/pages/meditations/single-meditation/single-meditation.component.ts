@@ -211,6 +211,6 @@ export class SingleMeditationComponent {
   }
 
    onSubscribe() {
-    this.router.navigate(['subscribe'])
+    this.router.navigate(['suscribe'])
   }
 }

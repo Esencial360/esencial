@@ -112,6 +112,6 @@ export class SubscriptionManagementComponent implements OnInit {
   }
 
   subscribe() {
-    this.router.navigate(['/subscribe']);
+    this.router.navigate(['/suscribe']);
   }
 }

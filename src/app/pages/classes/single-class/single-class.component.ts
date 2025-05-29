@@ -297,6 +297,6 @@ export class SingleClassComponent implements OnInit {
   }
 
   onSubscribe() {
-    this.router.navigate(['subscribe'])
+    this.router.navigate(['suscribe'])
   }
 }

@@ -74,7 +74,7 @@ export class HeaderComponent {
   }
 
   onSignUp() {
-    this.route.navigate(['/subscribe']);
+    this.route.navigate(['/suscribe']);
   }
 
   onContact() {
