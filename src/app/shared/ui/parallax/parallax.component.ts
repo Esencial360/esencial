@@ -16,6 +16,7 @@ export class ParallaxComponent {
     this.container = this.el.nativeElement.querySelector('.parallax-container');
     this.setBackgroundImage();
   }
+  
 
   private setBackgroundImage() {
     this.renderer.setStyle(this.container, 'backgroundImage', `url(${this.imagePath})`);
@@ -24,10 +25,13 @@ export class ParallaxComponent {
     this.renderer.setStyle(this.container, 'backgroundPosition', 'center center');
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
+@HostListener('window:scroll', [])
+onWindowScroll() {
+  if (window.innerWidth > 768) {
     const scrollPosition = window.pageYOffset;
     const yPos = -(scrollPosition * this.parallaxSpeed);
     this.renderer.setStyle(this.container, 'backgroundPosition', `center ${yPos}px`);
   }
+}
+
 }

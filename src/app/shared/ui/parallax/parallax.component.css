@@ -10,6 +10,8 @@
 
 @media (max-width: 768px) {
   .parallax-container {
-    background-attachment: scroll;
+    background-attachment: scroll !important;
+    background-position: center center !important;
+    background-size: cover !important;
   }
 }
