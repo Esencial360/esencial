@@ -41,6 +41,7 @@
     </div>
     @if (!hideStatistics) {
       <app-class-statistics
+      [videoSource]="videoSource"
       [adminView]="true"
       [videoGuid]="class?.video?.guid"
       [previewView]="true"

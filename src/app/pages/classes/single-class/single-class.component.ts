@@ -122,7 +122,7 @@ export class SingleClassComponent implements OnInit {
   }
 
   getVideo() {
-    this.bunnystreamService.getVideo(this.videoId).subscribe(
+    this.bunnystreamService.getVideo('video', this.videoId).subscribe(
       (response: any) => {
         this.videos = response;
         const link = `https://iframe.mediadelivery.net/embed/263508/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
@@ -176,7 +176,7 @@ export class SingleClassComponent implements OnInit {
         confirmText: 'Borrar',
         cancelText: 'Volver',
         onConfirm: () => {
-          this.bunnystreamService.deleteVideo(this.videoId).subscribe(
+          this.bunnystreamService.deleteVideo('video', this.videoId).subscribe(
             (response) => {
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {
@@ -250,7 +250,7 @@ export class SingleClassComponent implements OnInit {
         message: 'Video no ha podido ser eliminado',
         confirmText: 'Aceptar',
         onConfirm: () => {
-          this.bunnystreamService.deleteVideo(this.videoId).subscribe(
+          this.bunnystreamService.deleteVideo('video', this.videoId).subscribe(
             (response) => {
               this.classesService.deleteClass(this.videoId).subscribe({
                 next: (response) => {

@@ -115,7 +115,7 @@ export class StudentProfileComponent implements OnInit {
     from(videos)
       .pipe(
         concatMap((videoId) =>
-          this.bunnystreamService.getVideo(videoId).pipe(
+          this.bunnystreamService.getVideo('video', videoId).pipe(
             map((video) => {
               return {
                 video: video,

@@ -1,0 +1,219 @@
+<app-header></app-header>
+<section
+  class="w-full h-[75vh] flex flex-col items-center justify-center text-center montserrat-normal"
+>
+  @if (isModalOpen) {
+  <div
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] text-start"
+  >
+    <div
+      class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative animate-fadeIn"
+    >
+      <button
+        (click)="closeModal()"
+        class="absolute top-4 right-4 text-gray-500 hover:text-blue"
+      >
+        ✕
+      </button>
+      @if (firstStep) {
+      <h2 class="text-xl font-semibold text-blue uppercase mb-4 text-center">
+        Subir nueva clase
+      </h2>
+      <form [formGroup]="newVideoForm" class="space-y-6">
+        <div>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Nombre de la clase</label
+          >
+          <input
+            type="text"
+            formControlName="title"
+            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
+            [ngClass]="{
+              'border-red-500':
+                newVideoForm.get('title')?.invalid &&
+                (newVideoForm.get('title')?.dirty ||
+                  newVideoForm.get('title')?.touched)
+            }"
+          />
+          <p
+            *ngIf="
+              newVideoForm.get('title')?.invalid &&
+              (newVideoForm.get('title')?.dirty ||
+                newVideoForm.get('title')?.touched)
+            "
+            class="text-red-500 text-sm"
+          >
+            Nombre es requerido.
+          </p>
+        </div>
+        <div>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Instructor</label
+          >
+          <select
+            formControlName="instructor"
+            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
+          >
+            <option value="" selected>No Instructor</option>
+            @for (singleInstructor of instructors; track $index;) {
+            <option [value]="singleInstructor._id">
+              {{ singleInstructor.firstname }} {{ singleInstructor.lastname }}
+            </option>
+            }
+          </select>
+        </div>
+
+        <!-- <div>
+          <label class="block text-blue font-medium mb-1 uppercase"
+            >Subcategoría</label
+          >
+          <select
+            formControlName="subcategory"
+            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
+            [disabled]="!newVideoForm.get('subcategory')?.value"
+          >
+          @for (sub of getSubcategories(); track $index) {
+            <option  [value]="sub">
+              {{ sub }}
+            </option>
+          }
+          </select>
+        </div> -->
+
+        <div>
+          <button
+            type="submit"
+            (click)="onSubmit()"
+            class="w-full py-3 text-white font-semibold rounded-lg"
+            [disabled]="!newVideoForm.valid"
+            [ngClass]="newVideoForm.valid ? 'bg-blue hover:bg-lightBrown transition duration-200' : 'bg-blue contrast-50'"
+          >
+            SIGUIENTE
+          </button>
+        </div>
+      </form>
+      } @if (secondStep) {
+
+      <div class="text-center space-y-4">
+        <h2 class="text-lg font-semibold">Subir Archivo</h2>
+        @if (!loading) {
+        <input
+          type="file"
+          #videoInput
+          (change)="onFileSelected($event)"
+          class="border p-2 rounded w-full"
+        />
+        <button
+          (click)="createVideo()"
+          class="w-full py-3 text-white font-semibold rounded-lg bg-blue hover:bg-lightBrown 0transition duration-200"
+        >
+          Subir Archivo
+        </button>
+        } @else {
+        <app-loading></app-loading>
+        <div class="montserrat-normal text-blue uppercase">
+          <p>Subiendo video: <span class="font-bold">{{uploadingProgress}}%</span></p>
+          <p>No salgas ni recarges la pagina</p>
+        </div>
+        }
+      </div>
+      } @if (thirdStep) {
+      <div class="flex flex-col items-center text-center space-y-4">
+        <app-check-mark></app-check-mark>
+        <h4 class="text-lg font-semibold text-blue uppercase">
+          ¡Su participación es esencial para nosotros!
+        </h4>
+        <p class="text-lightBrown">
+          ¡Gracias por tu video! Hemos recibido tu material y lo revisaremos
+          para darte nuestra opinión.
+        </p>
+        <h4 class="font-semibold text-blue">El equipo de esencial360</h4>
+        <button
+          (click)="onProcessDone()"
+          class="mt-5 py-3 px-6 bg-black text-white rounded-lg bg-blue hover:bg-lightBrown transition duration-200"
+        >
+          ACEPTAR
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  } @else {
+  <section class="">
+    <h2 class="text-blue uppercase text-3xl font-bold drop-shadow-lg">
+      ¡sigue inspirando!
+    </h2>
+    <div class="max-w-2xl mx-auto p-6">
+      <h2 class="text-lg font-bold text-blue text-start">RECOMENDACIONES</h2>
+      <p class="text-lightBlue text-sm text-start">
+        Haz clic en cada icono para seleccionar tus recomendaciones.
+      </p>
+
+      <div class="grid grid-cols-2 gap-6 mt-10">
+        <!-- Left Column -->
+        <div class="flex flex-col space-y-6">
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              restaurant
+            </span>
+            <p>Uso de cuencos</p>
+          </div>
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              wb_sunny
+            </span>
+            <p>Al aire libre</p>
+          </div>
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              view_module
+            </span>
+            <p>Uso de bloques.</p>
+          </div>
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              lightbulb
+            </span>
+            <p>Un espacio con luz moderada</p>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="flex flex-col space-y-6">
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              smoke_free
+            </span>
+            <p>Uso de incienso</p>
+          </div>
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              hotel
+            </span>
+            <p>Antes de dormir</p>
+          </div>
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              wb_twilight
+            </span>
+            <p>Al despertar</p>
+          </div>
+          <div class="flex items-center space-x-3 cursor-pointer">
+            <span class="material-symbols-outlined text-blue text-4xl">
+              group
+            </span>
+            <p>En pareja</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-button
+      [text]="'empezar'"
+      class="flex justify-center"
+      (click)="openModal()"
+    ></app-button>
+  </section>
+  }
+</section>
+<app-footer></app-footer>

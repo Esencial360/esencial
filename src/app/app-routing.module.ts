@@ -41,6 +41,7 @@ import { SingleMeditationComponent } from './pages/meditations/single-meditation
 import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 import { SingleWorkshopComponent } from './pages/workshops/single-workshop/single-workshop.component';
 import { AllWorkshopsComponent } from './pages/workshops/all-workshops/all-workshops.component';
+import { UploadWorkshopComponent } from './pages/workshops/upload-workshop/upload-workshop.component';
 
 const routes: Routes = [
   {
@@ -143,6 +144,11 @@ const routes: Routes = [
   {
     path: 'nuevo-video',
     component: UploadVideoComponent,
+    data: { animation: 'openClosePage' },
+  },
+    {
+    path: 'nuevo-taller',
+    component: UploadWorkshopComponent,
     data: { animation: 'openClosePage' },
   },
   {

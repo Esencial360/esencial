@@ -48,6 +48,7 @@
     <div
       class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-lg"
     >
+      @if (link) {
       <iframe
         #bunnyVideo
         [src]="link"
@@ -56,6 +57,7 @@
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
         allowfullscreen
       ></iframe>
+      }
     </div>
   </div>
 </div>
@@ -81,7 +83,10 @@
       RECOMENDACIONES PARA TU PRÁCTICA
     </h3>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 w-full my-10">
-      <div *ngFor="let rec of workshop.recommendations" class="flex items-center">
+      <div
+        *ngFor="let rec of workshop.recommendations"
+        class="flex items-center"
+      >
         <div class="p-2 rounded-full mr-3 text-lg">
           <img [src]="rec.icon" class="w-20 object-cover" alt="" />
         </div>
@@ -114,6 +119,7 @@
 @if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
 <app-class-statistics
+  [videoSource]="'workshop'"
   [videoGuid]="videoId"
   class="flex justify-center"
 ></app-class-statistics>

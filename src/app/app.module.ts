@@ -119,6 +119,7 @@ import { MeditationThumbnailComponent } from './shared/ui/meditation-thumbnail/m
 import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
 import { AllWorkshopsComponent } from './pages/workshops/all-workshops/all-workshops.component';
 import { SingleWorkshopComponent } from './pages/workshops/single-workshop/single-workshop.component';
+import { UploadWorkshopComponent } from './pages/workshops/upload-workshop/upload-workshop.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -206,6 +207,7 @@ registerLocaleData(localeEs, 'es');
     UploadMeditationsComponent,
     AllWorkshopsComponent,
     SingleWorkshopComponent,
+    UploadWorkshopComponent,
   ],
   imports: [
     BrowserModule,

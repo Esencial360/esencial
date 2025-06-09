@@ -75,7 +75,7 @@ export class InstructorAdminViewComponent {
     } else if (videoIdsArray.length === 1) {
       from(videoIdsArray)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -96,7 +96,7 @@ export class InstructorAdminViewComponent {
     } else if (videoIdsArray.length > 1) {
       from(videoIdsArray)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(

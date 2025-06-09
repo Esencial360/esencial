@@ -31,9 +31,11 @@ export class AllWorkshopsComponent {
   }
 
   getAllClasses() {
-    this.bunnyStreamService.getVideosList().subscribe(
+    this.bunnyStreamService.getVideosList('workshop').subscribe(
       (response) => {
         this.getVideo(response.items);
+        console.log(response);
+        
 
         if (response.totalItems <= 0) {
           this.loadingClasses = false;
@@ -67,11 +69,14 @@ export class AllWorkshopsComponent {
     from(videoIdsArray)
       .pipe(
         concatMap((videoId) =>
-          this.bunnyStreamService.getVideo(videoId).pipe(
+          this.bunnyStreamService.getVideo('workshop', videoId).pipe(
             map((video) => {
+              console.log(video);
+              
               const metadata = this.workshopsMetadata?.find(
                 (meta: any) => meta.classId === video.guid
               );
+
 
               return {
                 video: video,
@@ -102,7 +107,7 @@ export class AllWorkshopsComponent {
 
   onWatchSingleClass(id: string) {
     this.router
-      .navigate([`/clases/${id}`])
+      .navigate([`/taller/${id}`])
       .then((navigationSuccess) => {
         if (navigationSuccess) {
           console.log('Navigation to class successful');

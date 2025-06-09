@@ -119,10 +119,10 @@ export class SingleWorkshopComponent {
   }
 
   getVideo() {
-    this.bunnystreamService.getVideo(this.videoId).subscribe(
+    this.bunnystreamService.getVideo('workshop', this.videoId).subscribe(
       (response: any) => {
         this.videos = response;
-        const link = `https://iframe.mediadelivery.net/embed/263508/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
+        const link = `https://iframe.mediadelivery.net/embed/452333/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
         this.link = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         this.isLoading = false;
       },
@@ -173,7 +173,7 @@ export class SingleWorkshopComponent {
         confirmText: 'Borrar',
         cancelText: 'Volver',
         onConfirm: () => {
-          this.bunnystreamService.deleteVideo(this.videoId).subscribe(
+          this.bunnystreamService.deleteVideo( 'workshop' ,this.videoId).subscribe(
             (response) => {
               this.workshopService.deleteWorkshop(this.videoId).subscribe({
                 next: (response) => {
@@ -247,7 +247,7 @@ export class SingleWorkshopComponent {
         message: 'Video no ha podido ser eliminado',
         confirmText: 'Aceptar',
         onConfirm: () => {
-          this.bunnystreamService.deleteVideo(this.videoId).subscribe(
+          this.bunnystreamService.deleteVideo('workshop', this.videoId).subscribe(
             (response) => {
               this.workshopService.deleteWorkshop(this.videoId).subscribe({
                 next: (response) => {

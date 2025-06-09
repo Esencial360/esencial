@@ -11,8 +11,8 @@ import { take } from 'rxjs';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import { Instructor } from '../../../shared/Models/Instructor';
 import { Router } from '@angular/router';
-import { ClassesService } from '../../../shared/services/classes.service';
-import { Classes } from '../../../shared/Models/Classes';
+import { WorkshopService } from '../../../shared/services/workshop.service';
+import { Workshop } from '../../../shared/Models/Workshop';
 
 interface UploadVideo {
   title: string;
@@ -28,11 +28,11 @@ interface VideoResponse {
 }
 
 @Component({
-  selector: 'app-upload-video',
-  templateUrl: './upload-video.component.html',
-  styleUrl: './upload-video.component.css',
+  selector: 'app-upload-workshop',
+  templateUrl: './upload-workshop.component.html',
+  styleUrl: './upload-workshop.component.css',
 })
-export class UploadVideoComponent implements OnInit {
+export class UploadWorkshopComponent {
   videoData!: UploadVideo;
   collectionList: any[] = [];
   newVideoForm!: FormGroup;
@@ -45,26 +45,24 @@ export class UploadVideoComponent implements OnInit {
   instructors!: Instructor[];
   selectedInstructor!: string;
   loading!: boolean;
-  uploadingProgress!: string
+  uploadingProgress!: string;
+  libraryId = 452333
 
   constructor(
     private bunnyStreamService: BunnystreamService,
     private fb: FormBuilder,
     private instructorService: InstructorService,
     private router: Router,
-    private classesService: ClassesService
+    private workshopService: WorkshopService
   ) {
     this.newVideoForm = this.fb.group({
       title: ['', Validators.required],
-      collectionId: ['', Validators.required],
       instructor: [''],
-      difficulty: ['', Validators.required],
-      subcategory: ['', Validators.required],
+      // subcategory: ['', Validators.required],
     });
   }
 
   ngOnInit() {
-    this.getCollectionList();
     this.instructorService.getAllInstructors().subscribe(
       (response) => {
         this.instructors = response;
@@ -84,18 +82,6 @@ export class UploadVideoComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  getCollectionList() {
-    this.bunnyStreamService.getCollectionList().subscribe(
-      (response: any) => {
-        this.collectionList = response.items;
-        console.log(this.collectionList);
-      },
-      (error) => {
-        console.error('Error retrieving collection:', error);
-      }
-    );
-  }
-
   onSubmit() {
     if (this.newVideoForm.valid) {
       this.uploadVideoAndCreateStep();
@@ -111,36 +97,34 @@ export class UploadVideoComponent implements OnInit {
     const selectedInstructor = this.instructors.find(
       (instructor) => instructor._id === this.newVideoForm.value.instructor
     );
-    console.log(selectedInstructor);
-    
     if (selectedInstructor) {
-      const instructorVideos = selectedInstructor.videos
-        ? selectedInstructor.videos
+      const instructorWorkshops = selectedInstructor.workshops
+        ? selectedInstructor.workshops
         : [];
 
       const newVideo = {
         videoId: videoId,
-        status: 'Pending',
+        status: 'approve',
       };
       const updatedInstructor: Instructor = {
         ...selectedInstructor,
-        videos: [...instructorVideos, newVideo],
+        workshops: [...instructorWorkshops, newVideo],
       };
 
       const videos = videoId ? [videoId] : [];
       const instructorData: Instructor = { ...updatedInstructor };
-      const classVideo: Classes = {
-        classId: videoId,
+
+      const workshopVideo: Workshop = {
+        workshopId: videoId,
         instructorId: selectedInstructor._id,
-        difficulty: this.newVideoForm.value.difficulty,
         subcategory: this.newVideoForm.value.subcategory,
       };
-      this.classesService.createClass(classVideo).subscribe({
+      this.workshopService.createWorkshop(workshopVideo).subscribe({
         next: (response) => {
-          console.log('Class created successfully');
+          console.log('Workshop created successfully');
         },
         error: (error) => {
-          console.error('Error creating Classr:', error);
+          console.error('Error creating Workshopr:', error);
         },
         complete: () => {
           console.log('Cration process completed.');
@@ -159,19 +143,17 @@ export class UploadVideoComponent implements OnInit {
       });
     } else {
       console.error('No instructor found with the provided id');
-      const classVideo: Classes = {
-        classId: videoId,
+      const workshopVideo: Workshop = {
+        workshopId: videoId,
         instructorId: '',
-        difficulty: this.newVideoForm.value.difficulty,
         subcategory: this.newVideoForm.value.subcategory,
-
       };
-      this.classesService.createClass(classVideo).subscribe({
+      this.workshopService.createWorkshop(workshopVideo).subscribe({
         next: (response) => {
-          console.log('Class created successfully');
+          console.log('Workshop created successfully');
         },
         error: (error) => {
-          console.error('Error creating Classr:', error);
+          console.error('Error creating Workshopr:', error);
         },
         complete: () => {
           console.log('Cration process completed.');
@@ -186,15 +168,13 @@ export class UploadVideoComponent implements OnInit {
     if (files && files.length > 0) {
       this.selectedFile = files[0];
     }
-    console.log(this.selectedFile);
   }
 
   createVideo() {
-    const { title, collectionId } =
-      this.newVideoForm.value;
+    const { title } = this.newVideoForm.value;
 
     this.bunnyStreamService
-      .createVideo(title, collectionId, 5000)
+      .createWorkshop(title)
       .pipe(take(1))
       .subscribe(
         (response: any) => {
@@ -209,18 +189,15 @@ export class UploadVideoComponent implements OnInit {
   }
 
   async onUploadVideo() {
-    const { title, collectionId, } =
-      this.newVideoForm.value;
+    const { title } = this.newVideoForm.value;
     if (!this.selectedFile || !this.videoId) return;
 
     this.loading = true;
 
-    await this.bunnyStreamService.uploadVideoWithTus(
-      'video',
+    await this.bunnyStreamService.uploadVideoWithTusWorkshop(
       this.selectedFile,
       this.videoId,
       title,
-      collectionId,
       () => {
         console.log('Upload video successfully');
         this.secondStep = false;
@@ -234,22 +211,13 @@ export class UploadVideoComponent implements OnInit {
       },
       (progress) => {
         console.log(`Uploading: ${progress.toFixed(2)}%`);
-        this.uploadingProgress = progress.toFixed(2)
+        this.uploadingProgress = progress.toFixed(2);
       }
     );
   }
-
 
   onProcessDone() {
     this.router.navigate(['/home']);
   }
 
-  getSubcategories(): string[] {
-    const collection = this.newVideoForm.get('collectionId')?.value;
-    if (collection === '0ea815c8-7cf9-42e7-a5b0-4e0f6eef0d15')
-      return ['Restaurativo', 'Iyengar', 'Yin'];
-    if (collection === '472608a1-1a1c-4828-9bdc-12c590ecc759')
-      return ['Power', 'Flow', 'Ashtanga'];
-    return [];
-  }
 }

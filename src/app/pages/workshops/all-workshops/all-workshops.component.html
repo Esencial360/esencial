@@ -1,9 +1,9 @@
 <app-header></app-header>
 <section class="max-w-7xl mx-auto">
   <app-title-v2
-    [title]="'YOGA'"
+    [title]="'TALLERES'"
     [description]="
-      'Nuestras clases están diseñadas para adaptarse a tu nivel y ritmo. Elige tu preferencia de instructores, estilos y duración!'
+      'Nuestros talleres están diseñados para profundizar en temas de bienestar integral. Explora sesiones especializadas con expertos, donde podrás aprender, experimentar y llevar tu práctica a un nuevo nivel.'
     "
     [image]="pullZone + '/assets/yoga.png'"
   ></app-title-v2>
@@ -19,12 +19,23 @@
         <div class="relative z-10 mb-10">
           @if (loadingClasses) {
           <app-loading></app-loading>
-          } @else {
+          } @else if (videos) {
           <app-class-thumbnail
-            [classes]="filteredVideos"
+            [workshops]="true"
+            [classes]="videos"
             [allClasses]="true"
             (actionClassSelected)="onWatchSingleClass($event)"
           ></app-class-thumbnail>
+          } @else {
+          <div
+            class="flex text-center flex-col items-center justify-center bg-white p-6 md:p-10 mx-4 montserrat-normal my-20 md:space-x-8"
+          >
+            <h3
+              class="text-xl lg:text-3xl font-bold text-strongBrown drop-shadow-lg mb-4 w-full uppercase"
+            >
+              Aún no hay talleres agendados
+            </h3>
+          </div>
           }
         </div>
       </div>
@@ -32,4 +43,3 @@
   </div>
 </section>
 <app-footer></app-footer>
-

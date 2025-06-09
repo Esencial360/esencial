@@ -48,6 +48,7 @@
     <div
       class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-lg"
     >
+      @if (link) {
       <iframe
         #bunnyVideo
         [src]="link"
@@ -56,6 +57,7 @@
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
         allowfullscreen
       ></iframe>
+      }
     </div>
     <div class="relative mt-4">
       <button
@@ -123,6 +125,7 @@
 @if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
 <app-class-statistics
+  [videoSource]="'video'"
   [videoGuid]="videoId"
   class="flex justify-center"
 ></app-class-statistics>

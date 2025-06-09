@@ -32,7 +32,7 @@ export class AllClassesComponent implements OnInit {
   }
 
   getAllClasses() {
-    this.bunnyStreamService.getVideosList().subscribe(
+    this.bunnyStreamService.getVideosList('video').subscribe(
       (response) => {
         this.getVideo(response.items);
 
@@ -68,7 +68,7 @@ export class AllClassesComponent implements OnInit {
     from(videoIdsArray)
       .pipe(
         concatMap((videoId) =>
-          this.bunnyStreamService.getVideo(videoId).pipe(
+          this.bunnyStreamService.getVideo('video', videoId).pipe(
             map((video) => {
               const metadata = this.classesMetadata?.find(
                 (meta: any) => meta.classId === video.guid

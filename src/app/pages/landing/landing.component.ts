@@ -94,7 +94,7 @@ export class LandingComponent implements OnInit  {
     this.services = [
       { title: 'YOGA', image: this.pullZone + '/assets/6.png'},
       { title: 'MEDITACIONES', image: this.pullZone + '/assets/7.png' },
-      // { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
+      { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
     ];
     // this.fetchBlogs();
     this.fetchInstructors();
@@ -147,9 +147,11 @@ export class LandingComponent implements OnInit  {
 
   onService(title: string) {
     if (title === 'YOGA') {
-         this.router.navigate(['/clases']) 
-    } else {
+      this.router.navigate(['/clases']) 
+    } else if (title === 'MEDITACIONES'){
       this.router.navigate(['/meditaciones'])
+    } else {
+      this.router.navigate(['/taller'])
     }
   }
 

@@ -81,7 +81,7 @@ export class MoodCollectionComponent {
   
 loadAllData() {
   forkJoin({
-    videosList: this.bunnyStreamService.getVideosList(),
+    videosList: this.bunnyStreamService.getVideosList('video'),
     metadata: this.classesService.getAllClasses()
   }).subscribe({
     next: ({ videosList, metadata }) => {
@@ -168,7 +168,7 @@ loadAllData() {
     from(videoIdsArray)
       .pipe(
         concatMap((videoId) =>
-          this.bunnyStreamService.getVideo(videoId).pipe(
+          this.bunnyStreamService.getVideo('video', videoId).pipe(
             map((video) => {
               const metadata = this.classesMetadata.find(
                 (meta: any) => meta.classId === video.guid

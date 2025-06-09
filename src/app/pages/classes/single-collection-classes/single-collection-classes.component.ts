@@ -96,7 +96,7 @@ filteredVideos!: any[]
     from(videoIdsArray)
       .pipe(
         concatMap((videoId) =>
-          this.bunnystreamService.getVideo(videoId).pipe(
+          this.bunnystreamService.getVideo('video', videoId).pipe(
             map((video) => {
               const metadata = this.classesMetadata.find(
                 (meta: any) => meta.classId === video.guid

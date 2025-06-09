@@ -10,7 +10,7 @@ import { Workshop } from '../Models/Workshop';
 })
 export class WorkshopService {
 
-   private apiUrl = `${environment.apiUrl}workshops`;
+   private apiUrl = `${environment.apiUrl}workshop`;
   
     constructor(private http: HttpClient, private auth: AuthService) {}
   
