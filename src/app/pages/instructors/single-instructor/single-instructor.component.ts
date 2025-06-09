@@ -75,7 +75,7 @@ export class SingleInstructorComponent implements OnInit {
   
     from(videoIdArray)
       .pipe(
-        concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+        concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
         map((video) => ({
           video: video,
           safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(

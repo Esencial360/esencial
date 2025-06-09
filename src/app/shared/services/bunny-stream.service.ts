@@ -8,13 +8,33 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import * as tus from 'tus-js-client';
 
+type VideoSource = 'video' | 'workshop';
+
 @Injectable({
   providedIn: 'root',
 })
 export class BunnystreamService {
   private apiUrl = environment.apiUrlBS;
   private apiKey = environment.apiKeyBS;
+  private apiKeyWS = environment.apiKeyWS;
+  private apiUrlWS = environment.apiUrlWorkshop;
   private libraryId = 263508;
+  private libraryIdWS = 452333;
+
+  private getApiConfig(source: VideoSource) {
+    if (source === 'workshop') {
+      return {
+        apiUrl: this.apiUrlWS,
+        apiKey: this.apiKeyWS,
+        libraryId: this.libraryIdWS,
+      };
+    }
+    return {
+      apiUrl: this.apiUrl,
+      apiKey: this.apiKey,
+      libraryId: this.libraryId,
+    };
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -30,11 +50,12 @@ export class BunnystreamService {
     return this.http.get(url, { headers });
   }
 
-  getVideosList(amount?: string): Observable<any> {
-    const url = `${this.apiUrl}/videos?page=1&itemsPerPage=${
+  getVideosList(source: VideoSource, amount?: string): Observable<any> {
+    const { apiUrl, apiKey } = this.getApiConfig(source);
+    const url = `${apiUrl}/videos?page=1&itemsPerPage=${
       amount ? amount : '100'
     }&orderBy=date`;
-    const headers = { AccessKey: this.apiKey };
+    const headers = { AccessKey: apiKey };
     return this.http.get(url, { headers });
   }
 
@@ -56,9 +77,10 @@ export class BunnystreamService {
     );
   }
 
-  getVideo(videoId: any): Observable<any> {
-    const url = `${this.apiUrl}/videos/${videoId}`;
-    const headers = { AccessKey: this.apiKey };
+  getVideo(source: VideoSource, videoId: any): Observable<any> {
+    const { apiUrl, apiKey } = this.getApiConfig(source);
+    const url = `${apiUrl}/videos/${videoId}`;
+    const headers = { AccessKey: apiKey };
     return this.http.get(url, { headers }).pipe(
       tap((response) => {}),
       catchError((error: HttpErrorResponse) => {
@@ -92,7 +114,19 @@ export class BunnystreamService {
       .pipe(catchError(this.handleError));
   }
 
+  createWorkshop(title: string) {
+    const url = `${this.apiUrlWS}/videos`;
+    const headers = { AccessKey: this.apiKeyWS };
+    const body = {
+      title,
+    };
+    return this.http
+      .post<any>(url, body, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
   async uploadVideoWithTus(
+    source: VideoSource,
     file: File,
     videoId: string,
     title: string,
@@ -101,6 +135,7 @@ export class BunnystreamService {
     onError?: (err: any) => void,
     onProgress?: (percent: number) => void
   ) {
+    const { apiUrl, apiKey } = this.getApiConfig(source);
     const expirationTimestamp =
       Math.floor(Date.now() / 1000) + this.signatureExpireSeconds;
     const signature = await this.generateSignature(
@@ -123,6 +158,53 @@ export class BunnystreamService {
         filetype: file.type,
         title: title,
         collection: collectionId,
+      },
+      onError: (error) => {
+        console.error('TUS Upload error:', error);
+        if (onError) onError(error);
+      },
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const percent = (bytesUploaded / bytesTotal) * 100;
+        if (onProgress) onProgress(percent);
+      },
+      onSuccess: () => {
+        console.log('TUS Upload complete!');
+        if (onSuccess) onSuccess();
+      },
+    });
+
+    upload.start();
+  }
+
+  async uploadVideoWithTusWorkshop(
+    file: File,
+    videoId: string,
+    title: string,
+    onSuccess?: () => void,
+    onError?: (err: any) => void,
+    onProgress?: (percent: number) => void
+  ) {
+    const expirationTimestamp =
+      Math.floor(Date.now() / 1000) + this.signatureExpireSeconds;
+    const signature = await this.generateSignature(
+      this.libraryIdWS,
+      this.apiKeyWS,
+      expirationTimestamp,
+      videoId
+    );
+
+    const upload = new tus.Upload(file, {
+      endpoint: 'https://video.bunnycdn.com/tusupload',
+      retryDelays: [0, 3000, 5000, 10000, 20000, 60000],
+      headers: {
+        AuthorizationSignature: signature,
+        AuthorizationExpire: expirationTimestamp.toString(),
+        VideoId: videoId,
+        LibraryId: this.libraryIdWS.toString(),
+      },
+      metadata: {
+        filetype: file.type,
+        title: title,
       },
       onError: (error) => {
         console.error('TUS Upload error:', error);
@@ -166,10 +248,11 @@ export class BunnystreamService {
     return hashHex;
   }
 
-  deleteVideo(videoId: string) {
-    const url = `${this.apiUrl}/videos/${videoId}`;
+  deleteVideo(source: VideoSource, videoId: string) {
+    const { apiUrl, apiKey } = this.getApiConfig(source);
+    const url = `${apiUrl}/videos/${videoId}`;
     const headers = {
-      AccessKey: this.apiKey,
+      AccessKey: apiKey,
     };
 
     return this.http
@@ -177,10 +260,11 @@ export class BunnystreamService {
       .pipe(catchError(this.handleError));
   }
 
-  getVideoStatistics(videoGuid: string) {
-    const url = `${this.apiUrl}/statistics?hourly=false&videoGuid=${videoGuid}`;
+  getVideoStatistics(source: VideoSource, videoGuid: string) {
+   const { apiUrl, apiKey } = this.getApiConfig(source);
+    const url = `${apiUrl}/statistics?hourly=false&videoGuid=${videoGuid}`;
     const headers = {
-      AccessKey: this.apiKey,
+      AccessKey: apiKey,
     };
 
     return this.http.get(url, { headers }).pipe(catchError(this.handleError));

@@ -107,7 +107,7 @@ export class InstructorProfileComponent implements OnInit {
     from(videoIdArray)
       .pipe(
         mergeMap((videoId) =>
-          this.bunnystreamService.getVideo(videoId).pipe(
+          this.bunnystreamService.getVideo('video', videoId).pipe(
             catchError((error) => {
               console.error(`Error fetching video ID ${videoId}:`, error);
               return of(null);

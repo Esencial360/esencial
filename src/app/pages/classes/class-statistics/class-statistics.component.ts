@@ -3,6 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 
+type VideoSource = 'video' | 'workshop';
+
 @Component({
   selector: 'app-class-statistics',
   templateUrl: './class-statistics.component.html',
@@ -24,6 +26,9 @@ export class ClassStatisticsComponent implements OnInit {
 
   @Input()
   adminView!: boolean;
+
+  @Input()
+  videoSource!: VideoSource;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +54,7 @@ export class ClassStatisticsComponent implements OnInit {
   }
 
   getVideoStatistics() {
-    this.bunnystreamService.getVideoStatistics(this.videoGuid).subscribe(
+    this.bunnystreamService.getVideoStatistics(this.videoSource,this.videoGuid).subscribe(
       (response: any) => {
         this.videoStatistics = response;
       },
@@ -68,10 +73,11 @@ export class ClassStatisticsComponent implements OnInit {
   }
 
   getTotalWatchTime() {
-    const watchTimeCounts = this.videoStatistics?.countryWatchTime || {};
-    return Object.values(watchTimeCounts).reduce(
-      (acc: any, val) => acc + val,
-      0
-    );
+  const watchTimeCounts = this.videoStatistics?.countryWatchTime || {};
+  const totalSeconds: any = Object.values(watchTimeCounts).reduce(
+    (acc: any, val) => acc + val,
+    0
+  );
+  return Math.floor(totalSeconds / 60);
   }
 }

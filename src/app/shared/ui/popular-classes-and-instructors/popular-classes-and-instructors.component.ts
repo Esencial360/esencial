@@ -25,7 +25,7 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
   }
 
   getPopularClasses() {
-    this.bunnystreamService.getVideosList('3').subscribe(
+    this.bunnystreamService.getVideosList('video','3').subscribe(
       (response) => {
         const limitedVideos = response.items.slice(0, 3);
         this.getVideo(limitedVideos);
@@ -42,7 +42,7 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
     } else if (videoIdsArray.length === 1) {
       from(videoIdsArray)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -63,7 +63,7 @@ export class PopularClassesAndInstructorsComponent implements OnInit {
     } else if (videoIdsArray.length > 1) {
       from(videoIdsArray)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(

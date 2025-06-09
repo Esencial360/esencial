@@ -37,4 +37,8 @@ export class AdminDashboardComponent implements OnInit {
   onNewClass() {
     this.router.navigateByUrl('/nuevo-video');
   }
+
+    onNewWorkshop() {
+    this.router.navigateByUrl('/nuevo-taller');
+  }
 }

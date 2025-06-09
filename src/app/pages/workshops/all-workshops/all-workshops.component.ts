@@ -4,37 +4,38 @@ import { Router } from '@angular/router';
 import { concatMap, from, map, toArray } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
-import { ClassesService } from '../../../shared/services/classes.service';
-
+import { WorkshopService } from '../../../shared/services/workshop.service';
 @Component({
-  selector: 'app-all-classes',
-  templateUrl: './all-classes.component.html',
-  styleUrl: './all-classes.component.css',
+  selector: 'app-all-workshops',
+  templateUrl: './all-workshops.component.html',
+  styleUrl: './all-workshops.component.css',
 })
-export class AllClassesComponent implements OnInit {
+export class AllWorkshopsComponent {
   videos!: any[];
   loadingClasses: boolean = true;
   pullZone = environment.pullZone;
-  classesMetadata!: any;
+  workshopsMetadata!: any;
   filteredVideos: any[] = [];
 
   constructor(
     private bunnyStreamService: BunnystreamService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private classesService: ClassesService
+    private workshopService: WorkshopService
   ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-                this.getAllClassesMetadata();
+    this.getAllClassesMetadata();
     this.getAllClasses();
   }
 
   getAllClasses() {
-    this.bunnyStreamService.getVideosList('video').subscribe(
+    this.bunnyStreamService.getVideosList('workshop').subscribe(
       (response) => {
         this.getVideo(response.items);
+        console.log(response);
+        
 
         if (response.totalItems <= 0) {
           this.loadingClasses = false;
@@ -49,9 +50,9 @@ export class AllClassesComponent implements OnInit {
   }
 
   getAllClassesMetadata() {
-    this.classesService.getAllClasses().subscribe({
+    this.workshopService.getAllWorkshops().subscribe({
       next: (res) => {
-        this.classesMetadata = res;
+        this.workshopsMetadata = res;
       },
       error: (err) => {
         console.error('Error retrieving classes metadata', err);
@@ -68,11 +69,14 @@ export class AllClassesComponent implements OnInit {
     from(videoIdsArray)
       .pipe(
         concatMap((videoId) =>
-          this.bunnyStreamService.getVideo('video', videoId).pipe(
+          this.bunnyStreamService.getVideo('workshop', videoId).pipe(
             map((video) => {
-              const metadata = this.classesMetadata?.find(
+              console.log(video);
+              
+              const metadata = this.workshopsMetadata?.find(
                 (meta: any) => meta.classId === video.guid
               );
+
 
               return {
                 video: video,
@@ -103,7 +107,7 @@ export class AllClassesComponent implements OnInit {
 
   onWatchSingleClass(id: string) {
     this.router
-      .navigate([`/clases/${id}`])
+      .navigate([`/taller/${id}`])
       .then((navigationSuccess) => {
         if (navigationSuccess) {
           console.log('Navigation to class successful');

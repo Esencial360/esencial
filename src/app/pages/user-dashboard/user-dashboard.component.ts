@@ -51,7 +51,12 @@ export class UserDashboardComponent implements OnInit {
   userId: string = '';
   streak!: number;
   showRecommendation!: boolean;
-  pullZone: string = environment.pullZone
+  pullZone: string = environment.pullZone;
+  services = [
+    { title: 'YOGA', image: this.pullZone + '/assets/6.png' },
+    { title: 'MEDITACIONES', image: this.pullZone + '/assets/7.png' },
+    { title: 'TALLERES', image: this.pullZone + '/assets/8.png' },
+  ];
 
   constructor(
     public authService: AuthService,
@@ -100,7 +105,6 @@ export class UserDashboardComponent implements OnInit {
                           })
                         );
                       });
-
                   } else {
                     this.userId = response._id;
                     this.updateAndFetchStreak();
@@ -183,23 +187,15 @@ export class UserDashboardComponent implements OnInit {
       });
   }
 
-  // getVideos() {
-  //   this.bunnystreamService.getVideosList().subscribe(
-  //     (response: any) => {
-  //       this.videos = response.items;
-  //       this.links = this.videos.map((video) => {
-  //         const link =
-  //           'https://iframe.mediadelivery.net/embed/248742/' +
-  //           video.guid +
-  //           '?autoplay=true&loop=false&muted=false&preload=true&responsive=true';
-  //         return this.sanitizer.bypassSecurityTrustResourceUrl(link);
-  //       });
-  //     },
-  //     (error) => {
-  //       console.error('Error retrieving videos:', error);
-  //     }
-  //   );
-  // }
+  onService(title: string) {
+    if (title === 'YOGA') {
+      this.router.navigate(['/clases']);
+    } else if (title === 'MEDITACIONES') {
+      this.router.navigate(['/meditaciones']);
+    } else {
+      this.router.navigate(['/taller']);
+    }
+  }
 
   getCollectionList() {
     this.bunnystreamService.getCollectionList().subscribe(

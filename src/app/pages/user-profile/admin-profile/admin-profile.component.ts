@@ -95,7 +95,7 @@ export class AdminProfileComponent implements OnInit {
     } else if (videoIds.length === 1) {
       from(videoIds)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -115,7 +115,7 @@ export class AdminProfileComponent implements OnInit {
     } else if (videoIds.length > 1) {
       from(videoIds)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo(videoId)),
+          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -291,7 +291,7 @@ export class AdminProfileComponent implements OnInit {
       videos: updatedVideos,
     };
 
-    this.bunnystreamService.deleteVideo(this.activeVideoId).subscribe(
+    this.bunnystreamService.deleteVideo('video',this.activeVideoId).subscribe(
       (response) => {
         this.instructorService.updateInstructor(updatedInstructor).subscribe(
           (response: any) => {

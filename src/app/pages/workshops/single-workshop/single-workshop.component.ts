@@ -9,7 +9,6 @@ import {
 } from '../../../shared/ui/dialog/dialog.component';
 import { AuthService } from '@auth0/auth0-angular';
 import { Subject, takeUntil } from 'rxjs';
-import { LikedClassesService } from '../../../shared/services/liked-classes.service';
 import { UserService } from '../../../shared/services/users.service';
 import {
   selectAllUsers,
@@ -18,8 +17,8 @@ import {
 import { Store } from '@ngrx/store';
 import { ActiveUserApiActions } from '../../../state/user.actions';
 import { Location } from '@angular/common';
-import { ClassesService } from '../../../shared/services/classes.service';
-import { Classes } from '../../../shared/Models/Classes';
+import { WorkshopService } from '../../../shared/services/workshop.service';
+import { Workshop } from '../../../shared/Models/Workshop';
 import { InstructorService } from '../../../shared/services/instructor.service';
 import { Instructor } from '../../../shared/Models/Instructor';
 import { environment } from '../../../../environments/environment';
@@ -29,13 +28,12 @@ declare global {
     BunnyPlayer: any;
   }
 }
-
 @Component({
-  selector: 'app-single-class',
-  templateUrl: './single-class.component.html',
-  styleUrl: './single-class.component.css',
+  selector: 'app-single-workshop',
+  templateUrl: './single-workshop.component.html',
+  styleUrl: './single-workshop.component.css',
 })
-export class SingleClassComponent implements OnInit {
+export class SingleWorkshopComponent {
   @ViewChild('dialogAnchor') dialogAnchor!: ElementRef;
   @ViewChild('bunnyVideo') videoIframe!: ElementRef;
   videoId!: any;
@@ -46,13 +44,13 @@ export class SingleClassComponent implements OnInit {
   roles!: string;
   isLiked = false;
   userId!: string;
-  classInfo!: Classes;
+  workshopInfo!: Workshop;
   instructorInfo!: Instructor;
   forbidden!: boolean;
   users$!: any;
   user$!: any;
   user!: any;
-  class = {
+  workshop = {
     title: 'FLUYE CONSCIENTE CON LULÚ FRAGA',
     duration: '30 MIN',
     level: 'I/A',
@@ -83,10 +81,9 @@ export class SingleClassComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private authService: AuthService,
-    private likedClassesService: LikedClassesService,
     private store: Store,
     private location: Location,
-    private classesService: ClassesService,
+    private workshopService: WorkshopService,
     private instructorService: InstructorService
   ) {
     this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
@@ -122,10 +119,10 @@ export class SingleClassComponent implements OnInit {
   }
 
   getVideo() {
-    this.bunnystreamService.getVideo('video', this.videoId).subscribe(
+    this.bunnystreamService.getVideo('workshop', this.videoId).subscribe(
       (response: any) => {
         this.videos = response;
-        const link = `https://iframe.mediadelivery.net/embed/263508/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
+        const link = `https://iframe.mediadelivery.net/embed/452333/${this.videos.guid}?autoplay=false&loop=false&muted=false&preload=false&responsive=true`;
         this.link = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         this.isLoading = false;
       },
@@ -136,14 +133,14 @@ export class SingleClassComponent implements OnInit {
   }
 
   getVideoInfo() {
-    this.classesService.getClass(this.videoId).subscribe({
+    this.workshopService.getWorkshop(this.videoId).subscribe({
       next: (response) => {
-        this.classInfo = response;
+        this.workshopInfo = response;
         this.getInstructor(response.instructorId);
         this.getVideo();
       },
       error: (error) => {
-        console.error('Error retrieved Class:', error);
+        console.error('Error retrieved Workshop:', error);
         this.forbidden = true;
       },
       complete: () => {
@@ -176,17 +173,17 @@ export class SingleClassComponent implements OnInit {
         confirmText: 'Borrar',
         cancelText: 'Volver',
         onConfirm: () => {
-          this.bunnystreamService.deleteVideo('video', this.videoId).subscribe(
+          this.bunnystreamService.deleteVideo( 'workshop' ,this.videoId).subscribe(
             (response) => {
-              this.classesService.deleteClass(this.videoId).subscribe({
+              this.workshopService.deleteWorkshop(this.videoId).subscribe({
                 next: (response) => {
                   this.deleteVideoInInstructor();
                 },
                 error: (error) => {
-                  console.error('Error deleted Classr:', error);
+                  console.error('Error deleted Workshopr:', error);
                 },
                 complete: () => {
-                  console.log('Class deleted completed.');
+                  console.log('Workshop deleted completed.');
                 },
               });
               this.showSuccessMessage();
@@ -250,14 +247,14 @@ export class SingleClassComponent implements OnInit {
         message: 'Video no ha podido ser eliminado',
         confirmText: 'Aceptar',
         onConfirm: () => {
-          this.bunnystreamService.deleteVideo('video', this.videoId).subscribe(
+          this.bunnystreamService.deleteVideo('workshop', this.videoId).subscribe(
             (response) => {
-              this.classesService.deleteClass(this.videoId).subscribe({
+              this.workshopService.deleteWorkshop(this.videoId).subscribe({
                 next: (response) => {
-                  console.log('Class deleted successfully');
+                  console.log('Workshop deleted successfully');
                 },
                 error: (error) => {
-                  console.error('Error deleted Classr:', error);
+                  console.error('Error deleted Workshopr:', error);
                 },
                 complete: () => {
                   console.log('Cration deleted completed.');
@@ -273,30 +270,11 @@ export class SingleClassComponent implements OnInit {
     });
   }
 
-  toggleLike() {
-    this.likedClassesService
-      .toggleVideoLike(this.videoId, this.userId)
-      .subscribe(
-        (response) => {
-          this.store.dispatch(
-            ActiveUserApiActions.retrievedActiveUser({
-              user: response,
-            })
-          );
-          this.isLiked = this.user.likedVideos.includes(this.videoId);
-        },
-        (error) => {
-          console.error('Error toggling like:', error);
-          this.isLiked = this.user.likedVideos.includes(this.videoId);
-        }
-      );
-  }
-
   goBack() {
     this.location.back();
   }
 
   onSubscribe() {
-    this.router.navigate(['suscribe'])
+    this.router.navigate(['suscribe']);
   }
 }

@@ -11,13 +11,15 @@
 >
   <div class="flex-1 pr-8">
     <h2 class="!text-4xl font-bold text-blue uppercase mb-4">
-      Bienvenido {{ user['username'] ? user['username'] : user.nickname }}
+      Bienvenido {{ user["username"] ? user["username"] : user.nickname }}
     </h2>
     <br />
     <p class="text-olive-600 text-lg">
-      ¡Qué gusto tenerte de vuelta! Disfruta tu práctica de hoy con equilibrio y energía.
+      ¡Qué gusto tenerte de vuelta! Disfruta tu práctica de hoy con equilibrio y
+      energía.
       <br /><br />
-      Recuerda que tu proceso es solo tuyo: fluye a tu ritmo, con intención y presencia.
+      Recuerda que tu proceso es solo tuyo: fluye a tu ritmo, con intención y
+      presencia.
       <br /><br />
       <span class="font-bold"> Fluye Consciente.</span>
     </p>
@@ -40,13 +42,52 @@
   "
   [collectionList]="collectionList"
 ></app-classes-catalogue>
+<section
+  class="container mx-auto px-4 py-8"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div
+    class="flex flex-col text-col w-full items-center justify-center montserrat-normal my-8"
+  >
+    <h3 class="text-4xl lg:text-6xl my-2 text-strongBrown uppercase">
+      ¡Descubre tu equilibrio!
+    </h3>
+    <p class="text-strongBrown lg:text-xl my-4">
+      Explora todas las herramientas de esencial<span class="text-blue">360</span>
+    </p>
+  </div>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+  >
+    @for (service of services; track $index) {
+    <div
+      class="overflow-hidden relative group"
+      (click)="onService(service.title)"
+    >
+      <img
+        [src]="service.image"
+        [alt]="service.title"
+        class="w-full h-60 object-cover transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer brightness-75"
+      />
+      <div class="">
+        <h3
+          class="text-xl lg:text-3xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
+        >
+          {{ service.title }}
+        </h3>
+      </div>
+    </div>
+    }
+  </div>
+</section>
 <app-banner-v2
-[reverse]="true"
-[title]="'alimenta tu fuego con cada práctica.'"
-[text]="
-  'En la Amazonía colombiana, pueblos como los barasana y los makuna consideran que el fuego es una manifestación de la energía vital y un medio para la transformación personal. '
-"
-[image]="pullZone + '/assets/flame.png'"
+  [reverse]="true"
+  [title]="'alimenta tu fuego con cada práctica.'"
+  [text]="
+    'En la Amazonía colombiana, pueblos como los barasana y los makuna consideran que el fuego es una manifestación de la energía vital y un medio para la transformación personal. '
+  "
+  [image]="pullZone + '/assets/flame.png'"
 ></app-banner-v2>
 <app-banner-v3
   [image]="pullZone + '/assets/logoWhite.png'"

@@ -59,15 +59,6 @@
       ></iframe>
       }
     </div>
-    <div class="relative mt-4">
-      <button
-        (click)="toggleLike()"
-        class="absolute top-2 right-2 p-3 rounded-full backdrop-blur-md bg-gray-900/60 text-yellow-400 hover:bg-yellow-500 hover:text-white transition-all duration-300 shadow-xl"
-        aria-label="Toggle Favorite"
-      >
-        {{ isLiked ? "⭐" : "☆" }}
-      </button>
-    </div>
   </div>
 </div>
 }
@@ -79,7 +70,7 @@
       ESENCIALES PARA TU PRÁCTICA
     </h3>
     <div class="flex flex-col lg:flex-row justify-between mb-6 w-full">
-      @for (item of class.items; track $index) {
+      @for (item of workshop.items; track $index) {
       <div class="flex flex-col lg:flex-row items-center">
         <div class="p-3 rounded-full mb-2">
           <img [src]="item.icon" class="w-10 h-10 object-scale-down" alt="" />
@@ -92,7 +83,10 @@
       RECOMENDACIONES PARA TU PRÁCTICA
     </h3>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 w-full my-10">
-      <div *ngFor="let rec of class.recommendations" class="flex items-center">
+      <div
+        *ngFor="let rec of workshop.recommendations"
+        class="flex items-center"
+      >
         <div class="p-2 rounded-full mr-3 text-lg">
           <img [src]="rec.icon" class="w-20 object-cover" alt="" />
         </div>
@@ -125,7 +119,7 @@
 @if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>
 <app-class-statistics
-  [videoSource]="'video'"
+  [videoSource]="'workshop'"
   [videoGuid]="videoId"
   class="flex justify-center"
 ></app-class-statistics>
