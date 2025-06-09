@@ -73,10 +73,11 @@ export class ClassStatisticsComponent implements OnInit {
   }
 
   getTotalWatchTime() {
-    const watchTimeCounts = this.videoStatistics?.countryWatchTime || {};
-    return Object.values(watchTimeCounts).reduce(
-      (acc: any, val) => acc + val,
-      0
-    );
+  const watchTimeCounts = this.videoStatistics?.countryWatchTime || {};
+  const totalSeconds: any = Object.values(watchTimeCounts).reduce(
+    (acc: any, val) => acc + val,
+    0
+  );
+  return Math.floor(totalSeconds / 60);
   }
 }
