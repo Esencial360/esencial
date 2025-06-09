@@ -117,6 +117,8 @@ import { AllMeditationsComponent } from './pages/meditations/all-meditations/all
 import { SingleMeditationComponent } from './pages/meditations/single-meditation/single-meditation.component';
 import { MeditationThumbnailComponent } from './shared/ui/meditation-thumbnail/meditation-thumbnail.component';
 import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
+import { AllWorkshopsComponent } from './pages/workshops/all-workshops/all-workshops.component';
+import { SingleWorkshopComponent } from './pages/workshops/single-workshop/single-workshop.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -202,6 +204,8 @@ registerLocaleData(localeEs, 'es');
     SingleMeditationComponent,
     MeditationThumbnailComponent,
     UploadMeditationsComponent,
+    AllWorkshopsComponent,
+    SingleWorkshopComponent,
   ],
   imports: [
     BrowserModule,

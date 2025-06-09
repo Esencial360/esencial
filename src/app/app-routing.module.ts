@@ -39,6 +39,8 @@ import { animate } from '@angular/animations';
 import { AllMeditationsComponent } from './pages/meditations/all-meditations/all-meditations.component';
 import { SingleMeditationComponent } from './pages/meditations/single-meditation/single-meditation.component';
 import { UploadMeditationsComponent } from './pages/meditations/upload-meditations/upload-meditations.component';
+import { SingleWorkshopComponent } from './pages/workshops/single-workshop/single-workshop.component';
+import { AllWorkshopsComponent } from './pages/workshops/all-workshops/all-workshops.component';
 
 const routes: Routes = [
   {
@@ -71,6 +73,11 @@ const routes: Routes = [
   {
     path: 'clases',
     component: AllClassesComponent,
+    data: { animation: 'openClosePage' },
+  },
+    {
+    path: 'taller',
+    component: AllWorkshopsComponent,
     data: { animation: 'openClosePage' },
   },
   {
@@ -151,6 +158,11 @@ const routes: Routes = [
   {
     path: 'clases/:id',
     component: SingleClassComponent,
+    data: { animation: 'openClosePage' },
+  },
+    {
+    path: 'taller/:id',
+    component: SingleWorkshopComponent,
     data: { animation: 'openClosePage' },
   },
   {

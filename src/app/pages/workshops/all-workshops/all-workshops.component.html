@@ -7,9 +7,9 @@
     "
     [image]="pullZone + '/assets/yoga.png'"
   ></app-title-v2>
-  @if (videos) {
+  <!-- @if (videos) {
     <app-class-filter [videos]="videos" (filtersChanged)="onFiltersChanged($event)"></app-class-filter>
-  }
+  } -->
   <div class="flex">
     <div class="container mx-auto px-4 py-8 montserrat-normal">
       <div class="relative">
@@ -17,7 +17,6 @@
           class="absolute top-0 right-0 w-1/3 h-64 bg-green-600 rounded-bl-full"
         ></div>
         <div class="relative z-10 mb-10">
-          <!-- <app-instructor-filter></app-instructor-filter> -->
           @if (loadingClasses) {
           <app-loading></app-loading>
           } @else {
@@ -33,3 +32,4 @@
   </div>
 </section>
 <app-footer></app-footer>
+
