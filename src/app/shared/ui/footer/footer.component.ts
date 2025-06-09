@@ -44,6 +44,10 @@ export class FooterComponent {
     this.route.navigate(['/nosotros']);
   }
 
+  onWorkshop() {
+        this.route.navigate(['/taller']);
+  }
+
   onUserSettings() {
     this.route.navigate(['/ajustes']);
   }
