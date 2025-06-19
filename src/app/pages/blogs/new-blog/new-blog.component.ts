@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 export class NewBlogComponent implements OnInit {
   categories: Category[] = [];
   blogForm!: FormGroup;
+  isModalOpen!: boolean;
+  firstStep!: boolean;
+  secondStep!: boolean;
 
   constructor(
     private blogService: BlogService,
@@ -42,12 +45,24 @@ export class NewBlogComponent implements OnInit {
       this.blogService.createBlog(this.blogForm.value).subscribe(
         (response) => {
           console.log('File uploaded successfully:');
-          this.router.navigate([`/blog/${response._id}`])
+          this.router.navigate([`/blog/${response._id}`]);
         },
         (error) => {
           console.error('Error uploading file:', error);
         }
       );
     }
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  onProcessDone() {
+    this.router.navigate(['/home']);
   }
 }

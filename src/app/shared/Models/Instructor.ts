@@ -17,4 +17,7 @@ export interface Instructor {
     meditationId: string;
   }[];
   profilePicture: File;
+  referralCode?: string;
+  referralURL?: string;
+  qrImageDataURL?: string;
 }

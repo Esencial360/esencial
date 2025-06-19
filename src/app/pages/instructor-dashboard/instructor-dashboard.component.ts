@@ -19,7 +19,7 @@ export class InstructorDashboardComponent implements OnInit {
   isLoading!: boolean;
   userId: string = '';
   // filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
-  filters = ['MIS CLASES']
+  filters = ['MIS CLASES', 'CODIGO']
   pullZone: string = environment.pullZone
   instructorImage!: string;
 
