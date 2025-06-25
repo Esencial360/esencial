@@ -28,7 +28,9 @@ export class InstructorService {
         const headers = new HttpHeaders({
           Authorization: `Bearer ${token}`,
         });
-        return this.http.post<Instructor>(`${this.apiUrl}`, instructor, { headers });
+        return this.http.post<Instructor>(`${this.apiUrl}`, instructor, {
+          headers,
+        });
       })
     );
   }
@@ -39,19 +41,45 @@ export class InstructorService {
         const headers = new HttpHeaders({
           Authorization: `Bearer ${token}`,
         });
-        return this.http.put<Instructor>(`${this.apiUrl}`, instructor, { headers });
+        return this.http.put<Instructor>(`${this.apiUrl}`, instructor, {
+          headers,
+        });
       })
     );
   }
 
   deleteInstructor(id: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-     return this.auth.getAccessTokenSilently().pipe(
+    return this.auth.getAccessTokenSilently().pipe(
       switchMap((token: string) => {
         const headers = new HttpHeaders({
           Authorization: `Bearer ${token}`,
         });
         return this.http.delete<Instructor>(`${url}`, { headers });
+      })
+    );
+  }
+
+  getReferrals(id: string | undefined): Observable<any> {
+    const url = `${this.apiUrl}/referral-stats/${id}`;
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<Instructor>(`${url}`, { headers });
+      })
+    );
+  }
+
+  stripeOnboarding(id: string | undefined): Observable<any> {
+    const url = `${this.apiUrl}/onboarding-url/${id}`;
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<Instructor>(`${url}`, { headers });
       })
     );
   }

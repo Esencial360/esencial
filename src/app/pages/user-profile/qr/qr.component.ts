@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Instructor } from '../../../shared/Models/Instructor';
+import { InstructorService } from '../../../shared/services/instructor.service';
 
 @Component({
   selector: 'app-qr',
@@ -7,15 +8,32 @@ import { Instructor } from '../../../shared/Models/Instructor';
   styleUrl: './qr.component.css',
 })
 export class QrComponent implements OnInit {
+  totalReferrals = 0;
+  referralCode = '';
   @Input() instructor!: Instructor;
 
-  ngOnInit() {
-    console.log(this.instructor);
-  }
+  constructor(private instructorService: InstructorService) {}
+
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['instructor']) {
-      console.log(this.instructor);
+      this.instructorService.getReferrals(this.instructor._id).subscribe({
+        next: (res) => {
+          this.totalReferrals = res.totalReferrals;
+          this.referralCode = res.referralCode;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     }
+  }
+
+  stripeInstructorSetup() {
+    this.instructorService.stripeOnboarding(this.instructor._id).subscribe({
+      next: (res) => (window.location.href = res.url),
+      error: (err) => console.error(err),
+    });
   }
 }

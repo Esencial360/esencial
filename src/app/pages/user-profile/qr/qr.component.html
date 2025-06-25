@@ -35,3 +35,30 @@
     }
   </div>
 </section>
+<section
+  class="container mx-auto px-4 py-8 min-h-[60vh]"
+  data-aos="fade-up"
+  data-aos-duration="1000"
+>
+  <div class="flex flex-col text-center items-center montserrat-normal">
+    <h4 class="text-3xl font-bold mb-4 text-strongBrown uppercase">
+      Tus estadísticas de referidos
+    </h4>
+
+    <p class="text-xl text-gray-700 mb-2">Código de referido:</p>
+    <p
+      class="text-2xl font-mono bg-gray-100 px-4 py-2 rounded-md text-darkBrown"
+    >
+      {{ referralCode }}
+    </p>
+
+    <p class="mt-4 text-xl text-gray-700">Total de referidos:</p>
+    <p class="text-3xl font-bold text-green-600">
+      {{ totalReferrals }}
+    </p>
+    <app-button
+      (click)="stripeInstructorSetup()"
+      [text]="'STRIPE'"
+    ></app-button>
+  </div>
+</section>

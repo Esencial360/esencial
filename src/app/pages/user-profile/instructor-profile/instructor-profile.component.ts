@@ -68,8 +68,6 @@ export class InstructorProfileComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log(this.filters);
-
     await this.getInstructorVideos();
   }
 
