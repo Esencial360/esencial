@@ -90,8 +90,8 @@ export class UserProfileComponent implements OnInit {
       ];
     } else if (this.roles === 'Instructor') {
       this.filters = [
-        'EDITA TU PERFIL',
-        'CAMBIA TU CONTRASEÑA',
+        // 'EDITA TU PERFIL',
+        // 'CAMBIA TU CONTRASEÑA',
         'MIS CLASES',
         'PAGOS',
         'CODIGO',

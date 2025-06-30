@@ -67,8 +67,8 @@ export class InstructorProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.getInstructorVideos();
+  async ngOnInit() {
+    await this.getInstructorVideos();
   }
 
   getInstructorVideos() {
@@ -79,22 +79,26 @@ export class InstructorProfileComponent implements OnInit {
         filter((instructor) => !!instructor),
         tap((instructor) => {
           this.instructor = instructor;
-          this.pendingVideosCount = instructor.videos?.filter(video => video.status === 'Pending').length || 0;
+          this.pendingVideosCount =
+            instructor.videos?.filter((video) => video.status === 'Pending')
+              .length || 0;
           this.totalVideosCount = instructor.videos?.length || 0;
         }),
-        map((instructor) => 
-          instructor.videos?.filter(video => video.status === 'approve').map(video => video.videoId) || []
+        map(
+          (instructor) =>
+            instructor.videos
+              ?.filter((video) => video.status === 'approve')
+              .map((video) => video.videoId) || []
         ),
         filter((videoIds) => videoIds.length > 0),
         switchMap(async (videoIds) => this.getVideo(videoIds)),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       )
       .subscribe({
         next: (videos) => console.log('Videos retrieved:'),
         error: (error) => console.error('Error:', error),
       });
   }
-  
 
   getVideo(videoIds: string | string[]) {
     if (!videoIds || (Array.isArray(videoIds) && videoIds.length === 0)) {

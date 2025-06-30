@@ -8,7 +8,8 @@ import {
   DialogData,
 } from '../../shared/ui/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReferralCodeService } from '../../shared/services/referral-code.service';
 
 interface PricingPlan {
   name: string;
@@ -60,16 +61,15 @@ export class SignUpComponent implements OnInit {
     private http: HttpClient,
     private stripeService: StripeService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router, 
   ) {}
 
   ngOnInit() {
-    this.loading = false
+    this.loading = false;
   }
 
   selectPlan(plan: string) {
     this.selectedPlan = plan;
-
   }
 
   subscribe() {
@@ -77,12 +77,12 @@ export class SignUpComponent implements OnInit {
 
     this.loading = true;
 
-    const priceId = 'price_1RKIDlEmYKUZdsXfxutFY1VS'
+    const priceId = 'price_1RKIDlEmYKUZdsXfxutFY1VS';
 
     this.auth.user$.subscribe((user) => {
       if (user) {
-        this.noUser = false
-        
+        this.noUser = false;
+
         const userData = {
           email: user.email,
           userId: user.sub,
@@ -93,14 +93,15 @@ export class SignUpComponent implements OnInit {
             window.location.href = res.url;
           },
           error: (err) => {
-            if (err.error.error === 'User already has an active subscription.') {
-              this.showErrorMessage()
+            if (
+              err.error.error === 'User already has an active subscription.'
+            ) {
+              this.showErrorMessage();
             }
             this.loading = false;
           },
         });
       } else {
-        
         this.noUser = true;
         this.loading = false;
       }
@@ -111,7 +112,8 @@ export class SignUpComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Error',
-        message: 'Ya cuentas con una subscripcion activa. Si deseas actualizarla, hazlo desde la pagina de ajustes en tu perfil',
+        message:
+          'Ya cuentas con una subscripcion activa. Si deseas actualizarla, hazlo desde la pagina de ajustes en tu perfil',
         confirmText: 'Aceptar',
         onConfirm: () => {
           this.router.navigate(['']);
