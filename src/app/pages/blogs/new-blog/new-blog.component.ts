@@ -45,6 +45,8 @@ export class NewBlogComponent implements OnInit {
       this.blogService.createBlog(this.blogForm.value).subscribe(
         (response) => {
           console.log('File uploaded successfully:');
+          this.firstStep = false;
+          this.secondStep = true;
           this.router.navigate([`/blog/${response._id}`]);
         },
         (error) => {
@@ -56,6 +58,7 @@ export class NewBlogComponent implements OnInit {
 
   openModal() {
     this.isModalOpen = true;
+    this.firstStep = true
   }
 
   closeModal() {
