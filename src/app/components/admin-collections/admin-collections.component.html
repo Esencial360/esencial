@@ -1,0 +1,48 @@
+<div class="max-w-2xl mx-auto mt-10 bg-white p-6 shadow-xl rounded-2xl">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Gestionar Colecciones (Categorías)</h2>
+
+  <!-- Input + Button -->
+  <div class="flex items-center gap-3 mb-6">
+    <input
+      [(ngModel)]="newCollection"
+      placeholder="Nueva categoría"
+      class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      (click)="createCollection()"
+      [disabled]="loading || !newCollection"
+      class="bg-blue  text-white font-semibold px-4 py-2 rounded-lg transition disabled:opacity-50"
+    >
+      Crear
+    </button>
+  </div>
+
+  <!-- List -->
+  <ul *ngIf="collections.length; else emptyState" class="divide-y divide-gray-200">
+    <li *ngFor="let c of collections" class="flex justify-between items-center py-3">
+      <span class="text-gray-700 font-medium">{{ c.name }}</span>
+      <button
+        (click)="deleteCollection(c.guid)"
+        [disabled]="loading"
+        class="text-red-600 hover:text-red-800 hover:underline transition"
+      >
+        Eliminar
+      </button>
+    </li>
+  </ul>
+
+  <!-- Empty state -->
+  <ng-template #emptyState>
+    <p class="text-gray-500 text-center mt-4">No hay colecciones registradas aún.</p>
+  </ng-template>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="flex justify-center mt-6">
+    <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+    </svg>
+  </div>
+</div>

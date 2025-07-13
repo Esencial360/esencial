@@ -121,6 +121,8 @@ import { AllWorkshopsComponent } from './pages/workshops/all-workshops/all-works
 import { SingleWorkshopComponent } from './pages/workshops/single-workshop/single-workshop.component';
 import { UploadWorkshopComponent } from './pages/workshops/upload-workshop/upload-workshop.component';
 import { WeeklyPlanComponent } from './components/weekly-plan/weekly-plan.component';
+import { AdminWeeklyPlanComponent } from './components/admin-weekly-plan/admin-weekly-plan.component';
+import { AdminCollectionsComponent } from './components/admin-collections/admin-collections.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -210,6 +212,8 @@ registerLocaleData(localeEs, 'es');
     SingleWorkshopComponent,
     UploadWorkshopComponent,
     WeeklyPlanComponent,
+    AdminWeeklyPlanComponent,
+    AdminCollectionsComponent,
   ],
   imports: [
     BrowserModule,
