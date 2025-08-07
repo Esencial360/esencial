@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { WeeklyPlanService } from '../../shared/services/weekly-plan.service';
 import { BunnystreamService } from '../../shared/services/bunny-stream.service';
+import { CategoryConfigService } from '../../shared/services/category-config.service';
+import { CategoryConfig } from '../../shared/Models/CategoryConfig';
 
 interface WeeklyPlan {
   day: string;
@@ -31,13 +33,15 @@ export class AdminWeeklyPlanComponent implements OnInit {
   ];
   types = ['clase', 'meditacion', 'talleres'];
   category = [];
-  subcategory = [];
+  subcategory!: any;
   collectionList: any[] = [];
+  categoryConfigs: CategoryConfig[] = [];
 
   constructor(
     private fb: FormBuilder,
     private weeklyPlanService: WeeklyPlanService,
-    private bunnystreamService: BunnystreamService
+    private bunnystreamService: BunnystreamService,
+    private configService: CategoryConfigService
   ) {
     this.configForm = this.fb.group({
       day: ['', Validators.required],
@@ -47,7 +51,14 @@ export class AdminWeeklyPlanComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadCategoryConfigs();
+    this.getCollectionList();
+
+    this.configForm.get('category')?.valueChanges.subscribe((collectionId) => {
+      this.updateSubcategories(collectionId);
+    });
+  }
 
   onSubmit(): void {
     if (this.configForm.invalid) return;
@@ -68,15 +79,33 @@ export class AdminWeeklyPlanComponent implements OnInit {
     });
   }
 
-  getCollectionList() {
-    this.bunnystreamService.getCollectionList().subscribe(
-      (response: any) => {
-        this.collectionList = response.items;
-        console.log(this.collectionList);
+  loadCategoryConfigs() {
+    this.configService.getCategoryConfigs().subscribe({
+      next: (configs) => {
+        this.categoryConfigs = configs;
       },
-      (error) => {
-        console.error('Error retrieving collection:', error);
-      }
+      error: (err) => {
+        console.error('Error loading category configs', err);
+      },
+    });
+  }
+
+  getCollectionList() {
+    this.bunnystreamService.getCollectionList().subscribe({
+      next: (res) => {
+        this.collectionList = res.items;
+      },
+      error: (err) => {
+        console.error('Error retrieving collection:', err);
+      },
+    });
+  }
+
+  updateSubcategories(collectionId: string) {
+    const config = this.categoryConfigs.find(
+      (cfg) => cfg.collectionId === collectionId
     );
+    this.subcategory = config?.subcategories || [];
+    this.configForm.get('subcategory')?.reset(); // reset on change
   }
 }

@@ -131,7 +131,7 @@ export class LandingComponent implements OnInit {
     }
     this.services = [
       { title: 'YOGA', image: this.pullZone + '/assets/photo4.png' },
-      { title: 'MEDITACIONES', image: this.pullZone + '/assets/photo148.png' },
+      { title: 'MEDITACIONES', image: this.pullZone + '/assets/photo148.jpg' },
       { title: 'TALLERES', image: this.pullZone + '/assets/photo161.png' },
     ];
     // this.fetchBlogs();
