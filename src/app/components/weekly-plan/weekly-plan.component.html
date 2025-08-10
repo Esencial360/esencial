@@ -19,7 +19,7 @@
         Clases de Yoga
       </button>
 
-      <button
+      <!-- <button
         (click)="changeType('meditation')"
         [ngClass]="{
           'bg-strongBrown text-white': selectedType === 'meditation',
@@ -28,10 +28,8 @@
         class="px-6 py-2 rounded-full text-sm font-medium shadow-sm transition-all"
       >
         Meditaciones
-      </button>
+      </button> -->
     </div>
-
-    <!-- 🌀 Carousel container -->
     <div
       class="overflow-x-auto pb-4"
       style="scroll-snap-type: x mandatory;"
@@ -40,40 +38,53 @@
         class="flex space-x-4 w-max px-2"
         style="scroll-padding: 1rem;"
       >
-        <div
-          *ngFor="let day of weeklyPlan"
-          class="bg-white rounded-lg shadow-sm p-6 flex-shrink-0 w-64 snap-start"
-        >
-          <h3 class="text-lg font-bold text-strongBrown mb-1 text-center">{{ day.day }}</h3>
-          <p class="text-sm text-gray-500 mb-4 text-center">{{ day.date }}</p>
+   <div
+  *ngFor="let day of weeklyPlan"
+  class="bg-white rounded-xl shadow-md p-6 flex-shrink-0 w-64 snap-start"
+>
+  <h3 class="text-lg font-bold text-strongBrown mb-1 text-center">
+    {{ day.day }}
+  </h3>
+  <p class="text-sm text-gray-500 mb-4 text-center">{{ day.date }}</p>
 
-          <div *ngFor="let session of day.sessions" class="mb-4 last:mb-0">
-            <div
-              class="w-full relative rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md cursor-pointer"
-            >
-              <img
-                [src]="pullZone + '/assets/1.jpg'"
-                alt="Clase"
-                class="w-full h-36 object-cover"
-              />
-              <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <p class="text-white uppercase text-xs font-medium px-4 text-center">
-                  {{ session.title }}
-                </p>
-              </div>
-            </div>
-            <div class="mt-1">
-              <p class="text-sm font-semibold">{{ session.subtitle }}</p>
-              <p class="text-xs text-gray-500">{{ session.duration }} · {{ session.level }}</p>
-            </div>
-          </div>
+  <div *ngFor="let session of videosByDay[day.day]" class="mb-5 last:mb-0">
+    <!-- Video Thumbnail -->
+    <div
+      (click)="onWatchSingleClass(session.video.guid)"
+      class="relative rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+    >
+      <img
+        [src]="session.safeThumbnail"
+        alt="Clase"
+        class="w-full h-36 object-cover"
+      />
+      <div
+        class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+      >
+        <p class="text-white uppercase text-xs font-semibold px-4 text-center">
+          {{ session.video.title }}
+        </p>
+      </div>
+    </div>
 
-          <button
-            class="mt-2 text-teal-500 text-sm font-medium hover:text-teal-600 transition-colors"
-          >
-            Iniciar práctica
-          </button>
-        </div>
+    <!-- Video Info -->
+    <div class="mt-2 space-y-0.5">
+      <!-- Subcategory -->
+      <p
+        *ngIf="session.subcategory"
+        class="text-[11px] text-teal-600 font-medium uppercase tracking-wide"
+      >
+        {{ session.subcategory }}
+      </p>
+
+      <!-- Difficulty + Duration -->
+      <p class="text-xs text-gray-500">
+        {{ session.video.length }} · {{ session.difficulty }}
+      </p>
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   </div>

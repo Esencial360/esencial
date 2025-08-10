@@ -78,6 +78,7 @@ export class BunnystreamService {
   }
 
   getVideo(source: VideoSource, videoId: any): Observable<any> {
+
     const { apiUrl, apiKey } = this.getApiConfig(source);
     const url = `${apiUrl}/videos/${videoId}`;
     const headers = { AccessKey: apiKey };
