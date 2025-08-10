@@ -1,12 +1,23 @@
-<app-header></app-header>
+<app-header [newLanding]="true"></app-header>
+<section class="h-full relative">
+  <app-parallax
+    [parallaxSpeed]="0.5"
+    [imagePath]="pullZone + '/assets/1.jpg'"
+  ></app-parallax>
+  <div
+    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center"
+  >
+    <h1 class="font-bold text-2xl md:text-8xl uppercase">Blogs</h1>
+    <p class="text-2xl">yoga, meditaciones y talleres</p>
+  </div>
+  <span
+    (click)="scrollArrow()"
+    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
+  >
+    keyboard_arrow_down
+  </span>
+</section>
 <section>
-  <app-page-title
-    [pageTitle]="'Ilumina tu bienestar: consejos y trucos para una vida sana'"
-    [pageDescription]="
-      'Descubra los secretos del equilibrio entre alimentación y bienestar para una vida radiante.'
-    "
-    [arrowBack]="true"
-  ></app-page-title>
   <div class="container mx-auto px-4 py-8 montserrat-normal">
     <div class="relative">
       <div
@@ -66,5 +77,5 @@
       }
     </div>
   </div>
-</section>
+</section> 
 <app-footer></app-footer>

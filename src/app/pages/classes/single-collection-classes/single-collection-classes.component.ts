@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { concatMap, from, map, toArray } from 'rxjs';
+import { catchError, concatMap, from, map, of, toArray } from 'rxjs';
 import AOS from 'aos';
 import { ClassesService } from '../../../shared/services/classes.service';
 import { environment } from '../../../../environments/environment';
@@ -14,15 +14,15 @@ import { environment } from '../../../../environments/environment';
 })
 export class SingleCollectionClassesComponent implements OnInit {
   collectionList!: any[];
-  pullZone = environment.pullZone
+  pullZone = environment.pullZone;
   collectionName: any;
   loadingClasses: boolean = true;
   matchingCollection!: any;
-  videoIdsArray!: string[]
+  videoIdsArray!: string[];
   videos!: any[];
-filteredVideos!: any[]
+  filteredVideos!: any[];
   links: SafeResourceUrl[] = [];
-    classesMetadata!: any;
+  classesMetadata!: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +37,7 @@ filteredVideos!: any[]
     this.route.paramMap.subscribe((params) => {
       this.collectionName = params.get('id');
     });
-        this.getAllClassesMetadata();
+    this.getAllClassesMetadata();
     this.getCollectionList();
     AOS.init({
       once: true,
@@ -48,7 +48,7 @@ filteredVideos!: any[]
     this.bunnystreamService.getCollectionList().subscribe(
       (response: any) => {
         this.collectionList = response.items;
-        
+
         function findMatchingObject(dataArray: any, name: string) {
           return dataArray.find((item: { name: string }) => item.name === name);
         }
@@ -57,7 +57,7 @@ filteredVideos!: any[]
           this.collectionName
         );
         console.log(this.collectionName);
-        
+
         // this.getVideo(this.matchingCollection);
       },
       (error) => {
@@ -68,7 +68,7 @@ filteredVideos!: any[]
       .getCollectionVideosList(this.collectionName)
       .subscribe(
         (response) => {
-          this.getVideo(response.items)
+          this.getVideo(response.items);
         },
         (error) => {
           console.error('Error retrieving video list collection:', error);
@@ -113,10 +113,15 @@ filteredVideos!: any[]
                 difficulty: metadata?.difficulty || null,
                 instructorId: metadata?.instructorId || null,
               };
+            }),
+            catchError((error) => {
+              console.warn(`Failed to fetch video ${videoId}:`, error);
+              return of(null);
             })
           )
         ),
-        toArray()
+        toArray(),
+        map((videos) => videos.filter((v) => v !== null))
       )
       .subscribe({
         next: (videos) => {
@@ -124,7 +129,8 @@ filteredVideos!: any[]
           this.loadingClasses = false;
         },
         error: (error) => {
-          console.error('Error retrieving videos:', error);
+          console.error('Unexpected error during video retrieval:', error);
+          this.loadingClasses = false;
         },
       });
   }
@@ -144,8 +150,7 @@ filteredVideos!: any[]
       });
   }
 
-    onFiltersChanged(filtered: any[]) {
+  onFiltersChanged(filtered: any[]) {
     this.filteredVideos = filtered;
   }
-
 }

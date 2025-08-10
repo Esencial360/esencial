@@ -13,6 +13,8 @@ import { Instructor } from '../../../shared/Models/Instructor';
 import { Router } from '@angular/router';
 import { ClassesService } from '../../../shared/services/classes.service';
 import { Classes } from '../../../shared/Models/Classes';
+import { CategoryConfig } from '../../../shared/Models/CategoryConfig';
+import { CategoryConfigService } from '../../../shared/services/category-config.service';
 
 interface UploadVideo {
   title: string;
@@ -46,13 +48,15 @@ export class UploadVideoComponent implements OnInit {
   selectedInstructor!: string;
   loading!: boolean;
   uploadingProgress!: string
+  categoryConfigs: CategoryConfig[] = [];
 
   constructor(
     private bunnyStreamService: BunnystreamService,
     private fb: FormBuilder,
     private instructorService: InstructorService,
     private router: Router,
-    private classesService: ClassesService
+    private classesService: ClassesService,
+    private configService: CategoryConfigService
   ) {
     this.newVideoForm = this.fb.group({
       title: ['', Validators.required],
@@ -65,6 +69,7 @@ export class UploadVideoComponent implements OnInit {
 
   ngOnInit() {
     this.getCollectionList();
+    this.loadCategoryConfigs();
     this.instructorService.getAllInstructors().subscribe(
       (response) => {
         this.instructors = response;
@@ -75,6 +80,17 @@ export class UploadVideoComponent implements OnInit {
       }
     );
   }
+
+  loadCategoryConfigs() {
+  this.configService.getCategoryConfigs().subscribe({
+    next: (configs) => {
+      this.categoryConfigs = configs;
+    },
+    error: (err) => {
+      console.error('Error loading category configs', err);
+    },
+  });
+}
 
   openModal() {
     this.isModalOpen = true;
@@ -244,12 +260,9 @@ export class UploadVideoComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  getSubcategories(): string[] {
-    const collection = this.newVideoForm.get('collectionId')?.value;
-    if (collection === '0ea815c8-7cf9-42e7-a5b0-4e0f6eef0d15')
-      return ['Restaurativo', 'Iyengar', 'Yin'];
-    if (collection === '472608a1-1a1c-4828-9bdc-12c590ecc759')
-      return ['Power', 'Flow', 'Ashtanga'];
-    return [];
-  }
+getSubcategories(): string[] {
+  const collectionId = this.newVideoForm.get('collectionId')?.value;
+  const config = this.categoryConfigs.find(cfg => cfg.collectionId === collectionId);
+  return config?.subcategories || [];
+}
 }

@@ -6,34 +6,47 @@
   (isRecommendationDone)="onRecommendationDone()"
 ></app-recommendation-classes>
 }
-<div
-  class="flex md:flex-row lg:h-[60vh] flex-col items-center justify-around px-8 py-16 max-w-7xl mx-auto"
+<section 
+  class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12 px-6 sm:px-8 py-12 lg:py-16 max-w-7xl mx-auto min-h-[60vh] lg:h-[60vh]"
+  aria-labelledby="welcome-heading"
 >
-  <div class="flex-1 pr-8">
-    <h2 class="!text-4xl font-bold text-blue uppercase mb-4">
+  <div class="flex-1 lg:max-w-2xl">
+    <h1 
+      id="welcome-heading"
+      class="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue uppercase mb-6 leading-tight"
+    >
       Bienvenido {{ user["username"] ? user["username"] : user.nickname }}
-    </h2>
-    <br />
-    <p class="text-olive-600 text-lg">
-      ¡Qué gusto tenerte de vuelta! Disfruta tu práctica de hoy con equilibrio y
-      energía.
-      <br /><br />
-      Recuerda que tu proceso es solo tuyo: fluye a tu ritmo, con intención y
-      presencia.
-      <br /><br />
-      <span class="font-bold"> Fluye Consciente.</span>
-    </p>
+    </h1>
+    
+    <div class="space-y-4 text-olive-600 text-lg leading-relaxed">
+      <p>
+        ¡Qué gusto tenerte de vuelta! Disfruta tu práctica de hoy con equilibrio y energía.
+      </p>
+      
+      <p>
+        Recuerda que tu proceso es solo tuyo: fluye a tu ritmo, con intención y presencia.
+      </p>
+      
+      <p class="font-bold text-xl">
+        Fluye Consciente.
+      </p>
+    </div>
   </div>
-  <div class="mt-5 md:mt-0 md:w-1/2">
-    <img
-      [src]="pullZone + '/assets/foldedMat.jpg'"
-      alt="Person doing yoga"
-      class="rounded-xl object-cover w-full h-64"
-    />
+  
+  <div class="flex-shrink-0 lg:w-1/2 xl:w-2/5">
+    <div class="relative overflow-hidden rounded-xl shadow-lg">
+      <img
+        [src]="pullZone + '/assets/foldedMat.jpg'"
+        alt="Persona practicando yoga en posición de meditación"
+        class="w-full h-64 sm:h-72 lg:h-80 object-cover transition-transform duration-300 hover:scale-105"
+        loading="lazy"
+      />
+    </div>
   </div>
-</div>
+</section>
 }
-<app-mood-collection></app-mood-collection>
+<!-- <app-mood-collection></app-mood-collection> -->
+ <app-weekly-plan></app-weekly-plan>
 <app-popular-classes-and-instructors></app-popular-classes-and-instructors>
 <app-classes-catalogue
   [collectionName]="'CATEGORIAS'"
@@ -81,14 +94,6 @@
     }
   </div>
 </section>
-<app-banner-v2
-  [reverse]="true"
-  [title]="'alimenta tu fuego con cada práctica.'"
-  [text]="
-    'En la Amazonía colombiana, pueblos como los barasana y los makuna consideran que el fuego es una manifestación de la energía vital y un medio para la transformación personal. '
-  "
-  [image]="pullZone + '/assets/flame.png'"
-></app-banner-v2>
 <app-banner-v3
   [image]="pullZone + '/assets/logoWhite.png'"
   [firstDescriptions]="

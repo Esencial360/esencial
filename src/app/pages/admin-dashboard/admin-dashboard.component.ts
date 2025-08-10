@@ -16,6 +16,8 @@ export class AdminDashboardComponent implements OnInit {
     'CAMBIA TU CONTRASEÑA',
     'INSTRUCTORES',
     'VIDEOS PENDIENTES',
+    'PLAN SEMANAL',
+    'CATEGORIAS'
   ];
   isLoading!: boolean;
   pullZone: string = environment.pullZone;
