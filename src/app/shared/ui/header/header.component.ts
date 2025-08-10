@@ -24,6 +24,8 @@ export class HeaderComponent {
   isAuthenticated$ = this.authService.isAuthenticated$;
   userInfo: any;
 
+  isStepsOpen!: boolean;
+
   @Input()
   userConnected!: boolean;
 
@@ -109,6 +111,17 @@ export class HeaderComponent {
     this.route.navigate(['meditaciones']);
   }
 
+  onSubscribe() {
+    this.authService.loginWithRedirect({
+      authorizationParams: { screen_hint: 'signup' },
+      appState: { target: '/suscribe' },
+    });
+  }
+
+  onStartProcess() {
+    this.isStepsOpen = true
+  }
+
   toggle() {
     this.isOpen = !this.isOpen;
     // if (this.isOpen) {
@@ -122,5 +135,14 @@ export class HeaderComponent {
     this.authService.logout({
       logoutParams: { returnTo: '' },
     });
+  }
+
+  onCloseSteps() {
+    this.isStepsOpen = false
+  }
+
+  onConfirmedSteps() {
+    this.onSubscribe()
+    this.isStepsOpen = false
   }
 }

@@ -7,18 +7,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class DialogPopupComponent {
 
-  @Input()
-  isOpen!: boolean;
-
-  @Input()
-  badge!: any
-  
-  @Output()
-  onCloseDialog = new EventEmitter<boolean>();
+  @Input() isOpen: boolean = false;
+  @Output() close = new EventEmitter<void>();
+  @Output() confirmed = new EventEmitter<void>();
 
   closeDialog() {
-    document.body.classList.remove('overflow-hidden');
-    this.isOpen = false;
-    this.onCloseDialog.emit(true);
+    this.close.emit();
+  }
+
+  confirm() {
+    this.confirmed.emit(); 
+    this.closeDialog();
   }
 }

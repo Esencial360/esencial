@@ -27,7 +27,15 @@
       }
     </section>
   </mat-tab>
-  } }
+  } } @if (showTab('CATEGORIAS')) {
+  <mat-tab label="CATEGORIAS">
+    <app-admin-collections></app-admin-collections>
+  </mat-tab>
+  } @if (showTab('PLAN SEMANAL')) {
+  <mat-tab label="PLAN SEMANAL">
+    <app-admin-weekly-plan></app-admin-weekly-plan>
+  </mat-tab>
+  }
 </mat-tab-group>
 
 @if (showModal) {
@@ -37,7 +45,7 @@
   (close)="showModal = false"
   class="overflow-hidden"
 >
-@if (!isLoading) {
+  @if (!isLoading) {
   <div class="text-center flex flex-col mt-10">
     <h2 class="text-blue uppercase font-bold text-xl tracking-wide">
       {{ activeVideoInfo.title }}
@@ -65,7 +73,7 @@
       Rechazar
     </button>
   </div>
-}
+  }
   <div style="position: relative; padding-top: 56.25%">
     @if (isLoading) {
     <app-loading></app-loading>

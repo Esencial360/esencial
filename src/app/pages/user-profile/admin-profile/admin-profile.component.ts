@@ -5,7 +5,7 @@ import { InstructorService } from '../../../shared/services/instructor.service';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { EmailService } from '../../../shared/services/email.service';
 import { Router } from '@angular/router';
-import { concatMap, from, map, toArray } from 'rxjs';
+import { catchError, concatMap, from, map, of, toArray } from 'rxjs';
 import { ClassesService } from '../../../shared/services/classes.service';
 import { Classes } from '../../../shared/Models/Classes';
 import { FormBuilder } from '@angular/forms';
@@ -90,50 +90,88 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
-  async getVideo(videoIds: any) {
-    if (videoIds.length === 0) {
-    } else if (videoIds.length === 1) {
-      from(videoIds)
-        .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
-    } else if (videoIds.length > 1) {
-      from(videoIds)
-        .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
-          map((video) => ({
-            video: video,
-            safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
-            ),
-          })),
-          toArray()
-        )
-        .subscribe({
-          next: (videos) => {
-            this.videos = videos;
-          },
-          error: (error) => {
-            console.error('Error retrieving videos:', error);
-          },
-        });
+  // async getVideo(videoIds: any) {
+  //   console.log(videoIds);
+
+  //   if (videoIds.length === 0) {
+  //   } else if (videoIds.length === 1) {
+  //     from(videoIds)
+  //       .pipe(
+  //         concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
+  //         map((video) => ({
+  //           video: video,
+  //           safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+  //             `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
+  //           ),
+  //         })),
+  //         toArray()
+  //       )
+  //       .subscribe({
+  //         next: (videos) => {
+  //           this.videos = videos;
+  //         },
+  //         error: (error) => {
+  //           console.error('Error retrieving videos:', error);
+  //         },
+  //       });
+  //   } else if (videoIds.length > 1) {
+  //     from(videoIds)
+  //       .pipe(
+  //         concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
+  //         map((video) => ({
+  //           video: video,
+  //           safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+  //             `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
+  //           ),
+  //         })),
+  //         toArray()
+  //       )
+  //       .subscribe({
+  //         next: (videos) => {
+  //           this.videos = videos;
+  //         },
+  //         error: (error) => {
+  //           console.error('Error retrieving videos:', error);
+  //         },
+  //       });
+  //   }
+  //   this.isLoading = false;
+  // }
+
+  getVideo(videos: any) {
+    if (videos.length === 0) {
+      return;
     }
-    this.isLoading = false;
+
+    from(videos)
+      .pipe(
+        concatMap((videoId) =>
+          this.bunnystreamService.getVideo('video', videoId).pipe(
+            map((video) => ({
+              video: video,
+              safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
+                `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${
+                  video.thumbnailFileName || 'thumbnail.jpg'
+                }`
+              ),
+            })),
+            catchError((error) => {
+              console.warn(`Failed to load video ${videoId}:`, error);
+              return of(null);
+            })
+          )
+        ),
+        toArray(),
+        map((videos) => videos.filter((v) => v !== null))
+      )
+      .subscribe({
+        next: (videos) => {
+          this.videos = videos;
+        },
+        error: (error) => {
+          console.error('Unexpected error retrieving videos:', error);
+        },
+      });
   }
 
   onApprovalVideo(video: any) {
@@ -291,7 +329,7 @@ export class AdminProfileComponent implements OnInit {
       videos: updatedVideos,
     };
 
-    this.bunnystreamService.deleteVideo('video',this.activeVideoId).subscribe(
+    this.bunnystreamService.deleteVideo('video', this.activeVideoId).subscribe(
       (response) => {
         this.instructorService.updateInstructor(updatedInstructor).subscribe(
           (response: any) => {

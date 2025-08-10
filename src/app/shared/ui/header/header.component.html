@@ -366,21 +366,12 @@
       <li class="mr-10">
         <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
       </li>
-      <!-- <li class="mr-10">
-        <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li> -->
-      <!-- <li class="mr-10">
-        <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li> -->
 
       <li class="mr-10" (click)="authService.loginWithRedirect()">
         Inicia Sesion
       </li>
       <button
-        (click)="authService.loginWithRedirect({ 
-                authorizationParams: {
-                    screen_hint: 'signup',
-                  }, appState: { target: '/suscribe' }})"
+        (click)="onStartProcess()"
         class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
       >
         <span class="text-white text-sm font-medium uppercase"
@@ -484,22 +475,6 @@
       <li class="" (click)="signOut()">LOGOUT</li>
 
       <li class="" (click)="onUserSettings()">SETTINGS</li>
-
-      <!-- <li
-        class=""
-        (click)="authService.loginWithRedirect({ 
-              authorizationParams: {
-                  screen_hint: 'signup',
-                }, appState: { target: '/suscribe' }})"
-      >
-        SUBSCRIBITE
-      </li> -->
-      <!-- <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li> -->
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     }
@@ -551,10 +526,7 @@
       </li>
 
       <button
-        (click)="authService.loginWithRedirect({ 
-                authorizationParams: {
-                    screen_hint: 'signup',
-                  }, appState: { target: '/suscribe' }})"
+        (click)="onStartProcess()"
         class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
       >
         <span class="text-white text-sm font-medium uppercase"
@@ -652,22 +624,15 @@
       <li class="" (click)="authService.loginWithRedirect()">INICIA SESION</li>
       <li
         class=""
-        (click)="authService.loginWithRedirect({ 
-              authorizationParams: {
-                  screen_hint: 'signup',
-                }, appState: { target: '/suscribe' }})"
+        (click)="onStartProcess()"
       >
         SUSCRIBE
       </li>
-      <!-- <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li> -->
       <li class="" (click)="onContact()">CONTACTANOS</li>
     </ul>
     }
   </div>
 </section>
 } }
+
+<app-dialog-popup (close)="onCloseSteps()" (confirmed)="onConfirmedSteps()" [isOpen]="isStepsOpen"></app-dialog-popup>
