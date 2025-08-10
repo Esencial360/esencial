@@ -17,16 +17,18 @@ export class QrComponent implements OnInit {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['instructor']) {
-      this.instructorService.getReferrals(this.instructor._id).subscribe({
-        next: (res) => {
-          this.totalReferrals = res.totalReferrals;
-          this.referralCode = res.referralCode;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    if (this.instructor) {
+      if (changes['instructor']) {
+        this.instructorService.getReferrals(this.instructor._id).subscribe({
+          next: (res) => {
+            this.totalReferrals = res.totalReferrals;
+            this.referralCode = res.referralCode;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      }
     }
   }
 
