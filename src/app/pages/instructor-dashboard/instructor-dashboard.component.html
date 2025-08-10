@@ -13,7 +13,7 @@
   </div>
   <div class="flex-1">
     <h2 class="!text-4xl font-bold text-strongBrown uppercase mb-4">
-      ¡Bienvenido {{ user['username'] ? user['username'] : user.nickname }}!
+      ¡Bienvenido {{ user["username"] ? user["username"] : user.nickname }}!
     </h2>
     <br />
     <p class="text-olive-600 text-lg">
@@ -27,14 +27,8 @@
     </p>
   </div>
 </div>
-<app-banner-v2
-[reverse]="true"
-  [text]="
-    'El sol, nuestra fuente de energía,  crecimiento y vida, representa un símbolo de vitalidad, prosperidad y nuevos comienzos.'
-  "
-  [image]="pullZone + '/assets/sun.png'"
-></app-banner-v2>
+@if (!isLoading) {
 <section class="modern-tabs">
   <app-instructor-profile [filters]="filters"></app-instructor-profile>
 </section>
-} }
+} } }
