@@ -6,7 +6,11 @@
   @for (class of classes; track $index) {
   <div class="flex flex-col">
     <div
-      (click)="allInfo ? onClassSelected(class.video) : onClassSelected(class.video.guid)"
+      (click)="
+        allInfo
+          ? onClassSelected(class.video)
+          : onClassSelected(class.video.guid)
+      "
       class="relative overflow-hidden rounded-xl shadow-lg max-w-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl"
     >
       <div class="relative">
@@ -21,9 +25,18 @@
         <div
           class="absolute top-2 left-2 bg-white text-strongBrown px-3 py-1 rounded-lg text-xs font-semibold shadow-md"
         >
-          {{class.video.length | formatDuration }}
+          {{ class.video.length | formatDuration }}
         </div>
-
+        <div
+          class="absolute top-2 right-2 px-3 py-1 rounded-lg text-xs font-semibold shadow-md text-white"
+          [ngClass]="{
+            'bg-[#50C878]': class.difficulty === 'Principiante',
+            'bg-[#FFBF00]': class.difficulty === 'Intermedio',
+            'bg-[#FF0000]': class.difficulty === 'Avanzado'
+          }"
+        >
+          {{ class.difficulty }}
+        </div>
         <h2
           class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold uppercase text-center px-4"
         >
@@ -40,7 +53,7 @@
       </div>
     </div>
     @if (!hideStatistics) {
-      <app-class-statistics
+    <app-class-statistics
       [videoSource]="videoSource"
       [adminView]="true"
       [videoGuid]="class?.video?.guid"
