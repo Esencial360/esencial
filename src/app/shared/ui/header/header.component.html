@@ -1,638 +1,375 @@
-@if(authService.isAuthenticated$ | async) { @if (!newLanding) {
-<header
-  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 xl:flex justify-between items-center w-full top-0 z-[60]"
-  style="
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
-      rgba(35, 41, 54, 0.08) 0px 8px 16px;
-  "
+<div
+  class="top-0 z-[60] w-full"
+  [ngClass]="newLanding ? 'absolute' : 'relative'"
 >
-  <div class="flex justify-center items-center" (click)="onHome()">
-    <img
-      [src]="pullZone + '/assets/blueLogo.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-    />
-    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-  </div>
-  <nav>
-    <ul
-      class="flex anton items-center uppercase pointer text-base cursor-pointer"
-    >
-      @if (roles === "User") {
-      <div class="flex items-center">
-        <span class="text-xl">🔥</span>
-        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-      </div>
-      } @if (roles === "User") {
-      <li class="mr-10">
-        <a (click)="onInstructors()" class="hover:text-gray-400"
-          >INSTRUCTORES</a
-        >
-      </li>
-      <li class="mr-10">
-        <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
-      </li>
-      <li class="mr-10">
-        <a (click)="onMeditations()" class="hover:text-gray-400"
-          >MEDITACIONES</a
-        >
-      </li>
-      <!-- <li class="mr-10">
-        <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li> -->
-      <!-- <li class="mr-10">
-        <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li> -->
-      }
-      <li class="mr-10" (click)="signOut()">LOGOUT</li>
-      @if (roles === "User") {
-      <button
-        (click)="onUserSettings()"
-        class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
-      >
-        <span class="text-white text-sm font-medium uppercase">Mi perfil</span>
-        <div
-          class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
-        >
-          <svg
-            class="w-3 h-3 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            ></path>
-          </svg>
-        </div>
-      </button>
-      }
-    </ul>
-  </nav>
-</header>
+  @if(authService.isAuthenticated$ | async) {
 
-<header
-  class="xl:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
-  style="
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
-      rgba(35, 41, 54, 0.08) 0px 8px 16px;
-  "
->
-  <div class="flex items-center justify-between w-full">
-    <div class="flex justify-center items-center" (click)="onHome()">
-      <img
-        [src]="pullZone + '/assets/blueLogo.png'"
-        alt="Logo"
-        class="max-h-20 cursor-pointer rounded-lg"
-      />
-      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
+  <!-- Authenticated Header -->
+  <header
+    [class]="getAuthenticatedHeaderClasses()"
+    [style]="getHeaderBoxShadow()"
+  >
+    <!-- Desktop Header -->
+    <div class="hidden xl:flex justify-between items-center px-20 h-20">
+      <!-- Logo -->
+      <div class="flex items-center gap-2 cursor-pointer" (click)="onHome()">
+        <img
+          [src]="pullZone + '/assets/blueLogo.png'"
+          alt="Logo"
+          class="h-12 w-auto rounded-lg"
+        />
+        <h3 class="font-bold text-xl tracking-tight text-veige">
+          esencial<span class="text-blue">360</span>
+        </h3>
+      </div>
+
+      <!-- Navigation -->
+      <nav>
+        <ul
+          class="flex items-center space-x-8 font-medium uppercase text-sm tracking-wide"
+        >
+          @if (roles === "User") {
+          <!-- Streak -->
+          <div class="flex items-center pr-6 border-r border-gray-300/50">
+            <span class="text-xl">🔥</span>
+            <span class="ml-2 font-semibold text-lg">{{ streak }}</span>
+          </div>
+
+          <!-- Links -->
+          <li>
+            <a
+              (click)="onInstructors()"
+              class="hover:text-blue transition-colors"
+              >Instructores</a
+            >
+          </li>
+          <li>
+            <a (click)="onClasses()" class="hover:text-blue transition-colors"
+              >Clases</a
+            >
+          </li>
+          <li>
+            <a
+              (click)="onMeditations()"
+              class="hover:text-blue transition-colors"
+              >Meditaciones</a
+            >
+          </li>
+          @if (newLanding) {
+          <li>
+            <a (click)="onCounsel()" class="hover:text-blue transition-colors"
+              >Consejo</a
+            >
+          </li>
+          } }
+
+          <!-- Logout -->
+          <li
+            (click)="signOut()"
+            class="cursor-pointer hover:text-blue transition-colors"
+          >
+            Logout
+          </li>
+
+          <!-- Profile -->
+          @if (roles === "User") {
+          <button
+            (click)="onUserSettings()"
+            class="flex items-center rounded-full bg-lightBrown px-5 py-2 text-white text-sm font-semibold uppercase shadow hover:bg-strongBrown transition"
+          >
+            <span>Mi perfil</span>
+            <svg
+              class="w-4 h-4 ml-2 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+          }
+        </ul>
+      </nav>
     </div>
-    <span
-      (click)="toggle()"
-      class="material-symbols-outlined text-blue w-4 mr-6 font-bold"
-    >
-      menu
-    </span>
-  </div>
-</header>
+
+    <!-- Mobile Header -->
+    <div class="xl:hidden flex justify-between items-center px-4 h-16">
+      <div class="flex items-center gap-2 cursor-pointer" (click)="onHome()">
+        <img
+          [src]="pullZone + '/assets/blueLogo.png'"
+          alt="Logo"
+          class="h-10 w-auto rounded-lg"
+        />
+        <h3 class="font-bold text-lg text-veige">
+          esencial<span class="text-blue">360</span>
+        </h3>
+      </div>
+      <button (click)="toggle()" class="p-2 rounded-md hover:bg-gray-200/30">
+        <span class="material-symbols-outlined text-blue text-3xl">menu</span>
+      </button>
+    </div>
+  </header>
+
+  } @else {
+
+  <!-- Non-Authenticated Header -->
+  <header
+    [class]="getNonAuthenticatedHeaderClasses()"
+    [style]="getHeaderBoxShadow()"
+  >
+    <!-- Desktop Header -->
+    <div class="hidden xl:flex justify-between items-center px-20 h-20">
+      <!-- Logo -->
+      <div
+        class="flex items-center gap-3 cursor-pointer select-none"
+        (click)="onHome()"
+      >
+        <img
+          [src]="getLogoSource()"
+          alt="Logo"
+          class="h-14 w-auto rounded-xl drop-shadow-md"
+        />
+        <h3
+          [class]="getLogoTextClass()"
+          class="text-2xl tracking-tight text-veige"
+        >
+          esencial<span class="text-blue">360</span>
+        </h3>
+      </div>
+
+      <!-- Navigation -->
+      <nav>
+        <ul
+          class="flex items-center space-x-8 font-medium uppercase text-sm tracking-wide"
+        >
+          <li>
+            <a
+              (click)="onInstructors()"
+              class="hover:text-blue transition-colors"
+              >Instructores</a
+            >
+          </li>
+          @if (newLanding) {
+          <li>
+            <a (click)="onCounsel()" class="hover:text-blue transition-colors"
+              >Consejo</a
+            >
+          </li>
+          }
+          <li>
+            <a (click)="onClasses()" class="hover:text-blue transition-colors"
+              >Clases</a
+            >
+          </li>
+          @if (newLanding) {
+          <li>
+            <a
+              (click)="onMeditations()"
+              class="hover:text-blue transition-colors"
+              >Meditaciones</a
+            >
+          </li>
+          }
+
+          <!-- Login -->
+          <li
+            (click)="authService.loginWithRedirect()"
+            class="cursor-pointer hover:text-blue transition-colors"
+          >
+            Inicia Sesión
+          </li>
+
+          <!-- Subscribe -->
+          <button
+            (click)="onStartProcess()"
+            class="flex items-center rounded-full bg-lightBrown px-5 py-2 text-white text-sm font-semibold uppercase shadow hover:bg-strongBrown transition"
+          >
+            <span>Suscríbete</span>
+            <svg
+              class="w-4 h-4 ml-2 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Mobile Header -->
+    <div class="xl:hidden flex justify-between items-center px-4 h-16">
+      <div class="flex items-center gap-2 cursor-pointer" (click)="onHome()">
+        <img
+          [src]="pullZone + '/assets/blueLogo.png'"
+          alt="Logo"
+          class="h-10 w-auto rounded-lg"
+        />
+        <h3 class="font-bold text-lg text-veige">
+          esencial<span class="text-blue">360</span>
+        </h3>
+      </div>
+      <button (click)="toggle()" class="p-2 rounded-md hover:bg-gray-200/30">
+        <span [class]="getMobileMenuIconClass()" class="text-blue text-3xl"
+          >menu</span
+        >
+      </button>
+    </div>
+  </header>
+  }
+</div>
+
+<!-- Mobile Menu Overlay -->
 <section
   class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
   [@menuAnimation]="isOpen ? 'open' : 'closed'"
 >
   <button
-    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
+    class="xl:hidden absolute top-5 right-6 p-2 rounded-md hover:bg-gray-200/30"
     (click)="toggle()"
   >
-    <span class="material-symbols-outlined text-blue"> close </span>
+    <span class="material-symbols-outlined text-blue text-3xl">close</span>
   </button>
-  <div class="flex justify-start items-center" (click)="onHome()">
+
+  <!-- Mobile Logo -->
+  <div
+    class="flex items-center gap-2 px-4 mt-6 cursor-pointer"
+    (click)="onHome()"
+  >
     <img
       [src]="pullZone + '/assets/blueLogo.png'"
       alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
+      class="h-10 w-auto rounded-lg"
     />
-    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-  </div>
-  <div class="container mx-auto px-4 mt-16">
-    @if(userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      @if (roles === "User") {
-      <div class="flex items-center">
-        <span class="text-xl">🔥</span>
-        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-      </div>
-      }
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li (click)="onSignIn()">SIGN IN</li>
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    } @if(!userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-
-      <li class="" (click)="signOut()">LOGOUT</li>
-
-      <li class="" (click)="onUserSettings()">SETTINGS</li>
-
-      <!-- <li
-        class=""
-        (click)="authService.loginWithRedirect({ 
-              authorizationParams: {
-                  screen_hint: 'signup',
-                }, appState: { target: '/suscribe' }})"
-      >
-        SUBSCRIBITE
-      </li> -->
-      <!-- <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li> -->
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    }
-  </div>
-</section>
-} @else {
-<header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 xl:flex p-4 xl:absolute justify-between items-center w-full top-0 z-[60]"
->
-  <div class="flex justify-center items-center" (click)="onHome()">
-    <img
-      [src]="pullZone + '/assets/logoWhite.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-    />
-    <h3 class="text-white text-2xl">
+    <h3 class="font-bold text-lg text-veige">
       esencial<span class="text-blue">360</span>
     </h3>
   </div>
-  <nav class="flex">
-    @if (roles === "User") {
-    <div class="flex items-center">
-      <span class="text-xl">🔥</span>
-      <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-    </div>
-    }
-    <ul
-      class="flex anton items-center uppercase pointer text-base cursor-pointer"
-    >
+
+  <!-- Mobile Navigation -->
+  <div class="container mx-auto px-4 mt-12">
+    @if(authService.isAuthenticated$ | async) {
+    <ul class="space-y-6 text-lg font-semibold">
       @if (roles === "User") {
-      <li class="mr-10">
-        <a (click)="onInstructors()" class="hover:text-gray-400"
-          >INSTRUCTORES</a
-        >
-      </li>
-      <li class="mr-10">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="mr-10">
-        <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
-      </li>
-      <li class="mr-10">
-        <a (click)="onMeditations()" class="hover:text-gray-400"
-          >MEDITACIONES</a
-        >
-      </li>
-      <!-- <li class="mr-10">
-        <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li> -->
-      <!-- <li class="mr-10">
-        <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li> -->
-      }
-      <li class="mr-10" (click)="signOut()">LOGOUT</li>
-      @if (roles === "User") {
-      <button
-        (click)="onUserSettings()"
-        class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
-      >
-        <span class="text-white text-sm font-medium uppercase">Mi perfil</span>
-        <div
-          class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
-        >
-          <svg
-            class="w-3 h-3 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            ></path>
-          </svg>
-        </div>
-      </button>
-      }
-    </ul>
-  </nav>
-</header>
-<header
-  class="xl:hidden text-white p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
->
-  <div class="flex items-center justify-between w-full">
-    <div class="flex justify-center items-center" (click)="onHome()">
-      <img
-        [src]="pullZone + '/assets/blueLogo.png'"
-        alt="Logo"
-        class="max-h-20 cursor-pointer rounded-lg"
-      />
-    </div>
-    <span
-      (click)="toggle()"
-      class="material-symbols-outlined text-white text-xl w-4 mr-6 font-bold"
-    >
-      menu
-    </span>
-  </div>
-</header>
-<section
-  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
-  [@menuAnimation]="isOpen ? 'open' : 'closed'"
->
-  <button
-    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
-    (click)="toggle()"
-  >
-    <span class="material-symbols-outlined text-blue"> close </span>
-  </button>
-  <div class="flex justify-start items-center" (click)="onHome()">
-    <img
-      [src]="pullZone + '/assets/blueLogo.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-    />
-    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-  </div>
-  <div class="container mx-auto px-4 mt-16">
-    @if(userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      @if (roles === "User") {
-      <div class="flex items-center">
+      <div class="flex items-center mb-4">
         <span class="text-xl">🔥</span>
-        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
+        <span class="ml-2 font-semibold text-lg">{{ streak }}</span>
       </div>
       }
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li (click)="onSignIn()">SIGN IN</li>
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    } @if(!userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
 
-      <li class="" (click)="signOut()">LOGOUT</li>
-
-      <li class="" (click)="onUserSettings()">SETTINGS</li>
-
-      <!-- <li
-        class=""
-        (click)="authService.loginWithRedirect({ 
-              authorizationParams: {
-                  screen_hint: 'signup',
-                }, appState: { target: '/suscribe' }})"
-      >
-        SUBSCRIBITE
-      </li> -->
-      <!-- <li
-      class=""
-      (click)="onSignUp()"
-    >
-      SUBSCRIBITE
-    </li> -->
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    }
-  </div>
-</section>
-} } @else { @if (!newLanding) {
-<header
-  class="hidden bg-white bg-gray-800 text-black montserrat-normal text-strongBrown px-20 p-4 xl:flex justify-between items-center w-full sticky top-0 z-[60]"
-  style="
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
-      rgba(35, 41, 54, 0.08) 0px 8px 16px;
-  "
->
-  <div class="flex justify-center items-center" (click)="onHome()">
-    <img
-      [src]="pullZone + '/assets/blueLogo.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-    />
-    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-  </div>
-  <nav>
-    <ul
-      class="flex anton items-center uppercase pointer text-base cursor-pointer"
-    >
-      <li class="mr-10">
-        <a (click)="onInstructors()" class="hover:text-gray-400"
-          >INSTRUCTORES</a
-        >
-      </li>
-      <li class="mr-10">
-        <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
-      </li>
-
-      <li class="mr-10" (click)="authService.loginWithRedirect()">
-        Inicia Sesion
-      </li>
-      <button
-        (click)="onStartProcess()"
-        class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
-      >
-        <span class="text-white text-sm font-medium uppercase"
-          >Suscríbete</span
-        >
-        <div
-          class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
-        >
-          <svg
-            class="w-3 h-3 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            ></path>
-          </svg>
-        </div>
-      </button>
-    </ul>
-  </nav>
-</header>
-
-<header
-  class="xl:hidden text-white bg-white p-4 flex justify-between items-center w-full sticky top-0 z-[60]"
-  style="
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 4px,
-      rgba(35, 41, 54, 0.08) 0px 8px 16px;
-  "
->
-  <div class="flex items-center justify-between w-full">
-    <div class="flex justify-center items-center" (click)="onHome()">
-      <img
-        [src]="pullZone + '/assets/blueLogo.png'"
-        alt="Logo"
-        class="max-h-20 cursor-pointer rounded-lg"
-      />
-      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-    </div>
-    <span
-      (click)="toggle()"
-      class="material-symbols-outlined text-blue w-4 mr-6 font-bold"
-    >
-      menu
-    </span>
-  </div>
-</header>
-<section
-  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
-  [@menuAnimation]="isOpen ? 'open' : 'closed'"
->
-  <button
-    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
-    (click)="toggle()"
-  >
-    <span class="material-symbols-outlined text-blue"> close </span>
-  </button>
-  <div class="flex justify-start items-center">
-    <img
-      [src]="pullZone + '/assets/blueLogo.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-      (click)="onHome()"
-    />
-    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-  </div>
-  <div class="container mx-auto px-4 mt-16">
-    @if(userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      @if (roles === "User") {
-      <div class="flex items-center">
-        <span class="text-xl">🔥</span>
-        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-      </div>
-      }
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li (click)="onSignIn()">SIGN IN</li>
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    } @if(!userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-
-      <li class="" (click)="signOut()">LOGOUT</li>
-
-      <li class="" (click)="onUserSettings()">SETTINGS</li>
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    }
-  </div>
-</section>
-} @else {
-<header
-  class="hidden text-white text-black montserrat-normal text-strongBrown px-20 xl:flex p-4 xl:absolute justify-between items-center w-full top-0 z-[60]"
->
-  <div class="flex justify-center items-center" (click)="onHome()">
-    <img
-      [src]="pullZone + '/assets/logoWhite.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-    />
-    <h3 class="text-white text-2xl -ml-6">
-      esencial<span class="text-blue">360</span>
-    </h3>
-  </div>
-  <nav>
-    <ul
-      class="flex anton items-center uppercase pointer text-base cursor-pointer"
-    >
-      <li class="mr-10">
-        <a (click)="onInstructors()" class="hover:text-gray-400"
-          >INSTRUCTORES</a
-        >
-      </li>
-      <li class="mr-10">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="mr-10">
-        <a (click)="onClasses()" class="hover:text-gray-400">Clases</a>
-      </li>
-      <li class="mr-10">
-        <a (click)="onMeditations()" class="hover:text-gray-400"
-          >MEDITACIONES</a
-        >
-      </li>
-      <!-- <li class="mr-10">
-        <a (click)="onAbout()" class="hover:text-gray-400">Nosotros</a>
-      </li> -->
-      <!-- <li class="mr-10">
-        <a (click)="onCommunity()" class="hover:text-gray-400">Comunidad</a>
-      </li> -->
-
-      <li class="mr-10" (click)="authService.loginWithRedirect()">
-        Inicia Sesion
-      </li>
-
-      <button
-        (click)="onStartProcess()"
-        class="group flex items-center rounded-full bg-lightBrown px-4 py-2 hover:bg-strongBrown transition-colors duration-200"
-      >
-        <span class="text-white text-sm font-medium uppercase"
-          >Suscríbete</span
-        >
-        <div
-          class="ml-2 rounded-full bg-lightBrown w-5 h-5 flex items-center justify-center hover:bg-strongBrown transition-colors duration-200"
-        >
-          <svg
-            class="w-3 h-3 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            ></path>
-          </svg>
-        </div>
-      </button>
-    </ul>
-  </nav>
-</header>
-<header
-  class="xl:hidden text-white bg-transparent p-4 flex justify-between items-center w-full absolute top-0 z-[60]"
->
-  <div class="flex items-center justify-between w-full">
-    <div class="flex justify-center items-center" (click)="onHome()">
-      <img
-        [src]="pullZone + '/assets/blueLogo.png'"
-        alt="Logo"
-        class="max-h-20 cursor-pointer rounded-lg"
-      />
-      <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-    </div>
-    <span
-      (click)="toggle()"
-      class="material-symbols-outlined text-white w-4 mr-6 font-bold"
-    >
-      menu
-    </span>
-  </div>
-</header>
-<section
-  class="xl:hidden fixed top-0 left-0 w-full h-full montserrat-normal bg-white text-strongBrown z-[60]"
-  [@menuAnimation]="isOpen ? 'open' : 'closed'"
->
-  <button
-    class="xl:hidden text-white focus:outline-none absolute top-[5%] right-[10%]"
-    (click)="toggle()"
-  >
-    <span class="material-symbols-outlined text-blue"> close </span>
-  </button>
-  <div class="flex justify-start items-center" (click)="onHome()">
-    <img
-      [src]="pullZone + '/assets/blueLogo.png'"
-      alt="Logo"
-      class="max-h-20 cursor-pointer rounded-lg"
-    />
-    <h3 class="text-veige">esencial<span class="text-blue">360</span></h3>
-  </div>
-  <div class="container mx-auto px-4 mt-16">
-    @if(userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      @if (roles === "User") {
-      <div class="flex items-center">
-        <span class="text-xl">🔥</span>
-        <span class="mr-10 font-semibold text-lg">{{ streak }}</span>
-      </div>
-      }
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-      <li (click)="onSignIn()">SIGN IN</li>
-      <li class="" (click)="onContact()">CONTACTANOS</li>
-    </ul>
-    } @if(!userConnected) {
-    <ul class="space-y-4 text-lg font-semibold">
-      <li (click)="onClasses()" class="ml-2">CLASES</li>
-      <li (click)="onMeditations()" class="ml-2">MEDITACIONES</li>
-      <li class="ml-2" (click)="onInstructors()">INSTRUCTORES</li>
-      <li class="ml-2">
-        <a (click)="onCounsel()" class="hover:text-gray-400">CONSEJO</a>
-      </li>
-      <li class="border-t border-gray-700 pt-4 my-8"></li>
-
-      <li class="" (click)="authService.loginWithRedirect()">INICIA SESION</li>
       <li
-        class=""
-        (click)="onStartProcess()"
+        (click)="onClasses(); toggle()"
+        class="cursor-pointer hover:text-blue"
       >
-        SUSCRIBE
+        Clases
       </li>
-      <li class="" (click)="onContact()">CONTACTANOS</li>
+      <li
+        (click)="onMeditations(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Meditaciones
+      </li>
+      <li
+        (click)="onInstructors(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Instructores
+      </li>
+      @if (roles === "User") {
+      <li
+        (click)="onCounsel(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Consejo
+      </li>
+      }
+
+      <li class="border-t border-gray-200 pt-4 my-6"></li>
+
+      @if (roles === "User") {
+      <li
+        (click)="onUserSettings(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Mi Perfil
+      </li>
+      }
+      <li (click)="signOut(); toggle()" class="cursor-pointer hover:text-blue">
+        Logout
+      </li>
+      <li
+        (click)="onContact(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Contáctanos
+      </li>
+    </ul>
+    } @else {
+    <ul class="space-y-6 text-lg font-semibold">
+      <li
+        (click)="onClasses(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Clases
+      </li>
+      <li
+        (click)="onMeditations(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Meditaciones
+      </li>
+      <li
+        (click)="onInstructors(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Instructores
+      </li>
+      <li
+        (click)="onCounsel(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Consejo
+      </li>
+
+      <li class="border-t border-gray-200 pt-4 my-6"></li>
+
+      <li
+        (click)="authService.loginWithRedirect(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Inicia Sesión
+      </li>
+      <li
+        (click)="onStartProcess(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Suscríbete
+      </li>
+      <li
+        (click)="onContact(); toggle()"
+        class="cursor-pointer hover:text-blue"
+      >
+        Contáctanos
+      </li>
     </ul>
     }
   </div>
 </section>
-} }
 
-<app-dialog-popup (close)="onCloseSteps()" (confirmed)="onConfirmedSteps()" [isOpen]="isStepsOpen"></app-dialog-popup>
+<app-dialog-popup
+  (close)="onCloseSteps()"
+  (confirmed)="onConfirmedSteps()"
+  [isOpen]="isStepsOpen"
+>
+</app-dialog-popup>

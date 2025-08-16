@@ -13,12 +13,13 @@ import { selectActiveUser } from '../../../state/user.selectors';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { animate, query, stagger, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  animations: [burgerMenuAnimation],
+  animations: [burgerMenuAnimation]
 })
 export class HeaderComponent {
   isAuthenticated$ = this.authService.isAuthenticated$;
@@ -40,7 +41,7 @@ export class HeaderComponent {
   private ngUnsubscribe = new Subject<void>();
 
   constructor(
-    private route: Router,
+    private router: Router,
     private renderer: Renderer2,
     public authService: AuthService,
     private store: Store,
@@ -63,53 +64,7 @@ export class HeaderComponent {
         }
       });
   }
-  onHome() {
-    this.route.navigate(['']);
-  }
 
-  onMenu() {
-    this.route.navigate(['/menu']);
-  }
-
-  onSignIn() {
-    this.route.navigate(['/iniciar-sesion']);
-  }
-
-  onSignUp() {
-    this.route.navigate(['/suscribe']);
-  }
-
-  onContact() {
-    this.route.navigate(['/contacto']);
-  }
-
-  onAbout() {
-    this.route.navigate(['/nosotros']);
-  }
-
-  onUserSettings() {
-    this.route.navigate(['/ajustes']);
-  }
-
-  onInstructors() {
-    this.route.navigate(['/instructores']);
-  }
-
-  onCommunity() {
-    this.route.navigate(['/comunidad']);
-  }
-
-  onClasses() {
-    this.route.navigate(['clases']);
-  }
-
-  onCounsel() {
-    this.route.navigate(['consejo']);
-  }
-
-  onMeditations() {
-    this.route.navigate(['meditaciones']);
-  }
 
   onSubscribe() {
     this.authService.loginWithRedirect({
@@ -117,26 +72,6 @@ export class HeaderComponent {
       appState: { target: '/suscribe' },
     });
   }
-
-  onStartProcess() {
-    this.isStepsOpen = true
-  }
-
-  toggle() {
-    this.isOpen = !this.isOpen;
-    // if (this.isOpen) {
-    //   this.renderer.addClass(this.document.body, 'menu-opened');
-    // } else {
-    //   this.renderer.removeClass(this.document.body, 'menu-opened');
-    // }
-  }
-
-  public signOut(): void {
-    this.authService.logout({
-      logoutParams: { returnTo: '' },
-    });
-  }
-
   onCloseSteps() {
     this.isStepsOpen = false
   }
@@ -144,5 +79,106 @@ export class HeaderComponent {
   onConfirmedSteps() {
     this.onSubscribe()
     this.isStepsOpen = false
+  }
+
+   getAuthenticatedHeaderClasses(): string {
+    if (!this.newLanding) {
+      return 'bg-white text-black montserrat-normal text-strongBrown w-full';
+    } else {
+      return 'text-white text-black montserrat-normal text-strongBrown absolute w-full';
+    }
+  }
+
+  // Get non-authenticated header classes  
+  getNonAuthenticatedHeaderClasses(): string {
+    if (!this.newLanding) {
+      return 'bg-white text-black montserrat-normal text-strongBrown w-full';
+    } else {
+      return 'text-white text-black montserrat-normal text-strongBrown absolute w-full';
+    }
+  }
+
+  // Get header box shadow
+  getHeaderBoxShadow(): { [key: string]: string } {
+    if (this.newLanding) {
+      return {};
+    }
+    return {
+      'box-shadow': 'rgba(0, 0, 0, 0.06) 0px 1px 4px, rgba(35, 41, 54, 0.08) 0px 8px 16px'
+    };
+  }
+
+  // Get logo source
+  getLogoSource(): string {
+    if (this.newLanding) {
+      return `${this.pullZone}/assets/logoWhite.png`;
+    }
+    return `${this.pullZone}/assets/blueLogo.png`;
+  }
+
+  // Get logo text class
+  getLogoTextClass(): string {
+    if (this.newLanding) {
+      return 'text-white text-2xl';
+    }
+    return 'text-veige';
+  }
+
+  // Get mobile menu icon class
+  getMobileMenuIconClass(): string {
+    if (this.newLanding) {
+      return 'material-symbols-outlined text-white text-xl w-4 mr-6 font-bold cursor-pointer';
+    }
+    return 'material-symbols-outlined text-blue w-4 mr-6 font-bold cursor-pointer';
+  }
+
+  // Enhanced toggle method
+  toggle(): void {
+    this.isOpen = !this.isOpen;
+  }
+
+  // Navigation methods (keep your existing ones, just add toggle() calls for mobile)
+  onHome(): void {
+    this.router.navigate(['/']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onClasses(): void {
+    this.router.navigate(['/clases']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onMeditations(): void {
+    this.router.navigate(['/meditaciones']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onInstructors(): void {
+    this.router.navigate(['/instructores']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onCounsel(): void {
+    this.router.navigate(['/consejo']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onContact(): void {
+    this.router.navigate(['/contacto']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onUserSettings(): void {
+    this.router.navigate(['/ajustes']);
+    if (this.isOpen) this.toggle();
+  }
+
+  onStartProcess(): void {
+   this.isStepsOpen = true
+  }
+
+  signOut(): void {
+    this.authService.logout();
+    if (this.isOpen) this.toggle();
   }
 }
