@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BlogService } from '../../../shared/services/blog.service';
 import { Blog } from '../../../shared/Models/Blog';
 import { Location } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-single-blog',
@@ -11,11 +12,13 @@ import { Location } from '@angular/common';
 })
 export class SingleBlogComponent implements OnInit {
   blog: Blog | undefined;
+  safeDescription!: SafeHtml;
 
   constructor(
     private route: ActivatedRoute,
     private blogService: BlogService,
-    private location: Location
+    private location: Location,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -23,7 +26,11 @@ export class SingleBlogComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back()
+    this.location.back();
+  }
+
+  setDescription(html: string) {
+    this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   getBlogById() {

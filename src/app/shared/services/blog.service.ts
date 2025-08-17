@@ -23,7 +23,7 @@ export class BlogService {
     return this.http.get<Blog>(url);
   }
 
-  createBlog(blog: Blog): Observable<Blog> {
+  createBlog(blog: FormData): Observable<Blog> {
     return this.http.post<Blog>(this.apiUrlBlogs, blog);
   }
 

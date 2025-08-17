@@ -12,6 +12,7 @@ module.exports = {
       veige: '#B89B80',
       bone: '#f7f5ef',
       blue: '#5C7A83',
+      stronger_blue: '#1f657aff',
       teal: {
         100: '#e6fffa',
         200: '#b2f5ea',

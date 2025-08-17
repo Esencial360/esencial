@@ -1,223 +1,366 @@
 @if (instructorView) {
-<div class="container mx-auto px-4 py-12 text-center montserrat-normal">
-  <div
-    class="flex flex-col justify-center mb-12 items-center"
-    data-aos="fade-up"
-    data-aos-duration="1000"
-  >
-    @if (instructorView) {
-    <h2 class="mb-2 text-blue text-sm">PROCESO PARA NUEVOS INSTRUCTORES</h2>
-    }
-    <h1 class="text-4xl font-bold text-strongBrown mb-4 uppercase">
-      {{
-        instructorView
-          ? "EMPIEZA TU PROCESO PARA CONVERTIRTE EN INSTRUCTOR"
-          : "Find out more about our events and retreats"
-      }}
-    </h1>
-    <p class="text-strongBrown max-w-4xl mx-auto">
-      ¡Somos el espacio para ti, porque sabemos que tu conocimiento y pasión por
-      lo que haces, debe ser compartido! Nuestra motivación, es generar una
-      comunidad sólida que aporte a todo hispanoparlante, las mejores
-      oportunidades para explorar su mejor versión. ¿Cómo? Con prácticas, foros,
-      blogs, talleres y demás espacios que incluyan TU sello particular y el de
-      más profesionales destacados como tú. Sabemos que eres un candidato ideal
-      para pertenecer a este espacio ESENCIAL. ¡Únete!
-    </p>
-  </div>
-  <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
-    <img
-      [src]="pullZone + '/assets/3.png'"
-      alt="Yoga at sunset"
-      class="w-full h-96 object-cover rounded-lg shadow-lg"
-    />
-  </div>
+  <!-- Enhanced Instructor Application Section -->
+  <section class="relative bg-gradient-to-br from-slate-50 via-blue to-stronger_blue py-20">
+    
+    <div class="container mx-auto px-4 lg:px-8 text-center montserrat-normal relative z-10">
+      
+      <!-- Header Section -->
+      <div class="flex flex-col justify-center mb-16 items-center" data-aos="fade-up" data-aos-duration="1000">
+        <!-- Badge -->
+        <div class="inline-flex items-center px-6 py-3 rounded-full bg-blue-600/10 text-blue-700 font-semibold uppercase tracking-wider text-sm mb-8">
+          <div class="w-3 h-3 bg-blue-600 rounded-full mr-3"></div>
+          Proceso para nuevos instructores
+        </div>
+        
+        <!-- Main heading -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 uppercase leading-tight">
+          <span class="block">Empieza tu proceso para</span>
+          <span class="block bg-gradient-to-r from-blue to-stronger_blue bg-clip-text text-transparent">
+            convertirte en instructor
+          </span>
+        </h1>
+        
+        <!-- Description -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 lg:p-12 max-w-6xl mx-auto border border-white/20 shadow-lg">
+          <p class="text-lg lg:text-xl text-gray-700 leading-relaxed">
+            ¡Somos el espacio para ti, porque sabemos que tu <span class="font-semibold text-blue-600">conocimiento</span> y 
+            <span class="font-semibold text-indigo-600">pasión</span> por lo que haces, debe ser compartido! Nuestra motivación, 
+            es generar una comunidad sólida que aporte a todo hispanoparlante, las mejores oportunidades para explorar su mejor versión. 
+            ¿Cómo? Con prácticas, foros, blogs, talleres y demás espacios que incluyan 
+            <span class="font-bold text-blue-600">TU sello particular</span> y el de más profesionales destacados como tú. 
+            Sabemos que eres un candidato ideal para pertenecer a este espacio 
+            <span class="uppercase font-bold text-gray-900">ESENCIAL</span>. ¡Únete!
+          </p>
+        </div>
+      </div>
+      
+      <!-- Hero Image -->
+      <div class="mb-16 relative" data-aos="fade-up" data-aos-duration="1000">
+        <div class="relative overflow-hidden rounded-3xl shadow-2xl">
+          <img
+            [src]="pullZone + '/assets/3.png'"
+            alt="Yoga at sunset"
+            class="w-full h-96 lg:h-[28rem] object-cover transition-transform duration-700 hover:scale-105"
+          />
+          <!-- Image overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+          
+          <!-- Overlay content -->
+          <div class="absolute bottom-8 left-8 right-8">
+            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30">
+              <h3 class="text-2xl font-bold text-white mb-2">Únete a Nuestra Comunidad</h3>
+              <p class="text-white/90">Más de 50 instructores ya forman parte de esencial360</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div
-    class="grid grid-cols-1 md:grid-cols-3 gap-8"
-    data-aos="fade-up"
-    data-aos-duration="1000"
-  >
-    <div *ngFor="let feature of retreatFeatures">
-      <h3 class="text-xl font-semibold text-gray-800 mb-3">
-        {{ feature.title }}
-      </h3>
-      <p class="text-gray-600">{{ feature.description }}</p>
+      <!-- Features Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up" data-aos-duration="1000">
+        <div *ngFor="let feature of retreatFeatures" class="group">
+          <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl border border-white/20 transition-all duration-300 hover:scale-105 h-full">
+            <!-- Icon placeholder -->
+            <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            
+            <h3 class="text-xl lg:text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+              {{ feature.title }}
+            </h3>
+            <p class="text-gray-600 leading-relaxed">{{ feature.description }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+  
 } @else {
-<div
-  class="container mx-auto px-4 py-12 text-center montserrat-normal rounded-3xl my-10"
-  [ngClass]="instructorCatalogueView ? 'bg-bone w-9/12' : 'containerSection'"
->
-  <div class="flex flex-col lg:flex-row">
-    <div class="flex flex-col justify-evenly items-center md:h-96">
-      <img [src]="pullZone + '/assets/blueLogo.png'" class="h-[10rem] lg:h-48 bg-cover w-[8rem]" alt="" />
-      @if (!instructorCatalogueView) {
-      <h2 class="text-4xl lg:text-7xl text-white mb-4 ">
-        ¡Descubre <span class="lowercase">e</span>sencial<span class="text-blue">360!</span>
-      </h2>
-      } @else {
-      <h2 class="lg:text-7xl text-strongBrown mb-4 uppercase">
-        Conviertete en guía <span class="lowercase">e</span><span class="text-blue">360</span>
-      </h2>
-      }
-    </div>
-    <div class="mb-12" data-aos="fade-up" data-aos-duration="1000">
-      <img
-        [src]="
-          instructorCatalogueView
-            ? pullZone + '/assets/9.png'
-            : pullZone + '/assets/photo185.jpg'
-        "
-        alt="Yoga at sunset"
-        class="w-full lg:h-96 object-contain lg:object-cover rounded-lg lg:shadow-xl"
-      />
-    </div>
-  </div>
-  <div
-    class="flex flex-row justify-center mb-12 items-center mt-4 lg:mt-12"
-    data-aos="fade-up"
-    data-aos-duration="1000"
-  >
-    @if (instructorCatalogueView) {
-    <div class="flex flex-col text-start">
-      <p
-        class="text-strongBrown max-w-4xl mx-auto text-start font-bold text-xl"
-      >
-        Con <span class="lowercase">esencial<span class="text-blue">360</span></span
-        >, no solo amplías tu alcance, sino que también te rodeas de colegas
-        expertos con quienes podrás aprender y crecer, recibiendo asesoría
-        continua. <br />
-        <br />
-        Súmate y accede a beneficios exclusivos diseñados para potenciar tu
-        enseñanza:
-        <br />
-        <br />
-      </p>
-      <h4 class="text-blue font-bold my-4">Crecimiento y comunidad</h4>
-      <ul>
-        <li class="my-2">
-          ✔️ Ser parte de una comunidad avalada por expertos del consejo
-          esencial360.
-        </li>
-        <li class="my-2">
-          ✔️ Espacios de retroalimentación y capacitación con otros yoguis.
-        </li>
-        <li class="my-2">✔️ Organización de eventos y talleres exclusivos.</li>
-      </ul>
-      <h4 class="text-blue font-bold my-4">Expansión y visibilidad</h4>
-      <ul>
-        <li class="my-2">
-          ✔️ Promoción interna de tu marca o estudio personal.
-        </li>
-        <li class="my-2">
-          ✔️ Alcance y presencia con una comunidad de +1000 practicantes.
-        </li>
-        <li class="my-2">
-          ✔️ Asesoramiento para la producción de tu contenido.
-        </li>
-      </ul>
-      <h4 class="text-blue font-bold my-4">Beneficios y recompensas</h4>
-      <ul>
-        <li class="my-2">
-          ✔️ 25% de comisión por cada alumno recomendado que se inscriba.
-        </li>
-        <li class="my-2">
-          ✔️ Descuento especial para instructores y acceso total a la
-          plataforma.
-        </li>
-        <li class="my-2">
-          ✔️ Bonificaciones y beneficios adicionales en reconocimiento a tu
-          impacto
-        </li>
-      </ul>
+  <!-- Enhanced About/Instructor Catalogue Section -->
+  <section class="relative py-20">
+    <div
+      class="container mx-auto px-4 lg:px-8 text-center montserrat-normal rounded-3xl"
+      [ngClass]="instructorCatalogueView ? 'bg-bone border border-white/20 shadow-xl max-w-7xl backdrop-blur-sm' : 'containerSection  shadow-xl max-w-7xl backdrop-blur-sm'"
+    >
+      
+      <!-- Main Content Layout -->
+      <div class="flex flex-col lg:flex-row items-center gap-12 pt-10">
+        
+        <!-- Left Content -->
+        <div class="flex flex-col justify-center items-center lg:items-center lg:w-1/2">
+          <!-- Logo -->
+          <div class="mb-8">
+            <img 
+              [src]="pullZone + '/assets/blueLogo.png'" 
+              class="h-32 lg:h-48 w-auto object-contain transition-transform duration-300 hover:scale-105" 
+              alt="Esencial360 Logo" 
+            />
+          </div>
+          
+          <!-- Heading -->
+          <div class="text-center lg:text-left mb-8">
+            @if (!instructorCatalogueView) {
+              <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight text-center">
+                ¡Descubre 
+                <span class="lowercase">e</span>sencial<span class="text-blue">360</span>!
+              </h2>
+            } @else {
+              <h2 class="text-4xl md:text-5xl lg:text-6xl text-center font-bold text-gray-900 mb-6 uppercase leading-tight">
+                Conviértete en guía 
+                <span class="lowercase bg-gradient-to-r from-blue to-stronger_blue bg-clip-text text-transparent">e</span><span class="text-blue">360</span>
+              </h2>
+            }
+          </div>
+        </div>
+        
+        <!-- Right Image -->
+        <div class="lg:w-1/2 relative" data-aos="fade-up" data-aos-duration="1000">
+          <div class="relative overflow-hidden rounded-3xl shadow-2xl">
+            <img
+              [src]="instructorCatalogueView ? pullZone + '/assets/9.png' : pullZone + '/assets/photo185.jpg'"
+              alt="Yoga instructor"
+              class="w-full h-80 lg:h-96 object-cover transition-transform duration-700 hover:scale-105"
+            />
+            <!-- Image overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+          </div>
+        </div>
+      </div>
 
-      <h4 class="text-blue font-bold mt-5 text-xl">
-        ¡Comparte tu práctica en cualquier lugar y en cualquier momento!
-      </h4>
+      <!-- Main Content Section -->
+      <div class="mt-16 lg:mt-20" data-aos="fade-up" data-aos-duration="1000">
+        @if (instructorCatalogueView) {
+          <!-- Instructor Benefits Section -->
+          <div class="text-left max-w-5xl mx-auto">
+            
+            <!-- Introduction -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 lg:p-12 mb-12 border border-white/20 shadow-lg">
+              <p class="text-xl lg:text-2xl text-gray-800 font-semibold leading-relaxed mb-8">
+                Con <span class="lowercase font-bold">esencial<span class="text-blue">360</span></span>, 
+                no solo amplías tu alcance, sino que también te rodeas de colegas expertos con quienes podrás aprender y crecer, 
+                recibiendo asesoría continua.
+              </p>
+              <p class="text-lg text-gray-700 leading-relaxed">
+                Súmate y accede a beneficios exclusivos diseñados para potenciar tu enseñanza:
+              </p>
+            </div>
 
-      <app-button
-        [width]="'w-[20rem]'"
-        [height]="'h-[3rem]'"
-        [text]="'¡Quiero Aplicar!'"
-        [bgColor]="'bg-blue'"
-        class="flex justify-center mt-10"
-        (click)="onInstructorContact()"
-      ></app-button>
+            <!-- Benefits Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+              
+              <!-- Growth & Community -->
+              <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue to-stronger_blue rounded-2xl flex items-center justify-center mb-6">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 mb-6">Crecimiento y comunidad</h4>
+                <ul class="space-y-4">
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Ser parte de una comunidad avalada por expertos del consejo esencial360.</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Espacios de retroalimentación y capacitación con otros yoguis.</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Organización de eventos y talleres exclusivos.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Expansion & Visibility -->
+              <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue to-stronger_blue rounded-2xl flex items-center justify-center mb-6">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 mb-6">Expansión y visibilidad</h4>
+                <ul class="space-y-4">
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Promoción interna de tu marca o estudio personal.</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Alcance y presencia con una comunidad de +1000 practicantes.</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Asesoramiento para la producción de tu contenido.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Benefits & Rewards -->
+              <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue to-stronger_blue rounded-2xl flex items-center justify-center mb-6">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 mb-6">Beneficios y recompensas</h4>
+                <ul class="space-y-4">
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">25% de comisión por cada alumno recomendado que se inscriba.</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Descuento especial para instructores y acceso total a la plataforma.</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="w-6 h-6 bg-blue rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700 leading-relaxed">Bonificaciones y beneficios adicionales en reconocimiento a tu impacto.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="bg-gradient-to-r from-blue to-stronger_blue mb-10 rounded-3xl p-12 text-center text-white">
+              <h4 class="text-3xl font-bold mb-6">
+                ¡Comparte tu práctica en cualquier lugar y en cualquier momento!
+              </h4>
+              <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+                Únete a nuestra comunidad de instructores certificados y transforma vidas a través del bienestar
+              </p>
+              
+              <app-button
+                [width]="'w-80'"
+                [height]="'h-16'"
+                [text]="'¡Quiero Aplicar!'"
+                [bgColor]="'bg-white hover:bg-gray-100 text-blue-600'"
+                class="flex justify-center transform hover:scale-105 transition-all duration-300"
+                (click)="onInstructorContact()"
+              ></app-button>
+            </div>
+          </div>
+          
+        } @else {
+          <!-- About Section -->
+          <div class="max-w-5xl mx-auto pb-10">
+            <div class="bg-black/20 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-white/20">
+              <div class="text-left">
+                <p class="text-lg lg:text-xl text-white leading-relaxed space-y-6">
+                  <span class="block">
+                    <span class="font-semibold text-white">esencial<span class="text-blue">360</span></span>
+                    nace de nuestra pasión por el bienestar y el deseo de crear un espacio
+                    accesible y enriquecedor para el desarrollo personal. Por eso reunimos a
+                    los mejores profesionales del yoga, meditación y el desarrollo personal,
+                    para ofrecerte herramientas esenciales que transformen tu día a día.
+                  </span>
+                  
+                  <span class="block">
+                    Como <span class="font-semibold text-blue">latinas expat</span>, sabemos lo importante que es sentirse acompañadas en
+                    el camino de crecimiento personal especialmente cuando estamos lejos de
+                    casa, por eso esencial360 es también una comunidad de sangre latina
+                    orgullosa de sus raíces y dispuesta a brindar apoyo y compañía en el
+                    proceso de cada una de sus integrantes.
+                  </span>
+                  
+                  <span class="block">
+                    Desde el inicio, nos propusimos un compromiso inquebrantable brindarte
+                    contenido de <span class="font-semibold text-blue">calidad, veráz y profesional</span>. Para ello, contamos con un
+                    equipo excepcional de instructores y facilitadores, así como con un
+                    Consejo de Expertos esencial360, que supervisa y enriquece cada
+                    experiencia que llega a ti.
+                  </span>
+                  
+                  <span class="block">
+                    <span class="font-bold text-white">esencial360</span> es el espacio que elevará tu bienestar a cualquier hora, en
+                    cualquier lugar.
+                  </span>
+                  
+                  <span class="block">
+                    ¡Nos emociona que seas parte de esta comunidad! Te vemos en clase.
+                  </span>
+                  
+                  <span class="block italic text-center mt-8">
+                    -Caro, Lulú y Pau.
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
     </div>
-    } @else {
-    <p class="text-strongBrown max-w-4xl mx-auto text-start text-white">
-      <span class="text-white">esencial<span class="text-blue">360</span></span>
-      nace de nuestra pasión por el bienestar y el deseo de crear un espacio
-      accesible y enriquecedor para el desarrollo personal. Por eso reunimos a
-      los mejores profesionales del yoga, meditación y el desarrollo personal,
-      para ofrecerte herramientas esenciales que transformen tu día a día.
-      <br />
-      <br />
-      Como latinas expat, sabemos lo importante que es sentirse acompañadas en
-      el camino de crecimiento personal especialmente cuando estamos lejos de
-      casa, por eso esencial360 es también una comunidad de sangre latina
-      orgullosa de sus raíces y dispuesta a brindar apoyo y compañía en el
-      proceso de cada una de sus integrantes.
-      <br />
-      <br />
-      Desde el inicio, nos propusimos un compromiso inquebrantable brindarte
-      contenido de calidad, veráz y profesional. Para ello, contamos con un
-      equipo excepcional de instructores y facilitadores, así como con un
-      Consejo de Expertos esencial360, que supervisa y enriquece cada
-      experiencia que llega a ti.
-      <br />
-      <br />
-      esencial360 es el espacio que elevará tu bienestar a cualquier hora, en
-      cualquier lugar.
-      <br />
-      <br />
-      ¡Nos emociona que seas parte de esta comunidad! Te vemos en clase.
-      <br />
-      <br />
-      <span class="italic">-Caro, Lulú y Pau.</span>
-    </p>
+    
+    <!-- Banner Components -->
+    @if (!instructorCatalogueView) {
+      <div class="mt-20 space-y-12">
+        <app-banner
+          [title]="'¡Contenido de calidad garantizado!'"
+          [description]="'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial360 asegurando calidad, veracidad y transformación.'"
+          [buttonText]="'¡Conoce al consejo e360!'"
+          [image]="pullZone + '/assets/1.png'"
+          [addMargin]="true"
+          [contact]="true"
+          (onActionButton)="onCounselCatalogue()"
+        ></app-banner>
+        
+        <app-banner
+          [title]="'¡Aprende de los mejores!'"
+          [description]="'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'"
+          [addMargin]="true"
+          [contact]="true"
+          [buttonText]="'¡Conoce a los instructores e360!'"
+          [image]="pullZone + '/assets/9.png'"
+          (onActionButton)="onInstructorCatalogue()"
+        ></app-banner>
+        
+        <app-banner
+          [title]="'¿Quieres ser instructor e360?'"
+          [description]="'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'"
+          [addMargin]="true"
+          [contact]="true"
+          [buttonText]="'¡Quiero ser instructor e360!'"
+          [image]="pullZone + '/assets/photo162.jpg'"
+          (onActionButton)="onInstructorContact()"
+        ></app-banner>
+      </div>
     }
-  </div>
-  @if (!instructorCatalogueView) {
-  <app-banner
-    [title]="'¡Contenido de calidad garantizado!'"
-    [description]="
-      'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial360 asegurando calidad, veracidad y transformación.'
-    "
-    [buttonText]="'¡Conoce al consejo e360!'"
-    [description]="
-      'Nuestro Consejo de Expertos avala y enriquece cada contenido de esencial360 asegurando calidad, veracidad y transformación.'
-    "
-    [image]="pullZone + '/assets/1.png'"
-    [addMargin]="true"
-    [contact]="true"
-     (onActionButton)="onCounselCatalogue()"
-  ></app-banner>
-  <app-banner
-    [title]="'¡Aprende de los mejores!'"
-    [description]="
-      'Nuestro equipo de instructores está aquí para guiarte con conocimiento, experiencia y pasión por su materia.'
-    "
-    [addMargin]="true"
-    [contact]="true"
-    [buttonText]="'¡Conoce a los instructores e360!'"
-    [image]="pullZone + '/assets/9.png'"
-    (onActionButton)="onInstructorCatalogue()"
-  ></app-banner>
-  <app-banner
-    [title]="'¿Quieres ser instructor e360?'"
-    [description]="
-      'Forma parte de nuestro equipo de instructores y ayuda a expandir el bienestar de tus alumnos a través de esencial360.'
-    "
-    [addMargin]="true"
-    [contact]="true"
-    [buttonText]="'¡Quiero ser instructor e360!'"
-    [image]="pullZone + '/assets/photo162.jpg'"
-    (onActionButton)="onInstructorContact()"
-  ></app-banner>
-  }
-</div>
+  </section>
 }
