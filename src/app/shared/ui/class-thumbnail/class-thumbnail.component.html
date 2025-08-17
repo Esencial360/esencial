@@ -96,7 +96,7 @@
 
       <!-- Statistics Section (if not hidden) -->
       @if (!hideStatistics) {
-        <div class="mt-6 transform group-hover:translate-y-1 transition-transform duration-300">
+        <div class="transform group-hover:translate-y-1 transition-transform duration-300">
           <app-class-statistics
             [videoSource]="videoSource"
             [adminView]="true"
@@ -106,25 +106,6 @@
           ></app-class-statistics>
         </div>
       }
-
-      <!-- Additional info card (appears on hover) -->
-      <div class="mt-4 p-4 bg-white rounded-xl shadow-md opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-        <div class="flex items-center justify-between text-sm text-gray-600">
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-2 text-strongBrown" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="font-medium">Lista para reproducir</span>
-          </div>
-          
-          <div class="flex items-center text-blue">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-            <span class="text-xs font-medium">Ver ahora</span>
-          </div>
-        </div>
-      </div>
     </div>
   }
 </div>

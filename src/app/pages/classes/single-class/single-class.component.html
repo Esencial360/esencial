@@ -17,110 +17,183 @@
   [text]="'BORRAR EL VIDEO'"
   class="flex justify-center py-2 px-4 w-full mb-8 text-black rounded-md"
 ></app-button>
-} @if (forbidden || !user) {
-<div
-  class="flex text-center flex-col items-center justify-center bg-white p-6 md:p-10 mx-4 montserrat-normal my-20 md:space-x-8"
->
-  <h3
-    class="text-xl font-bold text-strongBrown drop-shadow-lg mb-4 w-full uppercase"
-  >
-    NO cuentas con una subscripción activa para acceder al video
-  </h3>
-  <button
-    class="mt-10 bg-blue hover:bg-strongBrown text-white font-semibold py-3 px-8 rounded-xl transition disabled:opacity-50"
-    (click)="onSubscribe()"
-  >
-    {{ "Activar" }}
-  </button>
+} 
+@if (forbidden || !user) {
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-stronger_blue-50/20 p-6 relative overflow-hidden montserrat-normal ">
+  <!-- Decorative background elements -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-red/10 to-transparent rounded-full -translate-y-48 translate-x-48"></div>
+  <div class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-orange/10 to-transparent rounded-full translate-y-36 -translate-x-36"></div>
+
+  <div class="bg-white/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl text-center max-w-md border border-white/20 relative overflow-hidden" data-aos="fade-up">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 bg-gradient-to-br from-red/5 via-transparent to-orange/5"></div>
+    
+    <!-- Lock Icon -->
+    <div class="mb-8 relative z-10">
+      <div class="w-24 h-24 bg-gradient-to-br from-red to-orange rounded-full flex items-center justify-center mx-auto shadow-xl relative">
+        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
+        </svg>
+        <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue to-stronger_blue rounded-full animate-pulse flex items-center justify-center">
+          <span class="text-white text-xs">!</span>
+        </div>
+      </div>
+    </div>
+    
+    <h3 class="text-xl font-black text-gray-800 mb-6 uppercase leading-tight relative z-10">
+      Suscripción Requerida
+    </h3>
+    
+    <p class="text-gray-600 mb-8 leading-relaxed relative z-10">
+      Necesitas una suscripción activa para acceder a este contenido premium
+    </p>
+    
+    <button
+      class="relative z-10 w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-blue-700 hover:to-stronger_blue-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+      (click)="onSubscribe()"
+    >
+      🚀 Activar Suscripción
+    </button>
+  </div>
 </div>
 } @else {
-<div
-  #dialogAnchor
-  class="cdk-visually-hidden"
-  cdkTrapFocus
-  class="flex flex-col md:flex-row items-center md:items-start justify-center bg-white mb-10 lg:mb-0 p-6 md:p-10 mx-4 montserrat-normal space-y-6 md:space-y-0 md:space-x-8"
->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-stronger_blue-50/20 relative overflow-hidden">
+  <!-- Decorative background elements -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-blue-400/10 to-transparent rounded-full -translate-y-48 translate-x-48"></div>
+  <div class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-stronger_blue-400/10 to-transparent rounded-full translate-y-36 -translate-x-36"></div>
+  <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+
   <div
-    class="md:w-1/2 w-full mt-6 md:mt-0"
-    data-aos="fade-up"
-    data-aos-duration="1000"
+    #dialogAnchor
+    class="cdk-visually-hidden"
+    cdkTrapFocus
+    class="flex flex-col items-center justify-center p-6 md:p-12 mx-auto max-w-7xl montserrat-normal relative z-10"
   >
+    <!-- Video Container -->
     <div
-      class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-lg"
+      class="w-full max-w-5xl mt-6 md:mt-0 bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-white/20 relative"
+      data-aos="fade-up"
+      data-aos-duration="1000"
     >
-      @if (link) {
-      <iframe
-        #bunnyVideo
-        [src]="link"
-        loading="lazy"
-        class="absolute top-0 left-0 w-full h-full border-none rounded-lg"
-        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      }
+      <!-- Background pattern -->
+      <div class="absolute inset-0 bg-gradient-to-br from-blue/5 via-transparent to-stronger_blue/5 opacity-50"></div>
+      
+      <div class="relative aspect-video">
+        @if (link) {
+        <iframe
+          #bunnyVideo
+          [src]="link"
+          loading="lazy"
+          class="absolute inset-0 w-full h-full border-none rounded-3xl"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        }
+        
+        <!-- Floating Like Button -->
+        <button
+          (click)="toggleLike()"
+          class="absolute top-6 right-6 w-16 h-16 rounded-full bg-white/20 backdrop-blur-md text-2xl hover:bg-white/30 transition-all duration-300 shadow-xl border border-white/30 hover:scale-110 transform flex items-center justify-center"
+          aria-label="Toggle Favorite"
+        >
+          <span class="filter drop-shadow-lg">{{ isLiked ? "⭐" : "☆" }}</span>
+        </button>
+      </div>
     </div>
-    <div class="relative mt-4">
-      <button
-        (click)="toggleLike()"
-        class="absolute top-2 right-2 p-3 rounded-full backdrop-blur-md bg-gray-900/60 text-yellow-400 hover:bg-yellow-500 hover:text-white transition-all duration-300 shadow-xl"
-        aria-label="Toggle Favorite"
-      >
-        {{ isLiked ? "⭐" : "☆" }}
-      </button>
+  </div>
+
+  <!-- Practice Essentials Section -->
+  <div class="max-w-7xl mx-auto text-gray-700 p-6 flex flex-col items-center w-full montserrat-normal mt-16 relative z-10">
+    <div class="w-full max-w-6xl bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-12 border border-white/20 relative overflow-hidden">
+      
+      <!-- Background pattern -->
+      <div class="absolute inset-0 bg-gradient-to-br from-blue/5 via-transparent to-stronger_blue/5"></div>
+      
+      <!-- Essentials -->
+      <div class="mb-16 relative z-10">
+        <!-- Section header -->
+        <div class="text-center mb-12" data-aos="fade-down">
+          <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue/10 to-stronger_blue/10 rounded-full text-blue text-sm font-medium mb-6 shadow-md">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+            </svg>
+            Elementos esenciales
+          </div>
+          
+          <h3 class="text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue to-stronger_blue mb-4 uppercase tracking-wide">
+            ✨ Esenciales para tu práctica
+          </h3>
+          
+          <div class="w-24 h-1 bg-gradient-to-r from-blue via-stronger_blue to-blue rounded-full mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="200">
+          @for (item of class.items; track $index) {
+          <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 shadow-md hover:shadow-lg border border-white/30 hover:border-blue/20 transform hover:scale-105">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue/10 to-stronger_blue/10 shadow-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <img [src]="item.icon" class="w-12 h-12 object-scale-down" alt="" />
+            </div>
+            <span class="text-lg text-gray-700 font-medium leading-relaxed">{{ item.text }}</span>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="mb-12 relative z-10">
+        <!-- Section header -->
+        <div class="text-center mb-12" data-aos="fade-down">
+          <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue/10 to-stronger_blue/10 rounded-full text-blue text-sm font-medium mb-6 shadow-md">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            Consejos profesionales
+          </div>
+          
+          <h3 class="text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue to-stronger_blue mb-4 uppercase tracking-wide">
+            💡 Recomendaciones para tu práctica
+          </h3>
+          
+          <div class="w-24 h-1 bg-gradient-to-r from-blue via-stronger_blue to-blue rounded-full mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up" data-aos-delay="400">
+          <div *ngFor="let rec of class.recommendations" class="group flex items-center p-8 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 shadow-md hover:shadow-lg border border-white/30 hover:border-blue/20 transform hover:scale-[1.02]">
+            <div class="flex-shrink-0 w-24 h-24 rounded-xl bg-gradient-to-br from-blue/10 to-stronger_blue/10 shadow-md flex items-center justify-center mr-6 group-hover:scale-110 transition-transform duration-300">
+              <img [src]="rec.icon" class="w-20 h-20 object-contain" alt="" />
+            </div>
+            <span class="text-lg text-gray-700 font-medium leading-relaxed">{{ rec.text }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <div class="flex justify-center relative z-10" data-aos="fade-up" data-aos-delay="600">
+        <button
+          class="bg-gradient-to-r from-blue to-stronger_blue hover:from-blue-700 hover:to-stronger_blue-700 text-white font-bold py-4 px-10 rounded-2xl flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          (click)="goBack()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          VOLVER
+        </button>
+      </div>
     </div>
   </div>
 </div>
 }
-<div
-  class="max-w-7xl mx-auto text-strongBrown p-4 flex flex-col items-center w-full montserrat-normal"
->
-  <div class="mb-16">
-    <h3 class="text-xl font-bold text-blue mb-4 w-full">
-      ESENCIALES PARA TU PRÁCTICA
-    </h3>
-    <div class="flex flex-col lg:flex-row justify-between mb-6 w-full">
-      @for (item of class.items; track $index) {
-      <div class="flex flex-col lg:flex-row items-center">
-        <div class="p-3 rounded-full mb-2">
-          <img [src]="item.icon" class="w-10 h-10 object-scale-down" alt="" />
-        </div>
-        <span class="text-xl text-gray-600 text-center">{{ item.text }}</span>
-      </div>
-      }
-    </div>
-    <h3 class="text-xl font-bold text-blue mb-4 w-full">
-      RECOMENDACIONES PARA TU PRÁCTICA
-    </h3>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 w-full my-10">
-      <div *ngFor="let rec of class.recommendations" class="flex items-center">
-        <div class="p-2 rounded-full mr-3 text-lg">
-          <img [src]="rec.icon" class="w-20 object-cover" alt="" />
-        </div>
-        <span class="text-xl text-gray-600">{{ rec.text }}</span>
-      </div>
-    </div>
-    <button
-      class="bg-blue text-white font-medium py-2 px-4 rounded-2xl w-full lg:w-3/12 flex items-center justify-center"
-      (click)="goBack()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 mr-2"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10 19l-7-7m0 0l7-7m-7 7h18"
-        />
-      </svg>
-      VOLVER
-    </button>
-  </div>
-</div>
 
 @if (roles === 'Admin' || roles === 'Instructor') {
 <app-page-title [pageDescription]="'Estadisticas del video'"></app-page-title>

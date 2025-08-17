@@ -13,6 +13,8 @@ module.exports = {
       bone: '#f7f5ef',
       blue: '#5C7A83',
       stronger_blue: '#1f657aff',
+      red: '#aa2a2aff',
+      orange: '#a85a10ff',
       teal: {
         100: '#e6fffa',
         200: '#b2f5ea',

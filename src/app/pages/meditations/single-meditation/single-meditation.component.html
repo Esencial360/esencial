@@ -5,126 +5,230 @@
 </ng-container>
 
 <ng-template #content>
-  <ng-container *ngIf="instructorInfo">
-    <app-page-title
-      [pageTitle]="videos?.title"
-      [pageDescription]="
-        'Fluye consciente con ' +
-        instructorInfo.firstname +
-        ' ' +
-        instructorInfo.lastname
-      "
-    ></app-page-title>
-  </ng-container>
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue/30 to-strong_blue/20 relative overflow-hidden">
+    
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-stronger_blue/10 to-transparent rounded-full -translate-y-48 translate-x-48"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-strongBrown/10 to-transparent rounded-full translate-y-36 -translate-x-36"></div>
+    <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+    <div class="absolute bottom-40 right-20 w-24 h-24 bg-stronger_blue/20 rounded-full blur-lg animate-pulse delay-1000"></div>
+    
+    <!-- Header Section -->
+    <ng-container *ngIf="instructorInfo">
+      <app-page-title
+        [pageTitle]="videos?.title"
+        [pageDescription]="
+          'Fluye consciente con ' +
+          instructorInfo.firstname +
+          ' ' +
+          instructorInfo.lastname
+        "
+      ></app-page-title>
+    </ng-container>
 
-  <ng-container *ngIf="roles === 'Admin'">
-    <app-button
-      (click)="deleteVideo()"
-      [text]="'BORRAR EL VIDEO'"
-      class="flex justify-center py-2 px-4 w-full mb-8 text-black rounded-md"
-    ></app-button>
-  </ng-container>
+    <!-- Admin Delete Button -->
+    <ng-container *ngIf="roles === 'Admin'">
+      <div class="max-w-4xl mx-auto px-6 pt-6 relative z-10">
+        <app-button
+          (click)="deleteVideo()"
+          [text]="'🗑️ BORRAR EL VIDEO'"
+          class="w-full bg-gradient-to-r from-red to-orange hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        ></app-button>
+      </div>
+    </ng-container>
 
-@if (forbidden) {
-<div class="flex text-center flex-col items-center justify-center bg-white p-6 md:p-10 mx-4 montserrat-normal my-20 md:space-x-8">
-  <h3 class="text-xl font-bold text-strongBrown drop-shadow-lg  mb-4 w-full uppercase">
-    NO cuentas con una subscripcion activa para acceder al video
-  </h3>
-    <button
-    class="mt-10 bg-blue hover:bg-strongBrown text-white font-semibold py-3 px-8 rounded-xl transition disabled:opacity-50"
-    (click)="onSubscribe()"
-  >
-    {{ "Activar" }}
-  </button>
-</div>
-}
-  @if (meditationInfo) {
-<div
-  class="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 p-10 max-w-3xl mx-auto mb-16 text-center space-y-8"
->
-  <!-- Icon & Title -->
-  <div class="flex flex-col items-center gap-3">
-    <span class="text-7xl text-indigo-500 material-symbols-outlined">
-      self_improvement
-    </span>
-    <h1 class="text-3xl font-extrabold text-gray-800 uppercase tracking-wide">
-      {{ meditationInfo.title }}
-    </h1>
-  </div>
-
-  <!-- Audio Player -->
-  <div class="relative w-full">
-    <audio
-      class="w-full rounded-lg shadow-inner focus:outline-none"
-      controls
-      controlsList="nodownload"
-      (click)="$event.stopPropagation()"
-    >
-      <source [src]="meditationInfo.meditationClass" type="audio/mpeg" />
-      Tu navegador no soporta el elemento de audio.
-    </audio>
-  </div>
-</div>
-
-  }
-
-  <!-- Practice Essentials -->
-  <div class="max-w-6xl mx-auto px-4 text-strongBrown montserrat-normal">
-    <h3 class="text-xl font-bold text-blue mb-6">
-      ESENCIALES PARA TU PRÁCTICA
-    </h3>
-    <div class="flex flex-col lg:flex-row justify-between gap-6 mb-12">
-      <ng-container *ngFor="let item of class.items; index as i">
-        <div class="flex items-center space-x-4">
-          <img
-            [src]="item.icon"
-            class="w-12 h-12 object-contain"
-            alt="icon-{{ i }}"
-          />
-          <span class="text-lg text-gray-600">{{ item.text }}</span>
+    <!-- Forbidden Access -->
+    @if (forbidden) {
+    <div class="min-h-screen flex items-center justify-center p-6">
+      <div class="bg-white/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl text-center max-w-md border border-white/20 relative overflow-hidden" data-aos="fade-up">
+        <!-- Background pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-red/5 via-transparent to-orange/5"></div>
+        
+        <!-- Lock Icon -->
+        <div class="mb-8 relative z-10">
+          <div class="w-24 h-24 bg-gradient-to-br from-red to-orange rounded-full flex items-center justify-center mx-auto shadow-xl relative">
+            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
+            </svg>
+            <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse flex items-center justify-center">
+              <span class="text-white text-xs">!</span>
+            </div>
+          </div>
         </div>
-      </ng-container>
-    </div>
-
-    <!-- Recommendations -->
-    <h3 class="text-xl font-bold text-blue mb-6">
-      RECOMENDACIONES PARA TU PRÁCTICA
-    </h3>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-      <ng-container *ngFor="let rec of class.recommendations; index as j">
-        <div class="flex items-center space-x-4">
-          <img
-            [src]="rec.icon"
-            class="w-16 h-16 object-contain rounded-lg"
-            alt="recommendation-{{ j }}"
-          />
-          <span class="text-lg text-gray-600">{{ rec.text }}</span>
-        </div>
-      </ng-container>
-    </div>
-
-    <!-- Back Button -->
-    <div class="flex justify-center mb-10">
-      <button
-        class="bg-blue text-white font-medium py-2 px-6 rounded-2xl flex items-center gap-2 hover:bg-blue-dark transition"
-        (click)="goBack()"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        
+        <h3 class="text-xl font-black text-gray-800 mb-6 uppercase leading-tight relative z-10">
+          Suscripción Requerida
+        </h3>
+        
+        <p class="text-gray-600 mb-8 leading-relaxed relative z-10">
+          Necesitas una suscripción activa para acceder a este contenido
+        </p>
+        
+        <button
+          class="relative z-10 w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-blue hover:to-stronger_blue text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          (click)="onSubscribe()"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-        VOLVER
-      </button>
+          🚀 Activar
+        </button>
+      </div>
+    </div>
+    }
+
+    <!-- Meditation Player -->
+    @if (meditationInfo) {
+    <div class="max-w-4xl mx-auto p-6 mt-12 relative z-10">
+      <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 p-12 text-center border border-white/20 relative overflow-hidden" data-aos="fade-up">
+        
+        <!-- Background pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-stronger_blue/5 via-transparent to-lightBrown/5"></div>
+        
+        <!-- Meditation Icon & Title -->
+        <div class="flex flex-col items-center gap-8 mb-12 relative z-10" data-aos="zoom-in" data-aos-delay="200">
+          <div class="relative">
+            <!-- Decorative rings -->
+            <div class="absolute -inset-6 bg-gradient-to-r from-stronger_blue/20 to-purple/20 rounded-full opacity-50 animate-pulse transition-opacity duration-300"></div>
+            <div class="absolute -inset-3 bg-gradient-to-r from-strongBrown/30 to-lightBrown/30 rounded-full opacity-30 animate-pulse transition-opacity duration-300" style="animation-delay: 0.5s;"></div>
+            
+            <div class="w-32 h-32 bg-gradient-to-br from-stronger_blue to-blue rounded-full flex items-center justify-center shadow-2xl relative">
+              <span class="text-6xl text-white material-symbols-outlined animate-pulse">
+                self_improvement
+              </span>
+              <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="text-white text-xl">🧘</span>
+              </div>
+            </div>
+          </div>
+          
+          <h1 class="text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-stronger_blue to-blue uppercase tracking-wider">
+            {{ meditationInfo.title }}
+          </h1>
+          
+          <!-- Professional indicator -->
+          <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-stronger_blue/10 to-blue/10 rounded-full text-stronger_blue text-sm font-medium shadow-md">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Meditación guiada
+          </div>
+        </div>
+
+        <!-- Enhanced Audio Player Container -->
+        <div class="relative bg-gradient-to-r from-stronger_blue to-blue-50 p-10 rounded-2xl shadow-inner mb-8" data-aos="fade-up" data-aos-delay="400">
+          <div class="absolute inset-0 bg-gradient-to-r from-stronger_blue/50 to-blue/50 rounded-2xl"></div>
+          <audio
+            class="relative w-full h-16 rounded-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-stronger_blue transition-all duration-300"
+            controls
+            controlsList="nodownload"
+            (click)="$event.stopPropagation()"
+            style="filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1))"
+          >
+            <source [src]="meditationInfo.meditationClass" type="audio/mpeg" />
+            Tu navegador no soporta el elemento de audio.
+          </audio>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Practice Essentials & Recommendations -->
+    <div class="max-w-6xl mx-auto px-6 py-12 text-gray-700 montserrat-normal relative z-10">
+      <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-12 border border-white/20 relative overflow-hidden">
+        
+        <!-- Background pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue/5 via-transparent to-stronger_blue/5"></div>
+        
+        <!-- Practice Essentials -->
+        <div class="mb-16 relative z-10">
+          <!-- Section header -->
+          <div class="text-center mb-12" data-aos="fade-down">
+            <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue/10 to-stronger_blue/10 rounded-full text-blue text-sm font-medium mb-6 shadow-md">
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+              </svg>
+              Elementos esenciales
+            </div>
+            
+            <h3 class="text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue to-stronger_blue mb-4 uppercase tracking-wide">
+              ✨ Esenciales para tu práctica
+            </h3>
+            
+            <div class="w-24 h-1 bg-gradient-to-r from-blue via-stronger_blue to-blue rounded-full mx-auto"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="200">
+            <ng-container *ngFor="let item of class.items; index as i">
+              <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 shadow-md hover:shadow-lg border border-white/30 hover:border-blue/20 transform hover:scale-105">
+                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue/10 to-stronger_blue/10 shadow-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <img
+                    [src]="item.icon"
+                    class="w-14 h-14 object-contain"
+                    alt="icon-{{ i }}"
+                  />
+                </div>
+                <span class="text-lg text-gray-700 font-medium leading-relaxed">{{ item.text }}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="mb-12 relative z-10">
+          <!-- Section header -->
+          <div class="text-center mb-12" data-aos="fade-down">
+            <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue/10 to-stronger_blue/10 rounded-full text-blue text-sm font-medium mb-6 shadow-md">
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+              </svg>
+              Consejos profesionales
+            </div>
+            
+            <h3 class="text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue to-stronger_blue mb-4 uppercase tracking-wide">
+              💡 Recomendaciones para tu práctica
+            </h3>
+            
+            <div class="w-24 h-1 bg-gradient-to-r from-blue via-stronger_blue to-blue rounded-full mx-auto"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up" data-aos-delay="400">
+            <ng-container *ngFor="let rec of class.recommendations; index as j">
+              <div class="group flex items-center p-8 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 shadow-md hover:shadow-lg border border-white/30 hover:border-blue/20 transform hover:scale-[1.02]">
+                <div class="flex-shrink-0 w-24 h-24 rounded-xl bg-gradient-to-br from-blue/10 to-stronger_blue/10 shadow-lg flex items-center justify-center mr-6 group-hover:scale-110 transition-transform duration-300">
+                  <img
+                    [src]="rec.icon"
+                    class="w-20 h-20 object-contain rounded-lg"
+                    alt="recommendation-{{ j }}"
+                  />
+                </div>
+                <span class="text-lg text-gray-700 font-medium leading-relaxed">{{ rec.text }}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Enhanced Back Button -->
+        <div class="flex justify-center relative z-10" data-aos="fade-up" data-aos-delay="600">
+          <button
+            class="bg-gradient-to-r from-blue to-stronger_blue hover:from-blue hover:to-stronger_blue text-white font-bold py-4 px-10 rounded-2xl flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            (click)="goBack()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            VOLVER
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </ng-template>
