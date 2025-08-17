@@ -1,24 +1,90 @@
-<div
-  class="flex flex-col lg:flex-row items-center bg-gray-100 p-8 rounded-xl montserrat-normal"
->
-  <img
-    [src]="image"
-    alt="Yoga"
-    class="w-80 g:h-[60vh] lg:w-80 lg:h-[60vh] object-cover mb-6 lg:mb-0 lg:mr-10"
-  />
-  <div class="flex flex-col lg:h-[45vh] justify-evenly">
-    <h1
-      class="text-4xl lg:text-6xl drop-shadow-lg font-bold text-primary text-blue uppercase "
-    >
-      {{ title }}
-    </h1>
-    <p class="mt-4 text-gray-700">
-      {{ description }}
-    </p>
-    @if (closingTitle) {
-    <p class="mt-4 text-blue font-bold">
-      {{ closingTitle }}
-    </p>
-    }
+<div class="group relative flex flex-col lg:flex-row items-center bg-gradient-to-br from-gray-50 via-white to-gray-100 p-10 lg:p-12 rounded-3xl montserrat-normal shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] overflow-hidden">
+  
+  <!-- Background decorative elements -->
+  <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue/5 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
+  <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/5 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+  
+  <!-- Image Section -->
+  <div class="relative flex-shrink-0 mb-8 lg:mb-0 lg:mr-12" data-aos="fade-right" data-aos-duration="800">
+    <!-- Decorative frame -->
+    <div class="absolute -inset-3 bg-gradient-to-r from-blue/10 to-primary/10 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-500"></div>
+    
+    <!-- Main image container -->
+    <div class="relative overflow-hidden rounded-2xl shadow-2xl shadow-blue/20 group-hover:shadow-blue/30 transition-all duration-500">
+      <img
+        [src]="image"
+        alt="Contenido visual"
+        class="w-80 h-[50vh] lg:h-[60vh] lg:w-80 object-cover transition-all duration-700 group-hover:scale-110"
+        loading="lazy"
+      />
+      
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-br from-blue/20 via-transparent to-primary/20 group-hover:from-blue/10 group-hover:to-primary/10 transition-all duration-500"></div>
+
+    </div>
+
+    <!-- Floating badge -->
+    <div class="absolute -bottom-4 -right-4 bg-gradient-to-r from-blue to-primary text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+      <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      Contenido
+    </div>
   </div>
+
+  <!-- Content Section -->
+  <div class="relative z-10 flex flex-col lg:h-[45vh] justify-center lg:justify-evenly flex-grow" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+    
+    <!-- Category badge -->
+    <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue/10 to-primary/10 rounded-full text-blue text-sm font-medium mb-6 shadow-sm self-start">
+      <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+      </svg>
+      Destacado
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-4xl lg:text-6xl xl:text-7xl drop-shadow-lg font-bold uppercase leading-tight mb-8 group-hover:text-primary transition-colors duration-300">
+      <span class="bg-gradient-to-r from-blue via-primary to-blue bg-clip-text text-transparent">
+        {{ title }}
+      </span>
+    </h1>
+
+    <!-- Description -->
+    <div class="relative">
+      <div class="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue to-primary rounded-full opacity-30"></div>
+      <p class="text-gray-700 text-lg lg:text-xl leading-relaxed pl-6 group-hover:text-gray-800 transition-colors duration-300">
+        {{ description }}
+      </p>
+    </div>
+
+    <!-- Closing title (if exists) -->
+    @if (closingTitle) {
+      <div class="mt-8">
+        <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue to-primary text-white rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-bold">
+          <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          {{ closingTitle }}
+        </div>
+      </div>
+    }
+
+    <!-- Interactive indicator -->
+    <div class="mt-8 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+      <div class="inline-flex items-center text-blue hover:text-primary transition-colors duration-300 cursor-pointer">
+        <span class="text-sm font-medium mr-2">Explorar contenido</span>
+        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive border -->
+  <div class="absolute inset-0 border-2 border-transparent group-hover:border-blue/20 rounded-3xl transition-colors duration-500 pointer-events-none"></div>
+
+  <!-- Corner decoration -->
+  <div class="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-blue/20 group-hover:border-blue/40 transition-colors duration-300"></div>
+  <div class="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-primary/20 group-hover:border-primary/40 transition-colors duration-300"></div>
 </div>
