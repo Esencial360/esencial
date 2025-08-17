@@ -15,6 +15,7 @@ export class NewBlogComponent implements OnInit {
   isModalOpen!: boolean;
   firstStep!: boolean;
   secondStep!: boolean;
+  selectedFileNewBlog!: any;
 
   constructor(
     private blogService: BlogService,
@@ -24,7 +25,7 @@ export class NewBlogComponent implements OnInit {
     this.blogForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      imageUrl: [null, Validators.required],
+      imageUrl: [null],
       categoryId: ['', Validators.required],
     });
   }
@@ -41,8 +42,16 @@ export class NewBlogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.blogForm);
+    
     if (this.blogForm.valid) {
-      this.blogService.createBlog(this.blogForm.value).subscribe(
+      const formData = new FormData();
+
+      formData.append('title', this.blogForm.value.title);
+      formData.append('description', this.blogForm.value.description);
+      formData.append('categoryId', this.blogForm.value.categoryId);
+      formData.append('imageUrl', this.selectedFileNewBlog);
+      this.blogService.createBlog(formData).subscribe(
         (response) => {
           console.log('File uploaded successfully:');
           this.firstStep = false;
@@ -67,5 +76,14 @@ export class NewBlogComponent implements OnInit {
 
   onProcessDone() {
     this.router.navigate(['/home']);
+  }
+
+    onFileSelectedNewInstructor(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.selectedFileNewBlog = target.files[0];
+    }
+    console.log(this.selectedFileNewBlog);
+    
   }
 }

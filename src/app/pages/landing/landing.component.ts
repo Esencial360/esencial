@@ -63,6 +63,7 @@ export class LandingComponent implements OnInit {
   backgroundImageUrl = '../../../assets/images/yoga.jpg';
   isLoading!: boolean;
   pullZone: string = environment.pullZone;
+  isStepsOpen!: boolean;
   welcomeLines = [
     {
       title: 'Clases de yoga',
@@ -231,5 +232,20 @@ export class LandingComponent implements OnInit {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+    onSubscribe() {
+    this.authService.loginWithRedirect({
+      authorizationParams: { screen_hint: 'signup' },
+      appState: { target: '/suscribe' },
+    });
+  }
+  onCloseSteps() {
+    this.isStepsOpen = false
+  }
+
+  onConfirmedSteps() {
+    this.onSubscribe()
+    this.isStepsOpen = false
   }
 }

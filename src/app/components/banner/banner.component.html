@@ -1,9 +1,9 @@
 <div
   [style]="addMargin ? 'margin-top: 50px; margin-bottom: 50px;' : ''"
-  class="text-strongBrown container mx-auto bg-cover rounded-3xl overflow-hidden mb-5 relative montserrat-normal"
+  class="text-strongBrown container mx-auto bg-cover rounded-3xl overflow-hidden mb-5 relative montserrat-normal shadow-2xl"
 >
   <div
-    class="flex flex-col items-center justify-center md:flex-row !bg-cover !bg-no-repeat !bg-bottom"
+    class="flex flex-col items-center justify-center md:flex-row bg-cover bg-no-repeat bg-center min-h-[420px] transition-all duration-300 ease-in-out"
     data-aos="fade-up"
     data-aos-duration="1000"
     [ngStyle]="{
@@ -11,31 +11,67 @@
         ? 'url(' + image + ')'
         : 'url(' + pullZone + '/assets/1.jpg' +')'
     }"
+    role="banner"
+    [attr.aria-label]="title + ' - ' + description"
   >
-    <div class="absolute inset-0 bg-black opacity-25"></div>
+    <!-- Enhanced overlay with gradient for better text readability -->
+    <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/20"></div>
+    
+    <!-- Subtle pattern overlay for texture -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+    
     <div
-      class="relative p-8 flex text-white flex-col h-[420px] md:h-[420px] justify-center items-center"
+      class="relative z-10 p-8 sm:p-12 flex text-white flex-col h-full min-h-[420px] justify-center items-center text-center max-w-4xl mx-auto"
     >
-      <h1 class=" text-3xl lg:text-5xl font-bold mb-4">{{ title }}</h1>
-      <p class="mb-6 text-lg lg:text-xl">
+      <!-- Enhanced typography with better spacing and animations -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight tracking-tight animate-fade-in-up">
+        {{ title }}
+      </h1>
+      
+      <p class="mb-8 text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-2xl opacity-90 animate-fade-in-up animation-delay-200">
         {{ description }}
       </p>
+      
+      <!-- Improved button styling with better hover effects -->
       @if (!contact) {
-      <div class="flex space-x-4" (click)="onHandleCollection(category.name)">
-        <button
-          class="bg-transparent text-white border border-white hover:bg-white hover:text-strongBrown px-4 py-2 rounded flex items-center justify-center w-full"
-        >
-          {{buttonText}}
-        </button>
-      </div>
+        <div class="animate-fade-in-up animation-delay-400">
+          <button
+            (click)="onHandleCollection(category.name)"
+            class="group relative bg-transparent text-white border-2 border-white/80 hover:border-white 
+                   px-8 py-4 rounded-full text-lg font-semibold tracking-wide
+                   transition-all duration-300 ease-out
+                   hover:bg-white hover:text-strongBrown hover:shadow-xl hover:scale-105
+                   focus:outline-none focus:ring-4 focus:ring-white/30 focus:scale-105
+                   active:scale-95"
+            type="button"
+            [attr.aria-label]="'Navigate to ' + buttonText"
+          >
+            <span class="relative z-10">{{ buttonText }}</span>
+            
+            <!-- Subtle shine effect on hover -->
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent 
+                        translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+          </button>
+        </div>
       } @else {
-      <div class="flex space-x-4" (click)="onAction()">
-        <button
-          class="bg-blue text-white px-8 py-4 font-bold text-sm rounded-md flex items-center justify-center w-full"
-        >
-          {{ buttonText }}
-        </button>
-      </div>
+        <div class="animate-fade-in-up animation-delay-400">
+          <button
+            (click)="onAction()"
+            class="group relative bg-gradient-to-r from-blue to-stronger_blue hover:from-blue hover:to-stronger_blue 
+                   text-white px-10 py-4 font-bold text-lg rounded-full
+                   transition-all duration-300 ease-out
+                   hover:shadow-xl hover:shadow-blue- hover:scale-105
+                   focus:outline-none focus:ring-4 focus:ring-blue- focus:scale-105
+                   active:scale-95"
+            type="button"
+            [attr.aria-label]="buttonText"
+          >
+            <span class="relative z-10">{{ buttonText }}</span>
+            
+            <div class="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 
+                        transition-transform duration-300 ease-out opacity-0 group-hover:opacity-100"></div>
+          </button>
+        </div>
       }
     </div>
   </div>

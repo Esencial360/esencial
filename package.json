@@ -36,6 +36,8 @@
     "lottie-web": "^5.12.2",
     "ngrx-store-localstorage": "^18.0.0",
     "ngx-lottie": "^11.0.2",
+    "ngx-quill": "^21.0.2",
+    "quill": "^1.3.7",
     "readdirp": "3.6.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
