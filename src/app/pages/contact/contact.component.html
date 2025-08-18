@@ -6,107 +6,272 @@
   [pageDescription]="'¿Tienes alguna pregunta? Aquí están todas las formas en que puedes comunicarte con nosotros.'"
 ></app-page-title>
 
-<section class="w-full flex flex-col items-center montserrat-normal">
+<section class="w-full flex flex-col items-center montserrat-normal relative overflow-hidden">
+  
+  <!-- Background decorative elements -->
+  <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue/10 to-transparent rounded-full -translate-y-48 -translate-x-48"></div>
+  <div class="absolute top-1/2 right-0 w-64 h-64 bg-gradient-to-bl from-strongBrown/10 to-transparent rounded-full translate-x-32"></div>
+  
+  <!-- Main Contact Form Section -->
+  <section class="w-full relative z-10" data-aos="fade-up" data-aos-duration="1000">
+    <div class="flex flex-col md:flex-row bg-gradient-to-br from-white via-gray-50/80 to-white backdrop-blur-sm p-8 md:mx-10 rounded-3xl shadow-2xl border border-white/20 montserrat-normal relative overflow-hidden">
+      
+      <!-- Background pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue to-transparent rounded-full"></div>
+        <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-strongBrown to-transparent rounded-full"></div>
+      </div>
+      
+      <!-- Form Section -->
+      <div class="p-8 w-full lg:w-6/12 flex flex-col items-center relative z-10" data-aos="fade-right" data-aos-delay="200">
+        
+        <!-- Enhanced Header -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue/20 to-strongBrown/20 rounded-full text-blue text-sm font-medium mb-4 shadow-lg border border-white/30">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            Contacto
+          </div>
+          <h2 class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-strongBrown via-blue to-strongBrown bg-clip-text text-transparent uppercase mb-4">
+            ¡Nos encantaría saber de ti!
+          </h2>
+          <div class="w-20 h-1 bg-gradient-to-r from-strongBrown via-blue to-strongBrown rounded-full mx-auto"></div>
+        </div>
 
-  <section class="w-full">
-    <div class="flex flex-col md:flex-row bg-white p-6 md:mx-10 rounded-lg shadow-md montserrat-normal">
-      <div class="p-8 w-full lg:w-6/12 flex flex-col items-center bg-white">
-        <h2 class="text-strongBrown uppercase text-2xl mb-6 text-center">¡Nos encantaría saber de ti!</h2>
-
-        <form class="w-full" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-          <div class="flex flex-col lg:flex-row gap-4 mb-6">
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Nombre"
-              type="text"
-              id="name"
-              formControlName="name"
-              required
-            />
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Correo electrónico"
-              type="email"
-              id="email"
-              formControlName="email"
-              required
-            />
+        <!-- Enhanced Form -->
+        <form class="w-full space-y-6" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          
+          <!-- Name and Email Row -->
+          <div class="flex flex-col lg:flex-row gap-4">
+            <div class="flex-1 group">
+              <label class="block text-sm font-semibold text-strongBrown/80 mb-2 group-hover:text-strongBrown transition-colors">
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                </svg>
+                Correo electrónico
+              </label>
+              <input
+                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue focus:ring-4 focus:ring-blue/20 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-strongBrown/40 hover:shadow-md text-strongBrown font-medium placeholder-gray-400"
+                placeholder="tu@email.com"
+                type="email"
+                id="email"
+                formControlName="email"
+                required
+              />
+            </div>
           </div>
 
-          <div class="mb-6">
+          <!-- Message Field -->
+          <div class="group">
+            <label class="block text-sm font-semibold text-strongBrown/80 mb-2 group-hover:text-strongBrown transition-colors">
+              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+              </svg>
+              Mensaje
+            </label>
             <textarea
-              class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Mensaje"
+              class="w-full h-32 p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue focus:ring-4 focus:ring-blue/20 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-strongBrown/40 hover:shadow-md text-strongBrown font-medium placeholder-gray-400 resize-none"
+              placeholder="Cuéntanos cómo podemos ayudarte..."
               id="message"
               formControlName="message"
               required
             ></textarea>
           </div>
 
+          <!-- Enhanced Submit Button -->
           <button
-            class="cursor-pointer w-full py-3 px-4 bg-blue text-white rounded-md hover:bg-lightBrown transition-colors font-semibold"
+            class="group relative overflow-hidden w-full py-4 px-6 bg-gradient-to-r from-blue to-strongBrown text-white rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
             [disabled]="contactForm.invalid"
           >
-            Enviar
+            <!-- Button background effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-strongBrown to-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+            
+            <!-- Button content -->
+            <div class="relative flex items-center justify-center">
+              <svg class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+              Enviar mensaje
+            </div>
+            
+            <!-- Shine effect -->
+            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out rounded-2xl"></div>
           </button>
-          <div *ngIf="submitted && contactForm.invalid" class="text-red-500 text-sm mt-4">
+
+          <!-- Enhanced Error Messages -->
+          <div *ngIf="submitted && contactForm.invalid" class="bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 text-red-600 text-sm p-4 rounded-xl mt-4 flex items-center">
+            <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            </svg>
             Por favor completa todos los campos correctamente.
           </div>
 
-          <div *ngIf="success" class="text-green-500 text-center mt-4">
+          <!-- Enhanced Success Message -->
+          <div *ngIf="success" class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 text-center p-4 rounded-xl mt-4 flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
             ¡Tu mensaje ha sido enviado exitosamente! Nos pondremos en contacto pronto.
           </div>
 
-          <div *ngIf="error" class="text-red-500 text-center mt-4">
+          <!-- Enhanced Error Message -->
+          <div *ngIf="error" class="bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 text-red-600 text-center p-4 rounded-xl mt-4 flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            </svg>
             {{ error }}
           </div>
         </form>
       </div>
-      <div class="w-full lg:w-6/12 mt-6 lg:mt-0 flex justify-center items-center">
-        <img
-          class="w-full lg:w-8/12 rounded-3xl shadow-md"
-          [src]="pullZone + '/assets/yoga1.jpg'"
-          alt="Imagen de contacto"
-        />
+
+      <!-- Enhanced Image Section -->
+      <div class="w-full lg:w-6/12 mt-6 lg:mt-0 flex justify-center items-center p-8 relative" data-aos="fade-left" data-aos-delay="400">
+        <div class="relative group">
+          <!-- Decorative background -->
+          <div class="absolute inset-0 bg-gradient-to-br from-blue/20 to-strongBrown/20 rounded-3xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500"></div>
+          <div class="absolute inset-0 bg-gradient-to-tl from-strongBrown/20 to-blue/20 rounded-3xl transform -rotate-3 group-hover:-rotate-6 transition-transform duration-500"></div>
+          
+          <img
+            class="relative w-full lg:w-10/12 rounded-3xl shadow-2xl transform group-hover:scale-105 transition-all duration-500 border-4 border-white/50"
+            [src]="pullZone + '/assets/yoga1.jpg'"
+            alt="Imagen de contacto"
+          />
+          
+          <!-- Floating elements -->
+          <div class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-blue to-strongBrown rounded-full animate-bounce opacity-80"></div>
+          <div class="absolute -bottom-6 -left-6 w-6 h-6 bg-gradient-to-r from-strongBrown to-blue rounded-full animate-pulse opacity-60"></div>
+        </div>
       </div>
     </div>
   </section>
-  <div class="mt-10 w-full bg-white rounded-t-3xl py-12">
-    <div class="container mx-auto w-11/12 lg:w-9/12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+
+  <!-- Enhanced Contact Info Cards Section -->
+  <div class="mt-16 w-full bg-gradient-to-br from-white via-gray-50/50 to-white rounded-t-3xl py-16 relative overflow-hidden" data-aos="fade-up" data-aos-delay="600">
+    
+    <!-- Background decorative elements -->
+    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue/30 to-transparent"></div>
+    <div class="absolute bottom-0 right-0 w-48 h-48 bg-gradient-to-tl from-blue/5 to-transparent rounded-full translate-x-24 translate-y-24"></div>
+    
+    <div class="container mx-auto w-11/12 lg:w-9/12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative z-10">
       
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <span class="material-symbols-outlined text-[60px] text-blue">support_agent</span>
-        <h2 class="text-xl font-semibold mt-4 mb-2">Soporte Telefónico</h2>
-        <p class="text-gray-600 text-sm mb-2">
-          Lunes a Viernes: 6:00AM - 3:30PM PT<br/>
-          Sábado y Domingo: 8:00AM - 4:30PM PT
-        </p>
-        <p class="text-blue-500 font-semibold">
-          +1 855-936-1604<br/>
-          +1 323-321-6334
-        </p>
+      <!-- Support Card -->
+      <div class="group relative overflow-hidden bg-gradient-to-br from-white to-gray-50/80 p-8 rounded-3xl shadow-xl hover:shadow-2xl border border-white/50 transition-all duration-500 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="700">
+        <!-- Card background effect -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue/5 to-strongBrown/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+        
+        <div class="relative z-10">
+          <!-- Enhanced Icon -->
+          <div class="relative mb-6">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-r from-blue/20 to-strongBrown/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span class="material-symbols-outlined text-5xl text-blue group-hover:scale-110 transition-transform duration-300">support_agent</span>
+            </div>
+            <!-- Glow effect -->
+            <div class="absolute inset-0 bg-blue/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+          </div>
+          
+          <h2 class="text-2xl font-bold text-strongBrown mb-4 group-hover:text-blue transition-colors duration-300">Soporte Telefónico</h2>
+          
+          <div class="space-y-3 mb-6">
+            <p class="text-strongBrown/80 text-sm leading-relaxed">
+              <span class="font-semibold text-strongBrown">Lunes a Viernes:</span><br/>
+              6:00AM - 3:30PM PT
+            </p>
+            <p class="text-strongBrown/80 text-sm leading-relaxed">
+              <span class="font-semibold text-strongBrown">Sábado y Domingo:</span><br/>
+              8:00AM - 4:30PM PT
+            </p>
+          </div>
+          
+          <div class="space-y-2">
+            <a href="tel:+18559361604" class="block text-blue font-bold text-lg hover:text-strongBrown transition-colors duration-300 group-hover:scale-105 transform">
+              +1 855-936-1604
+            </a>
+            <a href="tel:+13233216334" class="block text-blue font-bold text-lg hover:text-strongBrown transition-colors duration-300 group-hover:scale-105 transform">
+              +1 323-321-6334
+            </a>
+          </div>
+        </div>
+
+        <!-- Interactive border -->
+        <div class="absolute inset-0 border-2 border-transparent group-hover:border-blue/30 rounded-3xl transition-colors duration-500 pointer-events-none"></div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <span class="material-symbols-outlined text-[60px] text-blue">mail</span>
-        <h2 class="text-xl font-semibold mt-4 mb-2">Correo Electrónico</h2>
-        <p class="text-gray-600 text-sm mb-4">
-          ¡Te responderemos lo más pronto posible!
-        </p>
+      <!-- Email Card -->
+      <div class="group relative overflow-hidden bg-gradient-to-br from-white to-gray-50/80 p-8 rounded-3xl shadow-xl hover:shadow-2xl border border-white/50 transition-all duration-500 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="800">
+        <!-- Card background effect -->
+        <div class="absolute inset-0 bg-gradient-to-br from-strongBrown/5 to-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+        
+        <div class="relative z-10">
+          <!-- Enhanced Icon -->
+          <div class="relative mb-6">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-r from-strongBrown/20 to-blue/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span class="material-symbols-outlined text-5xl text-blue group-hover:scale-110 transition-transform duration-300">mail</span>
+            </div>
+            <!-- Glow effect -->
+            <div class="absolute inset-0 bg-strongBrown/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+          </div>
+          
+          <h2 class="text-2xl font-bold text-strongBrown mb-4 group-hover:text-blue transition-colors duration-300">Correo Electrónico</h2>
+          
+          <p class="text-strongBrown/80 text-sm mb-6 leading-relaxed">
+            ¡Te responderemos lo más pronto posible!
+          </p>
+          
+          <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue/10 to-strongBrown/10 rounded-full text-blue text-sm font-medium">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Respuesta rápida
+          </div>
+        </div>
+
+        <!-- Interactive border -->
+        <div class="absolute inset-0 border-2 border-transparent group-hover:border-strongBrown/30 rounded-3xl transition-colors duration-500 pointer-events-none"></div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <span class="material-symbols-outlined text-[60px] text-blue">location_on</span>
-        <h2 class="text-xl font-semibold mt-4 mb-2">Nuestra Ubicación</h2>
-        <p class="text-gray-600 text-sm">
-          Queretaro, México<br/>
-        </p>
-      </div>
+      <!-- Location Card -->
+      <div class="group relative overflow-hidden bg-gradient-to-br from-white to-gray-50/80 p-8 rounded-3xl shadow-xl hover:shadow-2xl border border-white/50 transition-all duration-500 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay="900">
+        <!-- Card background effect -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue/5 to-strongBrown/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+        
+        <div class="relative z-10">
+          <!-- Enhanced Icon -->
+          <div class="relative mb-6">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-r from-blue/20 to-strongBrown/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span class="material-symbols-outlined text-5xl text-blue group-hover:scale-110 transition-transform duration-300">location_on</span>
+            </div>
+            <!-- Glow effect -->
+            <div class="absolute inset-0 bg-blue/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+          </div>
+          
+          <h2 class="text-2xl font-bold text-strongBrown mb-4 group-hover:text-blue transition-colors duration-300">Nuestra Ubicación</h2>
+          
+          <p class="text-strongBrown/80 text-sm leading-relaxed">
+            <span class="font-semibold text-strongBrown">Querétaro, México</span><br/>
+            <span class="text-xs text-strongBrown/60 mt-1 block">Centro de bienestar y meditación</span>
+          </p>
+          
+          <div class="mt-4 inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-full text-green-600 text-sm font-medium">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Visítanos
+          </div>
+        </div>
 
+        <!-- Interactive border -->
+        <div class="absolute inset-0 border-2 border-transparent group-hover:border-green-500/30 rounded-3xl transition-colors duration-500 pointer-events-none"></div>
+      </div>
+    </div>
+
+    <!-- Bottom decorative element -->
+    <div class="flex justify-center mt-16" data-aos="fade-up" data-aos-delay="1000">
+      <div class="w-32 h-1 bg-gradient-to-r from-strongBrown via-blue to-strongBrown rounded-full opacity-60"></div>
     </div>
   </div>
-
 </section>
 
 <app-footer></app-footer>
