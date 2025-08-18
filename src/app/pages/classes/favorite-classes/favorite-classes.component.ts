@@ -28,4 +28,8 @@ export class FavoriteClassesComponent implements OnInit {
       console.error(`An error occurred during navigation: ${error.message}`);
     });
   }
+
+  onExploreClasses() {
+    this.router.navigate(['/clases'])
+  }
 }

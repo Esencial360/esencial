@@ -1,42 +1,95 @@
-<!-- start-moving.component.html -->
-<div class="">
-  <div class="" data-aos="fade-up" data-aos-duration="1000">
-    <section
-      class="container mx-auto w-10/12 px-4 py-8"
-      data-aos="fade-up"
-      data-aos-duration="1000"
-    >
-      <div
-        class="flex flex-col text-col w-full items-center justify-center text-center montserrat-normal my-8"
+<div class="relative overflow-hidden">   
+  <div class="relative z-10" data-aos="fade-up" data-aos-duration="1000">     
+    <section       
+      class="container mx-auto w-10/12 px-4 py-16 lg:py-24"       
+      data-aos="fade-up"       
+      data-aos-duration="1000"     
+    >       
+      <!-- Header Section with enhanced styling -->
+      <div         
+        class="flex flex-col text-col w-full items-center justify-center text-center montserrat-normal mb-16 lg:mb-20"       
       >
-        <h4 class="text-blue">{{collectionName}}</h4>
-        <h3 class="text-4xl font-bold my-2 text-strongBrown uppercase">
-          {{collectionSubtitle}}
+        <!-- Subtitle badge -->
+        <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue to-stronger_blue rounded-full text-white text-sm font-medium mb-8 shadow-lg" data-aos="fade-down" data-aos-delay="200">
+          <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          {{collectionName}}
+        </div>
+        
+        <h3 class="text-4xl sm:text-5xl lg:text-7xl my-6 font-bold bg-gradient-to-r from-strongBrown via-strongBrown to-blue bg-clip-text text-transparent uppercase leading-tight" data-aos="fade-up" data-aos-delay="300">           
+          {{collectionSubtitle}}         
         </h3>
+        
+        <!-- Decorative line -->
+        <div class="w-24 h-1 bg-gradient-to-r from-strongBrown via-blue to-strongBrown rounded-full mt-4" data-aos="fade-up" data-aos-delay="500"></div>
       </div>
-        <div
-          data-aos="fade-up"
-          data-aos-duration="1000"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-        >
-          @for(category of collectionList; track $index) {
-          <div class="overflow-hidden relative group">
-            <img
-              (click)="onSingleCollection(category.guid)"
-              [src]="$index % 2 !== 0 ? pullZone + '/assets/1.jpg' : pullZone + '/assets/2.jpg'"
-              [alt]="category.name"
-              class="w-full h-60 object-cover brightness-75 transition duration-300 ease-in-out transform hover:scale-125 cursor-pointer"
+
+      <!-- Enhanced Grid -->
+      <div           
+        data-aos="fade-up"           
+        data-aos-duration="1000"           
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"         
+      >           
+        @for(category of collectionList; track $index) {           
+        <div class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 cursor-pointer" 
+             data-aos="zoom-in" 
+             [attr.data-aos-delay]="($index * 150).toString()">
+          
+          <!-- Image container -->
+          <div class="relative overflow-hidden">
+            <img               
+              (click)="onSingleCollection(category.guid)"               
+              [src]="$index % 2 !== 0 ? pullZone + '/assets/1.jpg' : pullZone + '/assets/2.jpg'"               
+              [alt]="category.name"               
+              class="w-full h-72 lg:h-80 object-cover transition-all duration-700 group-hover:scale-125 group-hover:rotate-1"             
             />
-            <div class="">
-              <h3
-                class="text-xl text-white z-20 font-semibold absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4"
-              >
-                {{ category.name }}
+            
+            <!-- Enhanced overlay with gradient -->
+            <div class="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60 group-hover:from-black/30 group-hover:via-black/40 group-hover:to-black/50 transition-all duration-500"></div>
+            
+            <!-- Decorative corner elements -->
+            <div class="absolute top-0 right-0 w-0 h-0 border-t-[60px] border-r-[60px] border-t-white/20 border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          </div>
+
+          <!-- Content Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <!-- Background glow effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-strongBrown/20 to-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <!-- Category Name -->
+            <div class="relative z-20 text-center px-6">               
+              <h3                 
+                class="text-2xl lg:text-4xl text-white font-bold mb-4 transform group-hover:scale-110 transition-all duration-500 leading-tight"               
+              >                 
+                {{ category.name }}               
               </h3>
+              
+              <!-- Hover indicator -->
+              <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium">
+                  <span>Explorar</span>
+                  <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
-          }
-        </div>
-    </section>
-  </div>
+
+          <!-- Interactive border -->
+          <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/30 rounded-2xl transition-colors duration-500 pointer-events-none"></div>
+          
+          <!-- Pulse effect on hover -->
+          <div class="absolute inset-0 rounded-2xl bg-white/10 scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 pointer-events-none"></div>
+        </div>           
+        }         
+      </div>
+      
+      <!-- Bottom decorative element -->
+      <div class="flex justify-center mt-16" data-aos="fade-up" data-aos-delay="1000">
+        <div class="w-24 h-1 bg-gradient-to-r from-strongBrown via-blue to-strongBrown rounded-full"></div>
+      </div>     
+    </section>   
+  </div> 
 </div>
