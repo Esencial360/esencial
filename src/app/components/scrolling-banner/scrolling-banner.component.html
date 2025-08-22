@@ -1,13 +1,13 @@
-<div class=" w-9/12 logo-container bg-blue h-20 flex items-center mt-24 rounded-full justify-around">
-  <div class="logo-scroll">
-    <div class="logo-group">
+<div class="w-9/12 logo-container bg-gradient-to-br from-blue to-stronger_blue h-20 flex items-center mt-24 rounded-full justify-around overflow-hidden relative">
+  <div class="logo-scroll flex animate-scroll whitespace-nowrap">
+    <div class="logo-group flex space-x-8">
       @for (logo of logos; track $index) {
-        <img [src]="logo.src" [alt]="logo.alt" class="logo">
+        <img [src]="logo.src" [alt]="logo.alt" class="h-12 object-contain rounded-lg shadow-md"/>
       }
     </div>
-    <div class="logo-group">
+    <div class="logo-group flex space-x-8">
       @for (logo of logos; track $index) {
-        <img [src]="logo.src" [alt]="logo.alt" class="logo">
+        <img [src]="logo.src" [alt]="logo.alt" class="h-12 object-contain rounded-lg shadow-md"/>
       }
     </div>
   </div>

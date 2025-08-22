@@ -91,121 +91,92 @@
 
 <!-- Enhanced Welcome Section -->
 <section
-  class="relative bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 montserrat-normal py-20"
+  class="relative bg-gradient-to-br from-gray-50 via-white to-gray-100 montserrat-normal py-24 overflow-hidden"
   data-aos="fade-up"
   data-aos-duration="1000"
 >
-  <!-- Decorative background elements -->
-  <div class="absolute top-0 right-0 w-1/3 h-96 bg-gradient-to-bl from-blue-400/10 to-transparent rounded-bl-[100px]"></div>
-  <div class="absolute bottom-0 left-0 w-1/4 h-64 bg-gradient-to-tr from-indigo-400/10 to-transparent rounded-tr-[80px]"></div>
-  
+  <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-blue/10 to-transparent rounded-full translate-x-48 -translate-y-48"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-strongBrown/5 to-transparent rounded-full -translate-x-32 translate-y-32"></div>
+
   <div class="container mx-auto px-4 lg:px-8 relative z-10">
-    <div
-      [@fadeIn]="elementState"
-      appInView
-      (inView)="onInView()"
-      class="max-w-7xl mx-auto"
-      id="scrollContent"
-    >
-      <!-- Section header -->
-      <div class="text-center mb-16">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-          ¡Bienvenidos y bienvenidas a 
-          <span class="relative">
-            <span class="lowercase text-gray-900">esencial</span><span class="text-blue-600">360</span>
-            <div class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></div>
+    <div class="max-w-7xl mx-auto" id="scrollContent">
+      
+      <div class="text-center mb-20">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight uppercase">
+          ¡Bienvenidos a 
+          <span class="bg-gradient-to-r from-blue via-strongBrown to-blue bg-clip-text text-transparent">
+            esencial360
           </span>!
         </h1>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p class="text-xl text-strongBrown/80 max-w-3xl mx-auto leading-relaxed">
           Tu espacio seguro para el crecimiento personal y el bienestar integral
         </p>
+        <div class="flex justify-center mt-6">
+          <div class="w-24 h-1 bg-gradient-to-r from-strongBrown via-blue to-strongBrown rounded-full"></div>
+        </div>
       </div>
 
-      <!-- Main content card -->
       <div
-        [@fadeIn]="elementState"
-        appInView
-        (inView)="onInView()"
-        class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-white/20 mb-16"
+        class="group bg-gradient-to-br from-white via-gray-50/80 to-white backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl border-2 border-white/50 hover:border-blue/30 transition-all duration-500 transform hover:scale-[1.01] hover:-translate-y-2 overflow-hidden"
       >
         <div class="flex flex-col lg:flex-row">
           
-          <!-- Image section -->
           <div class="lg:w-1/2 relative">
-            <div class="h-96 lg:h-full relative overflow-hidden">
+            <div class="h-96 lg:h-full overflow-hidden">
               <img
                 [src]="pullZone + '/assets/photo38.jpg'"
                 alt="Yoga pose"
-                class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <!-- Image overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent group-hover:from-black/20 transition-all duration-500"></div>
             </div>
-            
-            <!-- CTA button overlay -->
-            <div class="absolute bottom-8 left-8 right-8">
-              <app-button
-                [bgColor]="'bg-blue hover:from-blue-700 hover:to-indigo-700'"
-                [text]="'¡Comenzar mi viaje esencial360!'"
-                [width]="'w-full'"
-                class="transform hover:scale-105 transition-all duration-300 shadow-lg"
-                (click)="authService.loginWithRedirect({ 
-                  authorizationParams: {
-                    screen_hint: 'signup',
-                  }, appState: { target: '/suscribe' }})"
-              ></app-button>
+
+            <div class="absolute bottom-8 left-8 right-8 z-10">
+               <button
+                  class="group relative w-full overflow-hidden bg-gradient-to-r from-blue to-strongBrown hover:from-strongBrown hover:to-blue text-white font-bold text-lg py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  (click)="authService.loginWithRedirect({ 
+                    authorizationParams: { screen_hint: 'signup' },
+                    appState: { target: '/suscribe' }
+                  })"
+                >
+                  <div class="absolute inset-0 bg-gradient-to-r from-strongBrown to-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div class="relative flex items-center justify-center">
+                    <svg class="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    ¡Comenzar mi viaje!
+                  </div>
+                  <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out"></div>
+                </button>
             </div>
           </div>
 
-          <!-- Content section -->
-          <div
-            [@fadeIn]="elementState"
-            appInView
-            (inView)="onInView()"
-            class="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center"
-          >
-            <!-- Welcome description -->
-            <div class="mb-8">
-              <p class="text-lg text-gray-700 leading-relaxed mb-8">
-                Este es tu espacio seguro, un punto de encuentro donde el bienestar y
-                el crecimiento personal son la esencia de tu vida. Aquí eres parte de
-                una <span class="font-semibold text-blue">comunidad</span> que te inspira y te acompaña en cada paso de tu
-                <span class="font-semibold text-blue">transformación personal</span>.
-              </p>
-            </div>
+          <div class="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+            <p class="text-lg text-strongBrown leading-relaxed mb-10">
+              Este es tu espacio seguro, un punto de encuentro donde el bienestar y el crecimiento personal son la esencia. Aquí eres parte de una <span class="font-semibold bg-gradient-to-r from-blue to-strongBrown bg-clip-text text-transparent">comunidad</span> que te inspira y te acompaña en cada paso de tu <span class="font-semibold bg-gradient-to-r from-blue to-strongBrown bg-clip-text text-transparent">transformación</span>.
+            </p>
 
-            <!-- Feature items -->
-            <div class="space-y-6 mb-8">
+            <div class="space-y-6 mb-10">
               @for (item of welcomeLines; track $index) {
-                <div class="flex items-start space-x-4 group">
-                  <!-- Icon -->
-                  <div class="flex-shrink-0 w-12 h-12 bg-blue rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
+                <div class="flex items-start space-x-4">
+                  <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue/20 to-strongBrown/20 rounded-xl flex items-center justify-center border border-white/50">
+                    <svg class="w-5 h-5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   </div>
-                  <!-- Content -->
-                  <div class="flex-1">
-                    <h4 class="text-xl font-bold text-blue uppercase mb-2">{{ item.title }}</h4>
-                    <p class="text-gray-700 leading-relaxed">{{ item.description }}</p>
+                  <div>
+                    <h4 class="text-lg font-bold text-strongBrown uppercase mb-1">{{ item.title }}</h4>
+                    <p class="text-strongBrown/80 leading-relaxed">{{ item.description }}</p>
                   </div>
                 </div>
               }
             </div>
 
-            <!-- Call to action text -->
-            <div class="bg-gradient-to-r from-blue to-stronger_blue p-6 rounded-2xl border border-blue-100">
-              <p class="text-white font-semibold text-center">
-                ¡Disfruta de recompensas y beneficios que celebran tu compromiso y te
-                inspiran a seguir avanzando!
-              </p>
+            <div class="inline-flex items-center self-start px-4 py-2 bg-gradient-to-r from-blue/10 to-strongBrown/10 rounded-full border border-blue/20">
+              <svg class="w-4 h-4 mr-2 text-blue" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V4zm2 2v1h6V6H7zm6 3H7v1h6V9zm-1 2H8v1h4v-1z"></path></svg>
+              <span class="text-sm font-medium text-blue">Beneficios y recompensas te esperan</span>
             </div>
           </div>
         </div>
+        
       </div>
-
-      <!-- Scrolling banner -->
-      <app-scrolling-banner class="flex justify-center"></app-scrolling-banner>
+            <app-scrolling-banner class="flex justify-center w-full"></app-scrolling-banner>
     </div>
   </div>
 </section>
@@ -299,31 +270,53 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="text-center">
-      <div class="bg-gradient-to-r from-blue to-stronger_blue rounded-3xl p-12 border border-blue-100">
-        <h4 class="text-2xl md:text-3xl font-bold text-white mb-4">
-          ¿Listo para transformar tu vida?
-        </h4>
-        <p class="text-lg text-white mb-8 max-w-2xl mx-auto">
-          Únete a miles de personas que ya han comenzado su viaje de crecimiento personal
-        </p>
-        
-        <button
-          (click)="authService.loginWithRedirect({ 
-            authorizationParams: {
-              screen_hint: 'signup',
-            }, appState: { target: '/suscribe' }})"
-          class="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-12 py-5 font-bold text-lg rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-        >
-          <span class="flex items-center justify-center">
-            ¡Comenzar mi viaje esencial360!
-            <svg class="w-6 h-6 ml-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-            </svg>
-          </span>
-        </button>
+ <div 
+  class="relative montserrat-normal py-24 overflow-hidden" 
+  data-aos="fade-up" 
+  data-aos-duration="1000"
+>
+
+  <div class="absolute top-1/2 left-0 w-80 h-80 bg-gradient-to-br from-blue/10 to-transparent rounded-full -translate-y-1/2 -translate-x-48"></div>
+  <div class="absolute top-1/2 right-0 w-80 h-80 bg-gradient-to-bl from-strongBrown/10 to-transparent rounded-full -translate-y-1/2 translate-x-48"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6">
+    <div class="text-center bg-gradient-to-br from-white/80 via-gray-50/70 to-white/80 backdrop-blur-md rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-500 p-12 lg:p-16 border-2 border-white/50">
+      
+      <div class="inline-flex items-center px-5 py-2 bg-gradient-to-r from-blue/10 to-strongBrown/10 backdrop-blur-sm rounded-full text-blue text-sm font-medium mb-6 shadow-md border border-white/40">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+        Únete a la comunidad
       </div>
+
+      <h4 class="text-3xl md:text-4xl lg:text-5xl font-bold uppercase mb-6">
+        <span class="bg-gradient-to-r from-blue via-strongBrown to-blue bg-clip-text text-transparent">
+          ¿Listo para transformar tu vida?
+        </span>
+      </h4>
+      
+      <p class="text-lg text-strongBrown/80 mb-10 max-w-2xl mx-auto">
+        Únete a miles de personas que ya han comenzado su viaje de crecimiento personal y bienestar integral.
+      </p>
+      
+      <button
+        (click)="authService.loginWithRedirect({ 
+          authorizationParams: {
+            screen_hint: 'signup',
+          }, appState: { target: '/suscribe' }})"
+        class="group relative overflow-hidden bg-gradient-to-r from-blue to-strongBrown hover:from-strongBrown hover:to-blue text-white font-bold text-lg py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+      >
+        <div class="absolute inset-0 bg-gradient-to-r from-strongBrown to-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div class="relative flex items-center justify-center">
+          <svg class="w-6 h-6 mr-3 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+          ¡Comenzar mi viaje!
+        </div>
+        
+        <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out"></div>
+      </button>
+
     </div>
+  </div>
+</div>
   </div>
 </section>
 
