@@ -1,22 +1,51 @@
 <app-header [newLanding]="true"></app-header>
-<section class="h-full relative">
-  <app-parallax [imagePath]="pullZone + '/assets/7.jpg'"></app-parallax>
-  <div
-    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center w-full lg:w-8/12"
-  >
-    <h2 class="font-bold text-5xl lg:text-7xl">
-      Nuestro consejo de expertos
-    </h2>
-    <p class="text-xl mt-5">
-      Conoce a los expertos que respaldan tu crecimiento en esencial360
-    </p>
+<section class="relative h-screen overflow-hidden">
+  <app-parallax
+    [parallaxSpeed]="0.5"
+    [imagePath]="pullZone + '/assets/7.jpg'"
+  ></app-parallax>
+  
+  <!-- Enhanced gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50"></div>
+  
+  <!-- Floating elements for visual interest -->
+  <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+  <div class="absolute bottom-40 right-20 w-24 h-24 bg-blue-400/20 rounded-full blur-lg animate-pulse delay-1000"></div>
+  
+  <!-- Hero content -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-white montserrat-normal z-10">
+    <div class="text-center max-w-5xl px-4">
+      <!-- Brand badge -->
+      <div class="inline-flex items-center px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 mb-8 animate-fade-in">
+        <span class="text-sm font-medium tracking-wider">CONSEJO</span>
+      </div>
+      
+      <!-- Main heading with enhanced typography -->
+      <h1 class="font-bold text-4xl md:text-6xl lg:text-8xl uppercase mb-6 leading-tight">
+        <span class="block bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
+          Nuestro consejo de expertos
+        </span>
+      </h1>
+      
+      <!-- Enhanced subheading -->
+      <p class="text-xl md:text-2xl lg:text-3xl text-blue-100 font-light mb-12 leading-relaxed tracking-wide">
+        Conoce a los expertos que respaldan tu crecimiento en esencial360
+      </p>
+    </div>
   </div>
-  <span
-    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
-    (click)="scrollArrow()"
-  >
-    keyboard_arrow_down
-  </span>
+  
+  <!-- Enhanced scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+    <button
+      (click)="scrollArrow()"
+      class="group flex flex-col items-center text-white hover:text-blue-200 transition-all duration-300 cursor-pointer"
+    >
+      <span class="text-sm font-medium mb-2 opacity-80">Descubrir</span>
+      <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center group-hover:border-blue-200">
+        <div class="w-1 h-3 bg-white/70 rounded-full mt-2 animate-bounce group-hover:bg-blue-200"></div>
+      </div>
+    </button>
+  </div>
 </section>
 <app-banner-v3
   [image]="pullZone + '/assets/logoWhite.png'"

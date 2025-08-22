@@ -1,56 +1,109 @@
 <app-header [newLanding]="true"></app-header>
 
-<section class="h-full relative">
+<!-- <section class="h-screen relative">
+  
   <app-parallax [imagePath]="pullZone + '/assets/18.jpg'"></app-parallax>
-  <div
-    class="text-white montserrat-normal absolute -translate-x-2/4 -translate-y-1/2 top-1/2 left-2/4 text-center lg:w-9/12"
-  >
-    <h1 class="font-bold text-3xl uppercase lg:text-7xl">
-      Únete como guía esencial360
+  
+  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+  
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white montserrat-normal w-11/12">
+    <h1 class="font-bold text-4xl lg:text-7xl uppercase tracking-wider" style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+      Únete como
+      <span class="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Guía esencial360</span>
     </h1>
   </div>
-  <span
+  
+  <div 
     (click)="scrollArrow()"
-    class="material-symbols-outlined -translate-x-2/4 z-10 absolute text-4xl text-white bottom-[10%] left-2/4 cursor-pointer"
+    class="absolute bottom-[8%] left-1/2 -translate-x-1/2 z-10 cursor-pointer"
   >
-    keyboard_arrow_down
-  </span>
+    <div class="w-12 h-12 rounded-full border-2 border-white/50 flex items-center justify-center text-white hover:bg-white/10 transition-colors animate-bounce">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+    </div>
+  </div>
+</section> -->
+
+<section class="relative h-screen overflow-hidden">
+  <app-parallax
+    [parallaxSpeed]="0.5"
+    [imagePath]="pullZone + '/assets/18.jpg'"
+  ></app-parallax>
+  
+  <!-- Enhanced gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50"></div>
+  
+  <!-- Floating elements for visual interest -->
+  <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+  <div class="absolute bottom-40 right-20 w-24 h-24 bg-blue-400/20 rounded-full blur-lg animate-pulse delay-1000"></div>
+  
+  <!-- Hero content -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-white montserrat-normal z-10">
+    <div class="text-center max-w-5xl px-4">
+      <!-- Brand badge -->
+      
+      <!-- Main heading with enhanced typography -->
+      <h1 class="font-bold text-4xl md:text-6xl lg:text-8xl uppercase mb-6 leading-tight">
+        <span class="block bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
+         Únete como Guía
+        </span>
+        <span class="text-white lowercase">
+           esencial<span class="text-blue">360</span>
+        </span>
+      </h1>
+    </div>
+  </div>
+  
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+    <button
+      (click)="scrollArrow()"
+      class="group flex flex-col items-center text-white hover:text-blue-200 transition-all duration-300 cursor-pointer"
+    >
+      <span class="text-sm font-medium mb-2 opacity-80">Descubrir</span>
+      <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center group-hover:border-blue-200">
+        <div class="w-1 h-3 bg-white/70 rounded-full mt-2 animate-bounce group-hover:bg-blue-200"></div>
+      </div>
+    </button>
+  </div>
 </section>
-<div
-  class="flex flex-col bg-white p-6 text-center md:mx-10 rounded-lg montserrat-normal"
->
-  <section
-    class="container mx-auto px-4 py-8"
-    data-aos="fade-up"
-    data-aos-duration="1000"
-    id="scrollContent"
-  >
-    <app-banner-v2
-      class="my-5"
-      [title]="'estas en el lugar correcto.'"
-      [text]="
-        'Si eres instructor de Yoga, o facilitador de alguna las disciplinas siguientes, y quieres que tu práctica, material y/o clases tengan la mejor plataforma para ser vistas por cientos de alumnos y usuarios, estás en el lugar ideal.'
-      "
-      [image]="pullZone + '/assets/blueLogo.png'"
-      [reverse]="true"
-    ></app-banner-v2>
+
+<div class="relative bg-gradient-to-br from-gray-50 via-white to-gray-100 -mt-16 rounded-t-3xl z-20 pt-16">
+  <div class="container mx-auto px-4 py-8 montserrat-normal" id="scrollContent">
+    <div data-aos="fade-up">
+      <app-banner-v2
+        class="my-12"
+        [title]="'Estás en el lugar correcto'"
+        [text]="'Si eres instructor de Yoga o facilitador de alguna disciplina y quieres la mejor plataforma para ser visto por cientos de alumnos, estás en el lugar ideal.'"
+        [image]="pullZone + '/assets/blueLogo.png'"
+        [reverse]="false"
+      ></app-banner-v2>
+    </div>
+    
     @for (service of services; track $index) {
-    <app-banner-v2
-      class="my-5"
-      [title]="service.title"
-      [text]="service.description"
-      [image]="service.image"
-      [reverse]="$index % 2 !== 0"
-    ></app-banner-v2>
+      <div data-aos="fade-up">
+        <app-banner-v2
+          class="my-12"
+          [title]="service.title"
+          [text]="service.description"
+          [image]="service.image"
+          [reverse]="$index % 2 !== 0"
+        ></app-banner-v2>
+      </div>
     }
-  </section>
-  <app-banner
-    [title]="'un paso más cerca de alcanzar tus metas.'"
-    [addMargin]="true"
-    [contact]="true"
-    (onActionButton)="onContinueToForm()"
-    [buttonText]="'EMPEZAR EL PROCESO'"
-  ></app-banner>
+
+    <div class="mt-24" data-aos="fade-up">
+      <div class="text-center p-12 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/30">
+        <h3 class="text-3xl font-bold uppercase text-strongBrown mb-2">Un paso más cerca de tus metas</h3>
+        <p class="text-strongBrown/80 mb-8">Inicia el proceso para unirte a nuestra comunidad de guías.</p>
+        <button
+          (click)="onContinueToForm()"
+          class="group relative overflow-hidden bg-gradient-to-r from-blue to-strongBrown hover:from-strongBrown hover:to-blue text-white font-bold text-lg py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+        >
+          <span class="relative">EMPEZAR EL PROCESO</span>
+          <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out"></div>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-dialog-form

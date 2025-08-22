@@ -9,6 +9,7 @@
     [class]="getAuthenticatedHeaderClasses()"
     [style]="getHeaderBoxShadow()"
     class="relative overflow-hidden backdrop-blur-md bg-white/95 border-b border-white/20"
+    [ngClass]="newLanding ? '!bg-transparent' : ''"
   >
     <!-- Desktop Header -->
     <div class="hidden xl:flex justify-between items-center px-20 h-20 relative z-10">

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 
 interface PricingPlan {
   name: string;
@@ -28,7 +29,13 @@ export class PricingPlanComponent {
         '⁠Atraves de encuestas y preguntas estaremos en contacto contigo para escucharte.',
       ],
     },
+
+
   ];
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) {}
+
+  onContact(){
+    this.router.navigate(['/contacto'])
+  } 
 }
