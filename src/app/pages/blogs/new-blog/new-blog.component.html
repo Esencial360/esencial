@@ -1,261 +1,317 @@
 <app-header></app-header>
-<section
-  class="w-full h-[75vh] flex flex-col items-center justify-center text-center montserrat-normal"
->
+<section class="w-full h-[75vh] flex flex-col items-center justify-center text-center montserrat-normal">
   @if (isModalOpen) {
-  <div
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] text-start"
-  >
-    <div
-      class="bg-white rounded-xl shadow-lg w-full xl:max-w-[70rem] max-w-lg p-6 relative animate-fadeIn"
-    >
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] text-start overflow-y-auto">
+    <div class="bg-white rounded-xl shadow-lg w-full xl:max-w-[80rem] max-w-4xl p-6 relative animate-fadeIn my-8 max-h-[90vh] overflow-y-auto">
       <button
         (click)="closeModal()"
-        class="absolute top-4 right-4 text-gray-500 hover:text-blue"
+        class="absolute top-4 right-4 text-gray-500 hover:text-blue z-50 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-all duration-200"
       >
         ✕
       </button>
+      
       @if (firstStep) {
-      <h2 class="text-xl font-semibold text-blue uppercase mb-4 text-center">
-        Subir nuevo blog
+      <h2 class="text-2xl font-semibold text-blue uppercase mb-6 text-center">
+        Crear Nuevo Blog
       </h2>
-      <form
-        [formGroup]="blogForm"
-        (ngSubmit)="onSubmit()"
-        class="space-y-6 z-20"
-      >
-        <!-- Title -->
-        <div>
-          <label class="block text-blue font-medium mb-1 uppercase"
-            >Título</label
-          >
-          <input
-            type="text"
-            formControlName="title"
-            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-            [ngClass]="{
-              'border-red-500':
-                blogForm.get('title')?.invalid &&
-                (blogForm.get('title')?.dirty || blogForm.get('title')?.touched)
-            }"
-            placeholder="Escribe el título del blog"
-          />
-          <p
-            *ngIf="
-              blogForm.get('title')?.invalid &&
-              (blogForm.get('title')?.dirty || blogForm.get('title')?.touched)
-            "
-            class="text-red-500 text-sm"
-          >
-            Título es requerido.
+      
+      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Left Column -->
+          <div class="space-y-6">
+            <!-- Title -->
+            <div>
+              <label class="block text-blue font-medium mb-2 uppercase flex items-center text-sm">
+                <span class="material-symbols-outlined mr-2 text-base">title</span>
+                Título del Blog
+              </label>
+              <input
+                type="text"
+                formControlName="title"
+                class="w-full p-4 border-2 rounded-lg focus:ring-2 focus:ring-blue focus:border-blue focus:outline-none transition-all duration-200 text-base"
+                [ngClass]="{
+                  'border-red-500 ring-red-200': blogForm.get('title')?.invalid && (blogForm.get('title')?.dirty || blogForm.get('title')?.touched),
+                  'border-green-500 ring-green-200': blogForm.get('title')?.valid && blogForm.get('title')?.touched
+                }"
+                placeholder="Un título llamativo para tu blog..."
+                maxlength="100"
+              />
+              <div class="flex justify-between items-center mt-2">
+                <div class="space-y-1">
+                  <p *ngIf="blogForm.get('title')?.hasError('required') && (blogForm.get('title')?.dirty || blogForm.get('title')?.touched)" 
+                     class="text-red-500 text-sm flex items-center">
+                    <span class="material-symbols-outlined text-sm mr-1">error</span>
+                    El título es requerido
+                  </p>
+                  <p *ngIf="blogForm.get('title')?.hasError('minlength') && (blogForm.get('title')?.dirty || blogForm.get('title')?.touched)" 
+                     class="text-red-500 text-sm flex items-center">
+                    <span class="material-symbols-outlined text-sm mr-1">error</span>
+                    Mínimo 10 caracteres
+                  </p>
+                </div>
+                <span class="text-xs text-gray-500 font-medium">
+                  {{blogForm.get('title')?.value?.length || 0}}/100
+                </span>
+              </div>
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label class="block text-blue font-medium mb-2 uppercase flex items-center text-sm">
+                <span class="material-symbols-outlined mr-2 text-base">category</span>
+                Categoría
+              </label>
+              <select
+                formControlName="categoryId"
+                class="w-full p-4 border-2 rounded-lg focus:ring-2 focus:ring-blue focus:border-blue focus:outline-none transition-all duration-200 text-base bg-white"
+                [ngClass]="{
+                  'border-red-500 ring-red-200': blogForm.get('categoryId')?.invalid && (blogForm.get('categoryId')?.dirty || blogForm.get('categoryId')?.touched),
+                  'border-green-500 ring-green-200': blogForm.get('categoryId')?.valid && blogForm.get('categoryId')?.touched
+                }"
+              >
+                <option value="" class="text-gray-500">Selecciona una categoría</option>
+                @for (category of categories; track $index) {
+                <option [value]="category._id" class="uppercase text-gray-800">
+                  {{ category.name }}
+                </option>
+                }
+              </select>
+              <p *ngIf="blogForm.get('categoryId')?.invalid && (blogForm.get('categoryId')?.dirty || blogForm.get('categoryId')?.touched)" 
+                 class="text-red-500 text-sm mt-2 flex items-center">
+                <span class="material-symbols-outlined text-sm mr-1">error</span>
+                Selecciona una categoría
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="space-y-6">
+            <!-- Image Upload -->
+            <div>
+              <label class="block text-blue font-medium mb-2 uppercase flex items-center text-sm">
+                <span class="material-symbols-outlined mr-2 text-base">image</span>
+                Imagen Principal
+              </label>
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue transition-colors duration-200 bg-gray-50 hover:bg-blue-50"
+                   [ngClass]="{
+                     'border-red-500 bg-red-50': blogForm.get('imageUrl')?.invalid && (blogForm.get('imageUrl')?.dirty || blogForm.get('imageUrl')?.touched),
+                     'border-green-500 bg-green-50': selectedFileNewBlog,
+                     'border-blue bg-blue-50': !selectedFileNewBlog
+                   }"
+                   (dragover)="onDragOver($event)"
+                   (dragleave)="onDragLeave($event)"
+                   (drop)="onDrop($event)">
+                
+                @if (!selectedFileNewBlog) {
+                <span class="material-symbols-outlined text-6xl text-gray-400 mb-3 block">cloud_upload</span>
+                <p class="text-gray-600 mb-3 font-medium">Arrastra tu imagen aquí o haz clic para seleccionar</p>
+                <input
+                  type="file"
+                  id="imageUrl"
+                  (change)="onFileSelectedNewInstructor($event)"
+                  accept="image/*"
+                  class="hidden"
+                />
+                <label for="imageUrl" class="bg-blue text-white px-6 py-3 rounded-lg cursor-pointer hover:bg-lightBrown transition-colors duration-200 inline-flex items-center">
+                  <span class="material-symbols-outlined mr-2">add_photo_alternate</span>
+                  Seleccionar Imagen
+                </label>
+                <p class="text-xs text-gray-500 mt-3">
+                  Formatos: JPG, PNG, GIF (Máximo 5MB)
+                </p>
+                } @else {
+                <div class="space-y-4">
+                  <img [src]="imagePreview" alt="Preview" class="max-h-48 mx-auto rounded-lg shadow-md">
+                  <p class="text-green-600 font-medium flex items-center justify-center">
+                    <span class="material-symbols-outlined mr-2">check_circle</span>
+                    {{ selectedFileNewBlog.name }}
+                  </p>
+                  <button type="button" (click)="selectedFileNewBlog = null; imagePreview = null; blogForm.patchValue({imageUrl: null})" 
+                          class="text-red-500 hover:text-red-700 transition-colors duration-200 flex items-center justify-center mx-auto">
+                    <span class="material-symbols-outlined mr-1">delete</span>
+                    Cambiar imagen
+                  </button>
+                </div>
+                }
+              </div>
+              <p *ngIf="blogForm.get('imageUrl')?.invalid && (blogForm.get('imageUrl')?.dirty || blogForm.get('imageUrl')?.touched)" 
+                 class="text-red-500 text-sm mt-2 flex items-center">
+                <span class="material-symbols-outlined text-sm mr-1">error</span>
+                La imagen es requerida
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description (Full Width) -->
+        <div class="border-t pt-6">
+          <label class="block text-blue font-medium mb-3 uppercase flex items-center text-sm">
+            <span class="material-symbols-outlined mr-2 text-base">edit_note</span>
+            Contenido del Blog
+          </label>
+          
+          <!-- TinyMCE Editor -->
+          <div class="border-2 rounded-lg overflow-hidden"
+               [ngClass]="{
+                 'border-red-500': blogForm.get('description')?.invalid && (blogForm.get('description')?.dirty || blogForm.get('description')?.touched),
+                 'border-green-500': blogForm.get('description')?.valid && blogForm.get('description')?.touched,
+                 'border-gray-300': !blogForm.get('description')?.touched
+               }">
+            <editor
+              [init]="tinymceConfig"
+              formControlName="description"
+              [apiKey]="'ga42i7uk8rs107zna0n5n1hrjvz0jo3fd2xl6zcdgj8us70f'"
+              class="w-full">
+            </editor>
+          </div>
+          
+          <div class="flex justify-between items-center mt-2">
+            <div class="space-y-1">
+              <p *ngIf="blogForm.get('description')?.hasError('required') && (blogForm.get('description')?.dirty || blogForm.get('description')?.touched)" 
+                 class="text-red-500 text-sm flex items-center">
+                <span class="material-symbols-outlined text-sm mr-1">error</span>
+                El contenido es requerido
+              </p>
+              <p *ngIf="blogForm.get('description')?.hasError('minlength') && (blogForm.get('description')?.dirty || blogForm.get('description')?.touched)" 
+                 class="text-red-500 text-sm flex items-center">
+                <span class="material-symbols-outlined text-sm mr-1">error</span>
+                Mínimo 50 caracteres de contenido
+              </p>
+            </div>
+            <div class="text-xs text-gray-500 font-medium space-x-4">
+              <span>Palabras: {{ getWordCount() }}</span>
+              <span>Caracteres: {{ getCharCount() }}</span>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mt-2">
+            Escribe un contenido rico y detallado para tu blog. Puedes usar formato, listas, enlaces y más.
           </p>
         </div>
 
-        <!-- Description -->
-        <div>
-          <label class="block text-blue font-medium mb-1 uppercase"
-            >Descripción</label
-          >
-
-          <quill-editor
-            formControlName="description"
-            [style]="{ height: '200px' }"
-            class="border rounded-lg focus-within:ring focus-within:ring-gray-300"
-          ></quill-editor>
-
-          <p
-            *ngIf="
-              blogForm.get('description')?.invalid &&
-              (blogForm.get('description')?.dirty ||
-                blogForm.get('description')?.touched)
-            "
-            class="text-red-500 text-sm mt-1"
-          >
-            Descripción es requerida.
-          </p>
-        </div>
-
-        <!-- Image Upload -->
-        <div>
-          <label class="block text-blue font-medium mb-1 uppercase"
-            >Imagen</label
-          >
-          <input
-            type="file"
-            id="imageUrl"
-            (change)="onFileSelectedNewInstructor($event)"
-            accept="image/*"
-            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-            [ngClass]="{
-              'border-red-500':
-                blogForm.get('imageUrl')?.invalid &&
-                (blogForm.get('imageUrl')?.dirty ||
-                  blogForm.get('imageUrl')?.touched)
-            }"
-          />
-          <p
-            *ngIf="
-              blogForm.get('imageUrl')?.invalid &&
-              (blogForm.get('imageUrl')?.dirty ||
-                blogForm.get('imageUrl')?.touched)
-            "
-            class="text-red-500 text-sm"
-          >
-            Imagen es requerida.
-          </p>
-        </div>
-
-        <!-- Category -->
-        <div>
-          <label class="block text-blue font-medium mb-1 uppercase"
-            >Categoría</label
-          >
-          <select
-            formControlName="categoryId"
-            class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-            [ngClass]="{
-              'border-red-500':
-                blogForm.get('categoryId')?.invalid &&
-                (blogForm.get('categoryId')?.dirty ||
-                  blogForm.get('categoryId')?.touched)
-            }"
-          >
-            <option value="">Selecciona una categoría</option>
-            @for (category of categories; track $index) {
-            <option [value]="category._id" class="uppercase">
-              {{ category.name }}
-            </option>
-            }
-          </select>
-          <p
-            *ngIf="
-              blogForm.get('categoryId')?.invalid &&
-              (blogForm.get('categoryId')?.dirty ||
-                blogForm.get('categoryId')?.touched)
-            "
-            class="text-red-500 text-sm"
-          >
-            Categoría es requerida.
-          </p>
-        </div>
-
-        <!-- Submit -->
-        <div>
+        <!-- Submit Button -->
+        <div class="border-t pt-6">
           <button
             type="submit"
-            class="w-full py-3 text-white font-semibold rounded-lg"
+            class="w-full py-4 text-white font-semibold rounded-lg text-lg transition-all duration-200 flex items-center justify-center space-x-2"
             [disabled]="!blogForm.valid"
             [ngClass]="
               blogForm.valid
-                ? 'bg-blue hover:bg-lightBrown transition duration-200'
-                : 'bg-blue contrast-50'
+                ? 'bg-blue hover:bg-lightBrown shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
+                : 'bg-lightBrown cursor-not-allowed'
             "
           >
-            CREAR BLOG
+            <span class="material-symbols-outlined">publish</span>
+            <span>CREAR BLOG</span>
           </button>
+          
+          @if (!blogForm.valid && (blogForm.dirty || blogForm.touched)) {
+          <p class="text-center text-red-500 text-sm mt-3 flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm mr-1">info</span>
+            Complete todos los campos requeridos para continuar
+          </p>
+          }
         </div>
       </form>
+      
       } @if (secondStep) {
-
-      <div class="flex flex-col items-center text-center space-y-4">
-        <app-check-mark></app-check-mark>
-        <h4 class="text-lg font-semibold text-blue uppercase">
-          ¡Su participación es esencial para nosotros!
-        </h4>
-        <p class="text-lightBrown">
-          ¡Gracias por tu video! Hemos recibido tu material y lo revisaremos
-          para darte nuestra opinión.
-        </p>
-        <h4 class="font-semibold text-blue">El equipo de esencial360</h4>
+      <!-- Success Step -->
+      <div class="flex flex-col items-center text-center space-y-6 py-8">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
+          <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
+        </div>
+        <div class="space-y-4">
+          <h3 class="text-2xl font-semibold text-blue uppercase">
+            ¡Blog Creado Exitosamente!
+          </h3>
+          <p class="text-lightBrown text-lg max-w-md">
+            Tu blog ha sido publicado y ya está disponible para que otros lectores lo disfruten.
+          </p>
+        </div>
+        <div class="bg-blue-50 p-4 rounded-lg max-w-md">
+          <p class="text-blue font-medium">¡Gracias por compartir tu contenido!</p>
+          <p class="text-sm text-gray-600 mt-1">
+            El equipo de esencial360 aprecia tu contribución a nuestra comunidad.
+          </p>
+        </div>
         <button
           (click)="onProcessDone()"
-          class="mt-5 py-3 px-6 bg-black text-white rounded-lg bg-blue hover:bg-lightBrown transition duration-200"
+          class="mt-6 py-3 px-8 bg-blue text-white rounded-lg hover:bg-lightBrown transition-all duration-200 font-semibold flex items-center space-x-2 shadow-lg hover:shadow-xl"
         >
-          ACEPTAR
+          <span class="material-symbols-outlined">home</span>
+          <span>IR AL INICIO</span>
         </button>
       </div>
       }
     </div>
   </div>
   } @else {
-  <section class="">
-    <h2 class="text-blue uppercase text-3xl font-bold drop-shadow-lg">
+  <!-- Landing Section -->
+  <section class="max-w-4xl mx-auto px-6">
+    <h2 class="text-blue uppercase text-4xl font-bold drop-shadow-lg mb-8">
       ¡comparte tu voz!
     </h2>
 
-    <div class="max-w-2xl mx-auto p-6">
-      <h2 class="text-lg font-bold text-blue text-start">RECOMENDACIONES</h2>
-      <p class="text-lightBlue text-sm text-start">
-        Estas sugerencias pueden ayudarte a crear el ambiente perfecto para
-        escribir tu próximo blog.
-      </p>
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <div class="text-center mb-8">
+        <h3 class="text-xl font-bold text-blue uppercase mb-2">RECOMENDACIONES</h3>
+        <p class="text-lightBlue text-base">
+          Estas sugerencias pueden ayudarte a crear el ambiente perfecto para escribir tu próximo blog.
+        </p>
+      </div>
 
-      <div class="grid grid-cols-2 gap-6 mt-10">
-        <!-- Columna izquierda -->
-        <div class="flex flex-col space-y-6">
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              edit_note
-            </span>
-            <p>Escribe en un lugar tranquilo</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Left Column -->
+        <div class="space-y-6">
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">edit_note</span>
+            <p class="text-gray-700 font-medium">Escribe en un lugar tranquilo</p>
           </div>
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              music_note
-            </span>
-            <p>Escucha música que te inspire</p>
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">music_note</span>
+            <p class="text-gray-700 font-medium">Escucha música que te inspire</p>
           </div>
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              local_cafe
-            </span>
-            <p>Disfruta de tu bebida favorita</p>
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">local_cafe</span>
+            <p class="text-gray-700 font-medium">Disfruta de tu bebida favorita</p>
           </div>
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              light_mode
-            </span>
-            <p>Aprovecha la luz natural del día</p>
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">light_mode</span>
+            <p class="text-gray-700 font-medium">Aprovecha la luz natural del día</p>
           </div>
         </div>
 
-        <!-- Columna derecha -->
-        <div class="flex flex-col space-y-6">
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              dark_mode
-            </span>
-            <p>O escribe bajo la calma de la noche</p>
+        <!-- Right Column -->
+        <div class="space-y-6">
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">dark_mode</span>
+            <p class="text-gray-700 font-medium">O escribe bajo la calma de la noche</p>
           </div>
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              psychology_alt
-            </span>
-            <p>Deja que fluya tu reflexión personal</p>
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">psychology_alt</span>
+            <p class="text-gray-700 font-medium">Deja que fluya tu reflexión personal</p>
           </div>
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              travel_explore
-            </span>
-            <p>Cuenta una experiencia que te marcó</p>
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">travel_explore</span>
+            <p class="text-gray-700 font-medium">Cuenta una experiencia que te marcó</p>
           </div>
-          <div class="flex items-center space-x-3">
-            <span class="material-symbols-outlined text-blue text-4xl">
-              diversity_3
-            </span>
-            <p>Comparte algo que aprendiste en una conversación</p>
+          <div class="flex items-center space-x-4 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200">
+            <span class="material-symbols-outlined text-blue text-4xl">diversity_3</span>
+            <p class="text-gray-700 font-medium">Comparte algo que aprendiste</p>
           </div>
         </div>
       </div>
     </div>
 
-    <app-button
-      [text]="'Empezar'"
-      class="flex justify-center"
-      (click)="openModal()"
-    ></app-button>
+    <div class="text-center">
+      <button
+        (click)="openModal()"
+        class="bg-blue text-white px-8 py-4 rounded-lg hover:bg-lightBrown transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center space-x-2 mx-auto"
+      >
+        <span class="material-symbols-outlined">create</span>
+        <span>EMPEZAR A ESCRIBIR</span>
+      </button>
+    </div>
   </section>
-
   }
 </section>
 <app-footer></app-footer>

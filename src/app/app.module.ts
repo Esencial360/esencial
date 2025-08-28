@@ -123,6 +123,7 @@ import { UploadWorkshopComponent } from './pages/workshops/upload-workshop/uploa
 import { WeeklyPlanComponent } from './components/weekly-plan/weekly-plan.component';
 import { AdminWeeklyPlanComponent } from './components/admin-weekly-plan/admin-weekly-plan.component';
 import { AdminCollectionsComponent } from './components/admin-collections/admin-collections.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -225,6 +226,7 @@ registerLocaleData(localeEs, 'es');
     LoadingComponent,
     CheckMarkComponent,
     MatTabsModule,
+    EditorModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AuthModule.forRoot({
       domain: environment.auth0.domain,

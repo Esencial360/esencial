@@ -14,6 +14,7 @@ export const environment = {
     apiUrlBS: 'https://video.bunnycdn.com/library/263508',
     apiKeyBS: 'ef2617f6-6d44-4df4-a35b942cef57-555c-4302',
     apiUrlWorkshop: 'https://video.bunnycdn.com/library/452333',
-    apiKeyWS: 'c944d9b0-d84e-4b49-bcdffd0649f3-a0c2-4a5c'
+    apiKeyWS: 'c944d9b0-d84e-4b49-bcdffd0649f3-a0c2-4a5c',
+    tinymceApiKey: 'ga42i7uk8rs107zna0n5n1hrjvz0jo3fd2xl6zcdgj8us70f'
   };
 

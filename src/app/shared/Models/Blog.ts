@@ -3,5 +3,7 @@ export interface Blog {
     title: string, 
     description: string,
     imageUrl: string,
-    categoryId: string
+    categoryId: string,
+    tags?: any,
+    createdAt?: string;
 }
