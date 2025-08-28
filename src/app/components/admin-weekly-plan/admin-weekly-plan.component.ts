@@ -31,7 +31,7 @@ export class AdminWeeklyPlanComponent implements OnInit {
     'Sábado',
     'Domingo',
   ];
-  types = ['clase', 'meditacion', 'talleres'];
+  types = ['clase'];
   category = [];
   subcategory!: any;
   collectionList: any[] = [];
