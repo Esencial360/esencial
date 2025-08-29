@@ -1,0 +1,386 @@
+/* Add this to your single-blog.component.css */
+
+/* TinyMCE Content Styling */
+.tinymce-content {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.tinymce-content h1,
+.tinymce-content h2,
+.tinymce-content h3,
+.tinymce-content h4,
+.tinymce-content h5,
+.tinymce-content h6 {
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #111827;
+  line-height: 1.3;
+}
+
+.tinymce-content h1 {
+  font-size: 2.25rem; /* 36px */
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
+.tinymce-content h2 {
+  font-size: 1.875rem; /* 30px */
+  color: #1f2937;
+}
+
+.tinymce-content h3 {
+  font-size: 1.5rem; /* 24px */
+  color: #374151;
+}
+
+.tinymce-content h4 {
+  font-size: 1.25rem; /* 20px */
+  color: #4b5563;
+}
+
+.tinymce-content h5 {
+  font-size: 1.125rem; /* 18px */
+  color: #6b7280;
+}
+
+.tinymce-content h6 {
+  font-size: 1rem; /* 16px */
+  color: #6b7280;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.tinymce-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.8;
+}
+
+.tinymce-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Lists */
+.tinymce-content ul,
+.tinymce-content ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.tinymce-content ul {
+  list-style-type: disc;
+}
+
+.tinymce-content ol {
+  list-style-type: decimal;
+}
+
+.tinymce-content li {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.tinymce-content li::marker {
+  color: #3b82f6;
+}
+
+/* Nested lists */
+.tinymce-content ul ul,
+.tinymce-content ol ol,
+.tinymce-content ul ol,
+.tinymce-content ol ul {
+  margin: 0.5rem 0;
+}
+
+/* Links */
+.tinymce-content a {
+  color: #3b82f6;
+  text-decoration: underline;
+  text-decoration-color: rgba(59, 130, 246, 0.3);
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+}
+
+.tinymce-content a:hover {
+  color: #1d4ed8;
+  text-decoration-color: #1d4ed8;
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+/* Blockquotes */
+.tinymce-content blockquote {
+  border-left: 4px solid #3b82f6;
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 0 0.5rem 0.5rem 0;
+  position: relative;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #475569;
+}
+
+.tinymce-content blockquote::before {
+  content: '"';
+  font-size: 4rem;
+  color: #cbd5e1;
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  font-family: Georgia, serif;
+}
+
+.tinymce-content blockquote p {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Code blocks */
+.tinymce-content pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+  font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border: 1px solid #334155;
+}
+
+.tinymce-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  border-radius: 0;
+}
+
+/* Inline code */
+.tinymce-content code {
+  background: #f1f5f9;
+  color: #be123c;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
+  font-size: 0.875rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* Tables */
+.tinymce-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tinymce-content th,
+.tinymce-content td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tinymce-content th {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.tinymce-content tr:hover {
+  background: #f8fafc;
+}
+
+.tinymce-content tr:last-child td {
+  border-bottom: none;
+}
+
+/* Images */
+.tinymce-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 2rem 0;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tinymce-content img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px -7px rgba(0, 0, 0, 0.15);
+}
+
+/* Horizontal rules */
+.tinymce-content hr {
+  border: none;
+  height: 3px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 2px;
+  margin: 3rem 0;
+}
+
+/* Strong and emphasis */
+.tinymce-content strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+.tinymce-content em {
+  font-style: italic;
+  color: #4b5563;
+}
+
+/* Small text */
+.tinymce-content small {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Mark/Highlight */
+.tinymce-content mark {
+  background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+  color: #92400e;
+}
+
+/* Custom highlight paragraph class if used */
+.tinymce-content .highlight-paragraph {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-left: 4px solid #3b82f6;
+  padding: 1rem 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 1.5rem 0;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+/* Print styles */
+@media print {
+  .tinymce-content {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: black;
+  }
+  
+  .tinymce-content h1,
+  .tinymce-content h2,
+  .tinymce-content h3,
+  .tinymce-content h4,
+  .tinymce-content h5,
+  .tinymce-content h6 {
+    page-break-after: avoid;
+    color: black;
+  }
+  
+  .tinymce-content blockquote,
+  .tinymce-content pre,
+  .tinymce-content table {
+    page-break-inside: avoid;
+  }
+  
+  .tinymce-content img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .tinymce-content h1 {
+    font-size: 1.875rem; /* 30px */
+  }
+  
+  .tinymce-content h2 {
+    font-size: 1.5rem; /* 24px */
+  }
+  
+  .tinymce-content h3 {
+    font-size: 1.25rem; /* 20px */
+  }
+  
+  .tinymce-content p,
+  .tinymce-content li {
+    font-size: 1rem; /* 16px */
+  }
+  
+  .tinymce-content blockquote {
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .tinymce-content pre {
+    padding: 1rem;
+    font-size: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  
+  .tinymce-content table {
+    font-size: 0.875rem;
+  }
+  
+  .tinymce-content th,
+  .tinymce-content td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+/* Dark mode support (if your app has dark mode) */
+@media (prefers-color-scheme: dark) {
+  .dark .tinymce-content {
+    color: #d1d5db;
+  }
+  
+  .dark .tinymce-content h1,
+  .dark .tinymce-content h2,
+  .dark .tinymce-content h3,
+  .dark .tinymce-content h4,
+  .dark .tinymce-content h5,
+  .dark .tinymce-content h6 {
+    color: #f9fafb;
+  }
+  
+  .dark .tinymce-content blockquote {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    color: #d1d5db;
+    border-left-color: #60a5fa;
+  }
+  
+  .dark .tinymce-content code {
+    background: #374151;
+    color: #fbbf24;
+    border-color: #4b5563;
+  }
+  
+  .dark .tinymce-content table {
+    background: #1f2937;
+  }
+  
+  .dark .tinymce-content th {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  }
+  
+  .dark .tinymce-content tr:hover {
+    background: #374151;
+  }
+  
+  .dark .tinymce-content td {
+    border-color: #4b5563;
+  }
+}

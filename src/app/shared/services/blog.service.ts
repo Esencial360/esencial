@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, switchMap } from 'rxjs';
 import { Blog } from '../Models/Blog';
 import { Category } from '../Models/Category';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class BlogService {
   private apiUrlBlogs = `${environment.apiUrl}blog`;
   private apiUrlCategories = `${environment.apiUrl}categories`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   getAllBlogs(): Observable<Blog[]> {
     return this.http.get<Blog[]>(this.apiUrlBlogs);
@@ -24,7 +25,16 @@ export class BlogService {
   }
 
   createBlog(blog: FormData): Observable<Blog> {
-    return this.http.post<Blog>(this.apiUrlBlogs, blog);
+      return this.auth.getAccessTokenSilently().pipe(
+          switchMap((token: string) => {
+            const headers = new HttpHeaders({
+              Authorization: `Bearer ${token}`,
+            });
+            return this.http.post<Blog>(`${this.apiUrlBlogs}`, blog, {
+              headers,
+            });
+          })
+        );
   }
 
   updateBlog(blog: Blog): Observable<Blog> {
