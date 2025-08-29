@@ -17,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
     'INSTRUCTORES',
     'VIDEOS PENDIENTES',
     'PLAN SEMANAL',
-    'CATEGORIAS'
+    'CATEGORIAS',
   ];
   isLoading!: boolean;
   pullZone: string = environment.pullZone;
@@ -40,7 +40,23 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigateByUrl('/nuevo-video');
   }
 
-    onNewWorkshop() {
+  onNewWorkshop() {
     this.router.navigateByUrl('/nuevo-taller');
+  }
+
+  onNewBlog() {
+    this.router.navigateByUrl('/nuevo-blog');
+  }
+
+  onBunnyStream() {
+    window.open('https://bunny.net/', '_blank');
+  }
+
+  onAuth0() {
+    window.open('https://auth0.com/', '_blank');
+  }
+
+  onStripe() {
+    window.open('https://stripe.com/en-de', '_blank');
   }
 }
