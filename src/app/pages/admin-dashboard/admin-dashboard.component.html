@@ -2,46 +2,175 @@
 <app-loading></app-loading>
 } @else { @if (authService.user$ | async; as user) {
 <div
-  class="flex md:flex-row h-[75vh] flex-col items-center justify-around px-8 py-16 rounded-xl mx-auto montserrat-normal bg-bone"
+  class="montserrat-normal relative overflow-hidden bg-gradient-to-br from-bone via-bone/95 to-olive-50 rounded-2xl mx-auto shadow-2xl border border-olive-100"
 >
-  <div class="flex-1 lg:px-40">
-    <h2 class="!text-4xl font-bold text-strongBrown uppercase mb-4">
-      Bienvenido a esencial<span class="text-blue">360</span>
-    </h2>
-    <br />
-    <p class="text-olive-600 text-lg">
-      Desde aquí, gestionas la comunidad, las clases y la experiencia de cada
-      usuario. Tu labor impulsa el crecimiento de este espacio y mantiene viva
-      la esencia de nuestra plataforma.
+  <!-- Background decoration -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-blue/5 to-strongBrown/5 rounded-2xl"
+  ></div>
+  <div
+    class="absolute top-0 right-0 w-32 h-32 bg-blue/10 rounded-full -translate-y-16 translate-x-16 blur-xl"
+  ></div>
+  <div
+    class="absolute bottom-0 left-0 w-24 h-24 bg-strongBrown/10 rounded-full translate-y-12 -translate-x-12 blur-xl"
+  ></div>
 
-      <br /><br />
-      <span class="font-bold"> Gracias por ser parte de este camino. </span>
-      <br /><br />
-    </p>
-    <app-button
-      (onActionTrigger)="onNewMeditation()"
-      [bgColor]="'bg-blue'"
-      [text]="'Subir una meditacion'"
-    ></app-button>
-    <br />
-    <app-button
-      (onActionTrigger)="onNewClass()"
-      [bgColor]="'bg-blue'"
-      [text]="'Subir una clase'"
-    ></app-button>
-        <br />
-    <app-button
-      (onActionTrigger)="onNewWorkshop()"
-      [bgColor]="'bg-blue'"
-      [text]="'Subir un taller'"
-    ></app-button>
-  </div>
-  <div class="mt-5 md:mt-0 md:w-1/2">
-    <img
-      [src]="pullZone + '/assets/foldedMat.jpg'"
-      alt="Person doing yoga"
-      class="rounded-xl object-cover w-10/12 h-64"
-    />
+  <!-- Main content -->
+  <div
+    class="relative flex md:flex-row h-[85vh] flex-col items-center justify-between px-8 md:px-12 lg:px-16 py-16"
+  >
+    <!-- Left content section -->
+    <div class="flex-1 lg:pr-16 xl:pr-24 z-10">
+      <!-- Hero title with enhanced typography -->
+      <div class="mb-8">
+        <h2
+          class="text-4xl lg:text-5xl xl:text-6xl font-bold text-strongBrown uppercase mb-2 tracking-tight"
+        >
+          Bienvenido a
+        </h2>
+        <h2
+          class="text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight"
+        >
+          esencial<span
+            class="text-blue bg-gradient-to-r from-blue to-stronger_blue bg-clip-text text-transparent"
+            >360</span
+          >
+        </h2>
+        <div
+          class="w-20 h-1 bg-gradient-to-r from-blue to-strongBrown mt-4 rounded-full"
+        ></div>
+      </div>
+
+      <!-- Description with improved readability -->
+      <div class="mb-12">
+        <p class="text-olive-600 text-lg lg:text-xl leading-relaxed">
+          Desde aquí, gestionas la comunidad, las clases y la experiencia de
+          cada usuario. Tu labor impulsa el crecimiento de este espacio y
+          mantiene viva la esencia de nuestra plataforma.
+        </p>
+        <p
+          class="text-strongBrown font-semibold text-lg lg:text-xl mt-6 italic"
+        >
+          Gracias por ser parte de este camino.
+        </p>
+      </div>
+
+      <!-- Content Management Section -->
+      <div class="mb-8">
+        <h3
+          class="text-xl font-semibold text-strongBrown mb-4 uppercase tracking-wide"
+        >
+          Gestión de Contenido
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <app-button
+            (onActionTrigger)="onNewMeditation()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'✨ Subir Meditación'"
+            class="transform hover:scale-105 transition-all duration-200"
+          ></app-button>
+
+          <app-button
+            (onActionTrigger)="onNewClass()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'🧘‍♀️ Subir Clase'"
+            class="transform hover:scale-105 transition-all duration-200"
+          ></app-button>
+
+          <app-button
+            (onActionTrigger)="onNewWorkshop()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'🎯 Subir Taller'"
+            class="transform hover:scale-105 transition-all duration-200"
+          ></app-button>
+
+          <app-button
+            (onActionTrigger)="onNewBlog()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'📝 Subir Blog'"
+            class="transform hover:scale-105 transition-all duration-200"
+          ></app-button>
+        </div>
+      </div>
+
+      <!-- Platform Management Section -->
+      <div>
+        <h3
+          class="text-xl font-semibold text-strongBrown mb-4 uppercase tracking-wide"
+        >
+          Gestión de Plataforma
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <app-button
+            (onActionTrigger)="onBunnyStream()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'🎥 Bunny Stream'"
+            class="transform hover:scale-105 transition-all duration-200 text-sm"
+          ></app-button>
+
+          <app-button
+            (onActionTrigger)="onAuth0()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'🔐 Auth0'"
+            class="transform hover:scale-105 transition-all duration-200  text-sm"
+          ></app-button>
+
+          <app-button
+            (onActionTrigger)="onStripe()"
+            [bgColor]="
+              'bg-blue'
+            "
+            [text]="'💳 Stripe'"
+            class="transform hover:scale-105 transition-all duration-200 text-sm"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right image section with enhanced styling -->
+    <div class="mt-12 md:mt-0 md:w-1/2 lg:w-2/5 relative z-10">
+      <div class="relative group">
+        <!-- Image container with multiple effects -->
+        <div
+          class="relative overflow-hidden rounded-2xl shadow-2xl border-4 border-white/50 backdrop-blur-sm"
+        >
+          <img
+            [src]="pullZone + '/assets/foldedMat.jpg'"
+            alt="Person doing yoga"
+            class="w-full h-80 lg:h-96 object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+          />
+          <!-- Overlay gradient -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-strongBrown/20 via-transparent to-blue/10 group-hover:opacity-75 transition-opacity duration-300"
+          ></div>
+        </div>
+
+        <!-- Floating elements -->
+        <div
+          class="absolute -top-4 -right-4 w-8 h-8 bg-blue rounded-full opacity-80 animate-pulse"
+        ></div>
+        <div
+          class="absolute -bottom-4 -left-4 w-6 h-6 bg-strongBrown rounded-full opacity-60 animate-pulse delay-300"
+        ></div>
+
+        <!-- Decorative border -->
+        <div
+          class="absolute inset-0 rounded-2xl border-2 border-gradient-to-r from-blue/30 to-strongBrown/30 pointer-events-none transform group-hover:scale-105 transition-transform duration-300"
+        ></div>
+      </div>
+    </div>
   </div>
 </div>
 <section class="modern-tabs">
