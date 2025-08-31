@@ -29,7 +29,7 @@
     
     <!-- Add Instructor Button (Admin Only) -->
     @if (adminView) {
-      <div class="flex flex-col items-center mr-8 lg:mr-12 mb-8 lg:mb-0 flex-shrink-0" data-aos="zoom-in" data-aos-delay="300">
+      <div class="flex flex-col items-center mb-8 lg:mb-0 flex-shrink-0" data-aos="zoom-in" data-aos-delay="300">
         <div class="relative group">
           <!-- Decorative rings -->
           <div class="absolute -inset-2 bg-gradient-to-r from-blue to-strongBrown rounded-full opacity-20 group-hover:opacity-40 animate-pulse transition-opacity duration-300"></div>
@@ -134,13 +134,15 @@
   </div>
   
   <!-- View All Button -->
-  <div class="flex justify-end mt-12" data-aos="fade-left" data-aos-delay="800">
+   @if (!adminView) {
+      <div class="flex justify-end mt-12" data-aos="fade-left" data-aos-delay="800">
     <app-button-v2 
       class="group relative overflow-hidden" 
       (onClickAction)="onAllInstructors()" 
       [text]="'ver todos los instructores'"
     ></app-button-v2>
   </div>
+   }
 </section>
 
 @if (openModal) {

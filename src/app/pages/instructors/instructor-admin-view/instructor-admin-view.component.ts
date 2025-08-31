@@ -11,6 +11,7 @@ import {
   DialogComponent,
   DialogData,
 } from '../../../shared/ui/dialog/dialog.component';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-instructor-admin-view',
@@ -29,6 +30,7 @@ export class InstructorAdminViewComponent {
   videos!: any[];
   loadingClasses!: boolean;
   pullZone = environment.pullZone;
+  confirmDelete!: boolean;
 
   links: SafeResourceUrl[] = [];
 
@@ -38,7 +40,8 @@ export class InstructorAdminViewComponent {
     private bunnystreamService: BunnystreamService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private overlay: Overlay
   ) {}
 
   @Input() adminView!: boolean;
@@ -48,14 +51,13 @@ export class InstructorAdminViewComponent {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
 
   async ngOnInit() {
-    console.log('single initialized');
+    window.scrollTo(0, 0);
     this.route.paramMap.subscribe((params) => {
       this.instructorId = params.get('id');
     });
 
     await this.instructorService.getInstructor(this.instructorId).subscribe(
       (response) => {
-        console.log('Instructor get successfully');
         this.instructor = response;
         this.getVideo(this.instructor.videos);
       },
@@ -90,6 +92,7 @@ export class InstructorAdminViewComponent {
             this.loadingClasses = false;
           },
           error: (error) => {
+            this.loadingClasses = false
             console.error('Error retrieving videos:', error);
           },
         });
@@ -111,6 +114,7 @@ export class InstructorAdminViewComponent {
             this.loadingClasses = false;
           },
           error: (error) => {
+            this.loadingClasses = false
             console.error('Error retrieving videos:', error);
           },
         });
@@ -134,35 +138,27 @@ export class InstructorAdminViewComponent {
   onRemoveInstructor() {
     this.instructorService.deleteInstructor(this.instructorId).subscribe({
       next: (response) => {
-        console.log('Instructor removed successfully');
+        this.router.navigate(['/'])
+        this.confirmDelete = false
       },
       error: (error) => {
         console.log('Instructor removed error', error);
+        this.confirmDelete = false
       },
     });
   }
 
-  deleteConfirmation() {
-    const scrollPosition = window.pageYOffset;
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Eliminar instructor',
-        message: 'Estas seguro de eliminar el instructor?',
-        confirmText: 'Aprovar',
-        cancelText: 'Volver',
-      } as DialogData,
-    });
+deleteConfirmation() {
+  this.confirmDelete = true;
+}
 
-    dialogRef.afterOpened().subscribe(() => {
-      window.scrollTo(0, scrollPosition);
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.onRemoveInstructor();
-      }
-    });
-  }
+onCancel() {
+  console.log('canceling');
+  
+  this.confirmDelete = false;
+}
+
 
   getDescriptionParagraphs(description: string): string[] {
     return description.split('.').map(p => p.trim()).filter(p => p.length > 0);

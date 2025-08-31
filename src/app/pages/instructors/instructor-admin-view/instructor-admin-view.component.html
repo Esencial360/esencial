@@ -1,16 +1,45 @@
 <app-header></app-header>
 <app-page-title
-  [pageDescription]="instructor.title"
+  [pageDescription]="instructor ? instructor.title : ''"
   [arrowBack]="true"
-  [pageTitle]="instructor.firstname + ' ' + instructor.lastname"
+  [pageTitle]="
+    instructor ? instructor.firstname + ' ' + instructor.lastname : ''
+  "
 ></app-page-title>
 <div class="w-full flex flex-col items-center montserrat-normal">
+  <button
+    (click)="deleteConfirmation()"
+    class="group relative overflow-hidden bg-gradient-to-r from-blue to-strongBrown hover:from-strongBrown hover:to-blue text-white font-bold text-lg py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+  >
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-strongBrown to-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    ></div>
+
+    <div class="relative flex items-center justify-center">
+      <svg
+        class="w-6 h-6 mr-3 transform group-hover:translate-x-1 transition-transform duration-300"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 7l5 5m0 0l-5 5m5-5H6"
+        ></path>
+      </svg>
+      Remover perfil
+    </div>
+
+    <div
+      class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out"
+    ></div>
+  </button>
   <div
     class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 cursor-pointer max-w-4xl"
   >
-    <div
-      class="w-80 rounded-full object-cover flex-shrink-0 overflow-hidden"
-    >
+    <div class="w-80 rounded-full object-cover flex-shrink-0 overflow-hidden">
       <img
         [src]="instructor.profilePicture"
         [alt]="instructor.firstname"
@@ -24,7 +53,11 @@
         {{ instructor.firstname + " " + instructor.lastname }}
       </h2>
       <div class="text-neutral-700 leading-relaxed space-y-4">
-        <p *ngFor="let paragraph of getDescriptionParagraphs(instructor.description)">
+        <p
+          *ngFor="
+            let paragraph of getDescriptionParagraphs(instructor.description)
+          "
+        >
           {{ paragraph }}.
         </p>
       </div>
@@ -43,7 +76,7 @@
       data-aos-duration="1000"
       class="container mx-auto px-4 py-8 montserrat-normal"
     >
-    @if (loadingClasses) {
+      @if (loadingClasses) {
       <app-loading></app-loading>
       } @else {
       <app-class-thumbnail
@@ -53,14 +86,19 @@
       ></app-class-thumbnail>
       }
     </section>
-    <app-button
-    [bgColor]="'bg-blue'"
-    [text]="'Eliminar perfil'"
-    [width]="'w-full'"
-    class="my-10"
-    (onActionTrigger)="deleteConfirmation()"
-  ></app-button>
   </div>
 </div>
 
 <app-footer></app-footer>
+
+@if (confirmDelete) {
+<app-dialog
+  [title]="'Eliminar instructor'"
+  [message]="'Estas seguro de eliminar el instructor?'"
+  [cancelText]="'Volver'"
+  [confirmText]="'Aprovar'"
+  (confirmed)="onRemoveInstructor()"
+  (close)="onCancel()"
+  [isOpen]="confirmDelete"
+></app-dialog>
+}
