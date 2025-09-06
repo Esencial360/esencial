@@ -12,6 +12,7 @@ import {
   DialogData,
 } from '../../../shared/ui/dialog/dialog.component';
 import { Overlay } from '@angular/cdk/overlay';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-instructor-admin-view',
@@ -34,14 +35,19 @@ export class InstructorAdminViewComponent {
 
   links: SafeResourceUrl[] = [];
 
+  editMode = false;
+  updateInstructorForm!: FormGroup;
+  selectedFileUpdateInstructor: File | null = null;
+  onSubmittingUpdateForm = false;
+  error!: any;
+
   constructor(
     private route: ActivatedRoute,
     private instructorService: InstructorService,
     private bunnystreamService: BunnystreamService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private dialog: MatDialog,
-    private overlay: Overlay
+    private fb: FormBuilder
   ) {}
 
   @Input() adminView!: boolean;
@@ -65,6 +71,17 @@ export class InstructorAdminViewComponent {
         console.error('Instructor get error', error);
       }
     );
+    this.initializeUpdateForm();
+  }
+
+  initializeUpdateForm() {
+    this.updateInstructorForm = this.fb.group({
+      firstname: [this.instructor.firstname, Validators.required],
+      lastname: [this.instructor.lastname, Validators.required],
+      email: [this.instructor.email, [Validators.required, Validators.email]],
+      title: [this.instructor.title],
+      description: [this.instructor.description],
+    });
   }
 
   getVideo(videos: any) {
@@ -77,7 +94,9 @@ export class InstructorAdminViewComponent {
     } else if (videoIdsArray.length === 1) {
       from(videoIdsArray)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
+          concatMap((videoId) =>
+            this.bunnystreamService.getVideo('video', videoId)
+          ),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -92,14 +111,16 @@ export class InstructorAdminViewComponent {
             this.loadingClasses = false;
           },
           error: (error) => {
-            this.loadingClasses = false
+            this.loadingClasses = false;
             console.error('Error retrieving videos:', error);
           },
         });
     } else if (videoIdsArray.length > 1) {
       from(videoIdsArray)
         .pipe(
-          concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
+          concatMap((videoId) =>
+            this.bunnystreamService.getVideo('video', videoId)
+          ),
           map((video) => ({
             video: video,
             safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -114,7 +135,7 @@ export class InstructorAdminViewComponent {
             this.loadingClasses = false;
           },
           error: (error) => {
-            this.loadingClasses = false
+            this.loadingClasses = false;
             console.error('Error retrieving videos:', error);
           },
         });
@@ -138,29 +159,91 @@ export class InstructorAdminViewComponent {
   onRemoveInstructor() {
     this.instructorService.deleteInstructor(this.instructorId).subscribe({
       next: (response) => {
-        this.router.navigate(['/'])
-        this.confirmDelete = false
+        this.router.navigate(['/']);
+        this.confirmDelete = false;
       },
       error: (error) => {
         console.log('Instructor removed error', error);
-        this.confirmDelete = false
+        this.confirmDelete = false;
       },
     });
   }
 
-deleteConfirmation() {
-  this.confirmDelete = true;
-}
+  deleteConfirmation() {
+    this.confirmDelete = true;
+  }
 
-
-onCancel() {
-  console.log('canceling');
-  
-  this.confirmDelete = false;
-}
-
+  onCancel() {
+    this.confirmDelete = false;
+  }
 
   getDescriptionParagraphs(description: string): string[] {
-    return description.split('.').map(p => p.trim()).filter(p => p.length > 0);
+    return description
+      .split('.')
+      .map((p) => p.trim())
+      .filter((p) => p.length > 0);
+  }
+
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+    if (this.editMode) {
+      this.initializeUpdateForm();
+    } else {
+      this.selectedFileUpdateInstructor = null;
+    }
+  }
+
+  onFileSelectedUpdateInstructor(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.selectedFileUpdateInstructor = target.files[0];
+    }
+  }
+
+  onSubmitUpdateInstructor() {
+    if (this.updateInstructorForm.valid) {
+      this.onSubmittingUpdateForm = true;
+      const formData = new FormData();
+
+      formData.append('_id', this.instructor._id ? this.instructor._id : '');
+
+      formData.append('firstname', this.updateInstructorForm.value.firstname);
+      formData.append('lastname', this.updateInstructorForm.value.lastname);
+      formData.append('title', this.updateInstructorForm.value.title);
+      formData.append('email', this.updateInstructorForm.value.email);
+      formData.append(
+        'description',
+        this.updateInstructorForm.value.description
+      );
+
+      if (this.selectedFileUpdateInstructor) {
+        formData.append('profilePicture', this.selectedFileUpdateInstructor);
+      }
+
+      console.log(formData);
+      
+
+      this.instructorService.updateInstructor(formData).subscribe({
+        next: (response) => {
+          this.instructor = { ...this.instructor, ...response };
+
+          this.onSubmittingUpdateForm = false;
+          this.editMode = false;
+          this.selectedFileUpdateInstructor = null;
+
+        },
+        error: (error) => {
+          console.log('Error updating instructor', error);
+          this.onSubmittingUpdateForm = false;
+          this.error = error;
+        },
+      });
+    }
+  }
+
+  cancelUpdate() {
+    this.editMode = false;
+    this.selectedFileUpdateInstructor = null;
+    this.updateInstructorForm.reset();
   }
 }
