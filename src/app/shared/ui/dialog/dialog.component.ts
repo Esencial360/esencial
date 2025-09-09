@@ -1,4 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface DialogData {
@@ -15,24 +22,25 @@ export interface DialogData {
   styleUrl: './dialog.component.css',
 })
 export class DialogComponent implements OnInit {
+  @Input() isOpen: boolean = false;
+  @Output() close = new EventEmitter<void>();
+  @Output() confirmed = new EventEmitter<void>();
+  @Input() title!: string;
+  @Input() message!: string;
+  @Input() cancelText!: string;
+  @Input() confirmText!: string;
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     // You can initialize any data here if needed
   }
 
   confirm() {
-    if (this.data.onConfirm) {
-      this.data.onConfirm();
-    }
-    this.dialogRef.close(true);
+    this.confirmed.emit();
   }
 
   cancel() {
-    this.dialogRef.close(false);
+    this.close.emit();
   }
 }

@@ -35,7 +35,7 @@ export class InstructorService {
     );
   }
 
-  updateInstructor(instructor: Instructor): Observable<Instructor> {
+  updateInstructor(instructor: FormData | Instructor): Observable<Instructor> {
     return this.auth.getAccessTokenSilently().pipe(
       switchMap((token: string) => {
         const headers = new HttpHeaders({

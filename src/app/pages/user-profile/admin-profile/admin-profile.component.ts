@@ -89,55 +89,6 @@ export class AdminProfileComponent implements OnInit {
       this.getVideo(this.pendingVideos);
     });
   }
-
-  // async getVideo(videoIds: any) {
-  //   console.log(videoIds);
-
-  //   if (videoIds.length === 0) {
-  //   } else if (videoIds.length === 1) {
-  //     from(videoIds)
-  //       .pipe(
-  //         concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
-  //         map((video) => ({
-  //           video: video,
-  //           safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-  //             `https://vz-4422bc83-71b.b-cdn.net/${video.guid}/thumbnail.jpg`
-  //           ),
-  //         })),
-  //         toArray()
-  //       )
-  //       .subscribe({
-  //         next: (videos) => {
-  //           this.videos = videos;
-  //         },
-  //         error: (error) => {
-  //           console.error('Error retrieving videos:', error);
-  //         },
-  //       });
-  //   } else if (videoIds.length > 1) {
-  //     from(videoIds)
-  //       .pipe(
-  //         concatMap((videoId) => this.bunnystreamService.getVideo('video', videoId)),
-  //         map((video) => ({
-  //           video: video,
-  //           safeThumbnail: this.sanitizer.bypassSecurityTrustResourceUrl(
-  //             `https://vz-cbbe1d6f-d6a.b-cdn.net/${video.guid}/${video.thumbnailFileName}`
-  //           ),
-  //         })),
-  //         toArray()
-  //       )
-  //       .subscribe({
-  //         next: (videos) => {
-  //           this.videos = videos;
-  //         },
-  //         error: (error) => {
-  //           console.error('Error retrieving videos:', error);
-  //         },
-  //       });
-  //   }
-  //   this.isLoading = false;
-  // }
-
   getVideo(videos: any) {
     if (videos.length === 0) {
       return;

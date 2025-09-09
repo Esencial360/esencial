@@ -184,6 +184,7 @@ const routes: Routes = [
   {
     path: 'instructor-previa/:id',
     component: InstructorAdminViewComponent,
+    canActivate: [AuthGuard],
     data: { animation: 'openClosePage' },
   },
   {

@@ -1,32 +1,208 @@
 <app-header></app-header>
 <app-page-title
-  [pageDescription]="instructor.title"
+  [pageDescription]="instructor ? instructor.title : ''"
   [arrowBack]="true"
-  [pageTitle]="instructor.firstname + ' ' + instructor.lastname"
+  [pageTitle]="
+    instructor ? instructor.firstname + ' ' + instructor.lastname : ''
+  "
 ></app-page-title>
 <div class="w-full flex flex-col items-center montserrat-normal">
-  <div
-    class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 cursor-pointer max-w-4xl"
-  >
-    <div
-      class="w-80 rounded-full object-cover flex-shrink-0 overflow-hidden"
+  <!-- Action buttons row -->
+  <div class="flex flex-col sm:flex-row gap-4 mb-6">
+    <!-- Edit/Update button -->
+    <button
+      *ngIf="!editMode"
+      (click)="toggleEditMode()"
+      class="group relative overflow-hidden bg-gradient-to-r from-blue to-strongBrown  hover:from-emerald-600 hover:to-green-700 text-white font-bold text-lg py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
     >
+      <div class="absolute inset-0 bg-gradient-to-r from-blue to-strongBrown opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div class="relative flex items-center justify-center">
+        <svg class="w-6 h-6 mr-3 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        </svg>
+        Editar perfil
+      </div>
+      <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out"></div>
+    </button>
+
+    <!-- Delete button -->
+    <button
+      (click)="deleteConfirmation()"
+      class="group relative overflow-hidden bg-gradient-to-r from-red to-orange hover:from-red-600 hover:to-red-700 text-white font-bold text-lg py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+    >
+      <div class="absolute inset-0 bg-gradient-to-r from-red to-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div class="relative flex items-center justify-center">
+        <svg class="w-6 h-6 mr-3 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+        Remover perfil
+      </div>
+      <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out"></div>
+    </button>
+  </div>
+
+  <!-- Instructor profile display/edit -->
+  <div class="flex flex-col lg:flex-row items-center gap-6 p-6 my-5 max-w-4xl w-full">
+    <!-- Profile picture section -->
+    <div class="w-80 rounded-full object-cover flex-shrink-0 overflow-hidden relative group">
       <img
         [src]="instructor.profilePicture"
         [alt]="instructor.firstname"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
+      
+      <!-- Edit overlay for profile picture -->
+      <div *ngIf="editMode" class="absolute inset-0 bg-blue/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <label for="updateProfilePicture" class="cursor-pointer text-white text-center">
+          <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          <span class="text-sm">Cambiar foto</span>
+        </label>
+        <input
+          id="updateProfilePicture"
+          type="file"
+          accept="image/*"
+          (change)="onFileSelectedUpdateInstructor($event)"
+          class="hidden"
+        />
+      </div>
     </div>
-    <div class="text-gray-700 lg:ml-10">
-      <h2
-        class="font-bold text-lg lg:text-2xl uppercase text-blue drop-shadow-lg"
-      >
-        {{ instructor.firstname + " " + instructor.lastname }}
-      </h2>
-      <div class="text-neutral-700 leading-relaxed space-y-4">
-        <p *ngFor="let paragraph of getDescriptionParagraphs(instructor.description)">
-          {{ paragraph }}.
-        </p>
+
+    <!-- Instructor information -->
+    <div class="text-gray-700 lg:ml-10 flex-1">
+      <!-- Edit mode form -->
+      <form *ngIf="editMode" [formGroup]="updateInstructorForm" class="space-y-6">
+        <!-- Name fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-strongBrown mb-2">Nombre</label>
+            <input
+              formControlName="firstname"
+              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue focus:outline-none transition-colors duration-200"
+              placeholder="Nombre"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-strongBrown mb-2">Apellido</label>
+            <input
+              formControlName="lastname"
+              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue focus:outline-none transition-colors duration-200"
+              placeholder="Apellido"
+            />
+          </div>
+        </div>
+
+        <!-- Email field -->
+        <div>
+          <label class="block text-sm font-semibold text-strongBrown mb-2">Email</label>
+          <input
+            formControlName="email"
+            type="email"
+            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue focus:outline-none transition-colors duration-200"
+            placeholder="Email"
+          />
+        </div>
+
+        <!-- Title field -->
+        <div>
+          <label class="block text-sm font-semibold text-strongBrown mb-2">Título</label>
+          <input
+            formControlName="title"
+            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue focus:outline-none transition-colors duration-200"
+            placeholder="Título profesional"
+          />
+        </div>
+
+        <!-- Description field -->
+        <div>
+          <label class="block text-sm font-semibold text-strongBrown mb-2">Descripción</label>
+          <textarea
+            formControlName="description"
+            rows="4"
+            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue focus:outline-none transition-colors duration-200 resize-none"
+            placeholder="Descripción del instructor"
+          ></textarea>
+        </div>
+
+        <!-- Action buttons for edit mode -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+          <button
+            type="button"
+            (click)="onSubmitUpdateInstructor()"
+            [disabled]="!updateInstructorForm.valid || onSubmittingUpdateForm"
+            class="group relative overflow-hidden bg-gradient-to-r from-blue to-strongBrown hover:from-strongBrown hover:to-blue text-white font-bold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          >
+            <div class="absolute inset-0 bg-gradient-to-r from-strongBrown to-blue group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative flex items-center justify-center">
+              <svg *ngIf="!onSubmittingUpdateForm" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <div *ngIf="onSubmittingUpdateForm" class="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              {{ onSubmittingUpdateForm ? 'Guardando...' : 'Guardar cambios' }}
+            </div>
+            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out"></div>
+          </button>
+
+          <button
+            type="button"
+            (click)="cancelUpdate()"
+            class="group relative overflow-hidden bg-white hover:bg-gray-50 text-gray-600 hover:text-gray-800 font-semibold py-3 px-8 rounded-xl border-2 border-gray-200 hover:border-gray-300 shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+          >
+            <div class="relative flex items-center justify-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Cancelar
+            </div>
+            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-gray-100/30 to-transparent transition-transform duration-500 ease-out"></div>
+          </button>
+        </div>
+      </form>
+
+      <!-- Display mode -->
+      <div *ngIf="!editMode">
+        <h2 class="font-bold text-lg lg:text-2xl uppercase text-blue drop-shadow-lg mb-4">
+          {{ instructor.firstname + " " + instructor.lastname }}
+        </h2>
+        
+        <div class="space-y-3">
+          <div *ngIf="instructor.title" class="flex items-center">
+            <svg class="w-5 h-5 text-strongBrown mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h8z"></path>
+            </svg>
+            <span class="font-semibold text-strongBrown">{{ instructor.title }}</span>
+          </div>
+          
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-strongBrown mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+            </svg>
+            <span class="text-gray-600">{{ instructor.email }}</span>
+          </div>
+        </div>
+
+        <div class="text-neutral-700 leading-relaxed space-y-4 mt-6">
+          <p *ngFor="let paragraph of getDescriptionParagraphs(instructor.description)">
+            {{ paragraph }}.
+          </p>
+        </div>
+
+        <!-- Edit button -->
+        <button
+          (click)="toggleEditMode()"
+          class="group mt-6 relative overflow-hidden bg-gradient-to-r from-blue to-strongBrown hover:from-strongBrown hover:to-blue text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-strongBrown to-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            Editar información
+          </div>
+          <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out"></div>
+        </button>
       </div>
     </div>
   </div>
@@ -43,24 +219,29 @@
       data-aos-duration="1000"
       class="container mx-auto px-4 py-8 montserrat-normal"
     >
-    @if (loadingClasses) {
-      <app-loading></app-loading>
+      @if (loadingClasses) {
+        <app-loading></app-loading>
       } @else {
-      <app-class-thumbnail
-        [classes]="videos"
-        [allClasses]="true"
-        (actionClassSelected)="onWatchSingleClass($event)"
-      ></app-class-thumbnail>
+        <app-class-thumbnail
+          [classes]="videos"
+          [allClasses]="true"
+          (actionClassSelected)="onWatchSingleClass($event)"
+        ></app-class-thumbnail>
       }
     </section>
-    <app-button
-    [bgColor]="'bg-blue'"
-    [text]="'Eliminar perfil'"
-    [width]="'w-full'"
-    class="my-10"
-    (onActionTrigger)="deleteConfirmation()"
-  ></app-button>
   </div>
 </div>
 
 <app-footer></app-footer>
+
+@if (confirmDelete) {
+<app-dialog
+  [title]="'Eliminar instructor'"
+  [message]="'Estas seguro de eliminar el instructor?'"
+  [cancelText]="'Volver'"
+  [confirmText]="'Aprovar'"
+  (confirmed)="onRemoveInstructor()"
+  (close)="onCancel()"
+  [isOpen]="confirmDelete"
+></app-dialog>
+}

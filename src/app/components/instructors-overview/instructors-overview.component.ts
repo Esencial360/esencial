@@ -33,7 +33,7 @@ export class InstructorsOverviewComponent implements OnInit {
   getAllInstructors() {
     this.instructorService.getAllInstructors().subscribe(
       (instructors) => {
-        this.instructors = instructors.slice(0, 3);
+        this.instructors = instructors
         this.store.dispatch(
           InstructorActions.retrievedInstructorList({
             instructors: instructors,
