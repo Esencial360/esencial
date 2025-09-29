@@ -1,0 +1,111 @@
+   <div class="instructor-actions-container space-y-4">
+      <!-- Teaching Streak Section -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+          </svg>
+          Update Teaching Streak
+        </h4>
+        
+        <p class="text-gray-600 mb-4">
+          Click this button after completing a teaching session to update your teaching streak.
+        </p>
+        
+        <button 
+          (click)="updateTeachingStreak()"
+          [disabled]="updatingStreak"
+          class="w-full sm:w-auto px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium">
+          <span *ngIf="!updatingStreak" class="flex items-center justify-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Mark Class as Taught
+          </span>
+          <span *ngIf="updatingStreak" class="flex items-center justify-center">
+            <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Updating...
+          </span>
+        </button>
+
+        <!-- Success/Error Messages for Streak -->
+        <div *ngIf="streakMessage" 
+             [ngClass]="streakMessageType === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'"
+             class="mt-4 p-3 rounded-lg border">
+          <div class="flex">
+            <svg *ngIf="streakMessageType === 'success'" class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            <svg *ngIf="streakMessageType === 'error'" class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-sm">{{ streakMessage }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Actions Section (only show if user has admin role) -->
+      <div *ngIf="showAdminActions" class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+          </svg>
+          Admin Actions
+        </h4>
+        
+        <div class="space-y-4">
+          <!-- Approve Class Form -->
+          <div class="border border-gray-200 rounded-lg p-4">
+            <h5 class="font-medium text-gray-700 mb-3">Approve Class</h5>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <input 
+                type="text" 
+                [(ngModel)]="approvalForm.videoId"
+                placeholder="Video/Workshop ID"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              
+              <select 
+                [(ngModel)]="approvalForm.type"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">Select Type</option>
+                <option value="video">Video</option>
+                <option value="workshop">Workshop</option>
+              </select>
+              
+              <button 
+                (click)="approveClass()"
+                [disabled]="!approvalForm.videoId || !approvalForm.type || approvingClass"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+                <span *ngIf="!approvingClass">Approve</span>
+                <span *ngIf="approvingClass" class="flex items-center justify-center">
+                  <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Approving...
+                </span>
+              </button>
+            </div>
+
+            <!-- Success/Error Messages for Approval -->
+            <div *ngIf="approvalMessage" 
+                 [ngClass]="approvalMessageType === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'"
+                 class="mt-3 p-3 rounded-lg border">
+              <div class="flex">
+                <svg *ngIf="approvalMessageType === 'success'" class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <svg *ngIf="approvalMessageType === 'error'" class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-sm">{{ approvalMessage }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

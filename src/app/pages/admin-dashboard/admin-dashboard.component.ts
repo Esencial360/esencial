@@ -18,6 +18,7 @@ export class AdminDashboardComponent implements OnInit {
     'VIDEOS PENDIENTES',
     'PLAN SEMANAL',
     'CATEGORIAS',
+    'BADGES INSTRUCTOR'
   ];
   isLoading!: boolean;
   pullZone: string = environment.pullZone;

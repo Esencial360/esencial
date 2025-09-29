@@ -19,7 +19,7 @@ export class InstructorDashboardComponent implements OnInit {
   isLoading!: boolean;
   userId: string = '';
   // filters = ['MIS CLASES', 'PAGOS', 'CODIGO'];
-  filters = ['MIS CLASES', 'CODIGO']
+  filters = ['MIS CLASES', 'CODIGO', 'BADGES']
   pullZone: string = environment.pullZone
   instructorImage!: string;
 
@@ -54,6 +54,8 @@ export class InstructorDashboardComponent implements OnInit {
               this.instructorService.getInstructor(user.email).subscribe({
                 next: (response) => {
                   this.instructorImage = response.profilePicture.toString()
+                  console.log(response);
+                  
                   this.store.dispatch(
                     ActiveUserApiActions.retrievedActiveUser({
                       user: response,

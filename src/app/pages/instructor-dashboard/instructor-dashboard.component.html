@@ -2,28 +2,29 @@
 <app-loading></app-loading>
 } @else { @if (authService.user$ | async; as user) {
 <div
-  class="flex md:flex-row h-[60vh] flex-col items-center justify-around px-8 py-16 max-w-7xl mx-auto montserrat-normal"
+  class="flex flex-col md:flex-row items-center justify-center p-8 md:p-16 max-w-7xl mx-auto montserrat-normal gap-8"
 >
-  <div class="mt-5 md:mt-0 md:w-1/2">
+  <div class="md:w-1/2 flex justify-center">
     <img
-      [src]="instructorImage"
+      [src]="pullZone + '/assets/1.png'"
       alt="Person doing yoga"
-      class="rounded-xl object-cover w-10/12 h-64"
+      class="w-full md:w-10/12 lg:w-3/4 max-w-[400px] h-auto rounded-2xl object-cover shadow-2xl transition-transform duration-300 hover:scale-105"
     />
   </div>
-  <div class="flex-1">
-    <h2 class="!text-4xl font-bold text-strongBrown uppercase mb-4">
-      ¡Bienvenido {{ user["username"] ? user["username"] : user.nickname }}!
+  <div class="md:w-1/2 text-center md:text-left">
+    <h2
+      class="text-4xl md:text-5xl font-extrabold text-strongBrown uppercase mb-4 leading-tight"
+    >
+      ¡Bienvenido
+      <span class="text-olive-600">{{
+        user["username"] ? user["username"] : user.nickname
+      }}</span
+      >!
     </h2>
-    <br />
-    <p class="text-olive-600 text-lg">
+    <p class="text-xl text-gray-700 leading-relaxed max-w-prose mx-auto md:mx-0">
       ¡Gracias por ser parte esencial de esta comunidad! Tu guía inspira y
-      transforma en cada clase.
-      <br /><br />
-      Sigue compartiendo con intención y pasión, impactando la práctica y el
-      crecimiento de cada alumno.
-      <br /><br />
-      <!-- <app-button (onActionTrigger)="onNewClass()" [bgColor]="'bg-blue'" [text]="'Subir una clase'"></app-button> -->
+      transforma en cada clase. Sigue compartiendo con intención y pasión,
+      impactando la práctica y el crecimiento de cada alumno.
     </p>
   </div>
 </div>

@@ -5,5 +5,5 @@ export interface Blog {
     imageUrl: string,
     categoryId: string,
     tags?: any,
-    createdAt?: string;
+    createdAt: string;
 }

@@ -124,6 +124,8 @@ import { WeeklyPlanComponent } from './components/weekly-plan/weekly-plan.compon
 import { AdminWeeklyPlanComponent } from './components/admin-weekly-plan/admin-weekly-plan.component';
 import { AdminCollectionsComponent } from './components/admin-collections/admin-collections.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { InstructorBadgeComponent } from './components/instructor-badge/instructor-badge.component';
+import { InstructorActionsComponent } from './components/instructor-actions/instructor-actions.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -215,6 +217,8 @@ registerLocaleData(localeEs, 'es');
     WeeklyPlanComponent,
     AdminWeeklyPlanComponent,
     AdminCollectionsComponent,
+    InstructorBadgeComponent,
+    InstructorActionsComponent,
   ],
   imports: [
     BrowserModule,
