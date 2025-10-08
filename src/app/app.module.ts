@@ -126,6 +126,7 @@ import { AdminCollectionsComponent } from './components/admin-collections/admin-
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { InstructorBadgeComponent } from './components/instructor-badge/instructor-badge.component';
 import { InstructorActionsComponent } from './components/instructor-actions/instructor-actions.component';
+import { BadgeNotificationComponent } from './shared/ui/badge-notification/badge-notification.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -219,6 +220,7 @@ registerLocaleData(localeEs, 'es');
     AdminCollectionsComponent,
     InstructorBadgeComponent,
     InstructorActionsComponent,
+    BadgeNotificationComponent,
   ],
   imports: [
     BrowserModule,

@@ -100,9 +100,125 @@
     ></app-previous-classes> -->
   </mat-tab>
   } 
-  <!-- @if (showTab('BADGES')) {
+  @if (showTab('BADGES')) {
   <mat-tab label="BADGES">
-    <app-badges [badges]="badges" [futureBadges]="futureBadges"></app-badges>
+     <app-badge-notification #badgeNotification></app-badge-notification>
+    
+    <div class="profile-container min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-8 px-4">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Profile Header -->
+        <div class="profile-header bg-white rounded-2xl shadow-lg p-6 mb-6">
+          <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
+            <!-- Avatar -->
+            <div class="avatar-container relative">
+              <div class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-4xl font-bold">
+                {{ getInitials(user?.username) }}
+              </div>
+              <!-- Streak Indicator -->
+              <!-- <div *ngIf="user?.streak?.count > 0" 
+                   class="absolute -bottom-2 -right-2 bg-orange-500 text-white rounded-full px-3 py-1 text-sm font-bold flex items-center">
+                🔥 {{ user?.streak?.count }}
+              </div> -->
+            </div>
+            
+            <!-- User Info -->
+            <div class="flex-1 text-center md:text-left">
+              <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ user?.username }}</h1>
+              <!-- <p class="text-gray-600 mb-4">{{ user?. }}</p> -->
+              
+              <!-- Stats Row -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                <div class="stat-card bg-purple-50 rounded-lg p-3 text-center">
+                  <p class="text-2xl font-bold text-purple-600">{{ user?.streak?.count || 0 }}</p>
+                  <p class="text-xs text-gray-600">Días de Racha</p>
+                </div>
+                <div class="stat-card bg-blue-50 rounded-lg p-3 text-center">
+                  <p class="text-2xl font-bold text-blue-600">{{ getDaysSinceJoined() }}</p>
+                  <p class="text-xs text-gray-600">Días como Miembro</p>
+                </div>
+                <div class="stat-card bg-green-50 rounded-lg p-3 text-center">
+                  <p class="text-2xl font-bold text-green-600">{{ user?.badges?.length || 0 }}</p>
+                  <p class="text-xs text-gray-600">Insignias</p>
+                </div>
+                <!-- <div class="stat-card bg-pink-50 rounded-lg p-3 text-center">
+                  <p class="text-2xl font-bold text-pink-600">{{ user?.practiceStats?.totalSessions || 0 }}</p>
+                  <p class="text-xs text-gray-600">Sesiones</p>
+                </div> -->
+              </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col space-y-2">
+              <button 
+                (click)="updateStreak()"
+                [disabled]="updatingStreak"
+                class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                <span *ngIf="!updatingStreak">Actualizar Racha</span>
+                <span *ngIf="updatingStreak" class="flex items-center">
+                  <svg class="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Actualizando...
+                </span>
+              </button>
+              <button 
+                (click)="shareProfile()"
+                class="px-6 py-2 bg-white border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition-colors">
+                Compartir Perfil
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Motivational Message -->
+        <div *ngIf="motivationalMessage" 
+             class="motivation-card bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-xl p-4 mb-6 shadow-lg">
+          <p class="text-lg font-semibold flex items-center">
+            <span class="text-2xl mr-2">{{ getMotivationalEmoji() }}</span>
+            {{ motivationalMessage }}
+          </p>
+        </div>
+        
+        <!-- Badges Section -->
+        <!-- <app-user-badges 
+          *ngIf="user"
+          [userId]="user._id"
+          [currentStreak]="user.streak.count"
+          [memberSince]="user.createdAt">
+        </app-user-badges> -->
+        
+        <!-- Next Goals Section -->
+        <div class="next-goals bg-white rounded-2xl shadow-lg p-6 mt-6" *ngIf="nextBadges.length > 0">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">Próximos Objetivos</h2>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div *ngFor="let badge of nextBadges" 
+                 class="goal-card border-2 border-dashed border-gray-300 rounded-xl p-4 hover:border-purple-400 transition-colors">
+              <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+                  <span class="text-2xl opacity-50">{{ badge.type === 'streak' ? '🔥' : '📅' }}</span>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-gray-800">{{ badge.name }}</h3>
+                  <p class="text-sm text-gray-600">{{ badge.daysRemaining }} días restantes</p>
+                  <div class="mt-2">
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        class="bg-gradient-to-r h-2 rounded-full transition-all duration-500"
+                        [ngClass]="badge.color"
+                        [style.width.%]="badge.progress">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
   </mat-tab>
-  } -->
+  }
 </mat-tab-group>
