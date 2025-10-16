@@ -8,7 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BadgeNotificationComponent } from '../../../shared/ui/badge-notification/badge-notification.component';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/users.service';
-import { BadgeService } from '../../../shared/services/badge.service';
+// import { BadgeService } from '../../../shared/services/badge.service';
 import { User } from '../../../shared/Models/User';
 
 @Component({
@@ -43,7 +43,7 @@ throw new Error('Method not implemented.');
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private userService: UserService,
-    private badgeService: BadgeService
+    // private badgeService: BadgeService
   ) {
     this.user$ = this.store.select(selectActiveUser);
   }
@@ -63,12 +63,12 @@ throw new Error('Method not implemented.');
       this.loadUserProfile();
     });
 
-     this.badgeService.newBadgeEarned.subscribe(badge => {
-      if (this.badgeNotification) {
-        this.badgeNotification.addNotification(badge);
-      }
-      this.showCelebration();
-    });
+    //  this.badgeService.newBadgeEarned.subscribe(badge => {
+    //   if (this.badgeNotification) {
+    //     this.badgeNotification.addNotification(badge);
+    //   }
+    //   this.showCelebration();
+    // });
   }
 
   getVideo(videos: any) {
@@ -136,8 +136,8 @@ throw new Error('Method not implemented.');
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
         this.user = user;
-        this.updateMotivationalMessage();
-        this.loadNextBadges();
+        // this.updateMotivationalMessage();
+        // this.loadNextBadges();
       },
       error: (error) => {
         console.error('Error loading user profile:', error);
@@ -145,56 +145,56 @@ throw new Error('Method not implemented.');
     });
   }
 
-   updateStreak() {
-    if (!this.user || this.updatingStreak) return;
+  //  updateStreak() {
+  //   if (!this.user || this.updatingStreak) return;
     
-    this.updatingStreak = true;
-    this.badgeService.updateStreak(this.user._id).subscribe({
-      next: (response) => {
-        if (this.user && this.user.streak) {
-          this.user.streak.count = String(response.streak);
-        }
-        this.user!.badges = response.badges;
-        this.updatingStreak = false;
-        this.updateMotivationalMessage();
-        this.loadNextBadges();
-      },
-      error: (error) => {
-        console.error('Error updating streak:', error);
-        this.updatingStreak = false;
-      }
-    });
-  }
-    loadNextBadges() {
-    if (!this.user) return;
+  //   this.updatingStreak = true;
+  //   this.badgeService.updateStreak(this.user._id).subscribe({
+  //     next: (response) => {
+  //       if (this.user && this.user.streak) {
+  //         this.user.streak.count = String(response.streak);
+  //       }
+  //       this.user!.badges = response.badges;
+  //       this.updatingStreak = false;
+  //       this.updateMotivationalMessage();
+  //       this.loadNextBadges();
+  //     },
+  //     error: (error) => {
+  //       console.error('Error updating streak:', error);
+  //       this.updatingStreak = false;
+  //     }
+  //   });
+  // }
+  //   loadNextBadges() {
+  //   if (!this.user) return;
     
-    const tenureDays = this.getDaysSinceJoined();
-    this.nextBadges = this.badgeService.getNextBadgesToEarn(
-      Number(this.user?.streak?.count),
-      tenureDays
-    );
-  }
-    updateMotivationalMessage() {
-    if (!this.user) return;
+  //   const tenureDays = this.getDaysSinceJoined();
+  //   this.nextBadges = this.badgeService.getNextBadgesToEarn(
+  //     Number(this.user?.streak?.count),
+  //     tenureDays
+  //   );
+  // }
+  //   updateMotivationalMessage() {
+  //   if (!this.user) return;
     
-    const messages = [
-      `¡Sigue así! Tu racha de ${this.user?.streak?.count ?? 0} días es inspiradora.`,
-      `¡Increíble compromiso! ${this.user?.streak?.count ?? 0} días de práctica constante.`,
-      `Tu dedicación es admirable. ¡${this.user?.streak?.count ?? 0} días y contando!`,
-      `¡Eres imparable! ${this.user?.streak?.count ?? 0} días de yoga y bienestar.`,
-      `Tu constancia inspira a otros. ¡${this.user?.streak?.count ?? 0} días de éxito!`
-    ];
+  //   const messages = [
+  //     `¡Sigue así! Tu racha de ${this.user?.streak?.count ?? 0} días es inspiradora.`,
+  //     `¡Increíble compromiso! ${this.user?.streak?.count ?? 0} días de práctica constante.`,
+  //     `Tu dedicación es admirable. ¡${this.user?.streak?.count ?? 0} días y contando!`,
+  //     `¡Eres imparable! ${this.user?.streak?.count ?? 0} días de yoga y bienestar.`,
+  //     `Tu constancia inspira a otros. ¡${this.user?.streak?.count ?? 0} días de éxito!`
+  //   ];
     
-    if (this.user?.streak?.count ?? 0 === 0) {
-      this.motivationalMessage = '¡Comienza tu racha hoy! Cada día cuenta.';
-    } else if (this.user?.streak?.count ?? 0 < 7) {
-      this.motivationalMessage = '¡Excelente comienzo! Mantén el impulso.';
-    } else if (this.user?.streak?.count ?? 0 < 25) {
-      this.motivationalMessage = messages[Math.floor(Math.random() * messages.length)];
-    } else {
-      this.motivationalMessage = `¡Fenomenal! ${this.user?.streak?.count ?? 0} días de práctica te convierten en un ejemplo a seguir.`;
-    }
-  }
+  //   if (this.user?.streak?.count ?? 0 === 0) {
+  //     this.motivationalMessage = '¡Comienza tu racha hoy! Cada día cuenta.';
+  //   } else if (this.user?.streak?.count ?? 0 < 7) {
+  //     this.motivationalMessage = '¡Excelente comienzo! Mantén el impulso.';
+  //   } else if (this.user?.streak?.count ?? 0 < 25) {
+  //     this.motivationalMessage = messages[Math.floor(Math.random() * messages.length)];
+  //   } else {
+  //     this.motivationalMessage = `¡Fenomenal! ${this.user?.streak?.count ?? 0} días de práctica te convierten en un ejemplo a seguir.`;
+  //   }
+  // }
 
   getMotivationalEmoji(): string {
     const emojis = ['✨', '🌟', '💪', '🎯', '🚀', '🏆', '💫'];

@@ -4,136 +4,151 @@
 <div
   class="montserrat-normal relative overflow-hidden bg-gradient-to-br from-bone via-bone/95 to-olive-50 rounded-2xl mx-auto shadow-2xl border border-olive-100"
 >
-  <!-- Background decoration -->
+  <!-- Enhanced background decoration -->
   <div
     class="absolute inset-0 bg-gradient-to-r from-blue/5 to-strongBrown/5 rounded-2xl"
   ></div>
   <div
-    class="absolute top-0 right-0 w-32 h-32 bg-blue/10 rounded-full -translate-y-16 translate-x-16 blur-xl"
+    class="absolute top-0 right-0 w-40 h-40 bg-blue/10 rounded-full -translate-y-20 translate-x-20 blur-2xl animate-pulse"
   ></div>
   <div
-    class="absolute bottom-0 left-0 w-24 h-24 bg-strongBrown/10 rounded-full translate-y-12 -translate-x-12 blur-xl"
+    class="absolute bottom-0 left-0 w-32 h-32 bg-strongBrown/10 rounded-full translate-y-16 -translate-x-16 blur-2xl animate-pulse"
+    style="animation-delay: 1s"
+  ></div>
+  <div
+    class="absolute top-1/2 left-1/4 w-24 h-24 bg-olive-200/10 rounded-full blur-xl animate-pulse"
+    style="animation-delay: 2s"
   ></div>
 
   <!-- Main content -->
   <div
-    class="relative flex md:flex-row h-[85vh] flex-col items-center justify-between px-8 md:px-12 lg:px-16 py-16"
+    class="relative flex md:flex-row flex-col items-center justify-between px-8 md:px-12 lg:px-16 py-16 gap-8"
   >
     <!-- Left content section -->
-    <div class="flex-1 lg:pr-16 xl:pr-24 z-10">
+    <div class="flex-1 lg:pr-16 xl:pr-24 z-10 max-w-3xl">
       <!-- Hero title with enhanced typography -->
       <div class="mb-8">
         <h2
-          class="text-4xl lg:text-5xl xl:text-6xl font-bold text-strongBrown uppercase mb-2 tracking-tight"
+          class="text-4xl lg:text-5xl xl:text-6xl font-bold text-strongBrown uppercase mb-2 tracking-tight leading-tight"
         >
           Bienvenido a
         </h2>
         <h2
-          class="text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight"
+          class="text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight leading-tight"
         >
           esencial<span
-            class="text-blue bg-gradient-to-r from-blue to-stronger_blue bg-clip-text text-transparent"
+            class="text-blue bg-gradient-to-r from-blue via-stronger_blue to-blue bg-clip-text text-transparent animate-gradient"
             >360</span
           >
         </h2>
         <div
-          class="w-20 h-1 bg-gradient-to-r from-blue to-strongBrown mt-4 rounded-full"
+          class="w-24 h-1.5 bg-gradient-to-r from-blue via-stronger_blue to-strongBrown mt-6 rounded-full shadow-lg"
         ></div>
       </div>
 
       <!-- Description with improved readability -->
-      <div class="mb-12">
-        <p class="text-olive-600 text-lg lg:text-xl leading-relaxed">
+      <div class="mb-12 space-y-4">
+        <p class="text-olive-700 text-lg lg:text-xl leading-relaxed">
           Desde aquí, gestionas la comunidad, las clases y la experiencia de
           cada usuario. Tu labor impulsa el crecimiento de este espacio y
           mantiene viva la esencia de nuestra plataforma.
         </p>
         <p
-          class="text-strongBrown font-semibold text-lg lg:text-xl mt-6 italic"
+          class="text-strongBrown font-semibold text-lg lg:text-xl italic relative pl-4 border-l-4 border-blue"
         >
           Gracias por ser parte de este camino.
         </p>
       </div>
 
       <!-- Content Management Section -->
-      <div class="mb-8">
-        <h3
-          class="text-xl font-semibold text-strongBrown mb-4 uppercase tracking-wide"
-        >
-          Gestión de Contenido
-        </h3>
+      <div class="mb-10">
+        <div class="flex items-center mb-6">
+          <div class="w-2 h-8 bg-gradient-to-b from-blue to-stronger_blue rounded-full mr-3"></div>
+          <h3
+            class="text-xl lg:text-2xl font-bold text-strongBrown uppercase tracking-wide"
+          >
+            Gestión de Contenido
+          </h3>
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <app-button
             (onActionTrigger)="onNewMeditation()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-blue'"
             [text]="'✨ Subir Meditación'"
-            class="transform hover:scale-105 transition-all duration-200"
           ></app-button>
 
           <app-button
             (onActionTrigger)="onNewClass()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-blue'"
             [text]="'🧘‍♀️ Subir Clase'"
-            class="transform hover:scale-105 transition-all duration-200"
           ></app-button>
 
           <app-button
             (onActionTrigger)="onNewWorkshop()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-blue'"
             [text]="'🎯 Subir Taller'"
-            class="transform hover:scale-105 transition-all duration-200"
           ></app-button>
 
           <app-button
             (onActionTrigger)="onNewBlog()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-blue'"
             [text]="'📝 Subir Blog'"
-            class="transform hover:scale-105 transition-all duration-200"
           ></app-button>
+        </div>
+      </div>
+
+      <!-- Live Classes Section (NEW) -->
+      <div class="mb-10">
+        <div class="flex items-center mb-6">
+          <div class="w-2 h-8 bg-gradient-to-b from-red-500 to-red-600 rounded-full mr-3 animate-pulse"></div>
+          <h3
+            class="text-xl lg:text-2xl font-bold text-strongBrown uppercase tracking-wide flex items-center gap-2"
+          >
+            <span>Clases en Vivo</span>
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
+          </h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <app-button
+            (onActionTrigger)="onNewLiveClass()"
+            [bgColor]="'bg-gradient-to-r from-red-500 to-red-600'"
+            [text]="'📡 Programar Clase en Vivo'"
+          >
+            <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+          </app-button>
         </div>
       </div>
 
       <!-- Platform Management Section -->
       <div>
-        <h3
-          class="text-xl font-semibold text-strongBrown mb-4 uppercase tracking-wide"
-        >
-          Gestión de Plataforma
-        </h3>
+        <div class="flex items-center mb-6">
+          <div class="w-2 h-8 bg-gradient-to-b from-strongBrown to-olive-600 rounded-full mr-3"></div>
+          <h3
+            class="text-xl lg:text-2xl font-bold text-strongBrown uppercase tracking-wide"
+          >
+            Gestión de Plataforma
+          </h3>
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <app-button
             (onActionTrigger)="onBunnyStream()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-gradient-to-br from-orange-500 to-orange-600'"
             [text]="'🎥 Bunny Stream'"
-            class="transform hover:scale-105 transition-all duration-200 text-sm"
           ></app-button>
 
           <app-button
             (onActionTrigger)="onAuth0()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-gradient-to-br from-indigo-500 to-indigo-600'"
             [text]="'🔐 Auth0'"
-            class="transform hover:scale-105 transition-all duration-200  text-sm"
           ></app-button>
 
           <app-button
             (onActionTrigger)="onStripe()"
-            [bgColor]="
-              'bg-blue'
-            "
+            [bgColor]="'bg-gradient-to-br from-green-500 to-green-600'"
             [text]="'💳 Stripe'"
-            class="transform hover:scale-105 transition-all duration-200 text-sm"
           ></app-button>
         </div>
       </div>
@@ -144,35 +159,58 @@
       <div class="relative group">
         <!-- Image container with multiple effects -->
         <div
-          class="relative overflow-hidden rounded-2xl shadow-2xl border-4 border-white/50 backdrop-blur-sm"
+          class="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white/70 backdrop-blur-sm transform transition-all duration-500 group-hover:shadow-3xl"
         >
           <img
-            [src]="pullZone + '/assets/foldedMat.jpg'"
+            [src]="pullZone + '/assets/yoga.png'"
             alt="Person doing yoga"
             class="w-full h-80 lg:h-96 object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
           />
-          <!-- Overlay gradient -->
+          <!-- Enhanced overlay gradient -->
           <div
-            class="absolute inset-0 bg-gradient-to-t from-strongBrown/20 via-transparent to-blue/10 group-hover:opacity-75 transition-opacity duration-300"
+            class="absolute inset-0 bg-gradient-to-t from-strongBrown/30 via-transparent to-blue/20 group-hover:opacity-60 transition-opacity duration-500"
           ></div>
+          
+          <!-- Shine effect on hover -->
+          <div
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+            ></div>
+          </div>
         </div>
 
-        <!-- Floating elements -->
+        <!-- Enhanced floating elements -->
         <div
-          class="absolute -top-4 -right-4 w-8 h-8 bg-blue rounded-full opacity-80 animate-pulse"
+          class="absolute -top-6 -right-6 w-12 h-12 bg-blue/80 rounded-full shadow-lg animate-bounce"
+          style="animation-duration: 3s"
         ></div>
         <div
-          class="absolute -bottom-4 -left-4 w-6 h-6 bg-strongBrown rounded-full opacity-60 animate-pulse delay-300"
+          class="absolute -bottom-6 -left-6 w-10 h-10 bg-strongBrown/70 rounded-full shadow-lg animate-bounce"
+          style="animation-duration: 4s; animation-delay: 0.5s"
+        ></div>
+        <div
+          class="absolute top-1/2 -right-4 w-6 h-6 bg-olive-400/60 rounded-full shadow-md animate-bounce"
+          style="animation-duration: 3.5s; animation-delay: 1s"
         ></div>
 
-        <!-- Decorative border -->
+        <!-- Enhanced decorative border -->
         <div
-          class="absolute inset-0 rounded-2xl border-2 border-gradient-to-r from-blue/30 to-strongBrown/30 pointer-events-none transform group-hover:scale-105 transition-transform duration-300"
+          class="absolute inset-0 rounded-3xl border-2 border-gradient-to-r from-blue/40 to-strongBrown/40 pointer-events-none transform group-hover:scale-105 transition-transform duration-500 shadow-inner"
         ></div>
+
+        <!-- Corner accents -->
+        <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-blue rounded-tl-2xl opacity-50"></div>
+        <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-strongBrown rounded-br-2xl opacity-50"></div>
       </div>
+
+      <!-- Additional decorative element -->
+      <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-gradient-to-r from-transparent via-blue/20 to-transparent blur-sm"></div>
     </div>
   </div>
 </div>
+
 <section class="modern-tabs">
   <app-admin-profile [filters]="filters"></app-admin-profile>
 </section>

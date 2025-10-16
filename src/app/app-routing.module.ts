@@ -42,6 +42,10 @@ import { UploadMeditationsComponent } from './pages/meditations/upload-meditatio
 import { SingleWorkshopComponent } from './pages/workshops/single-workshop/single-workshop.component';
 import { AllWorkshopsComponent } from './pages/workshops/all-workshops/all-workshops.component';
 import { UploadWorkshopComponent } from './pages/workshops/upload-workshop/upload-workshop.component';
+import { LiveClassesListComponent } from './pages/live-classes/live-classes-list/live-classes-list.component';
+import { LiveClassPlayerComponent } from './pages/live-classes/live-class-player/live-class-player.component';
+import { AdminLiveClassComponent } from './pages/live-classes/admin-live-class/admin-live-class.component';
+import { AdminLiveClassesListComponent } from './pages/live-classes/admin-live-classes-list/admin-live-classes-list.component';
 
 const routes: Routes = [
   {
@@ -223,6 +227,13 @@ const routes: Routes = [
     path: 'nueva-meditacion',
     component: UploadMeditationsComponent,
   },
+  { path: 'clases-envivo', component: LiveClassesListComponent },
+  { path: 'clase-envivo/:id', component: LiveClassPlayerComponent },
+  { path: 'nueva-clase-envivo', component: AdminLiveClassComponent },
+   { path: 'lista-clases-envivo', component: AdminLiveClassesListComponent },
+  // { path: 'admin/create-live-class', component: CreateLiveClassComponent },
+  { path: 'editar-clase-envivo/:id', component: AdminLiveClassComponent },
+  
   { path: '**', redirectTo: '', pathMatch: 'full' },
   // Catch-all for invalid routes (404)`
 ];

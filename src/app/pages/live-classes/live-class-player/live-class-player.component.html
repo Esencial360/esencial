@@ -1,0 +1,414 @@
+<app-header></app-header>
+<div class="min-h-screen bg-gradient-to-br from-bone via-white to-bone montserrat-normal">
+  <!-- Enhanced Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center h-screen">
+    <div class="relative">
+      <div class="w-24 h-24 border-4 border-veige rounded-full animate-pulse"></div>
+      <div class="absolute top-0 left-0 w-24 h-24 border-4 border-transparent border-t-blue rounded-full animate-spin"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <svg class="w-10 h-10 text-blue animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced Error State -->
+  <div *ngIf="error && !loading" class="container mx-auto px-4 py-8">
+    <div class="relative overflow-hidden bg-gradient-to-r from-red/10 to-orange/10 border-2 border-red/30 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red to-orange"></div>
+      <div class="flex items-start">
+        <div class="flex-shrink-0">
+          <svg class="h-12 w-12 text-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <div class="ml-4 flex-1">
+          <p class="text-xl font-bold text-strongBrown mb-2">¡Ups! Algo salió mal</p>
+          <p class="text-lightBrown mb-4">{{ error }}</p>
+          <button 
+            (click)="goBack()"
+            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red to-orange hover:from-orange hover:to-red text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+            </svg>
+            Volver a clases
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error && liveClass" class="container mx-auto px-4 py-6">
+    <!-- Enhanced Back Button -->
+    <button 
+      (click)="goBack()"
+      class="mb-6 inline-flex items-center px-4 py-2 text-blue hover:text-stronger_blue hover:bg-bone rounded-lg transition-all duration-300 group">
+      <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      <span class="font-medium">Volver a clases</span>
+    </button>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Video Player Section -->
+      <div class="lg:col-span-2">
+        <!-- Enhanced Video Container -->
+        <div class="relative bg-gradient-to-br from-strongBrown to-lightBrown rounded-2xl overflow-hidden shadow-2xl mb-6" style="aspect-ratio: 16/9;">
+          <!-- Decorative Elements -->
+          <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 blur-2xl"></div>
+          <div class="absolute bottom-0 left-0 w-48 h-48 bg-veige/20 rounded-full translate-y-24 -translate-x-24 blur-3xl"></div>
+          
+          <!-- Live Indicator for Active Stream -->
+          <div *ngIf="liveClass.status === 'live'" class="absolute top-4 left-4 z-10">
+            <span class="flex items-center bg-red/90 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold shadow-lg">
+              <span class="flex h-3 w-3 relative mr-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+              </span>
+              EN VIVO
+            </span>
+          </div>
+
+          <!-- YouTube Embed -->
+          <iframe
+            *ngIf="youtubeEmbedUrl && (liveClass.status === 'live' || liveClass.status === 'ended')"
+            [src]="youtubeEmbedUrl"
+            class="w-full h-full relative z-10"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+          
+          <!-- Enhanced Placeholder for Scheduled Classes -->
+          <div 
+            *ngIf="liveClass.status === 'scheduled'"
+            class="w-full h-full flex items-center justify-center relative z-10">
+            <div class="text-center text-white p-8 max-w-md">
+              <div class="relative mb-6">
+                <div class="absolute inset-0 animate-pulse">
+                  <svg class="w-32 h-32 mx-auto text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <svg class="w-32 h-32 mx-auto relative z-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h3 class="text-3xl font-bold mb-3 animate-pulse">La clase comenzará pronto</h3>
+              <div class="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-3 inline-block">
+                <p class="text-xl font-semibold">{{ formatDate(liveClass.scheduledTime) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enhanced Video Info Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <!-- Status Section -->
+          <div class="bg-gradient-to-r from-bone to-white p-6 border-b border-veige/30">
+            <div class="flex items-center justify-between">
+              <span [class]="getStatusBadgeClass() + ' text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg flex items-center'">
+                <span *ngIf="liveClass.status === 'live'" class="flex h-2 w-2 mr-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                </span>
+                {{ getStatusText() }}
+              </span>
+              <div *ngIf="liveClass.status === 'live' && viewers > 0" class="flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
+                <svg class="w-5 h-5 mr-2 text-blue" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="font-bold text-strongBrown">{{ viewers }}</span>
+                <span class="text-gray ml-1">viendo ahora</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Section -->
+          <div class="p-8">
+            <!-- Title and Description -->
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-strongBrown to-lightBrown bg-clip-text text-transparent mb-4">
+              {{ liveClass.title }}
+            </h1>
+            <p class="text-gray text-lg leading-relaxed mb-8">{{ liveClass.description }}</p>
+
+            <!-- Enhanced Instructor Info -->
+            <!-- <div class="flex items-center p-6 bg-gradient-to-r from-bone via-white to-bone rounded-2xl mb-8 border border-veige/30">
+              <div class="relative">
+                <img 
+                  [src]="liveClass.instructor.avatar || 'assets/default-avatar.png'" 
+                  [alt]="liveClass.instructorName"
+                  class="w-20 h-20 rounded-full border-4 border-white shadow-xl">
+                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-teal-500 rounded-full border-3 border-white"></div>
+              </div>
+              <div class="ml-5">
+                <p class="text-sm font-medium text-blue mb-1">Instructor Certificado</p>
+                <p class="text-xl font-bold text-strongBrown">{{ liveClass.instructorName }}</p>
+                <div class="flex items-center mt-2">
+                  <svg class="w-4 h-4 text-orange fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <svg class="w-4 h-4 text-orange fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <svg class="w-4 h-4 text-orange fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <svg class="w-4 h-4 text-orange fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <svg class="w-4 h-4 text-orange fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-sm text-gray ml-2">(4.9)</span>
+                </div>
+              </div>
+            </div> -->
+
+            <!-- Enhanced Class Details Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="group relative overflow-hidden bg-gradient-to-br from-bone to-white p-5 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-veige/30">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-blue/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10">
+                  <svg class="w-8 h-8 text-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                  </svg>
+                  <p class="text-xs font-medium text-blue mb-1">Categoría</p>
+                  <p class="text-lg font-bold text-strongBrown">{{ liveClass.category }}</p>
+                </div>
+              </div>
+
+              <div class="group relative overflow-hidden bg-gradient-to-br from-bone to-white p-5 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-veige/30">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-stronger_blue/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10">
+                  <svg class="w-8 h-8 text-stronger_blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  <p class="text-xs font-medium text-stronger_blue mb-1">Nivel</p>
+                  <p class="text-lg font-bold text-strongBrown">{{ liveClass.level }}</p>
+                </div>
+              </div>
+
+              <div class="group relative overflow-hidden bg-gradient-to-br from-bone to-white p-5 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-veige/30">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-teal-500/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10">
+                  <svg class="w-8 h-8 text-teal-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <p class="text-xs font-medium text-teal-600 mb-1">Duración</p>
+                  <p class="text-lg font-bold text-strongBrown">{{ liveClass.duration }} min</p>
+                </div>
+              </div>
+
+              <div class="group relative overflow-hidden bg-gradient-to-br from-bone to-white p-5 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-veige/30">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-orange/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10">
+                  <svg class="w-8 h-8 text-orange mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                  <p class="text-xs font-medium text-orange mb-1">Vistas Totales</p>
+                  <p class="text-lg font-bold text-strongBrown">{{ liveClass.totalViews }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enhanced Sidebar -->
+      <div class="lg:col-span-1 space-y-6">
+        <!-- Enhanced Registration Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <!-- Card Header -->
+          <div class="bg-gradient-to-r from-blue to-stronger_blue p-6">
+            <h3 class="text-2xl font-bold text-white flex items-center">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+              Información de la Clase
+            </h3>
+          </div>
+          
+          <div class="p-6">
+            <!-- Schedule with Icon -->
+            <div class="mb-6 p-4 bg-gradient-to-r from-bone to-white rounded-xl border border-veige/30">
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-blue mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <div>
+                  <p class="text-sm font-medium text-gray mb-1">Fecha y Hora</p>
+                  <p class="text-lg font-bold text-strongBrown">{{ formatDate(liveClass.scheduledTime) }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Enhanced Participants Section -->
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-3">
+                <p class="text-sm font-medium text-gray flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                  Participantes
+                </p>
+                <div class="flex items-baseline">
+                  <span class="text-3xl font-bold bg-gradient-to-r from-blue to-stronger_blue bg-clip-text text-transparent">
+                    {{ liveClass.registeredUsers.length }}
+                  </span>
+                  <span class="text-gray ml-1">/ {{ liveClass.maxParticipants }}</span>
+                </div>
+              </div>
+              
+              <!-- Enhanced Progress Bar -->
+              <div class="relative">
+                <div class="w-full bg-veige/30 rounded-full h-3 overflow-hidden">
+                  <div 
+                    class="h-full rounded-full bg-gradient-to-r from-blue to-stronger_blue transition-all duration-700 relative overflow-hidden"
+                    [style.width.%]="(liveClass.registeredUsers.length / liveClass.maxParticipants) * 100">
+                    <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+                  </div>
+                </div>
+                <p class="text-xs text-gray mt-2 text-center">
+                  {{ liveClass.maxParticipants - liveClass.registeredUsers.length }} lugares disponibles
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-3">
+              <!-- Register Button -->
+              <button 
+                *ngIf="!isRegistered && liveClass.status === 'scheduled'"
+                (click)="registerToClass()"
+                [disabled]="liveClass.registeredUsers.length >= liveClass.maxParticipants"
+                class="w-full relative overflow-hidden bg-gradient-to-r from-blue to-stronger_blue hover:from-stronger_blue hover:to-blue disabled:from-gray disabled:to-gray disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 shadow-lg hover:shadow-xl group">
+                <span class="relative z-10 flex items-center justify-center">
+                  <svg *ngIf="liveClass.registeredUsers.length < liveClass.maxParticipants" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                  </svg>
+                  <svg *ngIf="liveClass.registeredUsers.length >= liveClass.maxParticipants" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                  {{ liveClass.registeredUsers.length >= liveClass.maxParticipants ? 'Clase Llena' : 'Registrarse' }}
+                </span>
+                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              </button>
+
+              <!-- Already Registered Button -->
+              <button 
+                *ngIf="isRegistered && liveClass.status === 'scheduled'"
+                class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white font-bold py-4 rounded-xl shadow-lg cursor-default flex items-center justify-center">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+                Ya estás registrado
+              </button>
+
+              <!-- Share Button -->
+              <button 
+                (click)="shareClass()"
+                class="w-full relative overflow-hidden bg-gradient-to-r from-veige/30 to-veige/50 hover:from-veige/50 hover:to-veige/70 text-strongBrown font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg group flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+                Compartir Clase
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enhanced Additional Info Card -->
+        <div class="relative overflow-hidden bg-gradient-to-br from-bone to-white rounded-2xl p-6 border-2 border-veige/30 shadow-lg">
+          <!-- Decorative Elements -->
+          <div class="absolute top-0 right-0 w-24 h-24 bg-blue/10 rounded-full -translate-y-12 translate-x-12"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-stronger_blue/10 rounded-full translate-y-16 -translate-x-16"></div>
+          
+          <div class="relative z-10">
+            <h4 class="font-bold text-lg text-strongBrown mb-4 flex items-center">
+              <div class="w-8 h-8 bg-gradient-to-r from-blue to-stronger_blue rounded-lg flex items-center justify-center mr-3 shadow-md">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              Información Importante
+            </h4>
+            
+            <div class="space-y-3">
+              <div *ngIf="liveClass.chatEnabled" class="flex items-start bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-veige/20">
+                <div class="w-8 h-8 bg-gradient-to-r from-blue to-stronger_blue rounded-lg flex items-center justify-center mr-3 flex-shrink-0 shadow">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-strongBrown">Chat Interactivo</p>
+                  <p class="text-xs text-gray">Podrás chatear durante la clase</p>
+                </div>
+              </div>
+              
+              <div *ngIf="liveClass.isRecorded" class="flex items-start bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-veige/20">
+                <div class="w-8 h-8 bg-gradient-to-r from-red to-orange rounded-lg flex items-center justify-center mr-3 flex-shrink-0 shadow">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-strongBrown">Clase Grabada</p>
+                  <p class="text-xs text-gray">Disponible para ver después</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-veige/20">
+                <div class="w-8 h-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg flex items-center justify-center mr-3 flex-shrink-0 shadow">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-strongBrown">Preparación</p>
+                  <p class="text-xs text-gray">Ten listo tu mat y agua</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h4 class="font-bold text-strongBrown mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+            Estadísticas Rápidas
+          </h4>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
+              <p class="text-2xl font-bold text-blue">{{ liveClass.totalViews }}</p>
+              <p class="text-xs text-gray">Vistas totales</p>
+            </div>
+            <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
+              <p class="text-2xl font-bold text-stronger_blue">{{ liveClass.duration }}</p>
+              <p class="text-xs text-gray">Minutos</p>
+            </div>
+            <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
+              <p class="text-2xl font-bold text-teal-600">{{ liveClass.registeredUsers.length }}</p>
+              <p class="text-xs text-gray">Registrados</p>
+            </div>
+            <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
+              <p class="text-2xl font-bold text-orange">4.9</p>
+              <p class="text-xs text-gray">Calificación</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

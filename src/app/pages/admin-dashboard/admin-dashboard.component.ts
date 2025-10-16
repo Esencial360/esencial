@@ -60,4 +60,8 @@ export class AdminDashboardComponent implements OnInit {
   onStripe() {
     window.open('https://stripe.com/en-de', '_blank');
   }
+
+  onNewLiveClass() {
+    this.router.navigateByUrl(['/nueva-clase-envivo'].join(''));
+  }
 }
