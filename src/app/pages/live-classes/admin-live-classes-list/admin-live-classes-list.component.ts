@@ -115,6 +115,7 @@ export class AdminLiveClassesListComponent {
   }
 
   confirmStatusChange(): void {
+    
     if (!this.selectedClass || !this.newStatus) return;
 
     this.liveClassService.updateClassStatus(this.selectedClass._id, this.newStatus)

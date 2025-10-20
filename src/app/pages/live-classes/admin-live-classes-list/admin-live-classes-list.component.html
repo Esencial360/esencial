@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="min-h-screen bg-gradient-to-br from-bone via-olive-50 to-bone py-8 px-4">
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
@@ -15,8 +16,8 @@
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div class="flex items-center gap-3">
           <span class="relative flex h-4 w-4">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-red"></span>
           </span>
           <h1 class="text-4xl font-bold text-strongBrown">Gestión de Clases en Vivo</h1>
         </div>
@@ -126,10 +127,10 @@
               <span 
                 class="px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg flex items-center gap-1"
                 [ngClass]="{
-                  'bg-blue-600': liveClass.status === 'scheduled',
-                  'bg-red-600 animate-pulse': liveClass.status === 'live',
-                  'bg-gray-600': liveClass.status === 'ended',
-                  'bg-yellow-600': liveClass.status === 'cancelled'
+                  'bg-blue': liveClass.status === 'scheduled',
+                  'bg-red animate-pulse': liveClass.status === 'live',
+                  'bg-gray': liveClass.status === 'ended',
+                  'bg-orange': liveClass.status === 'cancelled'
                 }"
               >
                 <span *ngIf="liveClass.status === 'live'" class="h-2 w-2 bg-white rounded-full"></span>
@@ -182,13 +183,13 @@
 
             <!-- Tags -->
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full font-semibold">
+              <span class="bg-veige/30 text-strongBrown text-xs px-3 py-1 rounded-full font-semibold border border-veige">
                 {{ liveClass.category }}
               </span>
-              <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-semibold">
+              <span class="bg-blue/20 text-stronger_blue text-xs px-3 py-1 rounded-full font-semibold border border-blue">
                 {{ liveClass.level }}
               </span>
-              <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-semibold flex items-center gap-1">
+              <span class="bg-teal-100 text-teal-700 text-xs px-3 py-1 rounded-full font-semibold flex items-center gap-1 border border-teal-300">
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
                 </svg>
@@ -220,7 +221,7 @@
 
               <button
                 (click)="editClass(liveClass)"
-                class="flex items-center gap-2 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all hover:shadow-lg"
+                class="flex items-center gap-2 px-4 py-2 bg-strongBrown text-white rounded-lg hover:bg-lightBrown transition-all hover:shadow-lg"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -230,7 +231,7 @@
 
               <button
                 (click)="viewClass(liveClass)"
-                class="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all hover:shadow-lg"
+                class="flex items-center gap-2 px-4 py-2 bg-stronger_blue text-white rounded-lg hover:bg-blue transition-all hover:shadow-lg"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -241,7 +242,7 @@
 
               <button
                 (click)="openDeleteModal(liveClass)"
-                class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all hover:shadow-lg"
+                class="flex items-center gap-2 px-4 py-2 bg-red text-white rounded-lg hover:bg-red/90 transition-all hover:shadow-lg"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -279,10 +280,10 @@
           <span 
             class="w-3 h-3 rounded-full"
             [ngClass]="{
-              'bg-blue-500': status.value === 'scheduled',
-              'bg-red-500': status.value === 'live',
-              'bg-gray-500': status.value === 'ended',
-              'bg-yellow-500': status.value === 'cancelled'
+              'bg-blue': status.value === 'scheduled',
+              'bg-red': status.value === 'live',
+              'bg-gray': status.value === 'ended',
+              'bg-orange': status.value === 'cancelled'
             }"
           ></span>
           <span class="font-medium">{{ status.label }}</span>
@@ -324,16 +325,18 @@
     <div class="flex gap-3">
       <button
         (click)="closeDeleteModal()"
-        class="flex-1 px-6 py-3 bg-gray-200 text-gray-800 rounded-xl hover:bg-gray-300 transition-colors font-semibold"
+        class="flex-1 px-6 py-3 bg-bone text-strongBrown rounded-xl hover:bg-veige/50 transition-colors font-semibold border border-veige"
       >
         Cancelar
       </button>
       <button
         (click)="confirmDelete()"
-        class="flex-1 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors font-semibold"
+        class="flex-1 px-6 py-3 bg-red text-white rounded-xl hover:bg-red/90 transition-colors font-semibold shadow-lg"
       >
         Eliminar
       </button>
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>

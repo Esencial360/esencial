@@ -230,7 +230,7 @@ const routes: Routes = [
   { path: 'clases-envivo', component: LiveClassesListComponent },
   { path: 'clase-envivo/:id', component: LiveClassPlayerComponent },
   { path: 'nueva-clase-envivo', component: AdminLiveClassComponent },
-   { path: 'lista-clases-envivo', component: AdminLiveClassesListComponent },
+  { path: 'lista-clases-envivo', component: AdminLiveClassesListComponent },
   // { path: 'admin/create-live-class', component: CreateLiveClassComponent },
   { path: 'editar-clase-envivo/:id', component: AdminLiveClassComponent },
   

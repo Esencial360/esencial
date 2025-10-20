@@ -94,34 +94,20 @@
             [bgColor]="'bg-blue'"
             [text]="'📝 Subir Blog'"
           ></app-button>
-        </div>
-      </div>
 
-      <!-- Live Classes Section (NEW) -->
-      <div class="mb-10">
-        <div class="flex items-center mb-6">
-          <div class="w-2 h-8 bg-gradient-to-b from-red-500 to-red-600 rounded-full mr-3 animate-pulse"></div>
-          <h3
-            class="text-xl lg:text-2xl font-bold text-strongBrown uppercase tracking-wide flex items-center gap-2"
-          >
-            <span>Clases en Vivo</span>
-            <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
-          </h3>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <app-button
-            (onActionTrigger)="onNewLiveClass()"
-            [bgColor]="'bg-gradient-to-r from-red-500 to-red-600'"
-            [text]="'📡 Programar Clase en Vivo'"
-          >
-            <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-          </app-button>
+            (onActionTrigger)="onLiveClass()"
+            [bgColor]="'bg-blue'"
+            [text]="'🧘‍♀️ Nueva clase en vivo'"
+          ></app-button>
+
+              <app-button
+            (onActionTrigger)="onEditLiveClasses()"
+            [bgColor]="'bg-blue'"
+            [text]="'🧘‍♀️ Clases en vivo'"
+          ></app-button>
         </div>
       </div>
-
       <!-- Platform Management Section -->
       <div>
         <div class="flex items-center mb-6">
