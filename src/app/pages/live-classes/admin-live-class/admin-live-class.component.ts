@@ -73,18 +73,18 @@ export class AdminLiveClassComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
       category: ['', Validators.required],
       level: ['', Validators.required],
-      instructor: ['', [Validators.required, Validators.pattern(/^[a-fA-F0-9]{24}$/)]],
+      // instructor: ['', [Validators.required, Validators.pattern(/^[a-fA-F0-9]{24}$/)]],
       instructorName: ['', [Validators.required, Validators.minLength(2)]],
       youtubeVideoId: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_-]{11}$/)]],
       scheduledTime: ['', [Validators.required, this.futureDateValidator()]],
-      duration: [60, [Validators.required, Validators.min(15), Validators.max(180)]],
-      maxParticipants: [30, [Validators.required, Validators.min(1), Validators.max(100)]],
+      // duration: [60, [Validators.required, Validators.min(15), Validators.max(180)]],
+      // maxParticipants: [30, [Validators.required, Validators.min(1), Validators.max(100)]],
       status: ['scheduled', Validators.required],
-      chatEnabled: [true],
+      // chatEnabled: [true],
       isRecorded: [false],
-      tags: [[]],
-      prerequisites: [''],
-      equipment: ['Mat de yoga']
+      // tags: [[]],
+      // prerequisites: [''],
+      // equipment: ['Mat de yoga']
     });
   }
 
@@ -160,6 +160,8 @@ export class AdminLiveClassComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
+    console.log(this.liveClassForm);
+    
     this.formSubmitted = true;
     
     if (this.liveClassForm.invalid) {
@@ -185,8 +187,8 @@ export class AdminLiveClassComponent implements OnInit {
           this.liveClassForm.reset({
             status: 'scheduled',
             duration: 60,
-            maxParticipants: 30,
-            chatEnabled: true,
+            // maxParticipants: 30,
+            // chatEnabled: true,
             isRecorded: false,
             equipment: 'Mat de yoga'
           });
@@ -215,7 +217,7 @@ export class AdminLiveClassComponent implements OnInit {
     const formValue = { ...this.liveClassForm.value };
     
     // Add calculated fields
-    formValue.endTime = this.calculateEndTime(formValue.scheduledTime, formValue.duration);
+    // formValue.endTime = this.calculateEndTime(formValue.scheduledTime, formValue.duration);
     
     // Process tags if they're a string
     if (typeof formValue.tags === 'string') {
@@ -225,11 +227,11 @@ export class AdminLiveClassComponent implements OnInit {
     return formValue;
   }
 
-  calculateEndTime(startTime: string, duration: number): string {
-    const start = new Date(startTime);
-    start.setMinutes(start.getMinutes() + duration);
-    return start.toISOString();
-  }
+  // calculateEndTime(startTime: string, duration: number): string {
+  //   const start = new Date(startTime);
+  //   start.setMinutes(start.getMinutes() + duration);
+  //   return start.toISOString();
+  // }
 
   scrollToError(): void {
     const firstError = document.querySelector('.ng-invalid');
@@ -246,7 +248,7 @@ export class AdminLiveClassComponent implements OnInit {
       if (field.errors['maxlength']) return `Máximo ${field.errors['maxlength'].requiredLength} caracteres`;
       if (field.errors['pattern']) {
         if (fieldName === 'youtubeVideoId') return 'ID de YouTube inválido (11 caracteres)';
-        if (fieldName === 'instructor') return 'ID de instructor inválido';
+        // if (fieldName === 'instructor') return 'ID de instructor inválido';
       }
       if (field.errors['pastDate']) return 'La fecha debe ser futura (mínimo 15 minutos)';
       if (field.errors['min']) return `Valor mínimo: ${field.errors['min'].min}`;
@@ -263,11 +265,11 @@ export class AdminLiveClassComponent implements OnInit {
   resetForm(): void {
     this.liveClassForm.reset({
       status: 'scheduled',
-      duration: 60,
-      maxParticipants: 30,
-      chatEnabled: true,
+      // duration: 60,
+      // maxParticipants: 30,
+      // chatEnabled: true,
       isRecorded: false,
-      equipment: 'Mat de yoga'
+      // equipment: 'Mat de yoga'
     });
     this.formSubmitted = false;
     this.errorMessage = null;

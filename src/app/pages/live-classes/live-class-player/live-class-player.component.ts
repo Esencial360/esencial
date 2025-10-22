@@ -80,7 +80,7 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
 
   checkRegistration(): void {
     if (this.liveClass && this.currentUserId) {
-      this.isRegistered = this.liveClass.registeredUsers.includes(this.currentUserId);
+      // this.isRegistered = this.liveClass.registeredUsers.includes(this.currentUserId);
     }
   }
 
@@ -97,24 +97,24 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
   }
 
   updateYouTubeStatus(): void {
-    this.liveClassService.getYouTubeStatus(this.classId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          if (response.success && response.data) {
-            this.youtubeStatus = response.data;
-            this.viewers = response.data.viewers || 0;
+    // this.liveClassService.getYouTubeStatus(this.classId)
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe({
+    //     next: (response) => {
+    //       if (response.success && response.data) {
+    //         this.youtubeStatus = response.data;
+    //         this.viewers = response.data.viewers || 0;
             
-            // Actualizar el estado local si cambió
-            if (this.liveClass && this.liveClass.status !== response.data.status) {
-              this.liveClass.status = response.data.status;
-            }
-          }
-        },
-        error: (err) => {
-          console.error('Error al actualizar estado de YouTube:', err);
-        }
-      });
+    //         // Actualizar el estado local si cambió
+    //         if (this.liveClass && this.liveClass.status !== response.data.status) {
+    //           this.liveClass.status = response.data.status;
+    //         }
+    //       }
+    //     },
+    //     error: (err) => {
+    //       console.error('Error al actualizar estado de YouTube:', err);
+    //     }
+    //   });
   }
 
   registerToClass(): void {

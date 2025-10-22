@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header>    </app-header>
 <div class="min-h-screen bg-gradient-to-br from-bone via-white to-bone py-8 montserrat-normal">
   <!-- Header Section -->
   <div class="max-w-4xl mx-auto px-4 mb-6">
@@ -147,30 +147,8 @@
           </div>
         </div>
 
-        <!-- Instructor Info -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Instructor ID -->
-          <div class="space-y-2">
-            <label class="flex items-center text-sm font-semibold text-strongBrown">
-              <svg class="w-4 h-4 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
-              </svg>
-              ID del Instructor
-            </label>
-            <input 
-              formControlName="instructor" 
-              type="text" 
-              [class]="'w-full border-2 rounded-xl p-3 transition-all duration-300 font-mono text-sm ' + 
-                       (isFieldInvalid('instructor') ? 'border-red/50 bg-red/5' : 'border-veige/40 hover:border-blue/60 focus:border-blue')"
-              placeholder="607f1f77bcf86cd799439011" />
-            <span *ngIf="getFieldError('instructor')" class="text-xs text-red flex items-center">
-              <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-              </svg>
-              {{ getFieldError('instructor') }}
-            </span>
-          </div>
-
           <!-- Instructor Name -->
           <div class="space-y-2">
             <label class="flex items-center text-sm font-semibold text-strongBrown">
@@ -194,6 +172,8 @@
           </div>
         </div>
 
+
+  
         <!-- YouTube and Timing -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- YouTube Video ID -->
@@ -240,49 +220,6 @@
           </div>
         </div>
 
-        <!-- Duration and Participants -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Duration -->
-          <div class="space-y-2">
-            <label class="flex items-center text-sm font-semibold text-strongBrown">
-              <svg class="w-4 h-4 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              Duración
-            </label>
-            <select 
-              formControlName="duration" 
-              [class]="'w-full border-2 rounded-xl p-3 transition-all duration-300 appearance-none cursor-pointer ' + 
-                       (isFieldInvalid('duration') ? 'border-red/50 bg-red/5' : 'border-veige/40 hover:border-blue/60 focus:border-blue bg-white')">
-              <option *ngFor="let dur of durationOptions" [value]="dur.value">
-                {{ dur.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Max Participants -->
-          <div class="space-y-2">
-            <label class="flex items-center text-sm font-semibold text-strongBrown">
-              <svg class="w-4 h-4 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-              </svg>
-              Máximo de Participantes
-            </label>
-            <input 
-              formControlName="maxParticipants" 
-              type="number" 
-              min="1" 
-              max="100"
-              [class]="'w-full border-2 rounded-xl p-3 transition-all duration-300 ' + 
-                       (isFieldInvalid('maxParticipants') ? 'border-red/50 bg-red/5' : 'border-veige/40 hover:border-blue/60 focus:border-blue')" />
-            <span *ngIf="getFieldError('maxParticipants')" class="text-xs text-red flex items-center">
-              <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-              </svg>
-              {{ getFieldError('maxParticipants') }}
-            </span>
-          </div>
-        </div>
 
         <!-- Status and Options -->
         <div class="space-y-6">
@@ -320,20 +257,6 @@
             </h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- Chat Enabled -->
-              <label class="flex items-center space-x-3 cursor-pointer group">
-                <input 
-                  type="checkbox" 
-                  formControlName="chatEnabled"
-                  class="w-5 h-5 text-blue rounded border-veige/40 focus:ring-blue">
-                <div>
-                  <span class="text-sm font-medium text-strongBrown group-hover:text-blue transition-colors">
-                    Chat Habilitado
-                  </span>
-                  <p class="text-xs text-gray">Permite interacción durante la clase</p>
-                </div>
-              </label>
-
               <!-- Recording -->
               <label class="flex items-center space-x-3 cursor-pointer group">
                 <input 
@@ -347,39 +270,6 @@
                   <p class="text-xs text-gray">Disponible para ver después</p>
                 </div>
               </label>
-            </div>
-          </div>
-
-          <!-- Equipment and Prerequisites -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Equipment -->
-            <div class="space-y-2">
-              <label class="flex items-center text-sm font-semibold text-strongBrown">
-                <svg class="w-4 h-4 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                </svg>
-                Equipamiento Necesario
-              </label>
-              <input 
-                formControlName="equipment" 
-                type="text" 
-                class="w-full border-2 border-veige/40 rounded-xl p-3 transition-all duration-300 hover:border-blue/60 focus:border-blue"
-                placeholder="Mat de yoga, bloques, correa..." />
-            </div>
-
-            <!-- Prerequisites -->
-            <div class="space-y-2">
-              <label class="flex items-center text-sm font-semibold text-strongBrown">
-                <svg class="w-4 h-4 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                </svg>
-                Prerequisitos
-              </label>
-              <input 
-                formControlName="prerequisites" 
-                type="text" 
-                class="w-full border-2 border-veige/40 rounded-xl p-3 transition-all duration-300 hover:border-blue/60 focus:border-blue"
-                placeholder="Experiencia previa requerida..." />
             </div>
           </div>
         </div>
