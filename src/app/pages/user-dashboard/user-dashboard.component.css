@@ -47,3 +47,7 @@
 .group:hover .transform {
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.shadow-3xl {
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
