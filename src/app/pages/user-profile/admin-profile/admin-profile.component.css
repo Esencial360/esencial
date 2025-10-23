@@ -1,0 +1,123 @@
+/* Custom Tab Group Styling */
+::ng-deep .custom-tab-group {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Tab Header Container */
+::ng-deep .custom-tab-group .mat-mdc-tab-header {
+  background: linear-gradient(to bottom, #f7f5ef 0%, #ffffff 100%);
+  border-bottom: 2px solid #B89B80;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Individual Tab Labels */
+::ng-deep .custom-tab-group .mat-mdc-tab {
+  min-width: 120px;
+  padding: 0 24px;
+  height: 56px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+  color: #84827f;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tab Label Text */
+::ng-deep .custom-tab-group .mdc-tab__text-label {
+  color: #84827f;
+  transition: all 0.3s ease;
+}
+
+/* Hover State */
+::ng-deep .custom-tab-group .mat-mdc-tab:hover {
+  background: linear-gradient(to bottom, rgba(92, 122, 131, 0.05), transparent);
+}
+
+::ng-deep .custom-tab-group .mat-mdc-tab:hover .mdc-tab__text-label {
+  color: #5C7A83;
+}
+
+/* Active Tab */
+::ng-deep .custom-tab-group .mat-mdc-tab.mdc-tab--active {
+  background: linear-gradient(to bottom, rgba(92, 122, 131, 0.1), transparent);
+}
+
+::ng-deep .custom-tab-group .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #1f657a;
+  font-weight: 700;
+}
+
+/* Ink Bar (Active Indicator) */
+::ng-deep .custom-tab-group .mat-mdc-tab-header-pagination-chevron {
+  border-color: #5C7A83;
+}
+
+::ng-deep .custom-tab-group .mdc-tab-indicator__content--underline {
+  border-color: transparent;
+  background: linear-gradient(to right, #5C7A83, #1f657a);
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 2px 4px rgba(31, 101, 122, 0.3);
+}
+
+/* Tab Body Content */
+::ng-deep .custom-tab-group .mat-mdc-tab-body-content {
+  padding: 1rem 0;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Ripple Effect Color */
+::ng-deep .custom-tab-group .mat-mdc-tab .mat-ripple-element {
+  background-color: rgba(92, 122, 131, 0.2);
+}
+
+/* Focus Indicator */
+::ng-deep .custom-tab-group .mat-mdc-tab:focus {
+  outline: 2px solid #5C7A83;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Pagination Buttons (if many tabs) */
+::ng-deep .custom-tab-group .mat-mdc-tab-header-pagination {
+  background: linear-gradient(to right, #f7f5ef, transparent);
+}
+
+::ng-deep .custom-tab-group .mat-mdc-tab-header-pagination-chevron {
+  border-color: #5C7A83;
+}
+
+::ng-deep .custom-tab-group .mat-mdc-tab-header-pagination:hover {
+  background: rgba(92, 122, 131, 0.1);
+}
+
+::ng-deep .custom-tab-group .mat-mdc-tab-header-pagination-disabled .mat-mdc-tab-header-pagination-chevron {
+  border-color: #B89B80;
+  opacity: 0.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  ::ng-deep .custom-tab-group .mat-mdc-tab {
+    min-width: 80px;
+    padding: 0 12px;
+    font-size: 0.75rem;
+  }
+  
+  ::ng-deep .custom-tab-group .mat-mdc-tab-header {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
