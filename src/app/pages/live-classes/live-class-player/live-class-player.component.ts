@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, interval, takeUntil } from 'rxjs';
 import { LiveClassService, LiveClass } from '../../../shared/services/live-class.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-live-class-player',
@@ -27,10 +28,12 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private liveClassService: LiveClassService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.classId = this.route.snapshot.paramMap.get('id') || '';
     if (this.classId) {
       this.loadClass();
@@ -152,8 +155,8 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
     }
   }
 
-  goBack(): void {
-    this.router.navigate(['/live-classes']);
+  goBack() {
+    this.location.back();
   }
 
   shareClass(): void {

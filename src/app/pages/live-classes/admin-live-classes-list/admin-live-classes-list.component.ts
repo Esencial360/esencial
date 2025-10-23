@@ -64,6 +64,7 @@ export class AdminLiveClassesListComponent {
   ) {}
 
   async ngOnInit() {
+    window.scrollTo(0, 0);
     this.isLoading = true;
     if (isPlatformBrowser(this.platformId)) {
       this.authService.user$

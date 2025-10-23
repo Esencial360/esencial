@@ -3,7 +3,7 @@
 @if(isLoading) {
 <app-loading></app-loading>
 } @else {
-  <div
+<div
   class="min-h-screen bg-gradient-to-br from-bone via-olive-50 to-bone py-8 px-4"
 >
   <div class="max-w-7xl mx-auto">
@@ -315,6 +315,8 @@
 
             <!-- Actions -->
             <div class="flex flex-wrap gap-3">
+              @if (roles === "Admin") {
+
               <button
                 (click)="openStatusModal(liveClass)"
                 class="flex items-center gap-2 px-4 py-2 bg-blue text-white rounded-lg hover:bg-stronger_blue transition-all hover:shadow-lg"
@@ -336,20 +338,6 @@
               </button>
 
               <button
-                (click)="checkYouTubeStatus(liveClass)"
-                class="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all hover:shadow-lg"
-              >
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Verificar YouTube
-              </button>
-
-              <button
                 (click)="editClass(liveClass)"
                 class="flex items-center gap-2 px-4 py-2 bg-strongBrown text-white rounded-lg hover:bg-lightBrown transition-all hover:shadow-lg"
               >
@@ -368,6 +356,26 @@
                 </svg>
                 Editar
               </button>
+              <button
+                (click)="openDeleteModal(liveClass)"
+                class="flex items-center gap-2 px-4 py-2 bg-red text-white rounded-lg hover:bg-red/90 transition-all hover:shadow-lg"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                Eliminar
+              </button>
+              }
 
               <button
                 (click)="viewClass(liveClass)"
@@ -393,26 +401,6 @@
                   />
                 </svg>
                 Ver
-              </button>
-
-              <button
-                (click)="openDeleteModal(liveClass)"
-                class="flex items-center gap-2 px-4 py-2 bg-red text-white rounded-lg hover:bg-red/90 transition-all hover:shadow-lg"
-              >
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-                Eliminar
               </button>
             </div>
           </div>
