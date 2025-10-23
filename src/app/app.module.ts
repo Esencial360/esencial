@@ -132,6 +132,7 @@ import { LiveClassPlayerComponent } from './pages/live-classes/live-class-player
 import { AdminLiveClassComponent } from './pages/live-classes/admin-live-class/admin-live-class.component';
 import { AdminLiveClassesListComponent } from './pages/live-classes/admin-live-classes-list/admin-live-classes-list.component';
 import { EditLiveClassesComponent } from './pages/live-classes/edit-live-classes/edit-live-classes.component';
+import { LiveClassesOverviewComponent } from './pages/live-classes/live-classes-overview/live-classes-overview.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -231,6 +232,7 @@ registerLocaleData(localeEs, 'es');
     AdminLiveClassComponent,
     AdminLiveClassesListComponent,
     EditLiveClassesComponent,
+    LiveClassesOverviewComponent,
   ],
   imports: [
     BrowserModule,

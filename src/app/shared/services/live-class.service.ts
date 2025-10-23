@@ -51,38 +51,36 @@ export class LiveClassService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   // Obtener todas las clases con filtros opcionales
-getAllClasses(filters?: {
-  status?: string;
-  category?: string;
-  level?: string;
-  instructor?: string;
-}): Observable<ApiResponse<LiveClass[]>> {
-  let params = new HttpParams();
+  getAllClasses(filters?: {
+    status?: string;
+    category?: string;
+    level?: string;
+    instructor?: string;
+  }): Observable<ApiResponse<LiveClass[]>> {
+    let params = new HttpParams();
 
-  if (filters) {
-    Object.keys(filters).forEach((key) => {
-      const value = filters[key as keyof typeof filters];
-      if (value) {
-        params = params.set(key, value);
-      }
-    });
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        const value = filters[key as keyof typeof filters];
+        if (value) {
+          params = params.set(key, value);
+        }
+      });
+    }
+
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+
+        return this.http.get<ApiResponse<LiveClass[]>>(this.apiUrl, {
+          headers,
+          params,
+        });
+      })
+    );
   }
-
-  return this.auth.getAccessTokenSilently().pipe(
-    switchMap((token: string) => {
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-      });
-
-      // ✅ Corrected: headers and params go in the same options object
-      return this.http.get<ApiResponse<LiveClass[]>>(this.apiUrl, {
-        headers,
-        params,
-      });
-    })
-  );
-}
-
 
   // Obtener clases en vivo actualmente
   getLiveClasses(): Observable<ApiResponse<LiveClass[]>> {
@@ -100,12 +98,33 @@ getAllClasses(filters?: {
 
   // Obtener clases próximas
   getUpcomingClasses(): Observable<ApiResponse<LiveClass[]>> {
-    return this.http.get<ApiResponse<LiveClass[]>>(`${this.apiUrl}/upcoming`);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<ApiResponse<LiveClass[]>>(
+          `${this.apiUrl}/upcoming`,
+          {
+            headers,
+          }
+        );
+      })
+    );
   }
 
   // Obtener una clase específica por ID
   getClassById(id: string): Observable<ApiResponse<LiveClass>> {
-    return this.http.get<ApiResponse<LiveClass>>(`${this.apiUrl}/${id}`);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<ApiResponse<LiveClass>>(`${this.apiUrl}/${id}`, {
+          headers,
+        });
+      })
+    );
   }
 
   // Crear una nueva clase
@@ -129,9 +148,19 @@ getAllClasses(filters?: {
     id: string,
     status: string
   ): Observable<ApiResponse<LiveClass>> {
-    return this.http.patch<ApiResponse<LiveClass>>(
-      `${this.apiUrl}/${id}/status`,
-      { status }
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.patch<ApiResponse<LiveClass>>(
+          `${this.apiUrl}/${id}/status`,
+          { status },
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 
@@ -139,9 +168,19 @@ getAllClasses(filters?: {
     id: string,
     classData: Partial<LiveClass>
   ): Observable<ApiResponse<LiveClass>> {
-    return this.http.put<ApiResponse<LiveClass>>(
-      `${this.apiUrl}/${id}`,
-      classData
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.put<ApiResponse<LiveClass>>(
+          `${this.apiUrl}/${id}`,
+          classData,
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 
@@ -150,22 +189,50 @@ getAllClasses(filters?: {
     classId: string,
     userId: string
   ): Observable<ApiResponse<LiveClass>> {
-    return this.http.post<ApiResponse<LiveClass>>(
-      `${this.apiUrl}/${classId}/register`,
-      { userId }
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<ApiResponse<LiveClass>>(
+          `${this.apiUrl}/${classId}/register`,
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 
   // Verificar estado de YouTube
   getYouTubeStatus(classId: string): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(
-      `${this.apiUrl}/${classId}/youtube-status`
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<ApiResponse<any>>(
+          `${this.apiUrl}/${classId}/youtube-status`,
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 
   // Eliminar una clase
   deleteClass(id: string): Observable<ApiResponse<any>> {
-    return this.http.delete<ApiResponse<any>>(`${this.apiUrl}/${id}`);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.delete<ApiResponse<any>>(`${this.apiUrl}/${id}`, {
+          headers,
+        });
+      })
+    );
   }
 
   // Polling automático para clases en vivo (actualiza cada 30 segundos)
