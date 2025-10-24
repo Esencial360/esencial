@@ -42,4 +42,9 @@
     <app-qr [instructor]="instructor"></app-qr>
   </mat-tab>
   }
+  @if (showTab('BADGES')) {
+    <mat-tab label="BADGES">
+      <app-instructor-badge></app-instructor-badge>
+    </mat-tab>
+  }
 </mat-tab-group>

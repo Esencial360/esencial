@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BlogService } from '../../../shared/services/blog.service';
 import { Blog } from '../../../shared/Models/Blog';
 import { Category } from '../../../shared/Models/Category';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
@@ -25,37 +25,11 @@ export class BlogComponent implements OnInit {
   pullZone = environment.pullZone;
   blogs: Blog[] = [];
   categories: Category[] = [];
-  imageId = '363849589bd5e9ef22f015490ee80ac1'; // Example ID from MongoDB
+  readingTime = 0;
+   wordCount = 0;
+  imageId = '363849589bd5e9ef22f015490ee80ac1'; 
   safeImageUrl: SafeUrl = '';
-  articles: Article[] = [
-    {
-      image: 'path/to/yoga-sleep.jpg',
-      author: 'Olivia Rhye',
-      date: 'Jan 29, 2024',
-      title: 'Yoga for sleep: Evening routines for better rest',
-      description:
-        'Breathing plays an essential role in our well-being. Follow the advice of Dr. Marie',
-      tag: 'Health',
-    },
-    {
-      image: 'path/to/yoga-styles.jpg',
-      author: 'Olivia Rhye',
-      date: 'Jan 29, 2024',
-      title: 'Exploring the different styles of Yoga',
-      description:
-        'Breathing plays an essential role in our well-being. Follow the advice of Dr. Marie',
-      tag: 'Health',
-    },
-    {
-      image: 'path/to/yoga-kids.jpg',
-      author: 'Olivia Rhye',
-      date: 'Jan 29, 2024',
-      title: 'Yoga and mindfulness for kids',
-      description:
-        'Breathing plays an essential role in our well-being. Follow the advice of Dr. Marie',
-      tag: 'Health',
-    },
-  ];
+  safeDescription!: SafeHtml;
 
   @Input()
   blogSelected!: string;
@@ -96,6 +70,23 @@ export class BlogComponent implements OnInit {
     );
   }
 
+    calculateReadingStats(html: string) {
+    // Extract text content from HTML
+    const textContent = html.replace(/<[^>]*>/g, '').trim();
+    
+    // Calculate word count
+    this.wordCount = textContent ? textContent.split(/\s+/).length : 0;
+    
+    // Calculate reading time (average reading speed: 200-250 words per minute)
+    this.readingTime = Math.max(1, Math.ceil(this.wordCount / 225));
+  }
+
+    setDescription(html: string) {
+    // Sanitize the HTML content from TinyMCE
+    this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(html);
+    this.calculateReadingStats(html);
+  }
+
   onNavigateToBlog(id: string) {
     this.router
       .navigate([`/blog/${id}`])
@@ -131,5 +122,14 @@ export class BlogComponent implements OnInit {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+    getFormattedDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   }
 }

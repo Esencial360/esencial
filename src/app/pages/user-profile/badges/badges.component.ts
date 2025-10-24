@@ -6,33 +6,84 @@ import { Component, Input } from '@angular/core';
   styleUrl: './badges.component.css'
 })
 export class BadgesComponent {
+  // @Input() userId!: string;
+  // @Input() currentStreak: number = 0;
+  // @Input() memberSince: Date = new Date();
+  
+  // userBadges: Badge[] = [];
+  // allBadges: any[] = [];
+  // badgeProgress: BadgeProgress | null = null;
+  // loading = true;
+  // selectedBadge: any = null;
+  // showAllBadges = false;
 
-  @Input()
-  title!: string;
+  // constructor(private badgeService: BadgeService) {}
 
-  @Input()
-  subtitle!: string;
+  // ngOnInit() {
+  //   this.loadUserBadges();
+  //   this.allBadges = this.badgeService.getAllBadgeDefinitions();
+  // }
 
-  @Input()
-  description!: string;
+  // loadUserBadges() {
+  //   if (!this.userId) return;
+    
+  //   this.loading = true;
+  //   this.badgeService.getUserBadges(this.userId).subscribe({
+  //     next: (badges) => {
+  //       this.userBadges = badges;
+  //       this.calculateProgress();
+  //       this.loading = false;
+  //     },
+  //     error: (error) => {
+  //       console.error('Error loading badges:', error);
+  //       this.loading = false;
+  //     }
+  //   });
+  // }
 
-  @Input()
-  badges!: any[]
+  // calculateProgress() {
+  //   const tenureDays = Math.floor(
+  //     (new Date().getTime() - new Date(this.memberSince).getTime()) / (1000 * 60 * 60 * 24)
+  //   );
+    
+  //   this.badgeProgress = this.badgeService.calculateProgress(
+  //     this.currentStreak, 
+  //     tenureDays
+  //   );
+  // }
 
-  @Input()
-  futureBadges!: any[]
+  // hasBadge(badgeId: string): boolean {
+  //   return this.badgeService.hasBadge(badgeId, this.userBadges);
+  // }
 
-  selectedBadge!: any
-  openDialog!: boolean;
+  // getBadgeDate(badgeId: string): Date | null {
+  //   const badge = this.userBadges.find(b => b.badgeId === badgeId);
+  //   return badge ? badge.earnedOn : null;
+  // }
 
-  onBadgeClick(badge: any) {
-    this.openDialog = true
-    this.selectedBadge = badge
-    document.body.classList.add('overflow-hidden');
-  }
+  // selectBadge(badge: any) {
+  //   this.selectedBadge = badge;
+  // }
 
-  onDialogClose() {
-    this.openDialog = false
-  }
+  // closeBadgeDetails() {
+  //   this.selectedBadge = null;
+  // }
 
+  // toggleBadgeView() {
+  //   this.showAllBadges = !this.showAllBadges;
+  // }
+
+  // getProgressPercentage(current: number, target: number): number {
+  //   return Math.min((current / target) * 100, 100);
+  // }
+
+  // formatDate(date: Date | null): string {
+  //   if (!date) return '';
+  //   const d = new Date(date);
+  //   return d.toLocaleDateString('es-ES', { 
+  //     day: 'numeric', 
+  //     month: 'long', 
+  //     year: 'numeric' 
+  //   });
+  // }
 }

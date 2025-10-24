@@ -1,0 +1,360 @@
+<app-header></app-header>
+<div class="min-h-screen bg-gradient-to-br from-bone via-olive-50 to-bone py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <button
+        (click)="onCancel()"
+        class="flex items-center text-strongBrown hover:text-blue transition-colors mb-4 group"
+      >
+        <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Volver
+      </button>
+      
+      <div class="flex items-center gap-3 mb-2">
+        <svg class="w-10 h-10 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>
+        <h1 class="text-4xl font-bold text-strongBrown">Editar Clase en Vivo</h1>
+      </div>
+      <p class="text-olive-600">Actualiza la información de la clase</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex justify-center items-center py-20">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue"></div>
+    </div>
+
+    <!-- Success Message -->
+    <div
+      *ngIf="success"
+      class="mb-6 bg-teal-100 border-l-4 border-teal-500 text-teal-700 p-4 rounded-lg animate-pulse"
+    >
+      <div class="flex items-center">
+        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span class="font-semibold">¡Clase actualizada exitosamente! Redirigiendo...</span>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      *ngIf="error"
+      class="mb-6 bg-red/10 border-l-4 border-red text-red p-4 rounded-lg"
+    >
+      <div class="flex items-center">
+        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>{{ error }}</span>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form *ngIf="!loading" [formGroup]="liveClassForm" (ngSubmit)="onSubmit()" class="bg-white rounded-2xl shadow-xl p-8 border border-olive-100">
+      
+      <!-- Basic Information Section -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-strongBrown mb-6 flex items-center gap-2">
+          <div class="w-1 h-8 bg-gradient-to-b from-blue to-stronger_blue rounded-full"></div>
+          Información Básica
+        </h2>
+        
+        <div class="space-y-6">
+          <!-- Title -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Título de la Clase *
+            </label>
+            <input
+              type="text"
+              formControlName="title"
+              placeholder="Ej: Yoga Vinyasa Matutino"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+              [class.border-red-500]="isFieldInvalid('title')"
+              [class.border-gray-300]="!isFieldInvalid('title')"
+            />
+            <p *ngIf="isFieldInvalid('title')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('title') }}
+            </p>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Descripción *
+            </label>
+            <textarea
+              formControlName="description"
+              rows="4"
+              placeholder="Describe la clase, qué se trabajará, nivel requerido, etc."
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all resize-none"
+              [class.border-red-500]="isFieldInvalid('description')"
+              [class.border-gray-300]="!isFieldInvalid('description')"
+            ></textarea>
+            <p *ngIf="isFieldInvalid('description')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('description') }}
+            </p>
+          </div>
+
+          <!-- Instructor Name -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Nombre del Instructor *
+            </label>
+            <input
+              type="text"
+              formControlName="instructorName"
+              placeholder="Ej: María García"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+              [class.border-red-500]="isFieldInvalid('instructorName')"
+              [class.border-gray-300]="!isFieldInvalid('instructorName')"
+            />
+            <p *ngIf="isFieldInvalid('instructorName')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('instructorName') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Section -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-strongBrown mb-6 flex items-center gap-2">
+          <div class="w-1 h-8 bg-gradient-to-b from-purple-500 to-purple-600 rounded-full"></div>
+          Programación
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Scheduled Time -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Fecha y Hora *
+            </label>
+            <input
+              type="datetime-local"
+              formControlName="scheduledTime"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+              [class.border-red-500]="isFieldInvalid('scheduledTime')"
+              [class.border-gray-300]="!isFieldInvalid('scheduledTime')"
+            />
+            <p *ngIf="isFieldInvalid('scheduledTime')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('scheduledTime') }}
+            </p>
+          </div>
+
+          <!-- Duration -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Duración (minutos) *
+            </label>
+            <input
+              type="number"
+              formControlName="duration"
+              min="15"
+              max="180"
+              placeholder="60"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+              [class.border-red-500]="isFieldInvalid('duration')"
+              [class.border-gray-300]="!isFieldInvalid('duration')"
+            />
+            <p *ngIf="isFieldInvalid('duration')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('duration') }}
+            </p>
+          </div>
+
+          <!-- Status -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Estado *
+            </label>
+            <select
+              formControlName="status"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+            >
+              <option *ngFor="let status of statusOptions" [value]="status.value">
+                {{ status.label }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Max Participants -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Máximo de Participantes *
+            </label>
+            <input
+              type="number"
+              formControlName="maxParticipants"
+              min="1"
+              placeholder="100"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+              [class.border-red-500]="isFieldInvalid('maxParticipants')"
+              [class.border-gray-300]="!isFieldInvalid('maxParticipants')"
+            />
+            <p *ngIf="isFieldInvalid('maxParticipants')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('maxParticipants') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube Configuration -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-strongBrown mb-6 flex items-center gap-2">
+          <div class="w-1 h-8 bg-gradient-to-b from-red-500 to-red-600 rounded-full"></div>
+          Configuración de YouTube
+        </h2>
+        
+        <div class="space-y-6">
+          <!-- YouTube Video ID -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              ID del Video de YouTube *
+            </label>
+            <input
+              type="text"
+              formControlName="youtubeVideoId"
+              placeholder="dQw4w9WgXcQ (11 caracteres)"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all font-mono"
+              [class.border-red-500]="isFieldInvalid('youtubeVideoId')"
+              [class.border-gray-300]="!isFieldInvalid('youtubeVideoId')"
+            />
+            <p class="mt-2 text-sm text-gray-600">
+              💡 El ID es la parte después de "v=" en la URL de YouTube
+            </p>
+            <p *ngIf="isFieldInvalid('youtubeVideoId')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('youtubeVideoId') }}
+            </p>
+          </div>
+
+          <!-- YouTube Channel ID -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              ID del Canal de YouTube *
+            </label>
+            <input
+              type="text"
+              formControlName="youtubeChannelId"
+              placeholder="UCuAXFkgsw1L7xaCfnd5JJOw"
+              class="w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all font-mono"
+              [class.border-red-500]="isFieldInvalid('youtubeChannelId')"
+              [class.border-gray-300]="!isFieldInvalid('youtubeChannelId')"
+            />
+            <p *ngIf="isFieldInvalid('youtubeChannelId')" class="mt-2 text-sm text-red-600">
+              {{ getFieldError('youtubeChannelId') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class Details -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-strongBrown mb-6 flex items-center gap-2">
+          <div class="w-1 h-8 bg-gradient-to-b from-green-500 to-green-600 rounded-full"></div>
+          Detalles de la Clase
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Category -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Categoría *
+            </label>
+            <select
+              formControlName="category"
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+            >
+              <option *ngFor="let cat of categories" [value]="cat.value">
+                {{ cat.label }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Level -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Nivel *
+            </label>
+            <select
+              formControlName="level"
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
+            >
+              <option *ngFor="let lvl of levels" [value]="lvl.value">
+                {{ lvl.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Options -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-strongBrown mb-6 flex items-center gap-2">
+          <div class="w-1 h-8 bg-gradient-to-b from-yellow-500 to-yellow-600 rounded-full"></div>
+          Opciones Adicionales
+        </h2>
+        
+        <div class="space-y-4">
+          <!-- Chat Enabled -->
+          <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+            <input
+              type="checkbox"
+              formControlName="chatEnabled"
+              class="w-5 h-5 text-blue rounded focus:ring-blue"
+            />
+            <span class="ml-3 text-gray-700 font-medium">Habilitar chat en vivo</span>
+          </label>
+
+          <!-- Is Recorded -->
+          <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+            <input
+              type="checkbox"
+              formControlName="isRecorded"
+              class="w-5 h-5 text-blue rounded focus:ring-blue"
+            />
+            <span class="ml-3 text-gray-700 font-medium">Grabar clase para verla después</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Hidden Instructor ID (you should get this from auth service) -->
+      <input type="hidden" formControlName="instructor" />
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="flex-1 px-6 py-4 bg-gray-200 text-gray-800 rounded-xl hover:bg-gray-300 transition-all font-semibold text-lg"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="liveClassForm.invalid || saving || !hasChanges()"
+          class="flex-1 px-6 py-4 bg-gradient-to-r from-blue to-stronger_blue text-white rounded-xl hover:shadow-xl transition-all font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          <svg *ngIf="!saving" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <div *ngIf="saving" class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+          <span>{{ saving ? 'Guardando...' : 'Guardar Cambios' }}</span>
+        </button>
+      </div>
+
+      <!-- Info Message -->
+      <div *ngIf="!hasChanges()" class="mt-4 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-xl text-sm">
+        <div class="flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+          </svg>
+          <span>No se han realizado cambios</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,25 +1,48 @@
 <button
-(click)="onActionButton()"
-class="group flex items-center justify-center bg-blue rounded-full px-4 hover:bg-veige py-2 transition-colors duration-200"
+  (click)="onActionButton()"
+  class="group relative flex items-center justify-between bg-gradient-to-r from-blue via-stronger_blue to-blue bg-[length:200%_100%] rounded-2xl px-6 py-3.5 transition-all duration-500 hover:shadow-2xl hover:scale-[1.03] active:scale-95 overflow-hidden border border-white/20 hover:bg-right"
 >
-<span class="text-white text-sm font-medium">{{text}}</span>
-<div
-  class="ml-2 rounded-full w-5 h-5 flex items-center justify-center transition-colors duration-200"
-  [ngClass]="bgColor"
->
-  <svg
-    class="w-3 h-3 text-white"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M9 5l7 7-7 7"
-    ></path>
-  </svg>
-</div>
+  <!-- Animated background gradient -->
+  <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+  
+  <!-- Glow effect -->
+  <div class="absolute -inset-1 bg-gradient-to-r from-blue to-stronger_blue rounded-2xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"></div>
+  
+  <!-- Content Container -->
+  <div class="relative flex items-center justify-between w-full z-10">
+    <!-- Text with slight animation -->
+    <span class="text-white text-sm font-bold tracking-wide group-hover:tracking-wider transition-all duration-300 drop-shadow-sm">
+      {{text}}
+    </span>
+    
+    <!-- Icon Circle with Animation -->
+    <div class="relative ml-3">
+      <!-- Pulse ring -->
+      <span class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity"
+            [ngClass]="bgColor + '/50'"></span>
+      
+      <!-- Main circle -->
+      <div
+        class="relative rounded-full w-8 h-8 flex items-center justify-center transition-all duration-300 shadow-md group-hover:shadow-xl group-hover:rotate-[360deg] backdrop-blur-sm"
+        [ngClass]="bgColor"
+      >
+        <svg
+          class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="3"
+            d="M9 5l7 7-7 7"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom shine line -->
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white/80 group-hover:w-3/4 transition-all duration-500 rounded-full"></div>
 </button>

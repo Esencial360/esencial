@@ -1,9 +1,9 @@
 <div
   [style]="addMargin ? 'margin-top: 50px; margin-bottom: 50px;' : ''"
-  class="text-strongBrown container mx-auto bg-cover rounded-3xl overflow-hidden mb-5 relative montserrat-normal shadow-2xl"
+  class="text-strongBrown container mx-auto bg-cover rounded-3xl overflow-hidden mb-5 relative montserrat-normal shadow-2xl hover:shadow-3xl transition-shadow duration-500"
 >
   <div
-    class="flex flex-col items-center justify-center md:flex-row bg-cover bg-no-repeat bg-center min-h-[420px] transition-all duration-300 ease-in-out"
+    class="flex flex-col items-center justify-center md:flex-row bg-cover bg-no-repeat bg-center min-h-[420px] transition-all duration-500 ease-in-out"
     data-aos="fade-up"
     data-aos-duration="1000"
     [ngStyle]="{
@@ -15,7 +15,7 @@
     [attr.aria-label]="title + ' - ' + description"
   >
     <!-- Enhanced overlay with gradient for better text readability -->
-    <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-strongBrown/70 via-strongBrown/50 to-strongBrown/30"></div>
     
     <!-- Subtle pattern overlay for texture -->
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
@@ -24,11 +24,11 @@
       class="relative z-10 p-8 sm:p-12 flex text-white flex-col h-full min-h-[420px] justify-center items-center text-center max-w-4xl mx-auto"
     >
       <!-- Enhanced typography with better spacing and animations -->
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight tracking-tight animate-fade-in-up">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight tracking-tight animate-fade-in-up drop-shadow-2xl">
         {{ title }}
       </h1>
       
-      <p class="mb-8 text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-2xl opacity-90 animate-fade-in-up animation-delay-200">
+      <p class="mb-8 text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-2xl opacity-95 animate-fade-in-up animation-delay-200 drop-shadow-lg">
         {{ description }}
       </p>
       
@@ -37,19 +37,19 @@
         <div class="animate-fade-in-up animation-delay-400">
           <button
             (click)="onHandleCollection(category.name)"
-            class="group relative bg-transparent text-white border-2 border-white/80 hover:border-white 
-                   px-8 py-4 rounded-full text-lg font-semibold tracking-wide
+            class="group relative bg-transparent text-white border-2 border-white/90 hover:border-white 
+                   px-10 py-4 rounded-full text-lg font-bold tracking-wide
                    transition-all duration-300 ease-out
-                   hover:bg-white hover:text-strongBrown hover:shadow-xl hover:scale-105
-                   focus:outline-none focus:ring-4 focus:ring-white/30 focus:scale-105
-                   active:scale-95"
+                   hover:bg-white hover:text-strongBrown hover:shadow-2xl hover:scale-110
+                   focus:outline-none focus:ring-4 focus:ring-white/40 focus:scale-105
+                   active:scale-95 shadow-lg"
             type="button"
             [attr.aria-label]="'Navigate to ' + buttonText"
           >
             <span class="relative z-10">{{ buttonText }}</span>
             
             <!-- Subtle shine effect on hover -->
-            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent 
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
                         translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
           </button>
         </div>
@@ -57,12 +57,12 @@
         <div class="animate-fade-in-up animation-delay-400">
           <button
             (click)="onAction()"
-            class="group relative bg-gradient-to-r from-blue to-stronger_blue hover:from-blue hover:to-stronger_blue 
-                   text-white px-10 py-4 font-bold text-lg rounded-full
+            class="group relative bg-gradient-to-r from-blue to-stronger_blue hover:from-stronger_blue hover:to-blue 
+                   text-white px-12 py-4 font-bold text-lg rounded-full
                    transition-all duration-300 ease-out
-                   hover:shadow-xl hover:shadow-blue- hover:scale-105
-                   focus:outline-none focus:ring-4 focus:ring-blue- focus:scale-105
-                   active:scale-95"
+                   hover:shadow-2xl hover:scale-110 shadow-xl
+                   focus:outline-none focus:ring-4 focus:ring-blue/40 focus:scale-105
+                   active:scale-95 border-2 border-white/20"
             type="button"
             [attr.aria-label]="buttonText"
           >

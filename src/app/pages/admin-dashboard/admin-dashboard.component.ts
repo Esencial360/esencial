@@ -18,6 +18,7 @@ export class AdminDashboardComponent implements OnInit {
     'VIDEOS PENDIENTES',
     'PLAN SEMANAL',
     'CATEGORIAS',
+    'BADGES INSTRUCTOR',
   ];
   isLoading!: boolean;
   pullZone: string = environment.pullZone;
@@ -58,5 +59,17 @@ export class AdminDashboardComponent implements OnInit {
 
   onStripe() {
     window.open('https://stripe.com/en-de', '_blank');
+  }
+
+  onNewLiveClass() {
+    this.router.navigateByUrl(['/nueva-clase-envivo'].join(''));
+  }
+
+  onLiveClass() {
+    this.router.navigateByUrl(['/nueva-clase-envivo'].join(''));
+  }
+
+  onEditLiveClasses() {
+    this.router.navigateByUrl(['/lista-clases-envivo'].join(''));
   }
 }
