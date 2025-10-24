@@ -92,8 +92,6 @@ export class SingleClassComponent implements OnInit {
     this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
       this.userId = user._id;
       this.user = user;
-      console.log(this.userId);
-      console.log(this.user);
     });
   }
 

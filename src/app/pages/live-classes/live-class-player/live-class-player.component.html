@@ -1,5 +1,45 @@
 <app-header></app-header>
-<div class="min-h-screen bg-gradient-to-br from-bone via-white to-bone montserrat-normal">
+
+@if (!user) {
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-stronger_blue-50/20 p-6 relative overflow-hidden montserrat-normal ">
+  <!-- Decorative background elements -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-red/10 to-transparent rounded-full -translate-y-48 translate-x-48"></div>
+  <div class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-orange/10 to-transparent rounded-full translate-y-36 -translate-x-36"></div>
+
+  <div class="bg-white/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl text-center max-w-md border border-white/20 relative overflow-hidden" data-aos="fade-up">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 bg-gradient-to-br from-red/5 via-transparent to-orange/5"></div>
+    
+    <!-- Lock Icon -->
+    <div class="mb-8 relative z-10">
+      <div class="w-24 h-24 bg-gradient-to-br from-red to-orange rounded-full flex items-center justify-center mx-auto shadow-xl relative">
+        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
+        </svg>
+        <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue to-stronger_blue rounded-full animate-pulse flex items-center justify-center">
+          <span class="text-white text-xs">!</span>
+        </div>
+      </div>
+    </div>
+    
+    <h3 class="text-xl font-black text-gray-800 mb-6 uppercase leading-tight relative z-10">
+      Suscripción Requerida
+    </h3>
+    
+    <p class="text-gray-600 mb-8 leading-relaxed relative z-10">
+      Necesitas una suscripción activa para acceder a este contenido premium
+    </p>
+    
+    <button
+      class="relative z-10 w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-blue-700 hover:to-stronger_blue-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+      (click)="onSubscribe()"
+    >
+      🚀 Activar Suscripción
+    </button>
+  </div>
+</div>
+} @else {
+  <div class="min-h-screen bg-gradient-to-br from-bone via-white to-bone montserrat-normal">
   <!-- Enhanced Loading State -->
   <div *ngIf="loading" class="flex justify-center items-center h-screen">
     <div class="relative">
@@ -297,86 +337,14 @@
           <div class="absolute top-0 right-0 w-24 h-24 bg-blue/10 rounded-full -translate-y-12 translate-x-12"></div>
           <div class="absolute bottom-0 left-0 w-32 h-32 bg-stronger_blue/10 rounded-full translate-y-16 -translate-x-16"></div>
           
-          <div class="relative z-10">
-            <h4 class="font-bold text-lg text-strongBrown mb-4 flex items-center">
-              <div class="w-8 h-8 bg-gradient-to-r from-blue to-stronger_blue rounded-lg flex items-center justify-center mr-3 shadow-md">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              Información Importante
-            </h4>
-            
-            <!-- <div class="space-y-3">
-              <div *ngIf="liveClass.chatEnabled" class="flex items-start bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-veige/20">
-                <div class="w-8 h-8 bg-gradient-to-r from-blue to-stronger_blue rounded-lg flex items-center justify-center mr-3 flex-shrink-0 shadow">
-                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-strongBrown">Chat Interactivo</p>
-                  <p class="text-xs text-gray">Podrás chatear durante la clase</p>
-                </div>
-              </div>
-              
-              <div *ngIf="liveClass.isRecorded" class="flex items-start bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-veige/20">
-                <div class="w-8 h-8 bg-gradient-to-r from-red to-orange rounded-lg flex items-center justify-center mr-3 flex-shrink-0 shadow">
-                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-strongBrown">Clase Grabada</p>
-                  <p class="text-xs text-gray">Disponible para ver después</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-veige/20">
-                <div class="w-8 h-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg flex items-center justify-center mr-3 flex-shrink-0 shadow">
-                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-strongBrown">Preparación</p>
-                  <p class="text-xs text-gray">Ten listo tu mat y agua</p>
-                </div>
-              </div>
-            </div> -->
-          </div>
+ 
         </div>
 
-        <!-- Quick Stats Card -->
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-          <h4 class="font-bold text-strongBrown mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-            </svg>
-            Estadísticas Rápidas
-          </h4>
-          <div class="grid grid-cols-2 gap-3">
-            <!-- <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
-              <p class="text-2xl font-bold text-blue">{{ liveClass.totalViews }}</p>
-              <p class="text-xs text-gray">Vistas totales</p>
-            </div> -->
-            <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
-              <p class="text-2xl font-bold text-stronger_blue">{{ liveClass.duration }}</p>
-              <p class="text-xs text-gray">Minutos</p>
-            </div>
-            <!-- <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
-              <p class="text-2xl font-bold text-teal-600">{{ liveClass.registeredUsers.length }}</p>
-              <p class="text-xs text-gray">Registrados</p>
-            </div> -->
-            <div class="bg-gradient-to-br from-bone to-white p-3 rounded-lg text-center border border-veige/30">
-              <p class="text-2xl font-bold text-orange">4.9</p>
-              <p class="text-xs text-gray">Calificación</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
+
+}
 
 <app-footer></app-footer>

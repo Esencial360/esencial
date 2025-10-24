@@ -2,13 +2,18 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, interval, takeUntil } from 'rxjs';
-import { LiveClassService, LiveClass } from '../../../shared/services/live-class.service';
+import {
+  LiveClassService,
+  LiveClass,
+} from '../../../shared/services/live-class.service';
 import { Location } from '@angular/common';
+import { selectActiveUser } from '../../../state/user.selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-live-class-player',
   templateUrl: './live-class-player.component.html',
-  styleUrls: ['./live-class-player.component.css']
+  styleUrls: ['./live-class-player.component.css'],
 })
 export class LiveClassPlayerComponent implements OnInit, OnDestroy {
   liveClass: LiveClass | null = null;
@@ -17,7 +22,11 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
   error: string | null = null;
   isRegistered = false;
   currentUserId: string = ''; // Obtener del servicio de autenticación
-  
+  forbidden!: boolean;
+  userId!: string;
+  user$!: any;
+  user!: any;
+
   youtubeStatus: any = null;
   viewers = 0;
 
@@ -29,8 +38,14 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
     private router: Router,
     private liveClassService: LiveClassService,
     private sanitizer: DomSanitizer,
-    private location: Location
-  ) {}
+    private location: Location,
+    private store: Store
+  ) {
+        this.user$ = this.store.select(selectActiveUser).subscribe((user) => {
+          this.userId = user._id;
+          this.user = user;
+        });
+  }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
@@ -48,11 +63,15 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  onSubscribe() {
+    this.router.navigate(['suscribe']);
+  }
   loadClass(): void {
     this.loading = true;
     this.error = null;
 
-    this.liveClassService.getClassById(this.classId)
+    this.liveClassService
+      .getClassById(this.classId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -67,7 +86,7 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
           console.error('Error al cargar la clase:', err);
           this.error = 'No se pudo cargar la clase';
           this.loading = false;
-        }
+        },
       });
   }
 
@@ -77,7 +96,8 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
         this.liveClass.youtubeVideoId,
         true
       );
-      this.youtubeEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+      this.youtubeEmbedUrl =
+        this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
     }
   }
 
@@ -107,7 +127,6 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
     //       if (response.success && response.data) {
     //         this.youtubeStatus = response.data;
     //         this.viewers = response.data.viewers || 0;
-            
     //         // Actualizar el estado local si cambió
     //         if (this.liveClass && this.liveClass.status !== response.data.status) {
     //           this.liveClass.status = response.data.status;
@@ -128,7 +147,8 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
     }
 
     if (this.liveClass) {
-      this.liveClassService.registerToClass(this.liveClass._id, this.currentUserId)
+      this.liveClassService
+        .registerToClass(this.liveClass._id, this.currentUserId)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
@@ -143,7 +163,7 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
           error: (err) => {
             console.error('Error al registrarse:', err);
             alert(err.error?.message || 'Error al registrarse a la clase');
-          }
+          },
         });
     }
   }
@@ -162,11 +182,13 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
   shareClass(): void {
     const url = window.location.href;
     if (navigator.share) {
-      navigator.share({
-        title: this.liveClass?.title || 'Clase de Yoga en Vivo',
-        text: this.liveClass?.description || '',
-        url: url
-      }).catch(err => console.error('Error al compartir:', err));
+      navigator
+        .share({
+          title: this.liveClass?.title || 'Clase de Yoga en Vivo',
+          text: this.liveClass?.description || '',
+          url: url,
+        })
+        .catch((err) => console.error('Error al compartir:', err));
     } else {
       // Fallback: copiar al portapapeles
       navigator.clipboard.writeText(url).then(() => {
@@ -182,7 +204,7 @@ export class LiveClassPlayerComponent implements OnInit, OnDestroy {
       month: 'long',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   }
 

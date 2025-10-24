@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -73,14 +79,12 @@ export class AdminLiveClassesListComponent {
           if (user) {
             this.isLoading = false;
             this.user = user;
+            const namespace = 'https://test-assign-roles.com/';
+            this.roles = user[`${namespace}roles`][0] || [];
+          } else {
+            this.isLoading = false;
+            this.user = undefined;
           }
-          this.authService.user$.subscribe((user) => {
-            if (user) {
-              const namespace = 'https://test-assign-roles.com/';
-              this.roles = user[`${namespace}roles`][0] || [];
-              // this.setFilters();
-            }
-          });
         });
     }
     const accessToken = await this.authService.getAccessTokenSilently({
@@ -89,6 +93,10 @@ export class AdminLiveClassesListComponent {
       },
     });
     this.loadClasses();
+  }
+
+  onSubscribe() {
+    this.router.navigate(['suscribe']);
   }
 
   ngOnDestroy(): void {

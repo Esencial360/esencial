@@ -3,6 +3,47 @@
 @if(isLoading) {
 <app-loading></app-loading>
 } @else {
+
+  @if (!user) {
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-stronger_blue-50/20 p-6 relative overflow-hidden montserrat-normal ">
+  <!-- Decorative background elements -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-red/10 to-transparent rounded-full -translate-y-48 translate-x-48"></div>
+  <div class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-orange/10 to-transparent rounded-full translate-y-36 -translate-x-36"></div>
+
+  <div class="bg-white/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl text-center max-w-md border border-white/20 relative overflow-hidden" data-aos="fade-up">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 bg-gradient-to-br from-red/5 via-transparent to-orange/5"></div>
+    
+    <!-- Lock Icon -->
+    <div class="mb-8 relative z-10">
+      <div class="w-24 h-24 bg-gradient-to-br from-red to-orange rounded-full flex items-center justify-center mx-auto shadow-xl relative">
+        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
+        </svg>
+        <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue to-stronger_blue rounded-full animate-pulse flex items-center justify-center">
+          <span class="text-white text-xs">!</span>
+        </div>
+      </div>
+    </div>
+    
+    <h3 class="text-xl font-black text-gray-800 mb-6 uppercase leading-tight relative z-10">
+      Suscripción Requerida
+    </h3>
+    
+    <p class="text-gray-600 mb-8 leading-relaxed relative z-10">
+      Necesitas una suscripción activa para acceder a este contenido premium
+    </p>
+    
+    <button
+      class="relative z-10 w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-blue-700 hover:to-stronger_blue-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+      (click)="onSubscribe()"
+    >
+      🚀 Activar Suscripción
+    </button>
+  </div>
+</div>
+} @else {
+  
 <div
   class="min-h-screen bg-gradient-to-br from-bone via-olive-50 to-bone py-8 px-4"
 >
@@ -522,6 +563,8 @@
     </div>
   </div>
 </div>
+}
+
 }
 
 <app-footer></app-footer>
