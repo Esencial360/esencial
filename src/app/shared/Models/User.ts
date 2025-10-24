@@ -1,6 +1,6 @@
 
 export interface User {
-    badges: import("c:/Users/BOOK/Documents/Projects/esencial/src/app/shared/services/badge.service").Badge[];
+    badges: any;    
     _id: string,
     username: string, 
     password: string,
