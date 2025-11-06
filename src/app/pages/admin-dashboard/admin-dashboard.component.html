@@ -106,6 +106,18 @@
             [bgColor]="'bg-blue'"
             [text]="'🧘‍♀️ Clases en vivo'"
           ></app-button>
+
+            <app-button
+            (onActionTrigger)="onZoomClass()"
+            [bgColor]="'bg-blue'"
+            [text]="'🧘‍♀️ Nueva clase de Zoom'"
+          ></app-button>
+
+            <app-button
+            (onActionTrigger)="onEditZoomClasses()"
+            [bgColor]="'bg-blue'"
+            [text]="'🧘‍♀️ Clases de Zoom'"
+          ></app-button>
         </div>
       </div>
       <!-- Platform Management Section -->
