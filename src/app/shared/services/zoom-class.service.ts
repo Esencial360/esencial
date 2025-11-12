@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 import { interval } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
+import { AuthService } from '@auth0/auth0-angular';
 export interface ZoomClass {
   _id?: string;
   title: string;
@@ -55,7 +56,7 @@ export class ZoomClassService {
   private upcomingClassesSubject = new BehaviorSubject<ZoomClass[]>([]);
   public upcomingClasses$ = this.upcomingClassesSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   /**
    * Get all Zoom classes with optional filters
@@ -79,31 +80,52 @@ export class ZoomClassService {
       if (filters.page) params = params.set('page', filters.page.toString());
     }
 
-    return this.http.get<ZoomClassResponse>(this.apiUrl, { params });
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<ZoomClassResponse>(this.apiUrl, {
+          params,
+          headers,
+        });
+      })
+    );
   }
 
   /**
    * Get upcoming Zoom classes
    */
   getUpcomingClasses(limit: number = 5): Observable<ZoomClassResponse> {
-    return this.http
-      .get<ZoomClassResponse>(`${this.apiUrl}/upcoming`, {
-        params: { limit: limit.toString() },
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        const params = new HttpParams().set('limit', limit.toString());
+
+        return this.http.get<ZoomClassResponse>(`${this.apiUrl}/upcoming`, {
+          params,
+          headers,
+        });
       })
-      .pipe(
-        tap((response) => {
-          if (response.success && Array.isArray(response.data)) {
-            this.upcomingClassesSubject.next(response.data);
-          }
-        })
-      );
+    );
   }
 
   /**
    * Get a single Zoom class by ID
    */
   getZoomClassById(id: string): Observable<ZoomClassResponse> {
-    return this.http.get<ZoomClassResponse>(`${this.apiUrl}/${id}`);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<ZoomClassResponse>(`${this.apiUrl}/${id}`, {
+          headers,
+        });
+      })
+    );
   }
 
   /**
@@ -112,7 +134,16 @@ export class ZoomClassService {
   createZoomClass(
     zoomClass: Partial<ZoomClass>
   ): Observable<ZoomClassResponse> {
-    return this.http.post<ZoomClassResponse>(this.apiUrl, zoomClass);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<ZoomClassResponse>(this.apiUrl, zoomClass, {
+          headers,
+        });
+      })
+    );
   }
 
   /**
@@ -122,23 +153,55 @@ export class ZoomClassService {
     id: string,
     zoomClass: Partial<ZoomClass>
   ): Observable<ZoomClassResponse> {
-    return this.http.put<ZoomClassResponse>(`${this.apiUrl}/${id}`, zoomClass);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.put<ZoomClassResponse>(
+          `${this.apiUrl}/${id}`,
+          zoomClass,
+          {
+            headers,
+          }
+        );
+      })
+    );
   }
 
   /**
    * Delete a Zoom class (Admin only)
    */
   deleteZoomClass(id: string): Observable<ZoomClassResponse> {
-    return this.http.delete<ZoomClassResponse>(`${this.apiUrl}/${id}`);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.delete<ZoomClassResponse>(`${this.apiUrl}/${id}`, {
+          headers,
+        });
+      })
+    );
   }
 
   /**
    * Register for a Zoom class
    */
   registerForClass(id: string): Observable<ZoomClassResponse> {
-    return this.http.post<ZoomClassResponse>(
-      `${this.apiUrl}/${id}/register`,
-      {}
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<ZoomClassResponse>(
+          `${this.apiUrl}/${id}/register`,
+          {},
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 
@@ -146,9 +209,19 @@ export class ZoomClassService {
    * Unregister from a Zoom class
    */
   unregisterFromClass(id: string): Observable<ZoomClassResponse> {
-    return this.http.post<ZoomClassResponse>(
-      `${this.apiUrl}/${id}/unregister`,
-      {}
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<ZoomClassResponse>(
+          `${this.apiUrl}/${id}/unregister`,
+          {},
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 
@@ -156,7 +229,16 @@ export class ZoomClassService {
    * Get user's registered classes
    */
   getMyClasses(): Observable<ZoomClassResponse> {
-    return this.http.get<ZoomClassResponse>(`${this.apiUrl}/my-classes`);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<ZoomClassResponse>(`${this.apiUrl}/my-classes`, {
+          headers,
+        });
+      })
+    );
   }
 
   /**
@@ -215,22 +297,41 @@ export class ZoomClassService {
   /**
    * Update class status (Admin only)
    */
-  updateClassStatus(
-    id: string,
-    status: 'scheduled' | 'live' | 'completed' | 'cancelled'
-  ): Observable<ZoomClassResponse> {
-    return this.http.patch<ZoomClassResponse>(`${this.apiUrl}/${id}/status`, {
-      status,
-    });
+  updateClassStatus(id: string, status: string): Observable<ZoomClassResponse> {
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.patch<ZoomClassResponse>(
+          `${this.apiUrl}/${id}/status`,
+          { status },
+          {
+            headers,
+          }
+        );
+      })
+    );
   }
 
   /**
    * Update all class statuses (Admin only)
    */
+
   updateAllStatuses(): Observable<ZoomClassResponse> {
-    return this.http.post<ZoomClassResponse>(
-      `${this.apiUrl}/update-statuses`,
-      {}
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+        return this.http.post<ZoomClassResponse>(
+          `${this.apiUrl}/update-statuses`,
+          {},
+          {
+            headers,
+          }
+        );
+      })
     );
   }
 

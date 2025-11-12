@@ -237,7 +237,7 @@ const routes: Routes = [
   // { path: 'admin/create-live-class', component: CreateLiveClassComponent },
   { path: 'editar-clase-envivo/:id', component: AdminLiveClassComponent },
    {
-    path: 'admin/clases-zoom',
+    path: 'clases-zoom',
     component: AdminZoomClassListComponent,
   },
   {
@@ -251,11 +251,11 @@ const routes: Routes = [
   },
   
   // User routes (protected with auth guard)
-  {
-    path: 'clases-zoom',
-    component: ZoomClassesUserComponent,
-    // canActivate: [AuthGuard] // Your auth guard
-  },
+  // {
+  //   path: 'clases-zoom',
+  //   component: AdminZoomClassListComponent,
+  //   // canActivate: [AuthGuard] // Your auth guard
+  // },
   
   { path: '**', redirectTo: '', pathMatch: 'full' },
   // Catch-all for invalid routes (404)`

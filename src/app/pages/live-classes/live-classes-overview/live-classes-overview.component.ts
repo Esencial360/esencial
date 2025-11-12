@@ -160,13 +160,15 @@ export class LiveClassesOverviewComponent implements OnInit, OnDestroy {
       if (results.zoomUpcoming.success && Array.isArray(results.zoomUpcoming.data)) {
         this.upcomingZoomClasses = results.zoomUpcoming.data;
         this.hasZoomClasses = this.upcomingZoomClasses.length > 0;
+        console.log(this.upcomingZoomClasses);
       }
       
-      // ✅ NEW: Process live Zoom classes
       if (results.zoomLive.success && Array.isArray(results.zoomLive.data)) {
-        console.log();
+        console.log(results.zoomLive.data);
         
         this.liveZoomClasses = results.zoomLive.data;
+        console.log(this.liveZoomClasses);
+        
       }
       
       // Update statuses
@@ -304,7 +306,7 @@ export class LiveClassesOverviewComponent implements OnInit, OnDestroy {
    * Navigate to Zoom classes
    */
   goToZoomClasses(): void {
-    this.router.navigate(['/zoom-classes']);
+    this.router.navigate(['/clases-zoom']);
   }
   
   /**

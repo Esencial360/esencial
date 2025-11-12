@@ -78,6 +78,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   onEditZoomClasses() {
-    this.router.navigateByUrl(['/admin/clases-zoom'].join(''));
+    this.router.navigateByUrl(['/clases-zoom'].join(''));
   }
 }

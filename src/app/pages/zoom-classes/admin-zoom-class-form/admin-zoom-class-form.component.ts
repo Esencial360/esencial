@@ -114,7 +114,7 @@ export class AdminZoomClassFormComponent implements OnInit {
             : 'Clase creada exitosamente';
           
           setTimeout(() => {
-            this.router.navigate(['/admin/clases-zoom']);
+            this.router.navigate(['/clases-zoom']);
           }, 1500);
         }
         this.loading = false;
