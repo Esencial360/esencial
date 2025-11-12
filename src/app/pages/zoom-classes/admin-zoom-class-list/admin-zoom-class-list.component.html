@@ -1,0 +1,537 @@
+<app-header></app-header>
+
+@if (isLoading) {
+<app-loading></app-loading>
+} @else { @if (forbidden || !user) {
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-stronger_blue-50/20 p-6 relative overflow-hidden montserrat-normal"
+>
+  <!-- Decorative background elements -->
+  <div
+    class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-red/10 to-transparent rounded-full -translate-y-48 translate-x-48"
+  ></div>
+  <div
+    class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-orange/10 to-transparent rounded-full translate-y-36 -translate-x-36"
+  ></div>
+
+  <div
+    class="bg-white/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl text-center max-w-md border border-white/20 relative overflow-hidden"
+    data-aos="fade-up"
+  >
+    <!-- Background pattern -->
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-red/5 via-transparent to-orange/5"
+    ></div>
+
+    <!-- Lock Icon -->
+    <div class="mb-8 relative z-10">
+      <div
+        class="w-24 h-24 bg-gradient-to-br from-red to-orange rounded-full flex items-center justify-center mx-auto shadow-xl relative"
+      >
+        <svg
+          class="w-12 h-12 text-white"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"
+          />
+        </svg>
+        <div
+          class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue to-stronger_blue rounded-full animate-pulse flex items-center justify-center"
+        >
+          <span class="text-white text-xs">!</span>
+        </div>
+      </div>
+    </div>
+
+    <h3
+      class="text-xl font-black text-gray-800 mb-6 uppercase leading-tight relative z-10"
+    >
+      Suscripción Requerida
+    </h3>
+
+    <p class="text-gray-600 mb-8 leading-relaxed relative z-10">
+      Necesitas una suscripción activa para acceder a este contenido premium
+    </p>
+
+    <button
+      class="relative z-10 w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-blue-700 hover:to-stronger_blue-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+      (click)="onSubscribe()"
+    >
+      🚀 Activar Suscripción
+    </button>
+  </div>
+</div>
+} @else {
+<div
+  class="min-h-screen bg-gradient-to-br from-bone via-white to-veige/30 py-12 px-4 sm:px-6 lg:px-8"
+>
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"
+      >
+        <div>
+          <h1 class="text-4xl font-bold text-strongBrown mb-2">
+            Gestión de Clases Zoom
+          </h1>
+          @if (roles === 'Admin') {
+          <p class="text-gray">
+            Administra las clases en vivo de tu plataforma
+          </p>
+          }
+        </div>
+        @if (roles === 'Admin') {
+        <button
+          (click)="createNewClass()"
+          class="flex items-center px-6 py-3 bg-gradient-to-r from-blue to-stronger_blue text-white font-semibold rounded-xl hover:from-stronger_blue hover:to-blue transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Nueva Clase
+        </button>
+        }
+      </div>
+
+      <!-- Alert Messages -->
+      <div
+        *ngIf="successMessage"
+        class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg animate-fade-in"
+      >
+        <div class="flex items-center">
+          <svg
+            class="w-5 h-5 text-green-500 mr-3"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <p class="text-green-700 font-medium">{{ successMessage }}</p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="errorMessage"
+        class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg animate-fade-in"
+      >
+        <div class="flex items-center">
+          <svg
+            class="w-5 h-5 text-red-500 mr-3"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <p class="text-red-700 font-medium">{{ errorMessage }}</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-3 bg-white rounded-2xl p-4 shadow-md">
+        <button
+          (click)="onStatusFilterChange('all')"
+          [class.bg-gradient-to-r]="statusFilter === 'all'"
+          [class.from-blue]="statusFilter === 'all'"
+          [class.to-stronger_blue]="statusFilter === 'all'"
+          [class.text-white]="statusFilter === 'all'"
+          [class.bg-gray-100]="statusFilter !== 'all'"
+          [class.text-gray]="statusFilter !== 'all'"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+        >
+          Todas
+        </button>
+        <button
+          (click)="onStatusFilterChange('scheduled')"
+          [class.bg-gradient-to-r]="statusFilter === 'scheduled'"
+          [class.from-blue]="statusFilter === 'scheduled'"
+          [class.to-stronger_blue]="statusFilter === 'scheduled'"
+          [class.text-white]="statusFilter === 'scheduled'"
+          [class.bg-gray-100]="statusFilter !== 'scheduled'"
+          [class.text-gray]="statusFilter !== 'scheduled'"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+        >
+          Programadas
+        </button>
+        <button
+          (click)="onStatusFilterChange('live')"
+          [class.bg-gradient-to-r]="statusFilter === 'live'"
+          [class.from-blue]="statusFilter === 'live'"
+          [class.to-stronger_blue]="statusFilter === 'live'"
+          [class.text-white]="statusFilter === 'live'"
+          [class.bg-gray-100]="statusFilter !== 'live'"
+          [class.text-gray]="statusFilter !== 'live'"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+        >
+          En Vivo
+        </button>
+        <button
+          (click)="onStatusFilterChange('completed')"
+          [class.bg-gradient-to-r]="statusFilter === 'completed'"
+          [class.from-blue]="statusFilter === 'completed'"
+          [class.to-stronger_blue]="statusFilter === 'completed'"
+          [class.text-white]="statusFilter === 'completed'"
+          [class.bg-gray-100]="statusFilter !== 'completed'"
+          [class.text-gray]="statusFilter !== 'completed'"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+        >
+          Completadas
+        </button>
+        <button
+          (click)="onStatusFilterChange('cancelled')"
+          [class.bg-gradient-to-r]="statusFilter === 'cancelled'"
+          [class.from-blue]="statusFilter === 'cancelled'"
+          [class.to-stronger_blue]="statusFilter === 'cancelled'"
+          [class.text-white]="statusFilter === 'cancelled'"
+          [class.bg-gray-100]="statusFilter !== 'cancelled'"
+          [class.text-gray]="statusFilter !== 'cancelled'"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+        >
+          Canceladas
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex items-center justify-center py-20">
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue"
+      ></div>
+    </div>
+
+    <!-- Classes Grid -->
+    <div
+      *ngIf="!loading && zoomClasses.length > 0"
+      class="grid grid-cols-1 gap-6"
+    >
+      <div
+        *ngFor="let zoomClass of zoomClasses"
+        class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+      >
+        <div class="p-6">
+          <div
+            class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4"
+          >
+            <!-- Class Info -->
+            <div class="flex-1">
+              <div class="flex items-start flex-wrap gap-2 mb-4">
+                <!-- Live Indicator (ONLY when actually live) -->
+                <div
+                  *ngIf="
+                    isClassLive(zoomClass.scheduledDate, zoomClass.duration)
+                  "
+                  class="flex items-center bg-red/10 px-3 py-1 rounded-full animate-pulse"
+                >
+                  <span class="flex h-2 w-2 relative mr-2">
+                    <span
+                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red opacity-75"
+                    ></span>
+                    <span
+                      class="relative inline-flex rounded-full h-2 w-2 bg-red"
+                    ></span>
+                  </span>
+                  <span class="text-red text-xs font-bold">EN VIVO AHORA</span>
+                </div>
+
+                <!-- Status Badge with Dropdown -->
+
+                <!-- Level Badge -->
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-veige/20 text-strongBrown border-2 border-veige"
+                >
+                  {{ zoomClass.level }}
+                </span>
+              </div>
+
+              <h3 class="text-2xl font-bold text-strongBrown mb-2">
+                {{ zoomClass.title }}
+              </h3>
+
+              <p class="text-gray mb-4 line-clamp-2">
+                {{ zoomClass.description }}
+              </p>
+
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm"
+              >
+                <!-- Instructor -->
+                <div class="flex items-center text-strongBrown">
+                  <svg
+                    class="w-4 h-4 mr-2 text-blue"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  {{ zoomClass.instructorName }}
+                </div>
+
+                <!-- Scheduled Date/Time -->
+                <div class="flex items-center text-strongBrown">
+                  <svg
+                    class="w-4 h-4 mr-2 text-blue"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <div>
+                    <div class="font-medium">
+                      {{ formatDate(zoomClass.scheduledDate) }}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{ getTimeUntil(zoomClass.scheduledDate) }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Duration -->
+                <div class="flex items-center text-strongBrown">
+                  <svg
+                    class="w-4 h-4 mr-2 text-blue"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  {{ zoomClass.duration }} min
+                </div>
+
+                <!-- Participants -->
+                <div class="flex items-center text-strongBrown">
+                  <svg
+                    class="w-4 h-4 mr-2 text-blue"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
+                    />
+                  </svg>
+                  {{ zoomClass.registeredUsers?.length || 0 }} /
+                  {{ zoomClass.maxParticipants }}
+                </div>
+
+                <!-- Category -->
+                <div class="flex items-center text-strongBrown">
+                  <svg
+                    class="w-4 h-4 mr-2 text-blue"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"
+                    />
+                  </svg>
+                  {{ zoomClass.category }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex lg:flex-col gap-2 lg:items-end">
+              <button
+                (click)="copyZoomLink(zoomClass.zoomLink)"
+                class="flex-1 lg:flex-none px-4 py-2 bg-veige/20 text-strongBrown rounded-lg hover:bg-veige/30 transition-all duration-200 text-sm font-medium"
+              >
+                <svg
+                  class="w-4 h-4 inline mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Copiar Link
+              </button>
+              @if (roles === 'Admin') {
+              <button
+                (click)="editClass(zoomClass._id!)"
+                class="flex-1 lg:flex-none px-4 py-2 bg-blue/10 text-blue rounded-lg hover:bg-blue/20 transition-all duration-200 text-sm font-medium"
+              >
+                <svg
+                  class="w-4 h-4 inline mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
+                </svg>
+                Editar
+              </button>
+              <button
+                (click)="deleteClass(zoomClass._id!, zoomClass.title)"
+                class="flex-1 lg:flex-none px-4 py-2 bg-red/10 text-red rounded-lg hover:bg-red/20 transition-all duration-200 text-sm font-medium"
+              >
+                <svg
+                  class="w-4 h-4 inline mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                Eliminar
+              </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div
+      *ngIf="!loading && zoomClasses.length === 0"
+      class="text-center py-20 bg-white rounded-3xl shadow-lg"
+    >
+      <svg
+        class="w-24 h-24 mx-auto text-gray/30 mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+        />
+      </svg>
+      <h3 class="text-2xl font-bold text-strongBrown mb-2">
+        No hay clases disponibles
+      </h3>
+      <p class="text-gray mb-6">Comienza creando tu primera clase de Zoom</p>
+      <button
+        (click)="createNewClass()"
+        class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue to-stronger_blue text-white font-semibold rounded-xl hover:from-stronger_blue hover:to-blue transition-all duration-200 shadow-lg hover:shadow-xl"
+      >
+        <svg
+          class="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Crear Primera Clase
+      </button>
+    </div>
+
+    <!-- Pagination -->
+    <div
+      *ngIf="!loading && zoomClasses.length > 0 && totalPages > 1"
+      class="flex justify-center items-center gap-2 mt-8"
+    >
+      <button
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+        class="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      <div class="flex gap-2">
+        <button
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          (click)="goToPage(i + 1)"
+          [class.bg-gradient-to-r]="currentPage === i + 1"
+          [class.from-blue]="currentPage === i + 1"
+          [class.to-stronger_blue]="currentPage === i + 1"
+          [class.text-white]="currentPage === i + 1"
+          [class.bg-white]="currentPage !== i + 1"
+          [class.text-strongBrown]="currentPage !== i + 1"
+          class="px-4 py-2 rounded-lg font-medium shadow hover:shadow-md transition-all duration-200"
+        >
+          {{ i + 1 }}
+        </button>
+      </div>
+
+      <button
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+        class="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+} }
+<app-footer></app-footer>

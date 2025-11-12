@@ -72,4 +72,12 @@ export class AdminDashboardComponent implements OnInit {
   onEditLiveClasses() {
     this.router.navigateByUrl(['/lista-clases-envivo'].join(''));
   }
+
+  onZoomClass() {
+    this.router.navigateByUrl(['/admin/clases-zoom/nueva'].join(''));
+  }
+
+  onEditZoomClasses() {
+    this.router.navigateByUrl(['/clases-zoom'].join(''));
+  }
 }

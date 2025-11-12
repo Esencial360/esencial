@@ -19,7 +19,7 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './admin-live-classes-list.component.html',
   styleUrl: './admin-live-classes-list.component.css',
 })
-export class AdminLiveClassesListComponent {
+export class AdminLiveClassesListComponent implements OnInit, OnDestroy {
   allClasses: LiveClass[] = [];
   filteredClasses: LiveClass[] = [];
   loading = true;

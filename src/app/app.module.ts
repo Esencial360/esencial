@@ -133,6 +133,9 @@ import { AdminLiveClassComponent } from './pages/live-classes/admin-live-class/a
 import { AdminLiveClassesListComponent } from './pages/live-classes/admin-live-classes-list/admin-live-classes-list.component';
 import { EditLiveClassesComponent } from './pages/live-classes/edit-live-classes/edit-live-classes.component';
 import { LiveClassesOverviewComponent } from './pages/live-classes/live-classes-overview/live-classes-overview.component';
+import { AdminZoomClassFormComponent } from './pages/zoom-classes/admin-zoom-class-form/admin-zoom-class-form.component';
+import { AdminZoomClassListComponent } from './pages/zoom-classes/admin-zoom-class-list/admin-zoom-class-list.component';
+import { ZoomClassesUserComponent } from './pages/zoom-classes/zoom-classes-user/zoom-classes-user.component';
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: ['user', 'instructors'], rehydrate: true })(reducer);
@@ -233,6 +236,9 @@ registerLocaleData(localeEs, 'es');
     AdminLiveClassesListComponent,
     EditLiveClassesComponent,
     LiveClassesOverviewComponent,
+    AdminZoomClassFormComponent,
+    AdminZoomClassListComponent,
+    ZoomClassesUserComponent,
   ],
   imports: [
     BrowserModule,

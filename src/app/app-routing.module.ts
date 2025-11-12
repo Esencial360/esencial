@@ -46,6 +46,9 @@ import { LiveClassesListComponent } from './pages/live-classes/live-classes-list
 import { LiveClassPlayerComponent } from './pages/live-classes/live-class-player/live-class-player.component';
 import { AdminLiveClassComponent } from './pages/live-classes/admin-live-class/admin-live-class.component';
 import { AdminLiveClassesListComponent } from './pages/live-classes/admin-live-classes-list/admin-live-classes-list.component';
+import { ZoomClassesUserComponent } from './pages/zoom-classes/zoom-classes-user/zoom-classes-user.component';
+import { AdminZoomClassFormComponent } from './pages/zoom-classes/admin-zoom-class-form/admin-zoom-class-form.component';
+import { AdminZoomClassListComponent } from './pages/zoom-classes/admin-zoom-class-list/admin-zoom-class-list.component';
 
 const routes: Routes = [
   {
@@ -233,6 +236,26 @@ const routes: Routes = [
   { path: 'lista-clases-envivo', component: AdminLiveClassesListComponent },
   // { path: 'admin/create-live-class', component: CreateLiveClassComponent },
   { path: 'editar-clase-envivo/:id', component: AdminLiveClassComponent },
+   {
+    path: 'clases-zoom',
+    component: AdminZoomClassListComponent,
+  },
+  {
+    path: 'admin/clases-zoom/nueva',
+    component: AdminZoomClassFormComponent,
+    // canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/clases-zoom/editar/:id',
+    component: AdminZoomClassFormComponent,
+  },
+  
+  // User routes (protected with auth guard)
+  // {
+  //   path: 'clases-zoom',
+  //   component: AdminZoomClassListComponent,
+  //   // canActivate: [AuthGuard] // Your auth guard
+  // },
   
   { path: '**', redirectTo: '', pathMatch: 'full' },
   // Catch-all for invalid routes (404)`
