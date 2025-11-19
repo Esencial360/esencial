@@ -58,7 +58,7 @@ export class LiveClassesOverviewComponent implements OnInit, OnDestroy {
     // Update time and refresh every minute
     this.pollingInterval = setInterval(() => {
       this.currentTime = new Date();
-      this.updateLiveStatus();
+      this.loadAllClasses(); // Reload to check for new live classes
     }, 60000); // Update every minute
     
     // Refresh data every 5 minutes
@@ -80,144 +80,98 @@ export class LiveClassesOverviewComponent implements OnInit, OnDestroy {
   /**
    * Load all classes (YouTube Live + Zoom)
    */
-  // loadAllClasses(): void {
-  //   this.loadingYouTubeLiveClasses = true;
-  //   this.loadingZoomClasses = true;
-    
-  //   // Use forkJoin to load both simultaneously
-  //   const youtubeUpcoming$ = this.liveClassService.getUpcomingClasses();
-  //   const youtubeLive$ = this.liveClassService.getLiveClasses();
-  //   const zoomUpcoming$ = this.zoomClassService.getUpcomingClasses(10);
-    
-  //   const sub = forkJoin({
-  //     youtubeUpcoming: youtubeUpcoming$,
-  //     youtubeLive: youtubeLive$,
-  //     zoomUpcoming: zoomUpcoming$
-  //   }).subscribe({
-  //     next: (results) => {
-  //       // Process YouTube classes
-  //       if (results.youtubeUpcoming.success && Array.isArray(results.youtubeUpcoming.data)) {
-  //         this.youtubeUpcomingClasses = results.youtubeUpcoming.data;
-  //       }
-        
-  //       if (results.youtubeLive.success && Array.isArray(results.youtubeLive.data)) {
-  //         this.youtubeLiveClasses = results.youtubeLive.data;
-  //         this.hasYouTubeLiveClasses = this.youtubeLiveClasses.length > 0;
-  //       }
-        
-  //       // Process Zoom classes
-  //       if (results.zoomUpcoming.success && Array.isArray(results.zoomUpcoming.data)) {
-  //         this.upcomingZoomClasses = results.zoomUpcoming.data;
-  //         this.hasZoomClasses = this.upcomingZoomClasses.length > 0;
-  //       }
-        
-  //       // Update statuses
-  //       this.updateLiveStatus();
-  //       this.findNextClass();
-        
-  //       this.loadingYouTubeLiveClasses = false;
-  //       this.loadingZoomClasses = false;
-  //     },
-  //     error: (error) => {
-  //       console.error('Error loading classes:', error);
-  //       this.loadingYouTubeLiveClasses = false;
-  //       this.loadingZoomClasses = false;
-  //     }
-  //   });
-    
-  //   this.subscriptions.push(sub);
-  // }
   loadAllClasses(): void {
-  this.loadingYouTubeLiveClasses = true;
-  this.loadingZoomClasses = true;
-  
-  // Use forkJoin to load both simultaneously
-  const youtubeUpcoming$ = this.liveClassService.getUpcomingClasses();
-  const youtubeLive$ = this.liveClassService.getLiveClasses();
-  const zoomUpcoming$ = this.zoomClassService.getUpcomingClasses(20);
-  const zoomLive$ = this.zoomClassService.getLiveZoomClasses(); // ✅ NEW: Get live Zoom classes
-  
-  const sub = forkJoin({
-    youtubeUpcoming: youtubeUpcoming$,
-    youtubeLive: youtubeLive$,
-    zoomUpcoming: zoomUpcoming$,
-    zoomLive: zoomLive$ // ✅ NEW
-  }).subscribe({
-    next: (results) => {
-      console.log(results);
-      
-      // Process YouTube classes
-      if (results.youtubeUpcoming.success && Array.isArray(results.youtubeUpcoming.data)) {
-        this.youtubeUpcomingClasses = results.youtubeUpcoming.data;
-      }
-      
-      if (results.youtubeLive.success && Array.isArray(results.youtubeLive.data)) {
-        this.youtubeLiveClasses = results.youtubeLive.data;
-        this.hasYouTubeLiveClasses = this.youtubeLiveClasses.length > 0;
-      }
-      
-      // Process Zoom classes
-      if (results.zoomUpcoming.success && Array.isArray(results.zoomUpcoming.data)) {
-        this.upcomingZoomClasses = results.zoomUpcoming.data;
-        this.hasZoomClasses = this.upcomingZoomClasses.length > 0;
-        console.log(this.upcomingZoomClasses);
-      }
-      
-      if (results.zoomLive.success && Array.isArray(results.zoomLive.data)) {
-        console.log(results.zoomLive.data);
+    this.loadingYouTubeLiveClasses = true;
+    this.loadingZoomClasses = true;
+    
+    // Use forkJoin to load both simultaneously
+    const youtubeUpcoming$ = this.liveClassService.getUpcomingClasses();
+    const youtubeLive$ = this.liveClassService.getLiveClasses();
+    const zoomUpcoming$ = this.zoomClassService.getUpcomingClasses(20);
+    const zoomLive$ = this.zoomClassService.getLiveZoomClasses();
+    
+    const sub = forkJoin({
+      youtubeUpcoming: youtubeUpcoming$,
+      youtubeLive: youtubeLive$,
+      zoomUpcoming: zoomUpcoming$,
+      zoomLive: zoomLive$
+    }).subscribe({
+      next: (results) => {
+        console.log('API Results:', results);
         
-        this.liveZoomClasses = results.zoomLive.data;
-        console.log(this.liveZoomClasses);
+        // Process YouTube classes
+        if (results.youtubeUpcoming.success && Array.isArray(results.youtubeUpcoming.data)) {
+          this.youtubeUpcomingClasses = results.youtubeUpcoming.data;
+        }
         
+        if (results.youtubeLive.success && Array.isArray(results.youtubeLive.data)) {
+          this.youtubeLiveClasses = results.youtubeLive.data;
+          this.hasYouTubeLiveClasses = this.youtubeLiveClasses.length > 0;
+        }
+        
+        // Process Zoom upcoming classes
+        if (results.zoomUpcoming.success && Array.isArray(results.zoomUpcoming.data)) {
+          this.upcomingZoomClasses = results.zoomUpcoming.data;
+          this.hasZoomClasses = this.upcomingZoomClasses.length > 0;
+        }
+        
+        // Process Zoom LIVE classes (directly from backend)
+        if (results.zoomLive.success && Array.isArray(results.zoomLive.data)) {
+          this.liveZoomClasses = results.zoomLive.data;
+          console.log('Live Zoom Classes from API:', this.liveZoomClasses);
+        } else {
+          this.liveZoomClasses = [];
+        }
+        
+        // Update statuses
+        this.updateLiveStatus();
+        this.findNextClass();
+        
+        this.loadingYouTubeLiveClasses = false;
+        this.loadingZoomClasses = false;
+      },
+      error: (error) => {
+        console.error('Error loading classes:', error);
+        this.loadingYouTubeLiveClasses = false;
+        this.loadingZoomClasses = false;
       }
-      
-      // Update statuses
-      this.updateLiveStatus();
-      this.findNextClass();
-      
-      this.loadingYouTubeLiveClasses = false;
-      this.loadingZoomClasses = false;
-    },
-    error: (error) => {
-      console.error('Error loading classes:', error);
-      this.loadingYouTubeLiveClasses = false;
-      this.loadingZoomClasses = false;
-    }
-  });
-  
-  this.subscriptions.push(sub);
-}
+    });
+    
+    this.subscriptions.push(sub);
+  }
   
   /**
    * Update which classes are currently live
    */
-  // updateLiveStatus(): void {
-  //   // Check Zoom classes for live status
-  //   this.liveZoomClasses = this.upcomingZoomClasses.filter(zoomClass => 
-  //     this.zoomClassService.isClassLive(zoomClass.scheduledDate, zoomClass.duration)
-  //   );
+  updateLiveStatus(): void {
+    // Zoom live classes come directly from backend
+    // They are already filtered and updated by the backend
     
-  //   // Check YouTube classes for live status (they come from getLiveClasses())
-  //   // But also verify with time calculation
-  //   const liveYouTubeClasses = this.youtubeLiveClasses.filter(liveClass =>
-  //     this.liveClassService.isCurrentlyLive(liveClass)
-  //   );
+    // Check YouTube classes for live status
+    const liveYouTubeClasses = this.youtubeLiveClasses.filter(liveClass =>
+      this.liveClassService.isCurrentlyLive(liveClass)
+    );
     
-  //   // Determine overall live status
-  //   this.hasAnyLiveClasses = this.liveZoomClasses.length > 0 || liveYouTubeClasses.length > 0;
-  //   this.isLiveNow = this.hasAnyLiveClasses;
+    // Determine overall live status
+    this.hasAnyLiveClasses = this.liveZoomClasses.length > 0 || liveYouTubeClasses.length > 0;
+    this.isLiveNow = this.hasAnyLiveClasses;
     
-  //   // Set live class details
-  //   if (this.liveZoomClasses.length > 0) {
-  //     const firstLiveZoom = this.liveZoomClasses[0];
-  //     this.upcomingClassTitle = firstLiveZoom.title;
-  //     this.liveViewersCount = firstLiveZoom.registeredUsers?.length || 0;
-  //   } else if (liveYouTubeClasses.length > 0) {
-  //     const firstLiveYouTube = liveYouTubeClasses[0];
-  //     this.upcomingClassTitle = firstLiveYouTube.title;
-  //     this.liveViewersCount = firstLiveYouTube.registeredUsers?.length || 0;
-  //   }
-  // }
+    console.log('=== Live Status Update ===');
+    console.log('Live Zoom Classes:', this.liveZoomClasses.length, this.liveZoomClasses);
+    console.log('Live YouTube Classes:', liveYouTubeClasses.length);
+    console.log('Has Any Live Classes:', this.hasAnyLiveClasses);
+    
+    // Set live class details - prioritize showing first available live class
+    if (this.liveZoomClasses.length > 0) {
+      const firstLiveZoom = this.liveZoomClasses[0];
+      this.upcomingClassTitle = firstLiveZoom.title;
+      this.liveViewersCount = firstLiveZoom.registeredUsers?.length || 0;
+    } else if (liveYouTubeClasses.length > 0) {
+      const firstLiveYouTube = liveYouTubeClasses[0];
+      this.upcomingClassTitle = firstLiveYouTube.title;
+      this.liveViewersCount = firstLiveYouTube.registeredUsers?.length || 0;
+    }
+  }
   
   /**
    * Find the next upcoming class (from both YouTube and Zoom)
@@ -367,7 +321,7 @@ export class LiveClassesOverviewComponent implements OnInit, OnDestroy {
    * Check if there are any classes available
    */
   hasAnyClasses(): boolean {
-    return this.hasYouTubeLiveClasses || this.hasZoomClasses;
+    return this.hasYouTubeLiveClasses || this.hasZoomClasses || this.liveZoomClasses.length > 0;
   }
   
   /**
@@ -376,47 +330,4 @@ export class LiveClassesOverviewComponent implements OnInit, OnDestroy {
   isLoading(): boolean {
     return this.loadingYouTubeLiveClasses || this.loadingZoomClasses;
   }
-
-
-/**
- * Update which classes are currently live
- */
-updateLiveStatus(): void {
-  // Zoom live classes are now fetched from the backend
-  // But we can still verify with client-side calculation as backup
-  const clientSideLiveZoom = this.upcomingZoomClasses.filter(zoomClass => 
-    this.zoomClassService.isClassLive(zoomClass.scheduledDate, zoomClass.duration)
-  );
-  
-  // Merge backend live classes with client-side calculation
-  // Use a Set to avoid duplicates
-  const liveZoomIds = new Set([
-    ...this.liveZoomClasses.map(c => c._id),
-    ...clientSideLiveZoom.map(c => c._id)
-  ]);
-  
-  this.liveZoomClasses = this.upcomingZoomClasses.filter(c => 
-    c._id && liveZoomIds.has(c._id)
-  );
-  
-  // Check YouTube classes for live status
-  const liveYouTubeClasses = this.youtubeLiveClasses.filter(liveClass =>
-    this.liveClassService.isCurrentlyLive(liveClass)
-  );
-  
-  // Determine overall live status
-  this.hasAnyLiveClasses = this.liveZoomClasses.length > 0 || liveYouTubeClasses.length > 0;
-  this.isLiveNow = this.hasAnyLiveClasses;
-  
-  // Set live class details
-  if (this.liveZoomClasses.length > 0) {
-    const firstLiveZoom = this.liveZoomClasses[0];
-    this.upcomingClassTitle = firstLiveZoom.title;
-    this.liveViewersCount = firstLiveZoom.registeredUsers?.length || 0;
-  } else if (liveYouTubeClasses.length > 0) {
-    const firstLiveYouTube = liveYouTubeClasses[0];
-    this.upcomingClassTitle = firstLiveYouTube.title;
-    this.liveViewersCount = firstLiveYouTube.registeredUsers?.length || 0;
-  }
-}
 }

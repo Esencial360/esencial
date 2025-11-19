@@ -63,7 +63,7 @@
     </button>
   </div>
 </div>
-} @else {
+} @else { @if (roles === 'Admin') {
 <div
   class="min-h-screen bg-gradient-to-br from-bone via-white to-veige/30 py-12 px-4 sm:px-6 lg:px-8"
 >
@@ -254,6 +254,245 @@
                 </div>
 
                 <!-- Status Badge with Dropdown -->
+                <!-- Status Badge with Dropdown -->
+                @if (roles === 'Admin') {
+                <div class="relative inline-block">
+                  <!-- Status Badge Button -->
+                  <button
+                    type="button"
+                    [class]="
+                      'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border-2 cursor-pointer transition-all duration-200 transform hover:scale-105 hover:shadow-md ' +
+                      getStatusBadgeClass(zoomClass.status || 'scheduled')
+                    "
+                    (click)="toggleDropdown(zoomClass._id!)"
+                  >
+                    <!-- Status Icon -->
+                    <span class="flex items-center">
+                      <svg
+                        *ngIf="zoomClass.status === 'live'"
+                        class="w-3 h-3 animate-pulse"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <circle cx="10" cy="10" r="8" />
+                      </svg>
+                      <svg
+                        *ngIf="zoomClass.status === 'scheduled'"
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <svg
+                        *ngIf="zoomClass.status === 'completed'"
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <svg
+                        *ngIf="zoomClass.status === 'cancelled'"
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+
+                    <!-- Status Text -->
+                    <span>{{
+                      getStatusText(zoomClass.status || "scheduled")
+                    }}</span>
+
+                    <!-- Dropdown Arrow -->
+                    <svg
+                      class="w-3.5 h-3.5 transition-transform duration-200"
+                      [class.rotate-180]="openDropdownId === zoomClass._id"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+
+                  <!-- Status Dropdown Menu -->
+                  <div
+                    *ngIf="openDropdownId === zoomClass._id"
+                    class="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 min-w-[180px] overflow-hidden animate-fade-in-down"
+                  >
+                    <!-- Arrow pointer -->
+                    <div
+                      class="absolute -top-2 left-4 w-4 h-4 bg-white border-l border-t border-gray-200 transform rotate-45"
+                    ></div>
+
+                    <!-- Menu Items -->
+                    <div class="relative bg-white rounded-xl py-1">
+                      <button
+                        *ngFor="
+                          let status of getAvailableStatuses(
+                            zoomClass.status || 'scheduled'
+                          )
+                        "
+                        (click)="
+                          updateStatusAndClose(zoomClass._id!, status.value)
+                        "
+                        [class]="
+                          'group flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm font-medium transition-all duration-150 ' +
+                          getStatusHoverClass(status.value)
+                        "
+                      >
+                        <!-- Status Icon -->
+                        <span
+                          class="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full transition-colors duration-150"
+                          [class]="getStatusIconBgClass(status.value)"
+                        >
+                          <svg
+                            *ngIf="status.value === 'live'"
+                            class="w-3 h-3 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <circle cx="10" cy="10" r="6" />
+                          </svg>
+                          <svg
+                            *ngIf="status.value === 'scheduled'"
+                            class="w-3 h-3 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          <svg
+                            *ngIf="status.value === 'completed'"
+                            class="w-3 h-3 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          <svg
+                            *ngIf="status.value === 'cancelled'"
+                            class="w-3 h-3 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+
+                        <!-- Status Label -->
+                        <span class="flex-1">{{ status.label }}</span>
+
+                        <!-- Arrow indicator on hover -->
+                        <svg
+                          class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                } @else {
+                <!-- Non-Admin View (Read-only) -->
+                <span
+                  [class]="
+                    'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border-2 ' +
+                    getStatusBadgeClass(zoomClass.status || 'scheduled')
+                  "
+                >
+                  <!-- Status Icon -->
+                  <span class="flex items-center">
+                    <svg
+                      *ngIf="zoomClass.status === 'live'"
+                      class="w-3 h-3 animate-pulse"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <circle cx="10" cy="10" r="8" />
+                    </svg>
+                    <svg
+                      *ngIf="zoomClass.status === 'scheduled'"
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <svg
+                      *ngIf="zoomClass.status === 'completed'"
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <svg
+                      *ngIf="zoomClass.status === 'cancelled'"
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+
+                  <span>{{
+                    getStatusText(zoomClass.status || "scheduled")
+                  }}</span>
+                </span>
+                }
 
                 <!-- Level Badge -->
                 <span
@@ -533,5 +772,7 @@
     </div>
   </div>
 </div>
-} }
+} @else {
+<app-zoom-classes-user></app-zoom-classes-user>
+} } }
 <app-footer></app-footer>

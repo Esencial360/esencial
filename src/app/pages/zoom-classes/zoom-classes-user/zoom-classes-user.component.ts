@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ZoomClassService, ZoomClass } from '../../../shared/services/zoom-class.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-zoom-classes-user',
@@ -15,12 +15,29 @@ export class ZoomClassesUserComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
   activeTab: 'upcoming' | 'myClasses' = 'upcoming';
+  currentUserId: string = '';
 
-  constructor(private zoomClassService: ZoomClassService) {}
+  constructor(
+    private zoomClassService: ZoomClassService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit(): void {
+    // Get current user ID
+    this.auth.user$.subscribe(user => {
+      if (user && user.sub) {
+        this.currentUserId = user.sub;
+      }
+    });
+
     this.loadUpcomingClasses();
     this.loadMyClasses();
+
+    // Refresh every 2 minutes
+    setInterval(() => {
+      this.loadUpcomingClasses();
+      this.loadMyClasses();
+    }, 120000);
   }
 
   loadUpcomingClasses(): void {
@@ -31,6 +48,7 @@ export class ZoomClassesUserComponent implements OnInit {
       next: (response) => {
         if (response.success && Array.isArray(response.data)) {
           this.upcomingClasses = response.data;
+          console.log('Upcoming classes loaded:', this.upcomingClasses);
         }
         this.loading = false;
       },
@@ -49,6 +67,7 @@ export class ZoomClassesUserComponent implements OnInit {
       next: (response) => {
         if (response.success && Array.isArray(response.data)) {
           this.myClasses = response.data;
+          console.log('My classes loaded:', this.myClasses);
         }
         this.loadingMyClasses = false;
       },
@@ -71,6 +90,7 @@ export class ZoomClassesUserComponent implements OnInit {
       },
       error: (error) => {
         this.errorMessage = error.error?.message || 'Error al registrarse';
+        console.error('Registration error:', error);
         setTimeout(() => this.errorMessage = '', 5000);
       }
     });
@@ -89,6 +109,7 @@ export class ZoomClassesUserComponent implements OnInit {
         },
         error: (error) => {
           this.errorMessage = error.error?.message || 'Error al cancelar el registro';
+          console.error('Unregistration error:', error);
           setTimeout(() => this.errorMessage = '', 5000);
         }
       });
@@ -99,10 +120,20 @@ export class ZoomClassesUserComponent implements OnInit {
     window.open(zoomLink, '_blank');
   }
 
+  /**
+   * Check if current user is registered for this class
+   */
   isUserRegistered(zoomClass: ZoomClass): boolean {
-    // This would need to check against the current user's ID
-    // You'll need to implement user authentication service
-    return false; // Placeholder
+    if (!this.currentUserId || !zoomClass.registeredUsers) {
+      return false;
+    }
+
+    // Check if current user ID is in registered users
+    return zoomClass.registeredUsers.some((user: any) => {
+      // Handle both populated user objects and user IDs
+      const userId = typeof user === 'string' ? user : user._id || user.id || user.sub;
+      return userId === this.currentUserId || userId.includes(this.currentUserId);
+    });
   }
 
   isClassFull(zoomClass: ZoomClass): boolean {
