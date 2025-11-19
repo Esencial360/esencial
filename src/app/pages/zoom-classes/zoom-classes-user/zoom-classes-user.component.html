@@ -1,11 +1,13 @@
-<app-header></app-header>
-<div class="min-h-screen bg-gradient-to-br from-bone via-white to-veige/30 py-12 px-4 sm:px-6 lg:px-8">
+<div
+  class="min-h-screen bg-gradient-to-br from-bone via-white to-veige/30 py-12 px-4 sm:px-6 lg:px-8"
+>
   <div class="max-w-7xl mx-auto">
-    
     <!-- Header -->
     <div class="mb-8">
       <p class="text-gray text-sm font-medium mb-2">{{ getDayGreeting() }}</p>
-      <h1 class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-strongBrown to-lightBrown bg-clip-text text-transparent mb-3">
+      <h1
+        class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-strongBrown to-lightBrown bg-clip-text text-transparent mb-3"
+      >
         Clases en Vivo por Zoom
       </h1>
       <p class="text-gray text-lg">
@@ -14,19 +16,41 @@
     </div>
 
     <!-- Alert Messages -->
-    <div *ngIf="successMessage" class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg animate-fade-in">
+    <div
+      *ngIf="successMessage"
+      class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg animate-fade-in"
+    >
       <div class="flex items-center">
-        <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        <svg
+          class="w-5 h-5 text-green-500 mr-3"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"
+          />
         </svg>
         <p class="text-green-700 font-medium">{{ successMessage }}</p>
       </div>
     </div>
 
-    <div *ngIf="errorMessage" class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg animate-fade-in">
+    <div
+      *ngIf="errorMessage"
+      class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg animate-fade-in"
+    >
       <div class="flex items-center">
-        <svg class="w-5 h-5 text-red-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        <svg
+          class="w-5 h-5 text-red-500 mr-3"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clip-rule="evenodd"
+          />
         </svg>
         <p class="text-red-700 font-medium">{{ errorMessage }}</p>
       </div>
@@ -42,7 +66,8 @@
           [class.to-stronger_blue]="activeTab === 'upcoming'"
           [class.text-white]="activeTab === 'upcoming'"
           [class.text-gray]="activeTab !== 'upcoming'"
-          class="px-6 py-3 rounded-xl font-semibold transition-all duration-200">
+          class="px-6 py-3 rounded-xl font-semibold transition-all duration-200"
+        >
           Próximas Clases
         </button>
         <button
@@ -52,9 +77,13 @@
           [class.to-stronger_blue]="activeTab === 'myClasses'"
           [class.text-white]="activeTab === 'myClasses'"
           [class.text-gray]="activeTab !== 'myClasses'"
-          class="px-6 py-3 rounded-xl font-semibold transition-all duration-200">
+          class="px-6 py-3 rounded-xl font-semibold transition-all duration-200"
+        >
           Mis Clases
-          <span *ngIf="myClasses.length > 0" class="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full bg-white/30">
+          <span
+            *ngIf="myClasses.length > 0"
+            class="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full bg-white/30"
+          >
             {{ myClasses.length }}
           </span>
         </button>
@@ -62,38 +91,62 @@
     </div>
 
     <!-- Loading State -->
-    <div *ngIf="loading || loadingMyClasses" class="flex items-center justify-center py-20">
-      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue"></div>
+    <div
+      *ngIf="loading || loadingMyClasses"
+      class="flex items-center justify-center py-20"
+    >
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue"
+      ></div>
     </div>
 
     <!-- Upcoming Classes Tab -->
     <div *ngIf="activeTab === 'upcoming' && !loading">
-      
       <!-- Classes Grid -->
-      <div *ngIf="upcomingClasses.length > 0" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div *ngFor="let zoomClass of upcomingClasses" 
-             class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-          
+      <div
+        *ngIf="upcomingClasses.length > 0"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
+        <div
+          *ngFor="let zoomClass of upcomingClasses"
+          class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+        >
           <div class="p-6">
             <!-- Live Indicator -->
-            <div *ngIf="isClassLive(zoomClass.scheduledDate, zoomClass.duration)" 
-                 class="flex items-center bg-red/10 px-4 py-2 rounded-full mb-4 animate-pulse w-fit">
+            <div
+              *ngIf="isClassLive(zoomClass.scheduledDate, zoomClass.duration)"
+              class="flex items-center bg-red/10 px-4 py-2 rounded-full mb-4 animate-pulse w-fit"
+            >
               <span class="flex h-3 w-3 relative mr-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-red"></span>
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red opacity-75"
+                ></span>
+                <span
+                  class="relative inline-flex rounded-full h-3 w-3 bg-red"
+                ></span>
               </span>
               <span class="text-red text-sm font-bold">EN VIVO AHORA</span>
             </div>
 
             <!-- Badges -->
             <div class="flex flex-wrap gap-2 mb-4">
-              <span [class]="'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border-2 ' + getLevelColor(zoomClass.level)">
+              <span
+                [class]="
+                  'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border-2 ' +
+                  getLevelColor(zoomClass.level)
+                "
+              >
                 {{ zoomClass.level }}
               </span>
-              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-veige/20 text-strongBrown border-2 border-veige">
+              <span
+                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-veige/20 text-strongBrown border-2 border-veige"
+              >
                 {{ zoomClass.category }}
               </span>
-              <span *ngIf="isClassFull(zoomClass)" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange/10 text-orange border-2 border-orange/20">
+              <span
+                *ngIf="isClassFull(zoomClass)"
+                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange/10 text-orange border-2 border-orange/20"
+              >
                 Clase Llena
               </span>
             </div>
@@ -112,63 +165,154 @@
             <div class="space-y-2 mb-6">
               <!-- Instructor -->
               <div class="flex items-center text-strongBrown">
-                <svg class="w-5 h-5 mr-3 text-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                <svg
+                  class="w-5 h-5 mr-3 text-blue flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <span class="font-medium">{{ zoomClass.instructorName }}</span>
               </div>
 
               <!-- Date & Time -->
               <div class="flex items-center text-strongBrown">
-                <svg class="w-5 h-5 mr-3 text-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                <svg
+                  class="w-5 h-5 mr-3 text-blue flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <div>
-                  <p class="font-medium">{{ formatDate(zoomClass.scheduledDate) }}</p>
-                  <p class="text-sm text-gray">Comienza en {{ getTimeUntil(zoomClass.scheduledDate) }}</p>
+                  <p class="font-medium">
+                    {{ formatDate(zoomClass.scheduledDate) }}
+                  </p>
+                  <p class="text-sm text-gray">
+                    Comienza en {{ getTimeUntil(zoomClass.scheduledDate) }}
+                  </p>
                 </div>
               </div>
 
               <!-- Duration -->
               <div class="flex items-center text-strongBrown">
-                <svg class="w-5 h-5 mr-3 text-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg
+                  class="w-5 h-5 mr-3 text-blue flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
-                <span class="font-medium">{{ zoomClass.duration }} minutos</span>
+                <span class="font-medium"
+                  >{{ zoomClass.duration }} minutos</span
+                >
               </div>
 
               <!-- Participants -->
               <div class="flex items-center text-strongBrown">
-                <svg class="w-5 h-5 mr-3 text-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                <svg
+                  class="w-5 h-5 mr-3 text-blue flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
+                  />
                 </svg>
                 <span class="font-medium">
-                  {{ zoomClass.registeredUsers?.length || 0 }} / {{ zoomClass.maxParticipants }} participantes
+                  {{ zoomClass.registeredUsers?.length || 0 }} /
+                  {{ zoomClass.maxParticipants }} participantes
                 </span>
               </div>
             </div>
 
             <!-- Action Button -->
+            <!-- Action Button - Updated Logic -->
             <button
               *ngIf="!isUserRegistered(zoomClass)"
               (click)="registerForClass(zoomClass._id!)"
               [disabled]="isClassFull(zoomClass)"
-              class="w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-stronger_blue hover:to-blue text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+              class="w-full bg-gradient-to-r from-blue to-stronger_blue hover:from-stronger_blue hover:to-blue text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            >
               <span class="flex items-center justify-center">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4v16m8-8H4"
+                  />
                 </svg>
-                {{ isClassFull(zoomClass) ? 'Clase Llena' : 'Registrarme' }}
+                {{ isClassFull(zoomClass) ? "Clase Llena" : "Registrarme" }}
               </span>
             </button>
+
+            <!-- Show this if user is already registered -->
+            <div
+              *ngIf="isUserRegistered(zoomClass)"
+              class="bg-green-50 border-2 border-green-200 rounded-xl p-4 text-center"
+            >
+              <div
+                class="flex items-center justify-center text-green-700 font-semibold mb-2"
+              >
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Ya estás registrado
+              </div>
+              <button
+                (click)="setActiveTab('myClasses')"
+                class="text-sm text-blue hover:text-stronger_blue font-medium"
+              >
+                Ver en Mis Clases →
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Empty State -->
-      <div *ngIf="upcomingClasses.length === 0" class="text-center py-20 bg-white rounded-3xl shadow-lg">
-        <svg class="w-24 h-24 mx-auto text-gray/30 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+      <div
+        *ngIf="upcomingClasses.length === 0"
+        class="text-center py-20 bg-white rounded-3xl shadow-lg"
+      >
+        <svg
+          class="w-24 h-24 mx-auto text-gray/30 mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
         </svg>
         <h3 class="text-2xl font-bold text-strongBrown mb-2">
           No hay clases programadas
@@ -181,27 +325,48 @@
 
     <!-- My Classes Tab -->
     <div *ngIf="activeTab === 'myClasses' && !loadingMyClasses">
-      
       <!-- My Classes Grid -->
-      <div *ngIf="myClasses.length > 0" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div *ngFor="let zoomClass of myClasses" 
-             class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-blue/20">
-          
+      <div
+        *ngIf="myClasses.length > 0"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
+        <div
+          *ngFor="let zoomClass of myClasses"
+          class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-blue/20"
+        >
           <div class="p-6">
             <!-- Live Indicator -->
-            <div *ngIf="isClassLive(zoomClass.scheduledDate, zoomClass.duration)" 
-                 class="flex items-center bg-red/10 px-4 py-2 rounded-full mb-4 animate-pulse w-fit">
+            <div
+              *ngIf="isClassLive(zoomClass.scheduledDate, zoomClass.duration)"
+              class="flex items-center bg-red/10 px-4 py-2 rounded-full mb-4 animate-pulse w-fit"
+            >
               <span class="flex h-3 w-3 relative mr-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-red"></span>
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red opacity-75"
+                ></span>
+                <span
+                  class="relative inline-flex rounded-full h-3 w-3 bg-red"
+                ></span>
               </span>
-              <span class="text-red text-sm font-bold">CLASE ACTIVA - ¡ÚNETE AHORA!</span>
+              <span class="text-red text-sm font-bold"
+                >CLASE ACTIVA - ¡ÚNETE AHORA!</span
+              >
             </div>
 
             <!-- Registered Badge -->
-            <div class="flex items-center bg-green-50 px-4 py-2 rounded-full mb-4 w-fit">
-              <svg class="w-4 h-4 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            <div
+              class="flex items-center bg-green-50 px-4 py-2 rounded-full mb-4 w-fit"
+            >
+              <svg
+                class="w-4 h-4 mr-2 text-green-600"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                />
               </svg>
               <span class="text-green-700 text-sm font-bold">Registrado</span>
             </div>
@@ -219,19 +384,39 @@
             <!-- Class Details -->
             <div class="space-y-2 mb-6">
               <div class="flex items-center text-strongBrown">
-                <svg class="w-5 h-5 mr-3 text-blue" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                <svg
+                  class="w-5 h-5 mr-3 text-blue"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <span class="font-medium">{{ zoomClass.instructorName }}</span>
               </div>
 
               <div class="flex items-center text-strongBrown">
-                <svg class="w-5 h-5 mr-3 text-blue" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                <svg
+                  class="w-5 h-5 mr-3 text-blue"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <div>
-                  <p class="font-medium">{{ formatDate(zoomClass.scheduledDate) }}</p>
-                  <p class="text-sm text-gray">{{ getTimeUntil(zoomClass.scheduledDate) }}</p>
+                  <p class="font-medium">
+                    {{ formatDate(zoomClass.scheduledDate) }}
+                  </p>
+                  <p class="text-sm text-gray">
+                    {{ getTimeUntil(zoomClass.scheduledDate) }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -240,31 +425,53 @@
             <div class="flex gap-3">
               <button
                 (click)="joinZoomClass(zoomClass.zoomLink)"
-                class="flex-1 bg-gradient-to-r from-blue to-stronger_blue hover:from-stronger_blue hover:to-blue text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                class="flex-1 bg-gradient-to-r from-blue to-stronger_blue hover:from-stronger_blue hover:to-blue text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
                 <span class="flex items-center justify-center">
-                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  <svg
+                    class="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   Unirse a Zoom
                 </span>
               </button>
               <button
                 (click)="unregisterFromClass(zoomClass._id!)"
-                class="px-6 py-4 bg-red/10 text-red rounded-xl hover:bg-red/20 transition-all duration-200 font-semibold">
+                class="px-6 py-4 bg-red/10 text-red rounded-xl hover:bg-red/20 transition-all duration-200 font-semibold"
+              >
                 Cancelar
               </button>
             </div>
 
             <!-- Zoom Info (if available) -->
-            <div *ngIf="zoomClass.meetingId || zoomClass.password" 
-                 class="mt-4 p-4 bg-blue/5 rounded-xl text-sm">
-              <p class="font-semibold text-strongBrown mb-2">Información de la reunión:</p>
+            <div
+              *ngIf="zoomClass.meetingId || zoomClass.password"
+              class="mt-4 p-4 bg-blue/5 rounded-xl text-sm"
+            >
+              <p class="font-semibold text-strongBrown mb-2">
+                Información de la reunión:
+              </p>
               <p *ngIf="zoomClass.meetingId" class="text-gray">
                 <span class="font-medium">ID:</span> {{ zoomClass.meetingId }}
               </p>
               <p *ngIf="zoomClass.password" class="text-gray">
-                <span class="font-medium">Contraseña:</span> {{ zoomClass.password }}
+                <span class="font-medium">Contraseña:</span>
+                {{ zoomClass.password }}
               </p>
             </div>
           </div>
@@ -272,9 +479,22 @@
       </div>
 
       <!-- Empty State for My Classes -->
-      <div *ngIf="myClasses.length === 0" class="text-center py-20 bg-white rounded-3xl shadow-lg">
-        <svg class="w-24 h-24 mx-auto text-gray/30 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+      <div
+        *ngIf="myClasses.length === 0"
+        class="text-center py-20 bg-white rounded-3xl shadow-lg"
+      >
+        <svg
+          class="w-24 h-24 mx-auto text-gray/30 mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+          />
         </svg>
         <h3 class="text-2xl font-bold text-strongBrown mb-2">
           No tienes clases registradas
@@ -284,12 +504,11 @@
         </p>
         <button
           (click)="setActiveTab('upcoming')"
-          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue to-stronger_blue text-white font-semibold rounded-xl hover:from-stronger_blue hover:to-blue transition-all duration-200 shadow-lg hover:shadow-xl">
+          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue to-stronger_blue text-white font-semibold rounded-xl hover:from-stronger_blue hover:to-blue transition-all duration-200 shadow-lg hover:shadow-xl"
+        >
           Ver Próximas Clases
         </button>
       </div>
     </div>
-
   </div>
 </div>
-<app-footer></app-footer>

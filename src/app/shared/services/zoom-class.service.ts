@@ -294,25 +294,23 @@ export class ZoomClassService {
     return this.http.get<ZoomClassResponse>(`${this.apiUrl}/live`);
   }
 
-  /**
-   * Update class status (Admin only)
-   */
-  updateClassStatus(id: string, status: string): Observable<ZoomClassResponse> {
-    return this.auth.getAccessTokenSilently().pipe(
-      switchMap((token: string) => {
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-        });
-        return this.http.patch<ZoomClassResponse>(
-          `${this.apiUrl}/${id}/status`,
-          { status },
-          {
-            headers,
-          }
-        );
-      })
-    );
-  }
+ /**
+ * Update class status (Admin only)
+ */
+updateClassStatus(id: string, status: 'scheduled' | 'live' | 'completed' | 'cancelled'): Observable<ZoomClassResponse> {
+  return this.auth.getAccessTokenSilently().pipe(
+    switchMap((token: string) => {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+      return this.http.patch<ZoomClassResponse>(
+        `${this.apiUrl}/${id}/status`,
+        { status },
+        { headers }
+      );
+    })
+  );
+}
 
   /**
    * Update all class statuses (Admin only)
