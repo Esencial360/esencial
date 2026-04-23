@@ -158,8 +158,13 @@ export class BunnystreamService {
     const upload = new tus.Upload(file, {
       endpoint: 'https://video.bunnycdn.com/tusupload',
       retryDelays: [0, 3000, 5000, 10000, 20000, 60000],
-      // Disable fingerprint storage — prevents stale state on page reload
       storeFingerprintForResuming: false,
+      // Upload in parallel streams — dramatically faster on good connections.
+      // Each stream gets its own chunk. 3 is safe; go up to 5 on fast networks.
+      parallelUploads: 3,
+      // 50MB chunks — larger chunks = fewer round trips = faster on stable connections.
+      // TUS default is 5MB which is very conservative.
+      chunkSize: 50 * 1024 * 1024,
       headers: {
         AuthorizationSignature: signature,
         AuthorizationExpire: expirationTimestamp.toString(),
@@ -208,6 +213,8 @@ export class BunnystreamService {
     const upload = new tus.Upload(file, {
       endpoint: 'https://video.bunnycdn.com/tusupload',
       retryDelays: [0, 3000, 5000, 10000, 20000, 60000],
+      parallelUploads: 3,
+      chunkSize: 50 * 1024 * 1024,
       headers: {
         AuthorizationSignature: signature,
         AuthorizationExpire: expirationTimestamp.toString(),
