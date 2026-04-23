@@ -52,18 +52,28 @@ export class BunnystreamService {
 
   getVideosList(source: VideoSource, amount?: string): Observable<any> {
     const { apiUrl, apiKey } = this.getApiConfig(source);
-    const url = `${apiUrl}/videos?page=1&itemsPerPage=${
-      amount ? amount : '100'
-    }&orderBy=date`;
+    const url = `${apiUrl}/videos?page=1&itemsPerPage=${amount ? amount : '100'}&orderBy=date`;
     const headers = { AccessKey: apiKey };
-    return this.http.get(url, { headers });
+    return this.http.get<any>(url, { headers }).pipe(
+      // Filter out empty slots — storageSize=0 means upload was interrupted
+      tap(response => {
+        if (response?.items) {
+          response.items = response.items.filter((v: any) => v.storageSize > 0);
+        }
+      }),
+    );
   }
 
   getCollectionVideosList(collection: string): Observable<any> {
     const url = `${this.apiUrl}/videos?page=1&itemsPerPage=100&collection=${collection}&orderBy=date`;
     const headers = { AccessKey: this.apiKey };
-    return this.http.get(url, { headers }).pipe(
-      tap((response) => {}),
+    return this.http.get<any>(url, { headers }).pipe(
+      tap(response => {
+        if (response?.items) {
+          // Filter out empty slots — storageSize=0 means upload was interrupted
+          response.items = response.items.filter((v: any) => v.storageSize > 0);
+        }
+      }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           console.error('Unauthorized: Check your BunnyStream API key.');
@@ -73,12 +83,11 @@ export class BunnystreamService {
           console.error('An error occurred:', error.message);
         }
         return throwError('Failed to fetch video');
-      })
+      }),
     );
   }
 
   getVideo(source: VideoSource, videoId: any): Observable<any> {
-
     const { apiUrl, apiKey } = this.getApiConfig(source);
     const url = `${apiUrl}/videos/${videoId}`;
     const headers = { AccessKey: apiKey };
@@ -93,7 +102,7 @@ export class BunnystreamService {
           console.error('An error occurred:', error.message);
         }
         return throwError('Failed to fetch video');
-      })
+      }),
     );
   }
 
@@ -134,21 +143,23 @@ export class BunnystreamService {
     collectionId: string,
     onSuccess?: () => void,
     onError?: (err: any) => void,
-    onProgress?: (percent: number) => void
+    onProgress?: (percent: number) => void,
   ) {
-    const { apiUrl, apiKey } = this.getApiConfig(source);
+    const { apiKey } = this.getApiConfig(source);
     const expirationTimestamp =
       Math.floor(Date.now() / 1000) + this.signatureExpireSeconds;
     const signature = await this.generateSignature(
       this.libraryId,
-      this.apiKey,
+      apiKey,
       expirationTimestamp,
-      videoId
+      videoId,
     );
 
     const upload = new tus.Upload(file, {
       endpoint: 'https://video.bunnycdn.com/tusupload',
       retryDelays: [0, 3000, 5000, 10000, 20000, 60000],
+      // Disable fingerprint storage — prevents stale state on page reload
+      storeFingerprintForResuming: false,
       headers: {
         AuthorizationSignature: signature,
         AuthorizationExpire: expirationTimestamp.toString(),
@@ -157,7 +168,7 @@ export class BunnystreamService {
       },
       metadata: {
         filetype: file.type,
-        title: title,
+        title,
         collection: collectionId,
       },
       onError: (error) => {
@@ -183,7 +194,7 @@ export class BunnystreamService {
     title: string,
     onSuccess?: () => void,
     onError?: (err: any) => void,
-    onProgress?: (percent: number) => void
+    onProgress?: (percent: number) => void,
   ) {
     const expirationTimestamp =
       Math.floor(Date.now() / 1000) + this.signatureExpireSeconds;
@@ -191,7 +202,7 @@ export class BunnystreamService {
       this.libraryIdWS,
       this.apiKeyWS,
       expirationTimestamp,
-      videoId
+      videoId,
     );
 
     const upload = new tus.Upload(file, {
@@ -231,7 +242,7 @@ export class BunnystreamService {
     libraryId: number,
     apiKey: string,
     expireTime: number,
-    videoId: string
+    videoId: string,
   ) {
     const message = `${libraryId}${apiKey}${expireTime}${videoId}`;
     const encoder = new TextEncoder();
@@ -262,7 +273,7 @@ export class BunnystreamService {
   }
 
   getVideoStatistics(source: VideoSource, videoGuid: string) {
-   const { apiUrl, apiKey } = this.getApiConfig(source);
+    const { apiUrl, apiKey } = this.getApiConfig(source);
     const url = `${apiUrl}/statistics?hourly=false&videoGuid=${videoGuid}`;
     const headers = {
       AccessKey: apiKey,
@@ -306,7 +317,7 @@ export class BunnystreamService {
             console.error('An error occurred:', error.message);
           }
           return throwError('Failed to add metadata');
-        })
+        }),
       );
   }
 }

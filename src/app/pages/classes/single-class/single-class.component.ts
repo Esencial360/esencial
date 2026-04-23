@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BunnystreamService } from '../../../shared/services/bunny-stream.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -35,9 +35,8 @@ declare global {
   templateUrl: './single-class.component.html',
   styleUrl: './single-class.component.css',
 })
-export class SingleClassComponent implements OnInit {
-  @ViewChild('dialogAnchor') dialogAnchor!: ElementRef;
-  @ViewChild('bunnyVideo') videoIframe!: ElementRef;
+export class SingleClassComponent implements OnInit, OnDestroy {
+  @ViewChild('bunnyVideo') videoIframe!: ElementRef<HTMLIFrameElement>;
   videoId!: any;
   pullZone = environment.pullZone;
   videos!: any;
@@ -73,8 +72,8 @@ export class SingleClassComponent implements OnInit {
       { icon: this.pullZone + '/assets/boxes.png', text: 'Uso de bloques' },
     ],
   };
-  private intervalId: any;
   private destroy$ = new Subject<void>();
+  private dialogConfig = { panelClass: 'ewn-dialog-panel' };
 
   constructor(
     private route: ActivatedRoute,
@@ -98,25 +97,30 @@ export class SingleClassComponent implements OnInit {
   ngOnInit() {
     window.scrollTo(0, 0);
     this.isLoading = true;
+
     this.route.paramMap.subscribe((params) => {
       this.videoId = params.get('id');
     });
+
     this.isLiked = this.user.likedVideos?.includes(this.videoId);
-    // this.getVideo();
     this.getVideoInfo();
 
+    // FIX: Single subscription, no nesting
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      this.authService.user$.subscribe((user) => {
-        if (user) {
-          const namespace = 'https://test-assign-roles.com/';
-          this.roles = user[`${namespace}roles`][0] || [];
-          this.isLoading = false;
-        } else {
-          this.isLoading = false;
-          this.user = undefined;
-        }
-      });
+      if (user) {
+        const namespace = 'https://test-assign-roles.com/';
+        this.roles = user[`${namespace}roles`][0] || [];
+        this.isLoading = false;
+      } else {
+        this.isLoading = false;
+        this.user = undefined;
+      }
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getVideo() {
@@ -145,7 +149,7 @@ export class SingleClassComponent implements OnInit {
         this.forbidden = true;
       },
       complete: () => {
-        console.log('Cration retrieved completed.');
+        console.log('Class retrieved completed.');
       },
     });
   }
@@ -159,29 +163,29 @@ export class SingleClassComponent implements OnInit {
         console.error('Error retrieved instructor:', error);
       },
       complete: () => {
-        console.log('instructor retrieved completed.');
+        console.log('Instructor retrieved completed.');
       },
     });
   }
 
   deleteVideo() {
-    const scrollPosition = window.pageYOffset;
-
-    const dialogRef = this.dialog.open(DialogComponent, {
+    // FIX: Removed window.scrollTo + dialogRef.afterOpened scroll hack — was
+    // interfering with the dialog overlay positioning and focus trap.
+    this.dialog.open(DialogComponent, {
+      ...this.dialogConfig,
       data: {
-        title: 'Borrar el video',
-        message: 'Estas seguro de borrar el video?',
+        message: '¿Estás seguro de borrar el video?',
         confirmText: 'Borrar',
         cancelText: 'Volver',
         onConfirm: () => {
           this.bunnystreamService.deleteVideo('video', this.videoId).subscribe(
             (response) => {
               this.classesService.deleteClass(this.videoId).subscribe({
-                next: (response) => {
+                next: () => {
                   this.deleteVideoInInstructor();
                 },
                 error: (error) => {
-                  console.error('Error deleted Classr:', error);
+                  console.error('Error deleted Class:', error);
                 },
                 complete: () => {
                   console.log('Class deleted completed.');
@@ -190,16 +194,12 @@ export class SingleClassComponent implements OnInit {
               this.showSuccessMessage();
             },
             (error) => {
-              console.error('Error retrieving videos:', error);
+              console.error('Error deleting video:', error);
               this.showErrorMessage();
             }
           );
         },
       } as DialogData,
-    });
-
-    dialogRef.afterOpened().subscribe(() => {
-      window.scrollTo(0, scrollPosition);
     });
   }
 
@@ -214,20 +214,21 @@ export class SingleClassComponent implements OnInit {
     };
 
     this.instructorService.updateInstructor(updatedInstructor).subscribe({
-      next: (response) => {
-        console.log('instructor updated successfully');
+      next: () => {
+        console.log('Instructor updated successfully');
       },
       error: (error) => {
-        console.error('Error updated instructor:', error);
+        console.error('Error updating instructor:', error);
       },
       complete: () => {
-        console.log('instructor updated completed.');
+        console.log('Instructor update completed.');
       },
     });
   }
 
   showSuccessMessage() {
     const dialogRef = this.dialog.open(DialogComponent, {
+      ...this.dialogConfig,
       data: {
         title: 'El video ha sido borrado exitosamente',
         message: 'Da click para regresar a todas las clases',
@@ -236,34 +237,35 @@ export class SingleClassComponent implements OnInit {
       } as DialogData,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('/');
     });
   }
 
   showErrorMessage() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    this.dialog.open(DialogComponent, {
+      ...this.dialogConfig,
       data: {
         title: 'Intenta de nuevo',
-        message: 'Video no ha podido ser eliminado',
+        message: 'El video no ha podido ser eliminado',
         confirmText: 'Aceptar',
         onConfirm: () => {
           this.bunnystreamService.deleteVideo('video', this.videoId).subscribe(
             (response) => {
               this.classesService.deleteClass(this.videoId).subscribe({
-                next: (response) => {
+                next: () => {
                   console.log('Class deleted successfully');
                 },
                 error: (error) => {
-                  console.error('Error deleted Classr:', error);
+                  console.error('Error deleted Class:', error);
                 },
                 complete: () => {
-                  console.log('Cration deleted completed.');
+                  console.log('Class deletion completed.');
                 },
               });
             },
             (error) => {
-              console.error('Error retrieving videos:', error);
+              console.error('Error deleting video:', error);
             }
           );
         },
@@ -295,6 +297,6 @@ export class SingleClassComponent implements OnInit {
   }
 
   onSubscribe() {
-    this.router.navigate(['suscribe'])
+    this.router.navigate(['suscribe']);
   }
 }
