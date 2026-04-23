@@ -1,265 +1,290 @@
 <app-header></app-header>
-<section
-  class="w-full h-[75vh] flex flex-col items-center justify-center text-center montserrat-normal"
->
+
+<section class="upload-page w-full min-h-[85vh] flex flex-col items-center justify-center text-center montserrat-normal relative overflow-hidden">
+
+  <!-- Ambient background orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ── MODAL ──────────────────────────────────────────────────────────── -->
   @if (isModalOpen) {
-    <div
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] text-start"
-    >
-      <div
-        class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative animate-fadeIn"
-      >
-        <button
-          (click)="closeModal()"
-          class="absolute top-4 right-4 text-gray-500 hover:text-blue"
-        >
-          ✕
+    <div class="modal-backdrop fixed inset-0 flex items-center justify-center z-[9999] p-4">
+
+      <div class="modal-panel w-full max-w-lg relative">
+
+        <!-- Close -->
+        <button (click)="closeModal()" class="modal-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
         </button>
+
+        <!-- Step indicator dots -->
+        <div class="step-dots">
+          <span class="step-dot" [class.active]="firstStep"></span>
+          <span class="step-dot" [class.active]="secondStep"></span>
+          <span class="step-dot" [class.active]="thirdStep"></span>
+        </div>
+
+        <!-- ── STEP 1: Form ── -->
         @if (firstStep) {
-          <h2
-            class="text-xl font-semibold text-blue uppercase mb-4 text-center"
-          >
-            Subir nueva clase
-          </h2>
-          <form [formGroup]="newVideoForm" class="space-y-6">
-            <div>
-              <label class="block text-blue font-medium mb-1 uppercase"
-                >Nombre de la clase</label
-              >
-              <input
-                type="text"
-                formControlName="title"
-                class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-                [ngClass]="{
-                  'border-red-500':
-                    newVideoForm.get('title')?.invalid &&
-                    (newVideoForm.get('title')?.dirty ||
-                      newVideoForm.get('title')?.touched),
-                }"
-              />
-              <p
-                *ngIf="
-                  newVideoForm.get('title')?.invalid &&
-                  (newVideoForm.get('title')?.dirty ||
-                    newVideoForm.get('title')?.touched)
-                "
-                class="text-red-500 text-sm"
-              >
-                Nombre es requerido.
-              </p>
-            </div>
-            <div>
-              <label class="block text-blue font-medium mb-1 uppercase"
-                >Categoria</label
-              >
-              <select
-                formControlName="collectionId"
-                class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-              >
-                <option value="" disabled selected>
-                  Selecciona una categoria
-                </option>
-                @for (collection of collectionList; track $index) {
-                  <option [value]="collection.guid">
-                    {{ collection.name }}
-                  </option>
-                }
-              </select>
-            </div>
-            <div>
-              <label class="block text-blue font-medium mb-1 uppercase"
-                >Instructor</label
-              >
-              <select
-                formControlName="instructor"
-                class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-              >
-                <option value="" selected>No Instructor</option>
-                @for (singleInstructor of instructors; track $index) {
-                  <option [value]="singleInstructor._id">
-                    {{ singleInstructor.firstname }}
-                    {{ singleInstructor.lastname }}
-                  </option>
-                }
-              </select>
-            </div>
-            <div>
-              <label class="block text-blue font-medium mb-1 uppercase"
-                >Nivel de Dificultad</label
-              >
-              <select
-                formControlName="difficulty"
-                class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-              >
-                <option value="" disabled selected>Selecciona un nivel</option>
-                <option value="Principiante">Principiante</option>
-                <option value="Intermedio">Intermedio</option>
-                <option value="Avanzado">Avanzado</option>
-              </select>
+          <div class="step-content">
+            <div class="modal-header">
+              <div class="modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82V15a1 1 0 01-1.447.894L15 13.5M4 8h11a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2V10a2 2 0 012-2z"/>
+                </svg>
+              </div>
+              <h2 class="modal-title">Nueva clase</h2>
+              <p class="modal-subtitle">Completa la información de tu clase</p>
             </div>
 
-            <div>
-              <label class="block text-blue font-medium mb-1 uppercase"
-                >Subcategoría</label
-              >
-              <select
-                formControlName="subcategory"
-                class="w-full p-3 border rounded-lg focus:ring focus:ring-gray-300 focus:outline-none"
-                [disabled]="!newVideoForm.get('collectionId')?.value"
-              >
-                @for (sub of getSubcategories(); track $index) {
-                  <option [value]="sub">
-                    {{ sub }}
-                  </option>
-                }
-              </select>
-            </div>
+            <form [formGroup]="newVideoForm" class="form-grid">
 
-            <div>
+              <div class="field-group">
+                <label class="field-label">Nombre de la clase</label>
+                <input
+                  type="text"
+                  formControlName="title"
+                  placeholder="Ej. Vinyasa matutino con intención"
+                  class="field-input"
+                  [class.field-error]="newVideoForm.get('title')?.invalid && (newVideoForm.get('title')?.dirty || newVideoForm.get('title')?.touched)"
+                />
+                @if (newVideoForm.get('title')?.invalid && (newVideoForm.get('title')?.dirty || newVideoForm.get('title')?.touched)) {
+                  <p class="error-msg">Nombre es requerido</p>
+                }
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label class="field-label">Categoría</label>
+                  <select formControlName="collectionId" class="field-input field-select">
+                    <option value="" disabled selected>Selecciona</option>
+                    @for (collection of collectionList; track $index) {
+                      <option [value]="collection.guid">{{ collection.name }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label">Dificultad</label>
+                  <select formControlName="difficulty" class="field-input field-select">
+                    <option value="" disabled selected>Selecciona</option>
+                    <option value="Principiante">Principiante</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Avanzado">Avanzado</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label class="field-label">Instructor</label>
+                  <select formControlName="instructor" class="field-input field-select">
+                    <option value="">Sin instructor</option>
+                    @for (singleInstructor of instructors; track $index) {
+                      <option [value]="singleInstructor._id">
+                        {{ singleInstructor.firstname }} {{ singleInstructor.lastname }}
+                      </option>
+                    }
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label">Subcategoría</label>
+                  <select
+                    formControlName="subcategory"
+                    class="field-input field-select"
+                    [class.disabled]="!newVideoForm.get('collectionId')?.value"
+                    [disabled]="!newVideoForm.get('collectionId')?.value"
+                  >
+                    <option value="" disabled selected>Selecciona</option>
+                    @for (sub of getSubcategories(); track $index) {
+                      <option [value]="sub">{{ sub }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
               <button
-                type="submit"
+                type="button"
                 (click)="onSubmit()"
-                class="w-full py-3 text-white font-semibold rounded-lg"
                 [disabled]="!newVideoForm.valid"
-                [ngClass]="
-                  newVideoForm.valid
-                    ? 'bg-blue hover:bg-lightBrown transition duration-200'
-                    : 'bg-blue contrast-50'
-                "
+                class="btn-primary"
+                [class.btn-disabled]="!newVideoForm.valid"
               >
-                SIGUIENTE
+                <span>Continuar</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
               </button>
-            </div>
-          </form>
+
+            </form>
+          </div>
         }
+
+        <!-- ── STEP 2: Upload ── -->
         @if (secondStep) {
-          <div class="text-center space-y-4">
-            <h2 class="text-lg font-semibold">Subir Archivo</h2>
+          <div class="step-content">
+            <div class="modal-header">
+              <div class="modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                </svg>
+              </div>
+              <h2 class="modal-title">Subir archivo</h2>
+              <p class="modal-subtitle">Selecciona el video de tu clase</p>
+            </div>
+
             @if (!loading) {
-              <input
-                type="file"
-                #videoInput
-                (change)="onFileSelected($event)"
-                class="border p-2 rounded w-full"
-              />
-              <!-- <button
+              <div class="upload-zone" [class.has-file]="selectedFile">
+                <input
+                  type="file"
+                  #videoInput
+                  (change)="onFileSelected($event)"
+                  accept="video/*"
+                  class="upload-input"
+                />
+                @if (!selectedFile) {
+                  <div class="upload-placeholder">
+                    <div class="upload-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                      </svg>
+                    </div>
+                    <p class="upload-hint">Arrastra tu video aquí</p>
+                    <p class="upload-hint-sub">o haz clic para seleccionar</p>
+                  </div>
+                } @else {
+                  <div class="file-selected">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 text-green-500">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="file-name">{{ selectedFile.name }}</span>
+                  </div>
+                }
+              </div>
+
+              <button
                 (click)="createVideo()"
-                class="w-full py-3 text-white font-semibold rounded-lg bg-blue hover:bg-lightBrown 0transition duration-200"
+                [disabled]="isUploading || !selectedFile"
+                class="btn-primary mt-4"
+                [class.btn-disabled]="!selectedFile"
               >
-                Subir Archivo
-              </button> -->
-              <button (click)="createVideo()" [disabled]="isUploading"  class="w-full py-3 text-white font-semibold rounded-lg bg-blue hover:bg-lightBrown 0transition duration-200">
-                {{ isUploading ? "Subiendo..." : "Subir Archivo" }}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                </svg>
+                <span>{{ isUploading ? 'Subiendo...' : 'Subir video' }}</span>
               </button>
+
             } @else {
-              <app-loading></app-loading>
-              <div class="montserrat-normal text-blue uppercase">
-                <p>
-                  Subiendo video:
-                  <span class="font-bold">{{ uploadingProgress }}%</span>
+              <!-- Progress state -->
+              <div class="progress-state">
+                <div class="progress-ring-wrap">
+                  <svg class="progress-ring" viewBox="0 0 80 80">
+                    <circle class="progress-ring-bg" cx="40" cy="40" r="34" fill="none" stroke-width="4"/>
+                    <circle
+                      class="progress-ring-fill"
+                      cx="40" cy="40" r="34"
+                      fill="none"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                      [style.strokeDashoffset]="213 - (213 * (+uploadingProgress / 100))"
+                    />
+                  </svg>
+                  <span class="progress-pct">{{ uploadingProgress }}%</span>
+                </div>
+                <p class="progress-label">Subiendo tu clase...</p>
+                <p class="progress-warning">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3 h-3 inline mr-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+                  </svg>
+                  No salgas ni recargues la página
                 </p>
-                <p>No salgas ni recarges la pagina</p>
               </div>
             }
           </div>
         }
+
+        <!-- ── STEP 3: Success ── -->
         @if (thirdStep) {
-          <div class="flex flex-col items-center text-center space-y-4">
-            <app-check-mark></app-check-mark>
-            <h4 class="text-lg font-semibold text-blue uppercase">
-              ¡Su participación es esencial para nosotros!
-            </h4>
-            <p class="text-lightBrown">
-              ¡Gracias por tu video! Hemos recibido tu material y lo revisaremos
-              para darte nuestra opinión.
+          <div class="step-content success-state">
+            <div class="success-icon">
+              <app-check-mark></app-check-mark>
+            </div>
+            <h2 class="modal-title mt-4">¡Clase subida!</h2>
+            <p class="modal-subtitle">
+              Hemos recibido tu material y lo revisaremos para darte nuestra opinión.
             </p>
-            <h4 class="font-semibold text-blue">El equipo de esencial360</h4>
-            <button
-              (click)="onProcessDone()"
-              class="mt-5 py-3 px-6 bg-black text-white rounded-lg bg-blue hover:bg-lightBrown transition duration-200"
-            >
-              ACEPTAR
+            <p class="success-team">— El equipo de esencial360</p>
+            <button (click)="onProcessDone()" class="btn-primary mt-6">
+              <span>Aceptar</span>
             </button>
           </div>
         }
+
       </div>
     </div>
-  } @else {
-    <section class="">
-      <h2 class="text-blue uppercase text-3xl font-bold drop-shadow-lg">
-        ¡sigue inspirando!
-      </h2>
-      <div class="max-w-2xl mx-auto p-6">
-        <h2 class="text-lg font-bold text-blue text-start">RECOMENDACIONES</h2>
-        <p class="text-lightBlue text-sm text-start">
-          Haz clic en cada icono para seleccionar tus recomendaciones.
-        </p>
+  }
 
-        <div class="grid grid-cols-2 gap-6 mt-10">
-          <!-- Left Column -->
-          <div class="flex flex-col space-y-6">
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                restaurant
-              </span>
-              <p>Uso de cuencos</p>
-            </div>
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                wb_sunny
-              </span>
-              <p>Al aire libre</p>
-            </div>
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                view_module
-              </span>
-              <p>Uso de bloques.</p>
-            </div>
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                lightbulb
-              </span>
-              <p>Un espacio con luz moderada</p>
-            </div>
+  <!-- ── LANDING ─────────────────────────────────────────────────────────── -->
+  @else {
+    <div class="landing-content relative z-10">
+
+      <div class="landing-eyebrow">para instructores</div>
+      <h1 class="landing-title">¡Sigue inspirando!</h1>
+      <p class="landing-sub">Comparte tu práctica con nuestra comunidad</p>
+
+      <!-- Recommendations grid -->
+      <div class="recs-card">
+        <p class="recs-heading">Recomendaciones de práctica</p>
+
+        <div class="recs-grid">
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">restaurant</span>
+            <span>Uso de cuencos</span>
           </div>
-
-          <!-- Right Column -->
-          <div class="flex flex-col space-y-6">
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                smoke_free
-              </span>
-              <p>Uso de incienso</p>
-            </div>
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                hotel
-              </span>
-              <p>Antes de dormir</p>
-            </div>
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                wb_twilight
-              </span>
-              <p>Al despertar</p>
-            </div>
-            <div class="flex items-center space-x-3 cursor-pointer">
-              <span class="material-symbols-outlined text-blue text-4xl">
-                group
-              </span>
-              <p>En pareja</p>
-            </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">wb_sunny</span>
+            <span>Al aire libre</span>
+          </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">view_module</span>
+            <span>Uso de bloques</span>
+          </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">lightbulb</span>
+            <span>Luz moderada</span>
+          </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">smoke_free</span>
+            <span>Uso de incienso</span>
+          </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">hotel</span>
+            <span>Antes de dormir</span>
+          </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">wb_twilight</span>
+            <span>Al despertar</span>
+          </div>
+          <div class="rec-item">
+            <span class="material-symbols-outlined rec-icon">group</span>
+            <span>En pareja</span>
           </div>
         </div>
       </div>
 
-      <app-button
-        [text]="'Empezar'"
-        class="flex justify-center"
-        (click)="openModal()"
-      ></app-button>
-    </section>
+      <button (click)="openModal()" class="btn-start">
+        <span>Empezar</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </button>
+
+    </div>
   }
+
 </section>
 <app-footer></app-footer>
