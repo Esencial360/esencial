@@ -129,3 +129,117 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+/* ── Shell ────────────────────────────────────────────────────────────── */
+.page-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem 2rem;
+  overflow: hidden;
+}
+
+/* ── Back button ──────────────────────────────────────────────────────── */
+.page-title__back {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(160, 130, 90, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-strongBrown, #8B6347);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(100, 80, 50, 0.08);
+}
+.page-title__back:hover {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(74, 122, 155, 0.3);
+  color: var(--color-blue, #4a7a9b);
+  transform: translateY(-50%) translateX(-2px);
+  box-shadow: 0 4px 14px rgba(74, 122, 155, 0.15);
+}
+
+/* ── Content ──────────────────────────────────────────────────────────── */
+.page-title__content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.page-title__heading {
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 1.0;
+  margin: 0;
+  color: var(--color-strongBrown, #8B6347);
+}
+
+.page-title__description {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-blue, #4a7a9b);
+  margin: 0;
+  opacity: 0.8;
+}
+
+.page-title__rule {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.page-title__rule::before,
+.page-title__rule::after {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(74,122,155,0.4));
+  border-radius: 999px;
+}
+
+.page-title__rule::after {
+  background: linear-gradient(90deg, rgba(74,122,155,0.4), transparent);
+}
+
+.page-title__rule::before {
+  /* flip for left side */
+  transform: scaleX(-1);
+}
+
+/* inner dot */
+.page-title__rule {
+  position: relative;
+}
+.page-title__rule::before {
+  background: linear-gradient(90deg, transparent, rgba(139,99,71,0.35));
+}
+.page-title__rule::after {
+  background: linear-gradient(90deg, rgba(139,99,71,0.35), transparent);
+}
+/* Central dot via outline trick */
+.page-title__content::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(74, 122, 155, 0.5);
+  margin-top: -0.85rem;
+}

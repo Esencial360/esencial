@@ -201,3 +201,45 @@ body {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Add these rules to your global styles.css ─────────────────────────────
+   They fix MatDialog positioning so it always centers on the viewport,
+   regardless of scroll position or where the trigger button is on the page. */
+
+.ewn-dialog-panel {
+  /* Reset any inherited positioning */
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+
+  /* Remove Material's default white box — DialogComponent styles the host itself */
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+
+  /* Give room for the icon that overflows above the dialog panel */
+  overflow: visible !important;
+}
+
+/* Darken the backdrop */
+.cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+/* Force CDK overlay container above everything */
+.cdk-overlay-container {
+  z-index: 99999 !important;
+}
+
+.cdk-overlay-backdrop {
+  z-index: 99998 !important;
+}
+
+.cdk-overlay-pane {
+  z-index: 99999 !important;
+}

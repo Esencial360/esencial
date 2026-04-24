@@ -22,3 +22,205 @@
     background-position: 100% 50%;
   }
 }
+
+/* ── Shell ────────────────────────────────────────────────────────────── */
+.content-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 2.5rem;
+  border-radius: 1.75rem;
+  background: linear-gradient(145deg, #faf8f3 0%, #f5f0e6 60%, #faf7f0 100%);
+  border: 1px solid rgba(160, 130, 90, 0.12);
+  box-shadow:
+    0 16px 48px rgba(100, 80, 50, 0.08),
+    0 2px 8px rgba(100, 80, 50, 0.05),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .content-hero {
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+    padding: 3rem;
+  }
+}
+
+/* ── Background ───────────────────────────────────────────────────────── */
+.content-hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.content-hero__bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+.content-hero__bg-orb--1 {
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(74,122,155,0.06) 0%, transparent 70%);
+  top: -80px; right: -60px;
+}
+.content-hero__bg-orb--2 {
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(160,120,70,0.05) 0%, transparent 70%);
+  bottom: -60px; left: -40px;
+}
+
+/* ── Image column ─────────────────────────────────────────────────────── */
+.content-hero__image-col {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.content-hero__image-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  box-shadow:
+    0 20px 48px rgba(80, 60, 40, 0.18),
+    0 4px 12px rgba(80, 60, 40, 0.1);
+  border: 1px solid rgba(160, 130, 90, 0.12);
+}
+
+.content-hero__img {
+  display: block;
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+@media (min-width: 1024px) {
+  .content-hero__img {
+    width: 320px;
+    height: 58vh;
+  }
+}
+
+.content-hero:hover .content-hero__img {
+  transform: scale(1.04);
+}
+
+.content-hero__img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(74,122,155,0.08) 0%,
+    transparent 50%,
+    rgba(139,99,71,0.06) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Body ─────────────────────────────────────────────────────────────── */
+.content-hero__body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+/* Eyebrow */
+.content-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(74, 122, 155, 0.7);
+}
+
+.content-hero__eyebrow-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-blue, #4a7a9b);
+  opacity: 0.6;
+}
+
+/* Title */
+.content-hero__title {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-strongBrown, #8B6347);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Rule */
+.content-hero__rule {
+  width: 2.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-blue, #4a7a9b), transparent);
+  border-radius: 999px;
+}
+
+/* Description */
+.content-hero__description {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(80, 60, 40, 0.65);
+  margin: 0;
+  max-width: 52ch;
+  border-left: 2px solid rgba(74, 122, 155, 0.2);
+  padding-left: 1rem;
+}
+
+/* Closing title */
+.content-hero__closing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  background: rgba(74, 122, 155, 0.08);
+  border: 1px solid rgba(74, 122, 155, 0.18);
+  border-radius: 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-blue, #4a7a9b);
+  align-self: flex-start;
+}
+
+/* CTA */
+.content-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(74, 122, 155, 0.6);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+}
+
+.content-hero__cta:hover {
+  color: var(--color-blue, #4a7a9b);
+}
+
+.content-hero__cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.content-hero:hover .content-hero__cta-arrow {
+  transform: translateX(4px);
+}

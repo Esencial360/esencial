@@ -1,71 +1,75 @@
+<!-- ── Preview / inline mode ─────────────────────────────────────────── -->
 @if (previewView) {
-<div class="flex justify-start mt-2">
-  @if (videoStatistics) { @for (key of filteredKeys; track $index) { 
-  <div class="flex text-blue">
-    <span class="material-symbols-outlined">
-      {{ key === "countryWatchTime" ? "timer" : "visibility" }}
-    </span>
-    {{ key === "countryWatchTime" ? getTotalWatchTime() + "min" : getTotalViews()}}
+  <div class="stats-preview montserrat-normal">
+    @if (videoStatistics) {
+      @for (key of filteredKeys; track $index) {
+        <div class="stats-preview__chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-3.5 h-3.5 shrink-0">
+            @if (key === 'countryWatchTime') {
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+            } @else {
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z"/>
+            }
+          </svg>
+          <span class="stats-preview__value">
+            {{ key === 'countryWatchTime' ? getTotalWatchTime() + ' min' : getTotalViews() }}
+          </span>
+        </div>
+      }
+    } @else {
+      <app-loading width="24px" height="24px"></app-loading>
+    }
   </div>
-   } } @else {
-  <app-loading width="30px" height="30px"></app-loading>
-  }
-</div>
-} @else {
-<section
-  class="w-11/12 mx-auto uppercase montserrat-normal mb-10"
-  [ngClass]="
-    adminView ? 'text-center' : 'grid grid-cols-1 md:grid-cols-3 gap-8'
-  "
->
-  <div
-    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition hover:shadow-2xl cursor-pointer"
-  >
-    <p
-      class="montserrat-normal text-strongBrown"
-      [ngClass]="adminView ? 'text-3xl mb-2' : 'text-7xl mb-4'"
-    >
-      {{ getTotalViews() }}
-    </p>
-    <h3
-      class="text-blue font-semibold capitalize"
-      [ngClass]="adminView ? 'text-lg' : 'text-2xl'"
-    >
-      Visital Totales
-    </h3>
-  </div>
-  <div
-    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition hover:shadow-2xl cursor-pointer"
-  >
-    <p
-      class="montserrat-normal text-strongBrown"
-      [ngClass]="adminView ? 'text-3xl mb-2' : 'text-7xl mb-4'"
-    >
-      {{ getTotalWatchTime() }} min
-    </p>
-    <h3
-      class="text-blue font-semibold capitalize"
-      [ngClass]="adminView ? 'text-lg' : 'text-2xl'"
-    >
-      Tiempo total de reproducción
-    </h3>
-  </div>
-  <div
-    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition hover:shadow-2xl cursor-pointer"
-  >
-    <p
-      class="montserrat-normal text-strongBrown"
-      [ngClass]="adminView ? 'text-3xl mb-2' : 'text-7xl mb-4'"
-    >
-      {{ videoStatistics["engagementScore"] + "%" }}
-    </p>
-    <h3
-      class="text-blue font-semibold capitalize"
-      [ngClass]="adminView ? 'text-lg' : 'text-2xl'"
-    >
-      Puntuación de participación
-    </h3>
-  </div>
-</section>
 
+<!-- ── Full stats mode ───────────────────────────────────────────────── -->
+} @else {
+  <section class="stats-full montserrat-normal" [class.stats-full--admin]="adminView">
+
+    <!-- Views -->
+    <div class="stat-card">
+      <div class="stat-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        </svg>
+      </div>
+      <p class="stat-card__value" [class.stat-card__value--lg]="!adminView">
+        {{ getTotalViews() }}
+      </p>
+      <h3 class="stat-card__label" [class.stat-card__label--sm]="adminView">
+        Visitas totales
+      </h3>
+    </div>
+
+    <!-- Watch time -->
+    <div class="stat-card">
+      <div class="stat-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+        </svg>
+      </div>
+      <p class="stat-card__value" [class.stat-card__value--lg]="!adminView">
+        {{ getTotalWatchTime() }}<span class="stat-card__unit">min</span>
+      </p>
+      <h3 class="stat-card__label" [class.stat-card__label--sm]="adminView">
+        Tiempo de reproducción
+      </h3>
+    </div>
+
+    <!-- Engagement -->
+    <div class="stat-card">
+      <div class="stat-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125z"/>
+        </svg>
+      </div>
+      <p class="stat-card__value" [class.stat-card__value--lg]="!adminView">
+        {{ videoStatistics?.engagementScore }}<span class="stat-card__unit">%</span>
+      </p>
+      <h3 class="stat-card__label" [class.stat-card__label--sm]="adminView">
+        Puntuación de participación
+      </h3>
+    </div>
+
+  </section>
 }
