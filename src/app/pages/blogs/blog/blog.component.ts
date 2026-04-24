@@ -26,13 +26,12 @@ export class BlogComponent implements OnInit {
   blogs: Blog[] = [];
   categories: Category[] = [];
   readingTime = 0;
-   wordCount = 0;
-  imageId = '363849589bd5e9ef22f015490ee80ac1'; 
+  wordCount = 0;
+  imageId = '363849589bd5e9ef22f015490ee80ac1';
   safeImageUrl: SafeUrl = '';
   safeDescription!: SafeHtml;
 
-  @Input()
-  blogSelected!: string;
+  @Input() blogSelected!: string;
 
   constructor(
     private router: Router,
@@ -48,72 +47,45 @@ export class BlogComponent implements OnInit {
     this.loadImage();
   }
 
-  async fetchBlogs() {
-    await this.blogService.getAllBlogs().subscribe(
-      (blogs: Blog[]) => {
-        this.blogs = blogs;
-      },
-      (error) => {
-        console.error('Error fetching blogs:', error);
-      }
-    );
+  fetchBlogs() {
+    this.blogService.getAllBlogs().subscribe({
+      next: (blogs: Blog[]) => { this.blogs = blogs; },
+      error: (error) => { console.error('Error fetching blogs:', error); },
+    });
   }
 
-  async fetchCategories() {
-    await this.blogService.getAllCategories().subscribe(
-      (categories: Category[]) => {
-        this.categories = categories;
-      },
-      (error) => {
-        console.error('Error fetching categories:', error);
-      }
-    );
+  fetchCategories() {
+    this.blogService.getAllCategories().subscribe({
+      next: (categories: Category[]) => { this.categories = categories; },
+      error: (error) => { console.error('Error fetching categories:', error); },
+    });
   }
 
-    calculateReadingStats(html: string) {
-    // Extract text content from HTML
+  calculateReadingStats(html: string) {
     const textContent = html.replace(/<[^>]*>/g, '').trim();
-    
-    // Calculate word count
     this.wordCount = textContent ? textContent.split(/\s+/).length : 0;
-    
-    // Calculate reading time (average reading speed: 200-250 words per minute)
     this.readingTime = Math.max(1, Math.ceil(this.wordCount / 225));
   }
 
-    setDescription(html: string) {
-    // Sanitize the HTML content from TinyMCE
+  setDescription(html: string) {
     this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(html);
     this.calculateReadingStats(html);
   }
 
   onNavigateToBlog(id: string) {
-    this.router
-      .navigate([`/blog/${id}`])
-      .then((navigationSuccess) => {
-        if (navigationSuccess) {
-          console.log(`Navigation to blog ${id} successful`);
-        } else {
-          console.error(`Navigation to blog ${id} failed`);
-        }
-      })
-      .catch((error) => {
-        console.error(`An error occurred during navigation: ${error.message}`);
-      });
+    this.router.navigate([`/blog/${id}`]).catch((error) => {
+      console.error(`Navigation error: ${error.message}`);
+    });
   }
 
   loadImage() {
-    const apiUrl = `/api/uploadFile/${this.imageId}`; // Use your uploadFile endpoint
-
+    const apiUrl = `/api/uploadFile/${this.imageId}`;
     this.http.get(apiUrl, { responseType: 'blob' }).subscribe({
       next: (blob) => {
         const objectUrl = URL.createObjectURL(blob);
         this.safeImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
       },
-      error: (error) => {
-        console.error('Error loading image:', error);
-        // Handle errors gracefully (e.g., display an error message)
-      },
+      error: (error) => { console.error('Error loading image:', error); },
     });
   }
 
@@ -124,12 +96,23 @@ export class BlogComponent implements OnInit {
     }
   }
 
-    getFormattedDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+  getFormattedDate(dateString: string): string {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('es-ES', {
+      year: 'numeric', month: 'long', day: 'numeric',
     });
+  }
+
+  /** Returns Blog objects belonging to this category — replaces triple nested @for */
+  getBlogsForCategory(category: Category): Blog[] {
+    if (!category.blogs?.length || !this.blogs?.length) return [];
+    return (category.blogs as string[])
+      .map(id => this.blogs.find(b => b._id === id))
+      .filter((b): b is Blog => !!b);
+  }
+
+  /** Strips TinyMCE HTML tags so card excerpts show plain text */
+  stripHtml(html: string): string {
+    return html?.replace(/<[^>]*>/g, '').trim() ?? '';
   }
 }

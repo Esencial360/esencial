@@ -38,13 +38,21 @@ export class BlogService {
   }
 
   updateBlog(blog: Blog): Observable<Blog> {
-    const url = `${this.apiUrlBlogs}/${blog._id}`;
-    return this.http.put<Blog>(url, blog);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.put<Blog>(`${this.apiUrlBlogs}/${blog._id}`, blog, { headers });
+      })
+    );
   }
 
   deleteBlog(id: string): Observable<any> {
-    const url = `${this.apiUrlBlogs}/${id}`;
-    return this.http.delete(url);
+    return this.auth.getAccessTokenSilently().pipe(
+      switchMap((token: string) => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.delete(`${this.apiUrlBlogs}/${id}`, { headers });
+      })
+    );
   }
 
   getAllCategories(): Observable<Category[]> {
