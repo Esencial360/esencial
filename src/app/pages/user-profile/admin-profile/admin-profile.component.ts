@@ -149,9 +149,9 @@ export class AdminProfileComponent implements OnInit {
     const scrollPosition = window.pageYOffset;
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        title: 'Aprovar video',
-        message: 'Estas seguro de aprovar el video?',
-        confirmText: 'Aprovar',
+        title: 'Aprobar video',
+        message: 'Estas seguro de aprobar el video?',
+        confirmText: 'Aprobar',
         cancelText: 'Volver',
       } as DialogData,
     });
