@@ -38,25 +38,20 @@ export class UploadVideoComponent implements OnInit, OnDestroy {
   uploadingProgress!: string;
   categoryConfigs: CategoryConfig[] = [];
 
-  // Track whether upload was intentionally aborted so we skip the verify loop
+  // Track whether upload was intentionally aborted so we skip cleanup
   private uploadAborted = false;
-  // Track whether we're mid-verification so ngOnDestroy can clean up
-  private isVerifying = false;
 
   /** Intercept page reload/close while upload is in progress */
   @HostListener('window:beforeunload', ['$event'])
   onBeforeUnload(event: BeforeUnloadEvent) {
-    if (this.isUploading || this.isVerifying) {
-      // Delete the orphan slot synchronously — best effort
+    if (this.isUploading) {
       this.cleanupOrphan();
-      // Show browser's native "leave page?" dialog
       event.preventDefault();
     }
   }
 
   ngOnDestroy() {
-    // Component destroyed mid-upload (route change etc.) — clean up
-    if ((this.isUploading || this.isVerifying) && this.videoId) {
+    if (this.isUploading && this.videoId) {
       this.uploadAborted = true;
       this.cleanupOrphan();
     }
@@ -149,20 +144,25 @@ export class UploadVideoComponent implements OnInit, OnDestroy {
       this.videoId,
       title,
       collectionId,
-      // onSuccess — TUS confirmed bytes received, now VERIFY before writing DB
+      // onSuccess — TUS confirmed all bytes received by Bunny.
+      // Write to DB immediately — no polling needed. The class gets
+      // status 'Pending' so it won't surface publicly until approved.
       () => {
         this.ngZone.run(() => {
-          console.log('TUS complete — verifying Bunny has the file...');
-          this.verifyThenSave(this.videoId);
+          console.log('TUS complete — saving to DB');
+          this.loading = false;
+          this.isUploading = false;
+          this.secondStep = false;
+          this.thirdStep = true;
+          this.saveToDatabase(this.videoId);
         });
       },
-      // onError — upload failed, delete the orphan Bunny slot
       (error) => {
         this.ngZone.run(() => {
           console.error('TUS upload failed:', error);
           this.loading = false;
           this.isUploading = false;
-          this.deleteOrphanFromBunny(this.videoId);
+          this.cleanupOrphan();
         });
       },
       (progress) => {
@@ -171,60 +171,6 @@ export class UploadVideoComponent implements OnInit, OnDestroy {
         });
       },
     );
-  }
-
-  /**
-   * Poll Bunny until storageSize > 0 (file actually exists on their servers),
-   * then write to DB. If verification fails after max retries, delete the
-   * orphan from Bunny and do NOT write to DB.
-   */
-  private verifyThenSave(videoId: string, attempt = 0, maxAttempts = 10, delayMs = 3000) {
-    // If upload was aborted mid-verify, stop the loop immediately
-    if (this.uploadAborted) {
-      console.warn('Verification aborted — upload was cancelled');
-      return;
-    }
-
-    this.isVerifying = true;
-
-    this.bunnyStreamService.getVideo('video', videoId).pipe(take(1)).subscribe({
-      next: (bunnyVideo: any) => {
-        if (this.uploadAborted) return; // check again after async response
-
-        const hasBytes = bunnyVideo?.storageSize > 0;
-
-        if (hasBytes) {
-          console.log(`Bunny confirmed storageSize=${bunnyVideo.storageSize} — writing to DB`);
-          this.isVerifying = false;
-          this.loading = false;
-          this.isUploading = false;
-          this.secondStep = false;
-          this.thirdStep = true;
-          this.saveToDatabase(videoId);
-        } else if (attempt < maxAttempts) {
-          console.log(`Bunny storageSize=0, retrying (${attempt + 1}/${maxAttempts})...`);
-          setTimeout(() => this.verifyThenSave(videoId, attempt + 1, maxAttempts, delayMs), delayMs);
-        } else {
-          console.error('Bunny verification failed after max retries — aborting DB write');
-          this.isVerifying = false;
-          this.loading = false;
-          this.isUploading = false;
-          this.cleanupOrphan();
-        }
-      },
-      error: (err) => {
-        if (this.uploadAborted) return;
-        console.error('Error verifying video on Bunny:', err);
-        if (attempt < maxAttempts) {
-          setTimeout(() => this.verifyThenSave(videoId, attempt + 1, maxAttempts, delayMs), delayMs);
-        } else {
-          this.isVerifying = false;
-          this.loading = false;
-          this.isUploading = false;
-          this.cleanupOrphan();
-        }
-      },
-    });
   }
 
   private cleanupOrphan() {
@@ -237,11 +183,7 @@ export class UploadVideoComponent implements OnInit, OnDestroy {
     });
   }
 
-  private deleteOrphanFromBunny(videoId: string) {
-    this.cleanupOrphan();
-  }
-
-  // Only called after Bunny confirms storageSize > 0
+  // Only called after Bunny TUS confirms success
   private saveToDatabase(videoId: string) {
     console.log('Verified — saving to DB');
     const selectedInstructor = this.instructors.find(
